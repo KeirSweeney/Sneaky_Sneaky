@@ -8,6 +8,10 @@
 #include "DebugRenderer.h"
 #include "Profiler.h"
 #include "RigidBody.h"
+#include "Input.h"
+#include "Camera.h"
+#include "Graphics.h"
+#include "Octree.h"
 
 using namespace Urho3D;
 
@@ -32,22 +36,37 @@ void Person::Update(float timeStep)
 {
     PROFILE(PersonUpdate);
 
-    // This should probably be a param.
-    NavigationMesh *navMesh = node_->GetScene()->GetComponent<NavigationMesh>();
+    Input *input = GetSubsystem<Input>();
+    NavigationMesh *navMesh = GetScene()->GetComponent<NavigationMesh>();
 
     Vector3 position = node_->GetWorldPosition();
 
-    RigidBody *rigidBody = node_->GetComponent<RigidBody>();
-    if (rigidBody->GetLinearVelocity().LengthSquared() < (0.001f * 0.001f)) {
-        path_.Clear();
+    if (input->GetMouseButtonPress(MOUSEB_LEFT)) {
+        Camera *camera = GetScene()->GetChild("Camera")->GetComponent<Camera>();
+        Graphics *graphics = GetSubsystem<Graphics>();
+
+        IntVector2 mousePosition = input->GetMousePosition();
+        Ray mouseRay = camera->GetScreenRay(mousePosition.x_ / (float)graphics->GetWidth(), mousePosition.y_ / (float)graphics->GetHeight());
+
+        Octree *octree = GetScene()->GetComponent<Octree>();
+
+        PODVector<RayQueryResult> result;
+        RayOctreeQuery query(result, mouseRay, RAY_TRIANGLE, M_INFINITY, DRAWABLE_GEOMETRY);
+        octree->RaycastSingle(query);
+
+        if (!result.Empty()) {
+            //LOGERRORF("result[0].position_: %s", result[0].position_.ToString().CString());
+            target_ = navMesh->FindNearestPoint(result[0].position_);
+            navMesh->FindPath(path_, position, target_);
+            path_.Erase(0);
+        }
     }
 
-    while (path_.Empty()) {
-        navMesh->FindPath(path_, position, navMesh->GetRandomPointInCircle(position, 5.0f));
-        path_.Erase(0);
+    if (path_.Empty()) {
+        return;
     }
 
-#if 0
+#if 1
     DebugRenderer *debug = node_->GetScene()->GetComponent<DebugRenderer>();
     Vector3 last = position;
     last.y_ += navMesh->GetCellHeight() * 2;
@@ -59,23 +78,16 @@ void Person::Update(float timeStep)
     }
 #endif
 
-    //LOGERRORF("Path size: %d", path_.Size());
+    Vector3 next = path_.Front();
+    next.y_ -= navMesh->GetCellHeight();
 
-    target_ = path_.Front();
-    target_.y_ -= navMesh->GetCellHeight();
-
-    //LOGERRORF("Position: %f %f %f", position.x_, position.y_, position.z_);
-    //LOGERRORF("Target: %f %f %f", target_.x_, target_.y_, target_.z_);
-
-    Vector3 offset = target_ - position;
+    Vector3 offset = next - position;
     if (offset.LengthSquared() < (0.25f * 0.25f)) {
         path_.Erase(0);
     }
 
     offset.Normalize();
-    //node_->SetDirection(offset);
-    //node_->Translate(Vector3::FORWARD * 2.0f * timeStep);
 
-    //rigidBody->SetLinearVelocity(offset * 2.0f);
-    rigidBody->ApplyImpulse(offset * 2.0f);
+    RigidBody *rigidBody = node_->GetComponent<RigidBody>();
+    rigidBody->ApplyImpulse(offset * 10.0f);
 }

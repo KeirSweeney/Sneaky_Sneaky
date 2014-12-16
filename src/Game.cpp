@@ -32,8 +32,7 @@ using namespace Urho3D;
 DEFINE_APPLICATION_MAIN(Game)
 
 Game::Game(Context *context):
-    Application(context),
-    yaw_(0.0f), pitch_(45.0f)
+    Application(context)
 {
 }
 
@@ -198,27 +197,21 @@ void Game::Start()
 
     RigidBody *personRigidBody = personNode->CreateComponent<RigidBody>();
     personRigidBody->SetMass(100.0f);
-    personRigidBody->SetFriction(0.01f);
+    personRigidBody->SetFriction(0.1f);
     personRigidBody->SetAngularFactor(Vector3::ZERO);
-    personRigidBody->SetLinearDamping(0.75f);
+    personRigidBody->SetLinearDamping(0.90f);
 
     CollisionShape *personCollisionShape = personNode->CreateComponent<CollisionShape>();
     personCollisionShape->SetCylinder(0.5f, 1.0f, Vector3(0.0f, 0.5f, 0.0f));
 
     personNode->CreateComponent<Person>();
-
-    // Using the template we've created, create 9 more people.
-    for (int i = 1; i < 10; ++i) {
-        personNode = personNode->Clone();
-        personNode->SetPosition(navigationMesh->GetRandomPoint());
-    }
 #endif
 
     ////////////////////////////////////////////////////////////////////////////////
 
     Node *cameraNode = scene_->CreateChild("Camera");
-    cameraNode->SetPosition(Vector3(0.0f, 15.0f, -15.0f));
-    // Don't set rotation here, use the constructor way up top.
+    cameraNode->SetPosition(Vector3(0.0f, 15.0f, -13.0f));
+    cameraNode->SetRotation(Quaternion(50.0f, Vector3::RIGHT));
 
     camera_ = cameraNode->CreateComponent<Camera>();
     camera_->SetFarClip(zone->GetFogEnd());
@@ -253,11 +246,11 @@ void Game::HandleUpdate(StringHash eventType, VariantMap &eventData)
     float timeStep = eventData[Update::P_TIMESTEP].GetFloat();
 
     Input *input = GetSubsystem<Input>();
+    input->SetMouseVisible(true);
+    input->SetMouseMode(MM_ABSOLUTE);
 
     // Movement speed as world units per second
     const float MOVE_SPEED = 10.0f;
-    // Mouse sensitivity as degrees per pixel
-    const float MOUSE_SENSITIVITY = 0.1f;
 
     Node *cameraNode = camera_->GetNode();
 
@@ -266,31 +259,21 @@ void Game::HandleUpdate(StringHash eventType, VariantMap &eventData)
         JoystickState *state = input->GetJoystickByIndex(0);
         GetSubsystem<DebugHud>()->SetAppStats("Joystick", state->name_);
 
-        yaw_ += state->GetAxisPosition(5) * MOUSE_SENSITIVITY * timeStep * 2000.0f;
-        pitch_ -= state->GetAxisPosition(3) * MOUSE_SENSITIVITY * timeStep * 2000.0f;
-
         Vector3 movement(state->GetAxisPosition(0), -state->GetAxisPosition(2), -state->GetAxisPosition(1));
-        cameraNode->Translate(movement * MOVE_SPEED * timeStep * 2.0f);
+        cameraNode->Translate(movement * MOVE_SPEED * timeStep * 2.0f, TS_WORLD);
     } else {
         GetSubsystem<DebugHud>()->ResetAppStats("Joystick");
     }
 #endif
 
-    IntVector2 mouseMove = input->GetMouseMove();
-    yaw_ += MOUSE_SENSITIVITY * mouseMove.x_;
-    pitch_ += MOUSE_SENSITIVITY * mouseMove.y_;
-    pitch_ = Clamp(pitch_, -90.0f, 90.0f);
-
-    cameraNode->SetRotation(Quaternion(pitch_, yaw_, 0.0f));
-
     if (input->GetKeyDown('W'))
-        cameraNode->Translate(Vector3::FORWARD * MOVE_SPEED * timeStep);
+        cameraNode->Translate(Vector3::FORWARD * MOVE_SPEED * timeStep, TS_WORLD);
     if (input->GetKeyDown('S'))
-        cameraNode->Translate(Vector3::BACK * MOVE_SPEED * timeStep);
+        cameraNode->Translate(Vector3::BACK * MOVE_SPEED * timeStep, TS_WORLD);
     if (input->GetKeyDown('A'))
-        cameraNode->Translate(Vector3::LEFT * MOVE_SPEED * timeStep);
+        cameraNode->Translate(Vector3::LEFT * MOVE_SPEED * timeStep, TS_WORLD);
     if (input->GetKeyDown('D'))
-        cameraNode->Translate(Vector3::RIGHT * MOVE_SPEED * timeStep);
+        cameraNode->Translate(Vector3::RIGHT * MOVE_SPEED * timeStep, TS_WORLD);
 
     GetSubsystem<DebugHud>()->SetAppStats("Position", cameraNode->GetPosition());
     GetSubsystem<DebugHud>()->SetAppStats("Rotation", Vector2(pitch_, cameraNode->GetRotation().YawAngle()));
