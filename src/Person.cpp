@@ -38,11 +38,12 @@ void Person::Update(float timeStep)
 
     Input *input = GetSubsystem<Input>();
     NavigationMesh *navMesh = GetScene()->GetComponent<NavigationMesh>();
+    RigidBody *rigidBody = node_->GetComponent<RigidBody>();
 
     Vector3 position = node_->GetWorldPosition();
 
     if (input->GetMouseButtonPress(MOUSEB_LEFT)) {
-        Camera *camera = GetScene()->GetChild("Camera")->GetComponent<Camera>();
+        Camera *camera = GetScene()->GetChild("Camera", true)->GetComponent<Camera>();
         Graphics *graphics = GetSubsystem<Graphics>();
 
         IntVector2 mousePosition = input->GetMousePosition();
@@ -63,6 +64,7 @@ void Person::Update(float timeStep)
     }
 
     if (path_.Empty()) {
+        rigidBody->SetLinearVelocity(Vector3::ZERO);
         return;
     }
 
@@ -86,8 +88,8 @@ void Person::Update(float timeStep)
         path_.Erase(0);
     }
 
+    offset.y_ = 0.0f;
     offset.Normalize();
-
-    RigidBody *rigidBody = node_->GetComponent<RigidBody>();
-    rigidBody->ApplyImpulse(offset * 10.0f);
+    node_->SetDirection(offset);
+    rigidBody->SetLinearVelocity(offset * 2.0f * 0.5f);
 }

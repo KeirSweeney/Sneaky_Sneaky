@@ -24,6 +24,7 @@
 #include "Viewport.h"
 #include "XMLFile.h"
 #include "Zone.h"
+#include "Texture2D.h"
 
 #include <ctime>
 
@@ -44,6 +45,7 @@ void Game::Setup()
     engineParameters_["VSync"] = true;
     engineParameters_["TextureFilterMode"] = FILTER_ANISOTROPIC;
     engineParameters_["TextureAnisotropy"] = 16;
+    engineParameters_["RenderPath"] = "RenderPaths/PrepassHDR.xml";
 
     // Override these because the defaults are horrible for cross-platform compat.
     engineParameters_["ResourcePaths"] = "data";
@@ -60,7 +62,7 @@ void Game::Start()
     DebugHud *debugHud = engine_->CreateDebugHud();
     debugHud->SetDefaultStyle(cache->GetResource<XMLFile>("UI/DefaultStyle.xml"));
     debugHud->SetUseRendererStats(true);
-    debugHud->SetMode(DEBUGHUD_SHOW_STATS/* | DEBUGHUD_SHOW_PROFILER*/);
+    //debugHud->SetMode(DEBUGHUD_SHOW_ALL);
 
     scene_ = new Scene(context_);
 
@@ -71,9 +73,11 @@ void Game::Start()
     // The Zone component handles ambient lighting and fog.
     Zone *zone = scene_->CreateComponent<Zone>();
     zone->SetBoundingBox(BoundingBox(-1000.0f, 1000.0f));
+    zone->SetAmbientColor(Color::BLACK);
     zone->SetFogStart(50.0f);
     zone->SetFogEnd(200.0f);
 
+#if 0
     // Global lighting.
     Node *lightNode = scene_->CreateChild("DirectionalLight");
     lightNode->SetDirection(Vector3(0.0f, -1.0f, 0.0f));
@@ -86,6 +90,7 @@ void Game::Start()
 
     lightNode = lightNode->Clone();
     lightNode->SetDirection(Vector3(-1.0f, 0.5f, -1.0f));
+#endif
 
     ////////////////////////////////////////////////////////////////////////////////
 
@@ -99,6 +104,8 @@ void Game::Start()
     PhysicsWorld *physicsWorld = scene_->CreateComponent<PhysicsWorld>();
 
 #if 1
+    unsigned int lightMask = 1;
+
     Node *floorNode = scene_->CreateChild();
 
     floorNode->CreateComponent<Navigable>();
@@ -110,13 +117,50 @@ void Game::Start()
     StaticModel *floorModel = floorNode->CreateComponent<StaticModel>();
     floorModel->SetModel(cache->GetResource<Model>("Models/Floor.mdl"));
     floorModel->SetMaterial(cache->GetResource<Material>("Materials/FlatGrey.xml"));
-    floorModel->SetOccluder(true);
+    //floorModel->SetOccluder(true);
+    floorModel->SetLightMask(lightMask);
+
+#if 1
+    const float floorLightHeight = 3.0f;
+
+    Node *floorLightNode = floorNode->CreateChild();
+    floorLightNode->SetPosition(Vector3(-2.75f, floorLightHeight, -2.75f));
+    floorLightNode->SetDirection(Vector3::DOWN);
+
+    Light *floorLight = floorLightNode->CreateComponent<Light>();
+    floorLight->SetLightType(LIGHT_POINT);
+    //floorLight->SetFov(90.0f);
+    //floorLight->SetShapeTexture(cache->GetResource<Texture2D>("Textures/White.png"));
+    floorLight->SetBrightness(0.2f);
+    floorLight->SetColor(Color::WHITE);
+    //floorLight->SetCastShadows(true);
+    floorLight->SetLightMask(lightMask);
+
+    floorLightNode = floorLightNode->Clone();
+    floorLightNode->SetPosition(Vector3(2.75f, floorLightHeight, -2.75f));
+
+    floorLightNode = floorLightNode->Clone();
+    floorLightNode->SetPosition(Vector3(-2.75f, floorLightHeight, 2.75f));
+
+    floorLightNode = floorLightNode->Clone();
+    floorLightNode->SetPosition(Vector3(2.75f, floorLightHeight, 2.75f));
+#endif
 
     floorNode = floorNode->Clone();
     floorNode->SetPosition(Vector3(11.0f, 0.0f, 0.0f));
+    floorNode->GetComponent<StaticModel>()->SetLightMask(lightMask);
+    floorNode->GetChild((unsigned int)0)->GetComponent<Light>()->SetLightMask(lightMask);
+    floorNode->GetChild((unsigned int)1)->GetComponent<Light>()->SetLightMask(lightMask);
+    floorNode->GetChild((unsigned int)2)->GetComponent<Light>()->SetLightMask(lightMask);
+    floorNode->GetChild((unsigned int)3)->GetComponent<Light>()->SetLightMask(lightMask);
 
     floorNode = floorNode->Clone();
     floorNode->SetPosition(Vector3(11.0f, 0.0f, 11.0f));
+    floorNode->GetComponent<StaticModel>()->SetLightMask(lightMask *= 2);
+    floorNode->GetChild((unsigned int)0)->GetComponent<Light>()->SetLightMask(lightMask);
+    floorNode->GetChild((unsigned int)1)->GetComponent<Light>()->SetLightMask(lightMask);
+    floorNode->GetChild((unsigned int)2)->GetComponent<Light>()->SetLightMask(lightMask);
+    floorNode->GetChild((unsigned int)3)->GetComponent<Light>()->SetLightMask(lightMask);
 #endif
 
 #if 1
@@ -132,7 +176,8 @@ void Game::Start()
     StaticModel *wallModel = wallNode->CreateComponent<StaticModel>();
     wallModel->SetModel(cache->GetResource<Model>("Models/Wall.mdl"));
     wallModel->SetMaterial(cache->GetResource<Material>("Materials/FlatGrey.xml"));
-    wallModel->SetOccluder(true);
+    //wallModel->SetOccluder(true);
+    wallModel->SetCastShadows(true);
 
     wallNode = wallNode->Clone();
     wallNode->SetPosition(Vector3(0.0f, 0.0f, -5.5f));
@@ -194,15 +239,27 @@ void Game::Start()
     StaticModel *personModel = personNode->CreateComponent<StaticModel>();
     personModel->SetModel(cache->GetResource<Model>("Models/Person.mdl"));
     personModel->SetMaterial(cache->GetResource<Material>("Materials/Person.xml"));
+    personModel->SetCastShadows(true);
 
     RigidBody *personRigidBody = personNode->CreateComponent<RigidBody>();
     personRigidBody->SetMass(100.0f);
-    personRigidBody->SetFriction(0.1f);
+    personRigidBody->SetFriction(0.0f);
     personRigidBody->SetAngularFactor(Vector3::ZERO);
-    personRigidBody->SetLinearDamping(0.90f);
 
     CollisionShape *personCollisionShape = personNode->CreateComponent<CollisionShape>();
     personCollisionShape->SetCylinder(0.5f, 1.0f, Vector3(0.0f, 0.5f, 0.0f));
+
+#if 0
+    Node *personLightNode = personNode->CreateChild();
+    personLightNode->SetPosition(Vector3(0.0f, 0.75f, 0.3f));
+    personLightNode->SetRotation(Quaternion(5.0f, Vector3::RIGHT));
+
+    Light *personLight = personLightNode->CreateComponent<Light>();
+    personLight->SetLightType(LIGHT_SPOT);
+    personLight->SetBrightness(10.0f);
+    personLight->SetColor(Color::RED);
+    personLight->SetCastShadows(true);
+#endif
 
     personNode->CreateComponent<Person>();
 #endif
@@ -216,17 +273,36 @@ void Game::Start()
     camera_ = cameraNode->CreateComponent<Camera>();
     camera_->SetFarClip(zone->GetFogEnd());
 
+#if 1
+    Node *cameraLightNode = cameraNode->CreateChild();
+    cameraLightNode->SetPosition(Vector3(0.0f, -2.0f, 0.0f));
+    cameraLightNode->SetRotation(Quaternion(-5.0f, Vector3::RIGHT));
+
+    Light *cameraLight = cameraLightNode->CreateComponent<Light>();
+    cameraLight->SetLightType(LIGHT_SPOT);
+    cameraLight->SetRange(200.0f);
+    cameraLight->SetBrightness(0.2f);
+    cameraLight->SetFov(60.0f);
+    cameraLight->SetColor(Color::WHITE);
+    cameraLight->SetCastShadows(true);
+    cameraLight->SetShapeTexture(cache->GetResource<Texture2D>("Textures/White.png"));
+#endif
+
     SharedPtr<Viewport> viewport(new Viewport(context_, scene_, camera_));
 
-#if 0
+#if 1
     RenderPath *renderPath = viewport->GetRenderPath();
-    renderPath->Append(cache->GetResource<XMLFile>("PostProcess/Bloom.xml"));
-    renderPath->SetShaderParameter("BloomMix", Vector2(1.0f, 1.0f));
-    renderPath->SetEnabled("Bloom", true);
+
+    renderPath->Append(cache->GetResource<XMLFile>("PostProcess/BloomHDR.xml"));
+    renderPath->SetShaderParameter("BloomHDRMix", Vector2(1.0f, 1.0f));
+
+    renderPath->Append(cache->GetResource<XMLFile>("PostProcess/FXAA2.xml"));
 #endif
 
     Renderer *renderer = GetSubsystem<Renderer>();
     renderer->SetViewport(0, viewport);
+    renderer->SetShadowMapSize(2048);
+    renderer->SetShadowQuality(QUALITY_MAX);
 
     SubscribeToEvent(E_UPDATE, HANDLER(Game, HandleUpdate));
 
@@ -284,6 +360,6 @@ void Game::HandlePostRenderUpdate(StringHash eventType, VariantMap &eventData)
     (void)eventType; (void)eventData;
 
     scene_->GetComponent<NavigationMesh>()->DrawDebugGeometry(true);
-    scene_->GetComponent<PhysicsWorld>()->DrawDebugGeometry(true);
+    //scene_->GetComponent<PhysicsWorld>()->DrawDebugGeometry(true);
     GetSubsystem<Renderer>()->DrawDebugGeometry(true);
 }
