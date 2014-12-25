@@ -25,8 +25,4 @@ private:
 
 private:
     Urho3D::SharedPtr<Urho3D::Scene> scene_;
-    Urho3D::Node *camera_;
-    float cameraYaw_;
-    float targetCameraYaw_;
-    Urho3D::Node *person_;
 };

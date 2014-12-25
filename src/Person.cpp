@@ -34,8 +34,6 @@ void Person::DelayedStart()
 
 void Person::Update(float timeStep)
 {
-    PROFILE(PersonUpdate);
-
     Input *input = GetSubsystem<Input>();
     NavigationMesh *navMesh = GetScene()->GetComponent<NavigationMesh>();
     RigidBody *rigidBody = node_->GetComponent<RigidBody>();

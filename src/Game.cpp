@@ -25,6 +25,7 @@
 #include "XMLFile.h"
 #include "Zone.h"
 #include "Texture2D.h"
+#include "CameraController.h"
 
 #include <ctime>
 
@@ -33,8 +34,7 @@ using namespace Urho3D;
 DEFINE_APPLICATION_MAIN(Game)
 
 Game::Game(Context *context):
-    Application(context),
-    cameraYaw_(0.0f), targetCameraYaw_(0.0f)
+    Application(context)
 {
 }
 
@@ -77,8 +77,6 @@ void Game::Start()
     zone->SetAmbientColor(Color::BLACK);
     zone->SetFogStart(50.0f);
     zone->SetFogEnd(200.0f);
-
-    ////////////////////////////////////////////////////////////////////////////////
 
     NavigationMesh *navigationMesh = scene_->CreateComponent<NavigationMesh>();
     navigationMesh->SetCellSize(0.2f);
@@ -199,25 +197,25 @@ void Game::Start()
 #if 1
     Person::RegisterObject(context_);
 
-    person_ = scene_->CreateChild("Person");
-    person_->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
-    person_->Scale(Vector3(1.0f, 1.8f, 1.0f));
+    Node *personNode = scene_->CreateChild("Person");
+    personNode->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
+    personNode->Scale(Vector3(1.0f, 1.8f, 1.0f));
 
-    StaticModel *personModel = person_->CreateComponent<StaticModel>();
+    StaticModel *personModel = personNode->CreateComponent<StaticModel>();
     personModel->SetModel(cache->GetResource<Model>("Models/Person.mdl"));
     personModel->SetMaterial(cache->GetResource<Material>("Materials/Person.xml"));
     personModel->SetCastShadows(true);
 
-    RigidBody *personRigidBody = person_->CreateComponent<RigidBody>();
+    RigidBody *personRigidBody = personNode->CreateComponent<RigidBody>();
     personRigidBody->SetMass(100.0f);
     personRigidBody->SetFriction(0.0f);
     personRigidBody->SetAngularFactor(Vector3::ZERO);
 
-    CollisionShape *personCollisionShape = person_->CreateComponent<CollisionShape>();
+    CollisionShape *personCollisionShape = personNode->CreateComponent<CollisionShape>();
     personCollisionShape->SetCylinder(0.5f, 1.0f, Vector3(0.0f, 0.5f, 0.0f));
 
 #if 0
-    Node *personLightNode = person_->CreateChild();
+    Node *personLightNode = personNode->CreateChild();
     personLightNode->SetPosition(Vector3(0.0f, 0.75f, 0.3f));
     personLightNode->SetRotation(Quaternion(5.0f, Vector3::RIGHT));
 
@@ -228,14 +226,15 @@ void Game::Start()
     personLight->SetCastShadows(true);
 #endif
 
-    person_->CreateComponent<Person>();
+    personNode->CreateComponent<Person>();
 #endif
 
-    ////////////////////////////////////////////////////////////////////////////////
+    CameraController::RegisterObject(context_);
 
-    camera_ = scene_->CreateChild();
+    Node *cameraTargetNode = scene_->CreateChild();
+    cameraTargetNode->CreateComponent<CameraController>();
 
-    Node *cameraNode = camera_->CreateChild("Camera");
+    Node *cameraNode = cameraTargetNode->CreateChild("Camera");
     cameraNode->SetPosition(Vector3(0.0f, 14.0f, -8.0f));
     cameraNode->SetRotation(Quaternion(60.0f, Vector3::RIGHT));
 
@@ -273,6 +272,10 @@ void Game::Start()
     renderer->SetShadowMapSize(2048);
     renderer->SetShadowQuality(QUALITY_MAX);
 
+    Input *input = GetSubsystem<Input>();
+    input->SetMouseVisible(true);
+    input->SetMouseMode(MM_ABSOLUTE);
+
     SubscribeToEvent(E_UPDATE, HANDLER(Game, HandleUpdate));
 
     // Uncomment this to show all the debug rendering.
@@ -286,29 +289,7 @@ void Game::Stop()
 
 void Game::HandleUpdate(StringHash eventType, VariantMap &eventData)
 {
-    (void)eventType;
-
-    float timeStep = eventData[Update::P_TIMESTEP].GetFloat();
-
-    Input *input = GetSubsystem<Input>();
-    input->SetMouseVisible(true);
-    input->SetMouseMode(MM_ABSOLUTE);
-
-    if (input->GetKeyPress('Q'))
-        targetCameraYaw_ += 90.0f;
-    if (input->GetKeyPress('E'))
-        targetCameraYaw_ -= 90.0f;
-
-    cameraYaw_ += (targetCameraYaw_ - cameraYaw_) * 5.0f * timeStep;
-
-    camera_->SetRotation(Quaternion(0.0f, cameraYaw_, 0.0f));
-
-    Vector3 position = person_->GetPosition();
-    position.x_ = round(position.x_ / 11.0f) * 11.0f;
-    position.y_ = 0.0f;
-    position.z_ = round(position.z_ / 11.0f) * 11.0f;
-    Vector3 cameraPosition = camera_->GetPosition();
-    camera_->SetPosition(cameraPosition + (position - cameraPosition) * 2.0f * timeStep);
+    (void)eventType; (void)eventData;
 }
 
 void Game::HandlePostRenderUpdate(StringHash eventType, VariantMap &eventData)
