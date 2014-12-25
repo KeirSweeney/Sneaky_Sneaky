@@ -5,6 +5,7 @@
 namespace Urho3D {
     class Scene;
     class Camera;
+    class Node;
 }
 
 class Game: public Urho3D::Application
@@ -24,7 +25,8 @@ private:
 
 private:
     Urho3D::SharedPtr<Urho3D::Scene> scene_;
-    Urho3D::Camera *camera_;
-    float yaw_;
-    float pitch_;
+    Urho3D::Node *camera_;
+    float cameraYaw_;
+    float targetCameraYaw_;
+    Urho3D::Node *person_;
 };

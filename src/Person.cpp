@@ -91,5 +91,5 @@ void Person::Update(float timeStep)
     offset.y_ = 0.0f;
     offset.Normalize();
     node_->SetDirection(offset);
-    rigidBody->SetLinearVelocity(offset * 2.0f * 0.5f);
+    rigidBody->SetLinearVelocity(offset * 2.0f);
 }

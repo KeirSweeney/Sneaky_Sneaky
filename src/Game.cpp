@@ -33,7 +33,8 @@ using namespace Urho3D;
 DEFINE_APPLICATION_MAIN(Game)
 
 Game::Game(Context *context):
-    Application(context)
+    Application(context),
+    cameraYaw_(0.0f), targetCameraYaw_(0.0f)
 {
 }
 
@@ -90,16 +91,18 @@ void Game::Start()
 
     Image *levelImage = cache->GetResource<Image>("Levels/1.png");
 
-    int width = (levelImage->GetWidth() - 1) / 2;
-    int height = (levelImage->GetHeight() - 1) / 2;
+    int imageWidth = levelImage->GetWidth();
+    int imageHeight = levelImage->GetHeight();
+    int width = (imageWidth - 1) / 2;
+    int height = (imageHeight - 1) / 2;
     for (int x = 0; x < width; ++x) {
         for (int y = 0; y < height; ++y) {
-            if (levelImage->GetPixel(1 + (x * 2), 1 + (y * 2)).a_ < 0.5f) {
+            if (levelImage->GetPixel(1 + (x * 2), (imageHeight - 1) - (1 + (y * 2))).a_ < 0.5f) {
                 continue;
             }
 
             Node *floorNode = scene_->CreateChild();
-            floorNode->SetPosition(Vector3(x * 11.0f, 0.0f, y * -11.0f));
+            floorNode->SetPosition(Vector3(x * 11.0f, 0.0f, y * 11.0f));
 
             floorNode->CreateComponent<Navigable>();
             floorNode->CreateComponent<RigidBody>();
@@ -133,22 +136,20 @@ void Game::Start()
         }
     }
 
-    width = levelImage->GetWidth();
-    height = levelImage->GetHeight();
-    for (int x = 0; x < width; ++x) {
-        for (int y = 0; y < height; ++y) {
+    for (int x = 0; x < imageWidth; ++x) {
+        for (int y = 0; y < imageHeight; ++y) {
             if ((x % 2) == (y % 2)) {
                 continue;
             }
 
-            Color color = levelImage->GetPixel(x, y);
+            Color color = levelImage->GetPixel(x, (imageHeight - 1) - y);
             if (color.a_ < 0.5f) {
                 continue;
             }
 
             Node *wallNode = scene_->CreateChild();
 
-            Vector3 position(-5.5f + (x * 5.5f), 0.0f, 5.5f + (y * -5.5f));
+            Vector3 position(-5.5f + (x * 5.5f), 0.0f, -5.5f + (y * 5.5f));
 
             if ((y % 2) != 0) {
                 wallNode->SetRotation(Quaternion(90.0f, Vector3::UP));
@@ -158,9 +159,6 @@ void Game::Start()
 
             wallNode->CreateComponent<Navigable>();
             wallNode->CreateComponent<RigidBody>();
-
-            CollisionShape *wallCollisionShape = wallNode->CreateComponent<CollisionShape>();
-            wallCollisionShape->SetBox(Vector3(11.0f, 3.0f, 1.0f), Vector3(0.0f, 1.5f, 0.0f));
 
             String wallType("");
             if (color == Color::WHITE) {
@@ -173,13 +171,20 @@ void Game::Start()
             wallModel->SetModel(cache->GetResource<Model>("Models/Wall" + wallType + ".mdl"));
             wallModel->SetMaterial(cache->GetResource<Material>("Materials/FlatGrey.xml"));
             wallModel->SetCastShadows(true);
+
+            CollisionShape *wallCollisionShape = wallNode->CreateComponent<CollisionShape>();
+            if (wallType == "") {
+                wallCollisionShape->SetBox(Vector3(11.0f, 3.0f, 1.0f), Vector3(0.0f, 1.5f, 0.0f));
+            } else {
+                wallCollisionShape->SetTriangleMesh(wallModel->GetModel());
+            }
         }
     }
 
     // All the navigable gemoetry needs to have been added to the scene by this point.
     navigationMesh->Build();
 
-#if 0
+#if 1
     // Quick example of how to put a texture on a plane.
     Node *signNode = scene_->CreateChild("Sign");
     signNode->SetPosition(Vector3(0.0f, 1.5f, 5.0f));
@@ -191,28 +196,28 @@ void Game::Start()
     sign->SetMaterial(cache->GetResource<Material>("Materials/PosterMap.xml"));
 #endif
 
-#if 0
+#if 1
     Person::RegisterObject(context_);
 
-    Node *personNode = scene_->CreateChild("Person");
-    personNode->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
-    personNode->Scale(Vector3(1.0f, 1.8f, 1.0f));
+    person_ = scene_->CreateChild("Person");
+    person_->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
+    person_->Scale(Vector3(1.0f, 1.8f, 1.0f));
 
-    StaticModel *personModel = personNode->CreateComponent<StaticModel>();
+    StaticModel *personModel = person_->CreateComponent<StaticModel>();
     personModel->SetModel(cache->GetResource<Model>("Models/Person.mdl"));
     personModel->SetMaterial(cache->GetResource<Material>("Materials/Person.xml"));
     personModel->SetCastShadows(true);
 
-    RigidBody *personRigidBody = personNode->CreateComponent<RigidBody>();
+    RigidBody *personRigidBody = person_->CreateComponent<RigidBody>();
     personRigidBody->SetMass(100.0f);
     personRigidBody->SetFriction(0.0f);
     personRigidBody->SetAngularFactor(Vector3::ZERO);
 
-    CollisionShape *personCollisionShape = personNode->CreateComponent<CollisionShape>();
+    CollisionShape *personCollisionShape = person_->CreateComponent<CollisionShape>();
     personCollisionShape->SetCylinder(0.5f, 1.0f, Vector3(0.0f, 0.5f, 0.0f));
 
 #if 0
-    Node *personLightNode = personNode->CreateChild();
+    Node *personLightNode = person_->CreateChild();
     personLightNode->SetPosition(Vector3(0.0f, 0.75f, 0.3f));
     personLightNode->SetRotation(Quaternion(5.0f, Vector3::RIGHT));
 
@@ -223,17 +228,19 @@ void Game::Start()
     personLight->SetCastShadows(true);
 #endif
 
-    personNode->CreateComponent<Person>();
+    person_->CreateComponent<Person>();
 #endif
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    Node *cameraNode = scene_->CreateChild("Camera");
-    cameraNode->SetPosition(Vector3(0.0f, 15.0f, -13.0f));
-    cameraNode->SetRotation(Quaternion(50.0f, Vector3::RIGHT));
+    camera_ = scene_->CreateChild();
 
-    camera_ = cameraNode->CreateComponent<Camera>();
-    camera_->SetFarClip(zone->GetFogEnd());
+    Node *cameraNode = camera_->CreateChild("Camera");
+    cameraNode->SetPosition(Vector3(0.0f, 14.0f, -8.0f));
+    cameraNode->SetRotation(Quaternion(60.0f, Vector3::RIGHT));
+
+    Camera *camera = cameraNode->CreateComponent<Camera>();
+    camera->SetFarClip(zone->GetFogEnd());
 
 #if 1
     Node *cameraLightNode = cameraNode->CreateChild();
@@ -250,9 +257,9 @@ void Game::Start()
     cameraLight->SetShapeTexture(cache->GetResource<Texture2D>("Textures/White.png"));
 #endif
 
-    SharedPtr<Viewport> viewport(new Viewport(context_, scene_, camera_));
+    SharedPtr<Viewport> viewport(new Viewport(context_, scene_, camera));
 
-#if 1
+#if 0
     RenderPath *renderPath = viewport->GetRenderPath();
 
     renderPath->Append(cache->GetResource<XMLFile>("PostProcess/BloomHDR.xml"));
@@ -287,34 +294,21 @@ void Game::HandleUpdate(StringHash eventType, VariantMap &eventData)
     input->SetMouseVisible(true);
     input->SetMouseMode(MM_ABSOLUTE);
 
-    // Movement speed as world units per second
-    const float MOVE_SPEED = 10.0f;
+    if (input->GetKeyPress('Q'))
+        targetCameraYaw_ += 90.0f;
+    if (input->GetKeyPress('E'))
+        targetCameraYaw_ -= 90.0f;
 
-    Node *cameraNode = camera_->GetNode();
+    cameraYaw_ += (targetCameraYaw_ - cameraYaw_) * 5.0f * timeStep;
 
-#if 1
-    if (input->GetNumJoysticks() > 0) {
-        JoystickState *state = input->GetJoystickByIndex(0);
-        GetSubsystem<DebugHud>()->SetAppStats("Joystick", state->name_);
+    camera_->SetRotation(Quaternion(0.0f, cameraYaw_, 0.0f));
 
-        Vector3 movement(state->GetAxisPosition(0), -state->GetAxisPosition(2), -state->GetAxisPosition(1));
-        cameraNode->Translate(movement * MOVE_SPEED * timeStep * 2.0f, TS_WORLD);
-    } else {
-        GetSubsystem<DebugHud>()->ResetAppStats("Joystick");
-    }
-#endif
-
-    if (input->GetKeyDown('W'))
-        cameraNode->Translate(Vector3::FORWARD * MOVE_SPEED * timeStep, TS_WORLD);
-    if (input->GetKeyDown('S'))
-        cameraNode->Translate(Vector3::BACK * MOVE_SPEED * timeStep, TS_WORLD);
-    if (input->GetKeyDown('A'))
-        cameraNode->Translate(Vector3::LEFT * MOVE_SPEED * timeStep, TS_WORLD);
-    if (input->GetKeyDown('D'))
-        cameraNode->Translate(Vector3::RIGHT * MOVE_SPEED * timeStep, TS_WORLD);
-
-    GetSubsystem<DebugHud>()->SetAppStats("Position", cameraNode->GetPosition());
-    GetSubsystem<DebugHud>()->SetAppStats("Rotation", Vector2(pitch_, cameraNode->GetRotation().YawAngle()));
+    Vector3 position = person_->GetPosition();
+    position.x_ = round(position.x_ / 11.0f) * 11.0f;
+    position.y_ = 0.0f;
+    position.z_ = round(position.z_ / 11.0f) * 11.0f;
+    Vector3 cameraPosition = camera_->GetPosition();
+    camera_->SetPosition(cameraPosition + (position - cameraPosition) * 2.0f * timeStep);
 }
 
 void Game::HandlePostRenderUpdate(StringHash eventType, VariantMap &eventData)
@@ -322,6 +316,6 @@ void Game::HandlePostRenderUpdate(StringHash eventType, VariantMap &eventData)
     (void)eventType; (void)eventData;
 
     scene_->GetComponent<NavigationMesh>()->DrawDebugGeometry(true);
-    //scene_->GetComponent<PhysicsWorld>()->DrawDebugGeometry(true);
-    GetSubsystem<Renderer>()->DrawDebugGeometry(true);
+    scene_->GetComponent<PhysicsWorld>()->DrawDebugGeometry(true);
+    //GetSubsystem<Renderer>()->DrawDebugGeometry(true);
 }
