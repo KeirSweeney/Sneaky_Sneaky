@@ -77,21 +77,6 @@ void Game::Start()
     zone->SetFogStart(50.0f);
     zone->SetFogEnd(200.0f);
 
-#if 0
-    // Global lighting.
-    Node *lightNode = scene_->CreateChild("DirectionalLight");
-    lightNode->SetDirection(Vector3(0.0f, -1.0f, 0.0f));
-    Light *light = lightNode->CreateComponent<Light>();
-    light->SetLightType(LIGHT_DIRECTIONAL);
-    light->SetPerVertex(true);
-
-    lightNode = lightNode->Clone();
-    lightNode->SetDirection(Vector3(1.0f, 0.5f, 1.0f));
-
-    lightNode = lightNode->Clone();
-    lightNode->SetDirection(Vector3(-1.0f, 0.5f, -1.0f));
-#endif
-
     ////////////////////////////////////////////////////////////////////////////////
 
     NavigationMesh *navigationMesh = scene_->CreateComponent<NavigationMesh>();
@@ -103,121 +88,98 @@ void Game::Start()
 
     PhysicsWorld *physicsWorld = scene_->CreateComponent<PhysicsWorld>();
 
-#if 1
-    unsigned int lightMask = 1;
+    Image *levelImage = cache->GetResource<Image>("Levels/1.png");
 
-    Node *floorNode = scene_->CreateChild();
+    int width = (levelImage->GetWidth() - 1) / 2;
+    int height = (levelImage->GetHeight() - 1) / 2;
+    for (int x = 0; x < width; ++x) {
+        for (int y = 0; y < height; ++y) {
+            if (levelImage->GetPixel(1 + (x * 2), 1 + (y * 2)).a_ < 0.5f) {
+                continue;
+            }
 
-    floorNode->CreateComponent<Navigable>();
-    floorNode->CreateComponent<RigidBody>();
+            Node *floorNode = scene_->CreateChild();
+            floorNode->SetPosition(Vector3(x * 11.0f, 0.0f, y * -11.0f));
 
-    CollisionShape *floorCollisionShape = floorNode->CreateComponent<CollisionShape>();
-    floorCollisionShape->SetBox(Vector3(11.0f, 1.0f, 11.0f), Vector3(0.0f, -0.5f, 0.0f));
+            floorNode->CreateComponent<Navigable>();
+            floorNode->CreateComponent<RigidBody>();
 
-    StaticModel *floorModel = floorNode->CreateComponent<StaticModel>();
-    floorModel->SetModel(cache->GetResource<Model>("Models/Floor.mdl"));
-    floorModel->SetMaterial(cache->GetResource<Material>("Materials/FlatGrey.xml"));
-    //floorModel->SetOccluder(true);
-    floorModel->SetLightMask(lightMask);
+            CollisionShape *floorCollisionShape = floorNode->CreateComponent<CollisionShape>();
+            floorCollisionShape->SetBox(Vector3(11.0f, 1.0f, 11.0f), Vector3(0.0f, -0.5f, 0.0f));
 
-#if 1
-    const float floorLightHeight = 3.0f;
+            StaticModel *floorModel = floorNode->CreateComponent<StaticModel>();
+            floorModel->SetModel(cache->GetResource<Model>("Models/Floor.mdl"));
+            floorModel->SetMaterial(cache->GetResource<Material>("Materials/FlatGrey.xml"));
 
-    Node *floorLightNode = floorNode->CreateChild();
-    floorLightNode->SetPosition(Vector3(-2.75f, floorLightHeight, -2.75f));
-    floorLightNode->SetDirection(Vector3::DOWN);
+            const float floorLightHeight = 3.0f;
 
-    Light *floorLight = floorLightNode->CreateComponent<Light>();
-    floorLight->SetLightType(LIGHT_POINT);
-    //floorLight->SetFov(90.0f);
-    //floorLight->SetShapeTexture(cache->GetResource<Texture2D>("Textures/White.png"));
-    floorLight->SetBrightness(0.2f);
-    floorLight->SetColor(Color::WHITE);
-    //floorLight->SetCastShadows(true);
-    floorLight->SetLightMask(lightMask);
+            Node *floorLightNode = floorNode->CreateChild();
+            floorLightNode->SetPosition(Vector3(-2.75f, floorLightHeight, -2.75f));
+            floorLightNode->SetDirection(Vector3::DOWN);
 
-    floorLightNode = floorLightNode->Clone();
-    floorLightNode->SetPosition(Vector3(2.75f, floorLightHeight, -2.75f));
+            Light *floorLight = floorLightNode->CreateComponent<Light>();
+            floorLight->SetLightType(LIGHT_POINT);
+            floorLight->SetBrightness(0.2f);
+            floorLight->SetColor(Color::WHITE);
 
-    floorLightNode = floorLightNode->Clone();
-    floorLightNode->SetPosition(Vector3(-2.75f, floorLightHeight, 2.75f));
+            floorLightNode = floorLightNode->Clone();
+            floorLightNode->SetPosition(Vector3(2.75f, floorLightHeight, -2.75f));
 
-    floorLightNode = floorLightNode->Clone();
-    floorLightNode->SetPosition(Vector3(2.75f, floorLightHeight, 2.75f));
-#endif
+            floorLightNode = floorLightNode->Clone();
+            floorLightNode->SetPosition(Vector3(-2.75f, floorLightHeight, 2.75f));
 
-    floorNode = floorNode->Clone();
-    floorNode->SetPosition(Vector3(11.0f, 0.0f, 0.0f));
-    floorNode->GetComponent<StaticModel>()->SetLightMask(lightMask);
-    floorNode->GetChild((unsigned int)0)->GetComponent<Light>()->SetLightMask(lightMask);
-    floorNode->GetChild((unsigned int)1)->GetComponent<Light>()->SetLightMask(lightMask);
-    floorNode->GetChild((unsigned int)2)->GetComponent<Light>()->SetLightMask(lightMask);
-    floorNode->GetChild((unsigned int)3)->GetComponent<Light>()->SetLightMask(lightMask);
+            floorLightNode = floorLightNode->Clone();
+            floorLightNode->SetPosition(Vector3(2.75f, floorLightHeight, 2.75f));
+        }
+    }
 
-    floorNode = floorNode->Clone();
-    floorNode->SetPosition(Vector3(11.0f, 0.0f, 11.0f));
-    floorNode->GetComponent<StaticModel>()->SetLightMask(lightMask *= 2);
-    floorNode->GetChild((unsigned int)0)->GetComponent<Light>()->SetLightMask(lightMask);
-    floorNode->GetChild((unsigned int)1)->GetComponent<Light>()->SetLightMask(lightMask);
-    floorNode->GetChild((unsigned int)2)->GetComponent<Light>()->SetLightMask(lightMask);
-    floorNode->GetChild((unsigned int)3)->GetComponent<Light>()->SetLightMask(lightMask);
-#endif
+    width = levelImage->GetWidth();
+    height = levelImage->GetHeight();
+    for (int x = 0; x < width; ++x) {
+        for (int y = 0; y < height; ++y) {
+            if ((x % 2) == (y % 2)) {
+                continue;
+            }
 
-#if 1
-    Node *wallNode = scene_->CreateChild();
-    wallNode->SetPosition(Vector3(0.0f, 0.0f, 5.5f));
+            Color color = levelImage->GetPixel(x, y);
+            if (color.a_ < 0.5f) {
+                continue;
+            }
 
-    wallNode->CreateComponent<Navigable>();
-    wallNode->CreateComponent<RigidBody>();
+            Node *wallNode = scene_->CreateChild();
 
-    CollisionShape *wallCollisionShape = wallNode->CreateComponent<CollisionShape>();
-    wallCollisionShape->SetBox(Vector3(11.0f, 3.0f, 1.0f), Vector3(0.0f, 1.5f, 0.0f));
+            Vector3 position(-5.5f + (x * 5.5f), 0.0f, 5.5f + (y * -5.5f));
 
-    StaticModel *wallModel = wallNode->CreateComponent<StaticModel>();
-    wallModel->SetModel(cache->GetResource<Model>("Models/Wall.mdl"));
-    wallModel->SetMaterial(cache->GetResource<Material>("Materials/FlatGrey.xml"));
-    //wallModel->SetOccluder(true);
-    wallModel->SetCastShadows(true);
+            if ((y % 2) != 0) {
+                wallNode->SetRotation(Quaternion(90.0f, Vector3::UP));
+            }
 
-    wallNode = wallNode->Clone();
-    wallNode->SetPosition(Vector3(0.0f, 0.0f, -5.5f));
+            wallNode->SetPosition(position);
 
-    wallNode = wallNode->Clone();
-    wallNode->SetPosition(Vector3(11.0f, 0.0f, -5.5f));
+            wallNode->CreateComponent<Navigable>();
+            wallNode->CreateComponent<RigidBody>();
 
-    wallNode = wallNode->Clone();
-    wallNode->SetPosition(Vector3(11.0f, 0.0f, 16.5f));
+            CollisionShape *wallCollisionShape = wallNode->CreateComponent<CollisionShape>();
+            wallCollisionShape->SetBox(Vector3(11.0f, 3.0f, 1.0f), Vector3(0.0f, 1.5f, 0.0f));
 
-    wallNode = wallNode->Clone();
-    wallNode->SetPosition(Vector3(-5.5f, 0.0f, 0.0f));
-    wallNode->SetRotation(Quaternion(90.0f, Vector3::UP));
+            String wallType("");
+            if (color == Color::WHITE) {
+                wallType = "Filler";
+            } else if (color == Color::RED || color == Color::GREEN) {
+                wallType = "Door";
+            }
 
-    wallNode = wallNode->Clone();
-    wallNode->SetPosition(Vector3(16.5f, 0.0f, 0.0f));
-
-    wallNode = wallNode->Clone();
-    wallNode->SetPosition(Vector3(16.5f, 0.0f, 11.0f));
-
-    wallNode = wallNode->Clone();
-    wallNode->SetPosition(Vector3(5.5f, 0.0f, 11.0f));
-
-    // Ideally these would recreate the whole thing, but this was less to type.
-    wallNode = wallNode->Clone();
-    wallNode->SetPosition(Vector3(5.5f, 0.0f, 0.0f));
-    wallNode->GetComponent<StaticModel>()->SetModel(cache->GetResource<Model>("Models/WallFiller.mdl"));
-    wallNode->GetComponent<CollisionShape>()->SetTriangleMesh(cache->GetResource<Model>("Models/WallFiller.mdl"));
-
-    wallNode = wallNode->Clone();
-    wallNode->SetPosition(Vector3(11.0f, 0.0f, 5.5f));
-    wallNode->SetRotation(Quaternion::IDENTITY);
-    wallNode->GetComponent<StaticModel>()->SetModel(cache->GetResource<Model>("Models/WallDoor.mdl"));
-    wallNode->GetComponent<CollisionShape>()->SetTriangleMesh(cache->GetResource<Model>("Models/WallDoor.mdl"));
-#endif
+            StaticModel *wallModel = wallNode->CreateComponent<StaticModel>();
+            wallModel->SetModel(cache->GetResource<Model>("Models/Wall" + wallType + ".mdl"));
+            wallModel->SetMaterial(cache->GetResource<Material>("Materials/FlatGrey.xml"));
+            wallModel->SetCastShadows(true);
+        }
+    }
 
     // All the navigable gemoetry needs to have been added to the scene by this point.
     navigationMesh->Build();
 
-#if 1
+#if 0
     // Quick example of how to put a texture on a plane.
     Node *signNode = scene_->CreateChild("Sign");
     signNode->SetPosition(Vector3(0.0f, 1.5f, 5.0f));
@@ -229,7 +191,7 @@ void Game::Start()
     sign->SetMaterial(cache->GetResource<Material>("Materials/PosterMap.xml"));
 #endif
 
-#if 1
+#if 0
     Person::RegisterObject(context_);
 
     Node *personNode = scene_->CreateChild("Person");
