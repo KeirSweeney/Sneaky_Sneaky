@@ -14,7 +14,9 @@ public:
     void DelayedStart();
     void Update(float timeStep);
 
+public:
+    void SetTarget(Urho3D::Vector3 target);
+
 private:
-    Urho3D::Vector3 target_;
     Urho3D::PODVector<Urho3D::Vector3> path_;
 };

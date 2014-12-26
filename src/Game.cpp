@@ -29,6 +29,7 @@
 #include "Text3D.h"
 #include "Font.h"
 #include "StringUtils.h"
+#include "Door.h"
 
 #include <ctime>
 
@@ -194,7 +195,7 @@ void Game::Start()
 
             wallNode->SetPosition(position);
 
-            wallNode->CreateComponent<Navigable>();
+            wallNode->CreateComponent<Navigable>()->SetRecursive(false);
             wallNode->CreateComponent<RigidBody>();
 
             String wallType("");
@@ -214,6 +215,34 @@ void Game::Start()
                 wallCollisionShape->SetBox(Vector3(11.0f, 3.0f, 1.0f), Vector3(0.0f, 1.5f, 0.0f));
             } else {
                 wallCollisionShape->SetTriangleMesh(wallModel->GetModel());
+
+                if (wallType == "Door") {
+                    Door::RegisterObject(context_);
+
+                    Node *doorNode = wallNode->CreateChild();
+
+                    doorNode->CreateComponent<Navigable>();
+                    doorNode->CreateComponent<RigidBody>();
+
+                    StaticModel *doorModel = doorNode->CreateComponent<StaticModel>();
+                    doorModel->SetModel(cache->GetResource<Model>("Models/Door.mdl"));
+                    doorModel->SetMaterial(cache->GetResource<Material>("Materials/FlatGrey.xml"));
+                    doorModel->SetCastShadows(true);
+
+                    CollisionShape *doorCollisionShape = doorNode->CreateComponent<CollisionShape>();
+                    doorCollisionShape->SetBox(Vector3(1.5f, 2.0f, 1.0f), Vector3(0.0f, 1.0f, 0.0f));
+
+                    Node *doorTriggerNode = wallNode->CreateChild();
+
+                    RigidBody *doorTriggerRigidBody = doorTriggerNode->CreateComponent<RigidBody>();
+                    doorTriggerRigidBody->SetTrigger(true);
+
+                    CollisionShape *doorTriggerCollisionShape = doorTriggerNode->CreateComponent<CollisionShape>();
+                    doorTriggerCollisionShape->SetBox(Vector3(2.0f, 2.0f, 2.0f), Vector3(0.0f, 1.0f, 0.0f));
+
+                    Door *door = doorNode->CreateComponent<Door>();
+                    door->SetTriggerNode(doorTriggerNode);
+                }
             }
         }
     }

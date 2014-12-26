@@ -16,8 +16,7 @@
 using namespace Urho3D;
 
 Person::Person(Context *context):
-    LogicComponent(context),
-    target_(Vector3::ZERO)
+    LogicComponent(context)
 {
 }
 
@@ -55,8 +54,8 @@ void Person::Update(float timeStep)
 
         if (!result.Empty()) {
             //LOGERRORF("result[0].position_: %s", result[0].position_.ToString().CString());
-            target_ = navMesh->FindNearestPoint(result[0].position_);
-            navMesh->FindPath(path_, position, target_);
+            Vector3 target = navMesh->FindNearestPoint(result[0].position_);
+            navMesh->FindPath(path_, position, target);
             path_.Erase(0);
         }
     }
@@ -66,7 +65,7 @@ void Person::Update(float timeStep)
         return;
     }
 
-#if 1
+#if 0
     DebugRenderer *debug = node_->GetScene()->GetComponent<DebugRenderer>();
     Vector3 last = position;
     last.y_ += navMesh->GetCellHeight() * 2;
@@ -79,15 +78,21 @@ void Person::Update(float timeStep)
 #endif
 
     Vector3 next = path_.Front();
-    next.y_ -= navMesh->GetCellHeight();
 
     Vector3 offset = next - position;
-    if (offset.LengthSquared() < (0.25f * 0.25f)) {
+    offset.y_ = 0.0f;
+
+    if (offset.LengthSquared() < (2.0f * 2.0f * timeStep * timeStep)) {
         path_.Erase(0);
     }
 
-    offset.y_ = 0.0f;
     offset.Normalize();
     node_->SetDirection(offset);
     rigidBody->SetLinearVelocity(offset * 2.0f);
+}
+
+void Person::SetTarget(Vector3 target)
+{
+    path_.Clear();
+    path_.Push(target);
 }
