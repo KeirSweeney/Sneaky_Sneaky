@@ -30,6 +30,8 @@
 #include "Font.h"
 #include "StringUtils.h"
 #include "Door.h"
+#include "Terminal.h"
+#include "Log.h"
 
 #include <ctime>
 
@@ -90,6 +92,8 @@ void Game::Start()
     navigationMesh->SetAgentMaxSlope(5.0f);
 
     PhysicsWorld *physicsWorld = scene_->CreateComponent<PhysicsWorld>();
+
+    Terminal::RegisterObject(context_);
 
     Image *levelImage = cache->GetResource<Image>("Levels/1.png");
 
@@ -164,9 +168,18 @@ void Game::Start()
                         childNode->SetScale(child.GetFloat("scale"));
                     }
 
+                    childNode->CreateComponent<RigidBody>();
+
                     StaticModel *model = childNode->CreateComponent<StaticModel>();
                     model->SetModel(cache->GetResource<Model>("Models/" + child.GetAttribute("model") + ".mdl"));
                     model->SetMaterial(cache->GetResource<Material>("Materials/" + child.GetAttribute("material") + ".xml"));
+
+                    CollisionShape *collisionShape = childNode->CreateComponent<CollisionShape>();
+                    collisionShape->SetBox(model->GetBoundingBox().Size(), model->GetBoundingBox().Center());
+
+                    if (child.GetAttribute("interaction") == "terminal") {
+                        childNode->CreateComponent<Terminal>();
+                    }
 
                     child = child.GetNext();
                 }
