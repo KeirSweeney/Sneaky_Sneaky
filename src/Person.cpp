@@ -12,6 +12,7 @@
 #include "Camera.h"
 #include "Graphics.h"
 #include "Octree.h"
+#include "UI.h"
 
 using namespace Urho3D;
 
@@ -33,13 +34,14 @@ void Person::DelayedStart()
 
 void Person::Update(float timeStep)
 {
+    UI *ui = GetSubsystem<UI>();
     Input *input = GetSubsystem<Input>();
     NavigationMesh *navMesh = GetScene()->GetComponent<NavigationMesh>();
     RigidBody *rigidBody = node_->GetComponent<RigidBody>();
 
     Vector3 position = node_->GetWorldPosition();
 
-    if (input->GetMouseButtonPress(MOUSEB_LEFT)) {
+    if (input->GetMouseButtonPress(MOUSEB_LEFT) && !ui->GetElementAt(ui->GetCursorPosition(), false)) {
         Camera *camera = GetScene()->GetChild("Camera", true)->GetComponent<Camera>();
         Graphics *graphics = GetSubsystem<Graphics>();
 
