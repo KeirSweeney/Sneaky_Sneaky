@@ -32,6 +32,7 @@
 #include "Door.h"
 #include "Terminal.h"
 #include "Log.h"
+#include "Pickup.h"
 
 #include <ctime>
 
@@ -94,6 +95,7 @@ void Game::Start()
     PhysicsWorld *physicsWorld = scene_->CreateComponent<PhysicsWorld>();
 
     Terminal::RegisterObject(context_);
+    Pickup::RegisterObject(context_);
 
     Image *levelImage = cache->GetResource<Image>("Levels/1.png");
 
@@ -110,7 +112,7 @@ void Game::Start()
             Node *floorNode = scene_->CreateChild();
             floorNode->SetPosition(Vector3(x * 11.0f, 0.0f, y * 11.0f));
 
-            floorNode->CreateComponent<Navigable>();
+            floorNode->CreateComponent<Navigable>()->SetRecursive(false);
             floorNode->CreateComponent<RigidBody>();
 
             CollisionShape *floorCollisionShape = floorNode->CreateComponent<CollisionShape>();
@@ -149,8 +151,8 @@ void Game::Start()
             roomLabel->SetText(ToString("%dx%d", x + 1, y + 1));
             roomLabel->SetFont(cache->GetResource<Font>("Fonts/Anonymous Pro.sdf"));
             roomLabel->SetColor(Color::WHITE);
-            roomLabel->SetTextEffect(TE_STROKE);
-            roomLabel->SetEffectColor(Color::BLACK);
+            //roomLabel->SetTextEffect(TE_STROKE);
+            //roomLabel->SetEffectColor(Color::BLACK);
             roomLabel->SetAlignment(HA_CENTER, VA_CENTER);
             roomLabel->SetFaceCameraMode(FC_ROTATE_Y);
 
@@ -173,12 +175,15 @@ void Game::Start()
                     StaticModel *model = childNode->CreateComponent<StaticModel>();
                     model->SetModel(cache->GetResource<Model>("Models/" + child.GetAttribute("model") + ".mdl"));
                     model->SetMaterial(cache->GetResource<Material>("Materials/" + child.GetAttribute("material") + ".xml"));
+                    model->SetCastShadows(true);
 
                     CollisionShape *collisionShape = childNode->CreateComponent<CollisionShape>();
                     collisionShape->SetBox(model->GetBoundingBox().Size(), model->GetBoundingBox().Center());
 
-                    if (child.GetAttribute("interaction") == "terminal") {
-                        childNode->CreateComponent<Terminal>();
+                    if (child.HasAttribute("interaction")) {
+                        childNode->CreateComponent(child.GetAttribute("interaction"));
+                    } else {
+                        childNode->CreateComponent<Navigable>();
                     }
 
                     child = child.GetNext();
@@ -302,9 +307,10 @@ void Game::Start()
 
     Light *personLight = personLightNode->CreateComponent<Light>();
     personLight->SetLightType(LIGHT_SPOT);
-    personLight->SetBrightness(10.0f);
+    personLight->SetBrightness(1.0f);
     personLight->SetColor(Color::RED);
     personLight->SetCastShadows(true);
+    personLight->SetFov(60.0f);
 #endif
 
     personNode->CreateComponent<Person>();
@@ -339,7 +345,7 @@ void Game::Start()
 
     SharedPtr<Viewport> viewport(new Viewport(context_, scene_, camera));
 
-#if 0
+#if 1
     RenderPath *renderPath = viewport->GetRenderPath();
 
     renderPath->Append(cache->GetResource<XMLFile>("PostProcess/BloomHDR.xml"));
