@@ -345,9 +345,9 @@ void Game::Start()
     SharedPtr<Viewport> viewport(new Viewport(context_, scene_, camera));
 
 #if 1
-	RenderPath *renderPath = viewport->GetRenderPath();
+    RenderPath *renderPath = viewport->GetRenderPath();
 
-	renderPath->Append(cache->GetResource<XMLFile>("PostProcess/FXAA3.xml"));
+    renderPath->Append(cache->GetResource<XMLFile>("PostProcess/FXAA3.xml"));
 
     renderPath->Append(cache->GetResource<XMLFile>("PostProcess/BloomHDR.xml"));
     renderPath->SetShaderParameter("BloomHDRMix", Vector2(1.0f, 1.0f));
@@ -357,7 +357,7 @@ void Game::Start()
     renderer->SetViewport(0, viewport);
     renderer->SetShadowMapSize(2048);
     renderer->SetShadowQuality(QUALITY_MAX);
-	renderer->SetHDRRendering(true);
+    renderer->SetHDRRendering(true);
 
     Input *input = GetSubsystem<Input>();
     input->SetMouseVisible(true);

@@ -314,13 +314,13 @@ float CalcLuma(vec3 rgb)
 
 /*--------------------------------------------------------------------------*/
 
-#define FxaaTexTop(t, p) vec4(texture2DLod(t, p, 0.0).rgb, 1.0)
+#define FxaaTexTop(t, p) vec4(texture2D(t, p).rgb, 1.0)
 
-#define LumaTop(t, p) CalcLuma(texture2DLod(t, p, 0.0).rgb)
+#define LumaTop(t, p) CalcLuma(texture2D(t, p).rgb)
 #if (FXAA_FAST_PIXEL_OFFSET == 1)
-    #define LumaOff(t, p, o, r) CalcLuma(texture2DLodOffset(t, p, 0.0, o).rgb)
+    #define LumaOff(t, p, o, r) CalcLuma(texture2DOffset(t, p, o).rgb)
 #else
-    #define LumaOff(t, p, o, r) CalcLuma(texture2DLod(t, p + (o * r), 0.0).rgb)
+    #define LumaOff(t, p, o, r) CalcLuma(texture2D(t, p + (o * r)).rgb)
 #endif
 
 /*============================================================================
