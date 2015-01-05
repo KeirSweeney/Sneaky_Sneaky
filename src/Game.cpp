@@ -221,6 +221,17 @@ void Game::Start()
                     CollisionShape *guardCollisionShape = guardNode->CreateComponent<CollisionShape>();
                     guardCollisionShape->SetCylinder(0.5f, 1.0f, Vector3(0.0f, 0.5f, 0.0f));
 
+                    Node *guardLightNode = guardNode->CreateChild();
+                    guardLightNode->SetPosition(Vector3(0.0f, 0.75f, 0.0f));
+                    guardLightNode->SetRotation(Quaternion(30.0f, Vector3::RIGHT));
+
+                    Light *guardLight = guardLightNode->CreateComponent<Light>();
+                    guardLight->SetLightType(LIGHT_SPOT);
+                    guardLight->SetBrightness(1.0f);
+                    guardLight->SetColor(Color::WHITE);
+                    guardLight->SetCastShadows(true);
+                    guardLight->SetFov(90.0f);
+
 
                     Guard *guard = guardNode->CreateComponent<Guard>();
                     guard->SetWaypoints(waypoints);
@@ -339,19 +350,6 @@ void Game::Start()
 
     CollisionShape *personCollisionShape = personNode->CreateComponent<CollisionShape>();
     personCollisionShape->SetCylinder(0.5f, 1.0f, Vector3(0.0f, 0.5f, 0.0f));
-
-#if 0
-    Node *personLightNode = personNode->CreateChild();
-    personLightNode->SetPosition(Vector3(0.0f, 0.75f, 0.3f));
-    personLightNode->SetRotation(Quaternion(5.0f, Vector3::RIGHT));
-
-    Light *personLight = personLightNode->CreateComponent<Light>();
-    personLight->SetLightType(LIGHT_SPOT);
-    personLight->SetBrightness(1.0f);
-    personLight->SetColor(Color::RED);
-    personLight->SetCastShadows(true);
-    personLight->SetFov(60.0f);
-#endif
 
     personNode->CreateComponent<Person>();
     personNode->CreateComponent<Inventory>();
