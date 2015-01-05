@@ -34,6 +34,7 @@
 #include "Log.h"
 #include "Pickup.h"
 #include "Guard.h"
+#include "Inventory.h"
 
 #include <ctime>
 
@@ -320,6 +321,7 @@ void Game::Start()
 
 #if 1
     Person::RegisterObject(context_);
+    Inventory::RegisterObject(context_);
 
     Node *personNode = scene_->CreateChild("Person");
     personNode->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
@@ -352,6 +354,7 @@ void Game::Start()
 #endif
 
     personNode->CreateComponent<Person>();
+    personNode->CreateComponent<Inventory>();
 #endif
 
     CameraController::RegisterObject(context_);
