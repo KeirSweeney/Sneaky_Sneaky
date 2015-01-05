@@ -227,7 +227,7 @@ void Game::Start()
 
                     Light *guardLight = guardLightNode->CreateComponent<Light>();
                     guardLight->SetLightType(LIGHT_SPOT);
-                    guardLight->SetBrightness(1.0f);
+                    guardLight->SetBrightness(0.4f);
                     guardLight->SetColor(Color::WHITE);
                     guardLight->SetCastShadows(true);
                     guardLight->SetFov(90.0f);

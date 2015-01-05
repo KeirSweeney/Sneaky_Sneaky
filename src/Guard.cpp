@@ -95,5 +95,16 @@ bool Guard::DetectPlayer()
 
    //debug->AddSphere(Sphere(nodePos,1.0f), Color::MAGENTA);
 
+   Octree *octree = GetScene()->GetComponent<Octree>();
+   Ray ray(nodePos + Vector3(0.0f, 1.6f, 0.0f) + (nodeForward * 0.25f), charDiff);
+   PODVector<RayQueryResult> result;
+   RayOctreeQuery query(result, ray, RAY_TRIANGLE, M_INFINITY, DRAWABLE_GEOMETRY);
+   octree->RaycastSingle(query);
+   //debug->AddLine(nodePos + Vector3(0.0f, 1.6f, 0.0f) + (nodeForward * 0.25f), nodePos + (charDiff * 100),Color::WHITE);
+   if(result.Empty() || result[0].node_ != myChar)
+   {
+       return false;
+   }
+
    return true;
 }
