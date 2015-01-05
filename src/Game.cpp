@@ -204,7 +204,7 @@ void Game::Start()
                         continue;
                     }
 
-                    Node *guardNode = scene_->CreateChild("Guard");
+                    Node *guardNode = roomContentsNode->CreateChild("Guard");
                     guardNode->SetPosition(waypoints[0]);
                     guardNode->Scale(Vector3(1.0f, 1.8f, 1.0f));
 
