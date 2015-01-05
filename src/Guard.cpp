@@ -30,8 +30,60 @@ void Guard::RegisterObject(Context* context)
 
 void Guard::Update(float timeStep)
 {
-    UI *ui = GetSubsystem<UI>();
+    Node *myChar = GetScene()->GetChild("Person",true);
+
+    bool playerDetected = DetectPlayer(myChar);
+    Light *light = node_->GetChild((unsigned)0)->GetComponent<Light>();
+    light->SetColor(playerDetected ? Color::RED : Color::WHITE);
+
+    if(playerDetected == false)
+    {
+         FollowWaypoints(timeStep);
+    }
+    else
+    {
+        FollowPlayer(timeStep, myChar);
+    }
+
+
+
+
+
+}
+
+void Guard::FollowPlayer(float timeStep,Node *player)
+{
     NavigationMesh *navMesh = GetScene()->GetComponent<NavigationMesh>();
+    Vector3 position = node_->GetWorldPosition();
+    RigidBody *rigidBody = node_->GetComponent<RigidBody>();
+    Vector3 playerPos = player->GetWorldPosition();
+    Vector3 target = navMesh->FindNearestPoint(playerPos);
+    navMesh->FindPath(path_,position, target);
+    path_.Erase(0);
+
+    if (path_.Empty()) {
+        rigidBody->SetLinearVelocity(Vector3::ZERO);
+        return;
+    }
+
+    Vector3 next = path_.Front();
+
+    Vector3 offset = next - position;
+    offset.y_ = 0.0f;
+
+    if (offset.LengthSquared() < (2.0f * 2.0f * timeStep * timeStep)) {
+        path_.Erase(0);
+    }
+
+    offset.Normalize();
+    node_->SetDirection(offset);
+    rigidBody->SetLinearVelocity(offset * 2.0f);
+
+
+}
+
+void Guard::FollowWaypoints(float timeStep)
+{
     RigidBody *rigidBody = node_->GetComponent<RigidBody>();
     Vector3 position = node_->GetWorldPosition();
 
@@ -47,28 +99,24 @@ void Guard::Update(float timeStep)
     Vector3 offset = next - position;
     offset.y_ = 0.0f;
 
-    if (offset.LengthSquared() < (2.0f * 2.0f * timeStep * timeStep)) {
+    if (offset.LengthSquared() < (1.0f * 1.0f * timeStep * timeStep)) {
         path_.Erase(0);
     }
 
     offset.Normalize();
     node_->SetDirection(offset);
-    rigidBody->SetLinearVelocity(offset * 2.0f);
-
-    Light *light = node_->GetChild((unsigned)0)->GetComponent<Light>();
-    light->SetColor(DetectPlayer() ? Color::RED : Color::WHITE);
+    rigidBody->SetLinearVelocity(offset * 1.0f);
 }
-
 
 void Guard::SetWaypoints(PODVector<Vector3>  &waypoints)
 {
     path_ = waypoints_ = waypoints;
 }
 
-bool Guard::DetectPlayer()
+bool Guard::DetectPlayer(Node *myChar)
 {
     Vector3 nodePos = node_->GetWorldPosition();
-    Node *myChar = GetScene()->GetChild("Person",true);
+
     Vector3 charPos = myChar->GetWorldPosition();
 
     Vector3 charDiff = (charPos - nodePos);
