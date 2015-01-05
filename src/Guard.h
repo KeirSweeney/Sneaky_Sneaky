@@ -16,6 +16,7 @@ class Guard:public Urho3D::LogicComponent
 
 public:
     void SetWaypoints(Urho3D::PODVector<Urho3D::Vector3>  &waypoint);
+    bool DetectPlayer();
 
 private:
     Urho3D::PODVector<Urho3D::Vector3> path_;
