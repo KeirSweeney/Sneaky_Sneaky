@@ -33,6 +33,7 @@
 #include "Terminal.h"
 #include "Log.h"
 #include "Pickup.h"
+#include "Guard.h"
 
 #include <ctime>
 
@@ -95,6 +96,7 @@ void Game::Start()
 
     Terminal::RegisterObject(context_);
     Pickup::RegisterObject(context_);
+    Guard::RegisterObject(context_);
 
     Image *levelImage = cache->GetResource<Image>("Levels/1.png");
 
@@ -218,8 +220,9 @@ void Game::Start()
                     CollisionShape *guardCollisionShape = guardNode->CreateComponent<CollisionShape>();
                     guardCollisionShape->SetCylinder(0.5f, 1.0f, Vector3(0.0f, 0.5f, 0.0f));
 
-                    //Guard *guard = guardNode->CreateComponent<Guard>();
-                    //guard->SetWaypoints(waypoints);
+
+                    Guard *guard = guardNode->CreateComponent<Guard>();
+                    guard->SetWaypoints(waypoints);
 
                     child = child.GetNext("guard");
                 }
