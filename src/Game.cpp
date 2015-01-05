@@ -159,7 +159,7 @@ void Game::Start()
             if (roomContents) {
                 Node *roomContentsNode = floorNode->CreateChild();
 
-                XMLElement child = roomContents->GetRoot().GetChild();
+                XMLElement child = roomContents->GetRoot().GetChild("object");
                 while (child) {
                     Node *childNode = roomContentsNode->CreateChild();
                     childNode->SetPosition(child.GetVector3("position"));
@@ -185,7 +185,43 @@ void Game::Start()
                         childNode->CreateComponent<Navigable>();
                     }
 
-                    child = child.GetNext();
+                    child = child.GetNext("object");
+                }
+
+                child = roomContents->GetRoot().GetChild("guard");
+                while (child) {
+                    PODVector<Vector3> waypoints;
+                    XMLElement waypoint = child.GetChild("waypoint");
+                    while (waypoint) {
+                        waypoints.Push(waypoint.GetVector3("position"));
+                        waypoint = waypoint.GetNext("waypoint");
+                    }
+
+                    if (waypoints.Empty()) {
+                        continue;
+                    }
+
+                    Node *guardNode = scene_->CreateChild("Guard");
+                    guardNode->SetPosition(waypoints[0]);
+                    guardNode->Scale(Vector3(1.0f, 1.8f, 1.0f));
+
+                    StaticModel *guardModel = guardNode->CreateComponent<StaticModel>();
+                    guardModel->SetModel(cache->GetResource<Model>("Models/Person.mdl"));
+                    guardModel->SetMaterial(cache->GetResource<Material>("Materials/Person.xml"));
+                    guardModel->SetCastShadows(true);
+
+                    RigidBody *guardRigidBody = guardNode->CreateComponent<RigidBody>();
+                    guardRigidBody->SetMass(100.0f);
+                    guardRigidBody->SetFriction(0.0f);
+                    guardRigidBody->SetAngularFactor(Vector3::ZERO);
+
+                    CollisionShape *guardCollisionShape = guardNode->CreateComponent<CollisionShape>();
+                    guardCollisionShape->SetCylinder(0.5f, 1.0f, Vector3(0.0f, 0.5f, 0.0f));
+
+                    //Guard *guard = guardNode->CreateComponent<Guard>();
+                    //guard->SetWaypoints(waypoints);
+
+                    child = child.GetNext("guard");
                 }
             }
         }
