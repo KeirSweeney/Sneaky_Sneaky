@@ -248,7 +248,7 @@ void Game::LoadLevel()
                     PODVector<Vector3> waypoints;
                     XMLElement waypoint = child.GetChild("waypoint");
                     while (waypoint) {
-                        waypoints.Push(waypoint.GetVector3("position"));
+                        waypoints.Push(roomContentsNode->GetWorldPosition() + waypoint.GetVector3("position"));
                         waypoint = waypoint.GetNext("waypoint");
                     }
 

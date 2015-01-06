@@ -18,7 +18,9 @@
 
 using namespace Urho3D;
 
-Guard::Guard(Context *context):LogicComponent(context)
+Guard::Guard(Context *context):
+    LogicComponent(context),
+    wasFollowingPlayer_(false)
 {
 }
 
@@ -38,8 +40,16 @@ void Guard::Update(float timeStep)
     light->SetColor(playerDetected ? Color::RED : Color::WHITE);
 
     if (!playerDetected) {
+        if (wasFollowingPlayer_) {
+            NavigationMesh *navMesh = GetScene()->GetComponent<NavigationMesh>();
+            navMesh->FindPath(path_, node_->GetWorldPosition(), waypoints_[0]);
+            path_.Erase(0);
+
+            wasFollowingPlayer_ = false;
+        }
         FollowWaypoints(timeStep);
     } else {
+        wasFollowingPlayer_ = true;
         FollowPlayer(timeStep, personNode);
     }
 }

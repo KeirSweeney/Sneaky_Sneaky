@@ -29,4 +29,5 @@ public:
 private:
     Urho3D::PODVector<Urho3D::Vector3> path_;
     Urho3D::PODVector<Urho3D::Vector3> waypoints_;
+    bool wasFollowingPlayer_;
 };
