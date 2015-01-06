@@ -40,16 +40,8 @@ void Guard::Update(float timeStep)
     light->SetColor(playerDetected ? Color::RED : Color::WHITE);
 
     if (!playerDetected) {
-        if (wasFollowingPlayer_) {
-            NavigationMesh *navMesh = GetScene()->GetComponent<NavigationMesh>();
-            navMesh->FindPath(path_, node_->GetWorldPosition(), waypoints_[0]);
-            path_.Erase(0);
-
-            wasFollowingPlayer_ = false;
-        }
         FollowWaypoints(timeStep);
     } else {
-        wasFollowingPlayer_ = true;
         FollowPlayer(timeStep, personNode);
     }
 }
@@ -62,6 +54,8 @@ void Guard::FollowPlayer(float timeStep, Node *player)
 
     Vector3 guardPosition = node_->GetWorldPosition();
     Vector3 playerPosition = player->GetWorldPosition();
+
+    wasFollowingPlayer_ = true;
 
     Vector3 target = navMesh->FindNearestPoint(playerPosition);
     navMesh->FindPath(path_, guardPosition, target);
@@ -90,6 +84,14 @@ void Guard::FollowWaypoints(float timeStep)
 {
     RigidBody *rigidBody = node_->GetComponent<RigidBody>();
     Vector3 position = node_->GetWorldPosition();
+
+    if (wasFollowingPlayer_ && path_.Empty()) {
+        NavigationMesh *navMesh = GetScene()->GetComponent<NavigationMesh>();
+        navMesh->FindPath(path_, position, waypoints_[0]);
+        path_.Erase(0);
+
+        wasFollowingPlayer_ = false;
+    }
 
     if (path_.Empty()) {
         path_ = waypoints_;

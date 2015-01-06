@@ -257,7 +257,7 @@ void Game::LoadLevel()
                     }
 
                     Node *guardNode = roomContentsNode->CreateChild("Guard");
-                    guardNode->SetPosition(waypoints[0]);
+                    guardNode->SetWorldPosition(waypoints[0]);
                     guardNode->Scale(Vector3(1.0f, 1.8f, 1.0f));
 
                     StaticModel *guardModel = guardNode->CreateComponent<StaticModel>();
