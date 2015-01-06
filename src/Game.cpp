@@ -123,7 +123,11 @@ void Game::LoadLevel()
 
     Image *levelImage = cache->GetResource<Image>(ToString("Levels/%d.png", currentLevel_ + 1));
     if (!levelImage) {
-        currentLevel_ = 0;
+        if (currentLevel_ != 0) {
+            currentLevel_ = 0;
+            LoadLevel();
+        }
+
         return;
     }
 
@@ -363,7 +367,6 @@ void Game::LoadLevel()
     // All the navigable gemoetry needs to have been added to the scene by this point.
     navigationMesh->Build();
 
-#if 1
     Node *personNode = scene_->CreateChild("Person");
     personNode->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
     personNode->Scale(Vector3(1.0f, 1.8f, 1.0f));
@@ -383,7 +386,6 @@ void Game::LoadLevel()
 
     personNode->CreateComponent<Person>();
     personNode->CreateComponent<Inventory>();
-#endif
 
     Node *cameraTargetNode = scene_->CreateChild();
     cameraTargetNode->CreateComponent<CameraController>();
@@ -395,7 +397,6 @@ void Game::LoadLevel()
     Camera *camera = cameraNode->CreateComponent<Camera>();
     camera->SetFarClip(zone->GetFogEnd());
 
-#if 1
     Node *cameraLightNode = cameraNode->CreateChild();
     cameraLightNode->SetPosition(Vector3(0.0f, -2.0f, 0.0f));
     cameraLightNode->SetRotation(Quaternion(-5.0f, Vector3::RIGHT));
@@ -408,7 +409,6 @@ void Game::LoadLevel()
     cameraLight->SetColor(Color::WHITE);
     cameraLight->SetCastShadows(true);
     cameraLight->SetShapeTexture(cache->GetResource<Texture2D>("Textures/White.png"));
-#endif
 
     Renderer *renderer = GetSubsystem<Renderer>();
     renderer->GetViewport(0)->SetCamera(camera);
@@ -434,6 +434,11 @@ void Game::HandleUpdate(StringHash eventType, VariantMap &eventData)
 
     if (input->GetKeyPress(KEY_3)) {
         debugNavigation_ = !debugNavigation_;
+    }
+
+    if (input->GetKeyPress(KEY_N)) {
+        currentLevel_++;
+        LoadLevel();
     }
 
     Renderer *renderer = GetSubsystem<Renderer>();

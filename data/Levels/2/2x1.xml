@@ -1,0 +1,9 @@
+<room>
+    <object position="0 0 4.5" scale="15" model="Table" material="FlatGrey"></object>
+    <guard>
+        <waypoint position="0 0 2.5"></waypoint>
+        <waypoint position="2.5 0 0"></waypoint>
+        <waypoint position="-2.5 0 0"></waypoint>
+        <waypoint position="0 0 -2.5"></waypoint>
+    </guard>
+</room>
