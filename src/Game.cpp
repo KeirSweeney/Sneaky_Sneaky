@@ -232,7 +232,6 @@ void Game::Start()
                     guardLight->SetCastShadows(true);
                     guardLight->SetFov(90.0f);
 
-
                     Guard *guard = guardNode->CreateComponent<Guard>();
                     guard->SetWaypoints(waypoints);
 

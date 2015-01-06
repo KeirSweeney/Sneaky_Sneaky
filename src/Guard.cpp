@@ -30,35 +30,31 @@ void Guard::RegisterObject(Context* context)
 
 void Guard::Update(float timeStep)
 {
-    Node *myChar = GetScene()->GetChild("Person",true);
+    Node *personNode = GetScene()->GetChild("Person", true);
 
-    bool playerDetected = DetectPlayer(myChar);
+    bool playerDetected = DetectPlayer(personNode);
+
     Light *light = node_->GetChild((unsigned)0)->GetComponent<Light>();
     light->SetColor(playerDetected ? Color::RED : Color::WHITE);
 
-    if(playerDetected == false)
-    {
-         FollowWaypoints(timeStep);
+    if (!playerDetected) {
+        FollowWaypoints(timeStep);
+    } else {
+        FollowPlayer(timeStep, personNode);
     }
-    else
-    {
-        FollowPlayer(timeStep, myChar);
-    }
-
-
-
-
-
 }
 
-void Guard::FollowPlayer(float timeStep,Node *player)
+void Guard::FollowPlayer(float timeStep, Node *player)
 {
     NavigationMesh *navMesh = GetScene()->GetComponent<NavigationMesh>();
-    Vector3 position = node_->GetWorldPosition();
+
     RigidBody *rigidBody = node_->GetComponent<RigidBody>();
-    Vector3 playerPos = player->GetWorldPosition();
-    Vector3 target = navMesh->FindNearestPoint(playerPos);
-    navMesh->FindPath(path_,position, target);
+
+    Vector3 guardPosition = node_->GetWorldPosition();
+    Vector3 playerPosition = player->GetWorldPosition();
+
+    Vector3 target = navMesh->FindNearestPoint(playerPosition);
+    navMesh->FindPath(path_, guardPosition, target);
     path_.Erase(0);
 
     if (path_.Empty()) {
@@ -68,18 +64,16 @@ void Guard::FollowPlayer(float timeStep,Node *player)
 
     Vector3 next = path_.Front();
 
-    Vector3 offset = next - position;
+    Vector3 offset = next - guardPosition;
     offset.y_ = 0.0f;
 
-    if (offset.LengthSquared() < (2.0f * 2.0f * timeStep * timeStep)) {
+    if (offset.LengthSquared() < (1.0f * 1.0f * timeStep * timeStep)) {
         path_.Erase(0);
     }
 
     offset.Normalize();
     node_->SetDirection(offset);
-    rigidBody->SetLinearVelocity(offset * 2.0f);
-
-
+    rigidBody->SetLinearVelocity(offset * 1.0f);
 }
 
 void Guard::FollowWaypoints(float timeStep)
@@ -87,12 +81,9 @@ void Guard::FollowWaypoints(float timeStep)
     RigidBody *rigidBody = node_->GetComponent<RigidBody>();
     Vector3 position = node_->GetWorldPosition();
 
-    if(path_.Empty())
-    {
+    if (path_.Empty()) {
         path_ = waypoints_;
-        return;
     }
-
 
     Vector3 next = path_.Front();
 
@@ -108,49 +99,42 @@ void Guard::FollowWaypoints(float timeStep)
     rigidBody->SetLinearVelocity(offset * 1.0f);
 }
 
-void Guard::SetWaypoints(PODVector<Vector3>  &waypoints)
+void Guard::SetWaypoints(PODVector<Vector3> &waypoints)
 {
     path_ = waypoints_ = waypoints;
 }
 
-bool Guard::DetectPlayer(Node *myChar)
+bool Guard::DetectPlayer(Node *player)
 {
-    Vector3 nodePos = node_->GetWorldPosition();
+    Vector3 guardPosition = node_->GetWorldPosition();
+    Vector3 playerPosition = player->GetWorldPosition();
+    Vector3 difference = (playerPosition - guardPosition);
 
-    Vector3 charPos = myChar->GetWorldPosition();
-
-    Vector3 charDiff = (charPos - nodePos);
-
-   if(charDiff.LengthSquared() > (5.0f * 5.0f))
-   {
+   if (difference.LengthSquared() > (5.0f * 5.0f)) {
         return false;
    }
 
-   Vector3 nodeForward = node_->GetWorldDirection();
-   charDiff.Normalize();
-
+   Vector3 forward = node_->GetWorldDirection();
+   difference.Normalize();
 
    //DebugRenderer *debug = node_->GetScene()->GetComponent<DebugRenderer>();
-   //->AddLine(nodePos,nodePos+nodeForward,Color::BLUE);
-   //debug->AddLine(nodePos,nodePos+charDiff,Color::RED);
+   //debug->AddLine(guardPosition, guardPosition + forward, Color::BLUE);
+   //debug->AddLine(guardPosition, guardPosition + difference, Color::RED);
 
-   float dotProd = nodeForward.DotProduct(charDiff);
-
-   if(dotProd < Cos(45.0f))
-   {
+   if (forward.DotProduct(difference) < Cos(45.0f)) {
        return false;
    }
 
-   //debug->AddSphere(Sphere(nodePos,1.0f), Color::MAGENTA);
+   Ray ray(guardPosition + Vector3(0.0f, 1.6f, 0.0f) + (forward * 0.25f), difference);
+   //debug->AddLine(ray.origin_, ray.origin_ + (ray.direction_ * 5.0f), Color::WHITE);
 
-   Octree *octree = GetScene()->GetComponent<Octree>();
-   Ray ray(nodePos + Vector3(0.0f, 1.6f, 0.0f) + (nodeForward * 0.25f), charDiff);
    PODVector<RayQueryResult> result;
    RayOctreeQuery query(result, ray, RAY_TRIANGLE, M_INFINITY, DRAWABLE_GEOMETRY);
+
+   Octree *octree = GetScene()->GetComponent<Octree>();
    octree->RaycastSingle(query);
-   //debug->AddLine(nodePos + Vector3(0.0f, 1.6f, 0.0f) + (nodeForward * 0.25f), nodePos + (charDiff * 100),Color::WHITE);
-   if(result.Empty() || result[0].node_ != myChar)
-   {
+
+   if (result.Empty() || result[0].node_ != player) {
        return false;
    }
 
