@@ -30,15 +30,15 @@ void Pickup::DelayedStart()
     SharedPtr<ValueAnimation> animation(new ValueAnimation(context_));
     animation->SetInterpolationMethod(IM_SPLINE);
     animation->SetSplineTension(0.0f);
-    animation->SetKeyFrame(0.0f, 0.2f);
-    animation->SetKeyFrame(1.0f, 0.4f);
-    animation->SetKeyFrame(2.0f, 0.2f);
+    animation->SetKeyFrame(0.0f, HEIGHT_MIN);
+    animation->SetKeyFrame(1.0f, HEIGHT_MAX);
+    animation->SetKeyFrame(2.0f, HEIGHT_MIN);
     SetAttributeAnimation("Height", animation);
 }
 
 void Pickup::Update(float timeStep)
 {
-    node_->Rotate(Quaternion(30.0f * timeStep, Vector3::UP));
+    node_->Rotate(Quaternion(ROTATION_SPEED * timeStep, Vector3::UP));
 
     Vector3 position = node_->GetPosition();
     position.y_ = height_;

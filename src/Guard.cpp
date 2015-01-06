@@ -67,13 +67,13 @@ void Guard::FollowPlayer(float timeStep, Node *player)
     Vector3 offset = next - guardPosition;
     offset.y_ = 0.0f;
 
-    if (offset.LengthSquared() < (1.0f * 1.0f * timeStep * timeStep)) {
+    if (offset.LengthSquared() < (MOVE_SPEED * MOVE_SPEED * timeStep * timeStep)) {
         path_.Erase(0);
     }
 
     offset.Normalize();
     node_->SetDirection(offset);
-    rigidBody->SetLinearVelocity(offset * 1.0f);
+    rigidBody->SetLinearVelocity(offset * MOVE_SPEED);
 }
 
 void Guard::FollowWaypoints(float timeStep)
@@ -90,13 +90,13 @@ void Guard::FollowWaypoints(float timeStep)
     Vector3 offset = next - position;
     offset.y_ = 0.0f;
 
-    if (offset.LengthSquared() < (1.0f * 1.0f * timeStep * timeStep)) {
+    if (offset.LengthSquared() < (MOVE_SPEED * MOVE_SPEED * timeStep * timeStep)) {
         path_.Erase(0);
     }
 
     offset.Normalize();
     node_->SetDirection(offset);
-    rigidBody->SetLinearVelocity(offset * 1.0f);
+    rigidBody->SetLinearVelocity(offset * MOVE_SPEED);
 }
 
 void Guard::SetWaypoints(PODVector<Vector3> &waypoints)
@@ -110,7 +110,7 @@ bool Guard::DetectPlayer(Node *player)
     Vector3 playerPosition = player->GetWorldPosition();
     Vector3 difference = (playerPosition - guardPosition);
 
-   if (difference.LengthSquared() > (5.0f * 5.0f)) {
+   if (difference.LengthSquared() > (VIEW_DISTANCE * VIEW_DISTANCE)) {
         return false;
    }
 
@@ -121,12 +121,12 @@ bool Guard::DetectPlayer(Node *player)
    //debug->AddLine(guardPosition, guardPosition + forward, Color::BLUE);
    //debug->AddLine(guardPosition, guardPosition + difference, Color::RED);
 
-   if (forward.DotProduct(difference) < Cos(45.0f)) {
+   if (forward.DotProduct(difference) < Cos(VIEW_ANGLE / 2.0f)) {
        return false;
    }
 
    Ray ray(guardPosition + Vector3(0.0f, 1.6f, 0.0f) + (forward * 0.25f), difference);
-   //debug->AddLine(ray.origin_, ray.origin_ + (ray.direction_ * 5.0f), Color::WHITE);
+   //debug->AddLine(ray.origin_, ray.origin_ + (ray.direction_ * VIEW_DISTANCE), Color::WHITE);
 
    PODVector<RayQueryResult> result;
    RayOctreeQuery query(result, ray, RAY_TRIANGLE, M_INFINITY, DRAWABLE_GEOMETRY);

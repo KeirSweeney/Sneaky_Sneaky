@@ -41,7 +41,7 @@ void Person::Update(float timeStep)
 
     Vector3 position = node_->GetWorldPosition();
 
-    if (input->GetMouseButtonPress(MOUSEB_LEFT) && !ui->GetElementAt(ui->GetCursorPosition(), false)) {
+    if ((input->GetMouseButtonDown(MOUSEB_LEFT) || input->GetMouseButtonPress(MOUSEB_LEFT)) && !ui->GetElementAt(ui->GetCursorPosition(), false)) {
         Camera *camera = GetScene()->GetChild("Camera", true)->GetComponent<Camera>();
         Graphics *graphics = GetSubsystem<Graphics>();
 
@@ -84,13 +84,13 @@ void Person::Update(float timeStep)
     Vector3 offset = next - position;
     offset.y_ = 0.0f;
 
-    if (offset.LengthSquared() < (2.0f * 2.0f * timeStep * timeStep)) {
+    if (offset.LengthSquared() < (MOVE_SPEED * MOVE_SPEED * timeStep * timeStep)) {
         path_.Erase(0);
     }
 
     offset.Normalize();
     node_->SetDirection(offset);
-    rigidBody->SetLinearVelocity(offset * 2.0f);
+    rigidBody->SetLinearVelocity(offset * MOVE_SPEED);
 }
 
 void Person::SetTarget(Vector3 target)
