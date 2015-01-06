@@ -70,10 +70,9 @@ void Game::Start()
 
     ResourceCache *cache = GetSubsystem<ResourceCache>();
 
-    DebugHud *debugHud = engine_->CreateDebugHud();
-    debugHud->SetDefaultStyle(cache->GetResource<XMLFile>("UI/DefaultStyle.xml"));
-    debugHud->SetUseRendererStats(true);
-    //debugHud->SetMode(DEBUGHUD_SHOW_ALL);
+    debugHud_ = engine_->CreateDebugHud();
+    debugHud_->SetDefaultStyle(cache->GetResource<XMLFile>("UI/DefaultStyle.xml"));
+    debugHud_->SetUseRendererStats(true);
 
     scene_ = new Scene(context_);
 
@@ -434,6 +433,10 @@ void Game::HandleUpdate(StringHash eventType, VariantMap &eventData)
 
     if (input->GetKeyPress(KEY_3)) {
         debugNavigation_ = !debugNavigation_;
+    }
+
+    if (input->GetKeyPress(KEY_D)) {
+        debugHud_->SetMode(debugHud_->GetMode() == DEBUGHUD_SHOW_NONE ? DEBUGHUD_SHOW_ALL : DEBUGHUD_SHOW_NONE);
     }
 
     if (input->GetKeyPress(KEY_N)) {
