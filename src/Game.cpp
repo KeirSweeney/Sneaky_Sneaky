@@ -43,7 +43,9 @@ using namespace Urho3D;
 DEFINE_APPLICATION_MAIN(Game)
 
 Game::Game(Context *context):
-    Application(context)
+    Application(context),
+    currentLevel_(0),
+    debugGeometry_(false), debugPhysics_(false), debugNavigation_(false), debugDepthTest_(true)
 {
 }
 
@@ -75,6 +77,58 @@ void Game::Start()
 
     scene_ = new Scene(context_);
 
+    CameraController::RegisterObject(context_);
+    Door::RegisterObject(context_);
+    Guard::RegisterObject(context_);
+    Inventory::RegisterObject(context_);
+    Person::RegisterObject(context_);
+    Pickup::RegisterObject(context_);
+    Terminal::RegisterObject(context_);
+
+    SharedPtr<Viewport> viewport(new Viewport(context_, scene_, NULL));
+
+#if 1
+    RenderPath *renderPath = viewport->GetRenderPath();
+
+    renderPath->Append(cache->GetResource<XMLFile>("PostProcess/FXAA3.xml"));
+
+    renderPath->Append(cache->GetResource<XMLFile>("PostProcess/BloomHDR.xml"));
+    renderPath->SetShaderParameter("BloomHDRMix", Vector2(1.0f, 1.0f));
+#endif
+
+    Renderer *renderer = GetSubsystem<Renderer>();
+    renderer->SetViewport(0, viewport);
+    renderer->SetShadowMapSize(2048);
+    renderer->SetShadowQuality(QUALITY_MAX);
+    renderer->SetHDRRendering(true);
+
+    Input *input = GetSubsystem<Input>();
+    input->SetMouseVisible(true);
+    input->SetMouseMode(MM_ABSOLUTE);
+
+    LoadLevel();
+
+    SubscribeToEvent(E_UPDATE, HANDLER(Game, HandleUpdate));
+    SubscribeToEvent(E_POSTRENDERUPDATE, HANDLER(Game, HandlePostRenderUpdate));
+}
+
+void Game::Stop()
+{
+    engine_->DumpResources(true);
+}
+
+void Game::LoadLevel()
+{
+    ResourceCache *cache = GetSubsystem<ResourceCache>();
+
+    Image *levelImage = cache->GetResource<Image>(ToString("Levels/%d.png", currentLevel_ + 1));
+    if (!levelImage) {
+        currentLevel_ = 0;
+        return;
+    }
+
+    scene_->Clear();
+
     // Required components for 3D rendering.
     scene_->CreateComponent<Octree>();
     scene_->CreateComponent<DebugRenderer>();
@@ -93,13 +147,7 @@ void Game::Start()
     navigationMesh->SetAgentMaxClimb(0.0f);
     navigationMesh->SetAgentMaxSlope(5.0f);
 
-    PhysicsWorld *physicsWorld = scene_->CreateComponent<PhysicsWorld>();
-
-    Terminal::RegisterObject(context_);
-    Pickup::RegisterObject(context_);
-    Guard::RegisterObject(context_);
-
-    Image *levelImage = cache->GetResource<Image>("Levels/1.png");
+    scene_->CreateComponent<PhysicsWorld>();
 
     int imageWidth = levelImage->GetWidth();
     int imageHeight = levelImage->GetHeight();
@@ -158,7 +206,7 @@ void Game::Start()
             roomLabel->SetAlignment(HA_CENTER, VA_CENTER);
             roomLabel->SetFaceCameraMode(FC_ROTATE_Y);
 
-            XMLFile *roomContents = cache->GetResource<XMLFile>(ToString("Levels/1/%dx%d.xml", x + 1, y + 1));
+            XMLFile *roomContents = cache->GetResource<XMLFile>(ToString("Levels/%d/%dx%d.xml", currentLevel_ + 1, x + 1, y + 1));
             if (roomContents) {
                 Node *roomContentsNode = floorNode->CreateChild();
 
@@ -284,8 +332,6 @@ void Game::Start()
                 wallCollisionShape->SetTriangleMesh(wallModel->GetModel());
 
                 if (wallType == "Door") {
-                    Door::RegisterObject(context_);
-
                     Node *doorNode = wallNode->CreateChild();
 
                     doorNode->CreateComponent<Navigable>();
@@ -318,21 +364,6 @@ void Game::Start()
     navigationMesh->Build();
 
 #if 1
-    // Quick example of how to put a texture on a plane.
-    Node *signNode = scene_->CreateChild("Sign");
-    signNode->SetPosition(Vector3(0.0f, 1.5f, 5.0f));
-    signNode->SetRotation(Quaternion(-90.0f, Vector3::RIGHT));
-    signNode->SetScale(1.0f);
-
-    StaticModel *sign = signNode->CreateComponent<StaticModel>();
-    sign->SetModel(cache->GetResource<Model>("Models/Sign.mdl"));
-    sign->SetMaterial(cache->GetResource<Material>("Materials/PosterMap.xml"));
-#endif
-
-#if 1
-    Person::RegisterObject(context_);
-    Inventory::RegisterObject(context_);
-
     Node *personNode = scene_->CreateChild("Person");
     personNode->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
     personNode->Scale(Vector3(1.0f, 1.8f, 1.0f));
@@ -353,8 +384,6 @@ void Game::Start()
     personNode->CreateComponent<Person>();
     personNode->CreateComponent<Inventory>();
 #endif
-
-    CameraController::RegisterObject(context_);
 
     Node *cameraTargetNode = scene_->CreateChild();
     cameraTargetNode->CreateComponent<CameraController>();
@@ -381,48 +410,53 @@ void Game::Start()
     cameraLight->SetShapeTexture(cache->GetResource<Texture2D>("Textures/White.png"));
 #endif
 
-    SharedPtr<Viewport> viewport(new Viewport(context_, scene_, camera));
-
-#if 1
-    RenderPath *renderPath = viewport->GetRenderPath();
-
-    renderPath->Append(cache->GetResource<XMLFile>("PostProcess/FXAA3.xml"));
-
-    renderPath->Append(cache->GetResource<XMLFile>("PostProcess/BloomHDR.xml"));
-    renderPath->SetShaderParameter("BloomHDRMix", Vector2(1.0f, 1.0f));
-#endif
-
     Renderer *renderer = GetSubsystem<Renderer>();
-    renderer->SetViewport(0, viewport);
-    renderer->SetShadowMapSize(2048);
-    renderer->SetShadowQuality(QUALITY_MAX);
-    renderer->SetHDRRendering(true);
-
-    Input *input = GetSubsystem<Input>();
-    input->SetMouseVisible(true);
-    input->SetMouseMode(MM_ABSOLUTE);
-
-    SubscribeToEvent(E_UPDATE, HANDLER(Game, HandleUpdate));
-
-    // Uncomment this to show all the debug rendering.
-    //SubscribeToEvent(E_POSTRENDERUPDATE, HANDLER(Game, HandlePostRenderUpdate));
-}
-
-void Game::Stop()
-{
-    engine_->DumpResources(true);
+    renderer->GetViewport(0)->SetCamera(camera);
 }
 
 void Game::HandleUpdate(StringHash eventType, VariantMap &eventData)
 {
     (void)eventType; (void)eventData;
+
+    Input *input = GetSubsystem<Input>();
+
+    if (input->GetKeyPress(KEY_0)) {
+        debugDepthTest_ = !debugDepthTest_;
+    }
+
+    if (input->GetKeyPress(KEY_1)) {
+        debugGeometry_ = !debugGeometry_;
+    }
+
+    if (input->GetKeyPress(KEY_2)) {
+        debugPhysics_ = !debugPhysics_;
+    }
+
+    if (input->GetKeyPress(KEY_3)) {
+        debugNavigation_ = !debugNavigation_;
+    }
+
+    Renderer *renderer = GetSubsystem<Renderer>();
+    RenderPath *renderPath = renderer->GetDefaultRenderPath();
+
+    bool debugRendering = debugGeometry_ || debugPhysics_ || debugNavigation_;
+    renderPath->SetEnabled("FXAA3", !debugRendering);
+    renderPath->SetEnabled("BloomHDR", !debugRendering);
 }
 
 void Game::HandlePostRenderUpdate(StringHash eventType, VariantMap &eventData)
 {
     (void)eventType; (void)eventData;
 
-    scene_->GetComponent<NavigationMesh>()->DrawDebugGeometry(true);
-    scene_->GetComponent<PhysicsWorld>()->DrawDebugGeometry(true);
-    //GetSubsystem<Renderer>()->DrawDebugGeometry(true);
+    if (debugGeometry_) {
+        GetSubsystem<Renderer>()->DrawDebugGeometry(debugDepthTest_);
+    }
+
+    if (debugPhysics_) {
+        scene_->GetComponent<PhysicsWorld>()->DrawDebugGeometry(debugDepthTest_);
+    }
+
+    if (debugNavigation_) {
+        scene_->GetComponent<NavigationMesh>()->DrawDebugGeometry(debugDepthTest_);
+    }
 }

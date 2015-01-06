@@ -13,6 +13,7 @@
 #include "Graphics.h"
 #include "Octree.h"
 #include "UI.h"
+#include "Renderer.h"
 
 using namespace Urho3D;
 
@@ -42,9 +43,10 @@ void Person::Update(float timeStep)
     Vector3 position = node_->GetWorldPosition();
 
     if ((input->GetMouseButtonDown(MOUSEB_LEFT) || input->GetMouseButtonPress(MOUSEB_LEFT)) && !ui->GetElementAt(ui->GetCursorPosition(), false)) {
-        Camera *camera = GetScene()->GetChild("Camera", true)->GetComponent<Camera>();
+        Renderer *renderer = GetSubsystem<Renderer>();
         Graphics *graphics = GetSubsystem<Graphics>();
 
+        Camera *camera = renderer->GetViewport(0)->GetCamera();
         IntVector2 mousePosition = input->GetMousePosition();
         Ray mouseRay = camera->GetScreenRay(mousePosition.x_ / (float)graphics->GetWidth(), mousePosition.y_ / (float)graphics->GetHeight());
 
