@@ -261,7 +261,7 @@ void Game::LoadLevel()
                     guardNode->Scale(Vector3(1.0f, 1.8f, 1.0f));
 
                     StaticModel *guardModel = guardNode->CreateComponent<StaticModel>();
-                    guardModel->SetModel(cache->GetResource<Model>("Models/Person.mdl"));
+                    guardModel->SetModel(cache->GetResource<Model>("Models/PersonFlat.mdl"));
                     guardModel->SetMaterial(cache->GetResource<Material>("Materials/Person.xml"));
                     guardModel->SetCastShadows(true);
 
@@ -372,7 +372,7 @@ void Game::LoadLevel()
     personNode->Scale(Vector3(1.0f, 1.8f, 1.0f));
 
     StaticModel *personModel = personNode->CreateComponent<StaticModel>();
-    personModel->SetModel(cache->GetResource<Model>("Models/Person.mdl"));
+    personModel->SetModel(cache->GetResource<Model>("Models/PersonFlat.mdl"));
     personModel->SetMaterial(cache->GetResource<Material>("Materials/Person.xml"));
     personModel->SetCastShadows(true);
 
