@@ -64,3 +64,6 @@ Module Ownership
 ### Asher
 * Build System
 * Urho3D Submodule
+
+### Keir
+* Guard AI
