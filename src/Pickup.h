@@ -11,7 +11,6 @@ private:
     static const float HEIGHT_MIN;
     static const float HEIGHT_MAX;
 
-
 public:
     Pickup(Urho3D::Context *context);
     static void RegisterObject(Urho3D::Context* context);
@@ -20,6 +19,8 @@ public:
     void DelayedStart();
     void Update(float timeStep);
 
+public:
+    Urho3D::String GetPickupType();
 
 protected:
     float height_;

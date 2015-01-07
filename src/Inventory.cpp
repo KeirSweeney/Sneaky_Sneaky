@@ -19,7 +19,8 @@
 #include "Input.h"
 
 using namespace Urho3D;
-bool myPickup;
+
+const int Inventory::PADDING = 20;
 
 Inventory::Inventory(Context *context):
     LogicComponent(context)
@@ -37,21 +38,18 @@ void Inventory::DelayedStart()
 {
     UI *ui = GetSubsystem<UI>();
 
-    panel_ = ui->GetRoot()->CreateChild<UIElement>();
-    panel_->SetFixedSize(panel_->GetParent()->GetSize() - IntVector2(100, 100));
-    panel_->SetAlignment(HA_CENTER, VA_CENTER);
-    panel_->SetVisible(false);
+    UIElement *panel = ui->GetRoot()->CreateChild<UIElement>();
+    panel->SetFixedSize(panel->GetParent()->GetSize() - IntVector2(PADDING * 2, PADDING * 2));
+    panel->SetAlignment(HA_CENTER, VA_CENTER);
+    panel->SetVisible(false);
 
-    Sprite *background = panel_->CreateChild<Sprite>();
-    background->SetFixedSize(panel_->GetSize());
+    Sprite *background = panel->CreateChild<Sprite>();
+    background->SetFixedSize(panel->GetSize());
     background->SetColor(Color::BLACK);
     background->SetOpacity(0.6f);
 
-    Text *label = panel_->CreateChild<Text>();
-    label->SetFont("Fonts/Anonymous Pro.ttf");
-    label->SetColor(Color::WHITE);
-    label->SetText("Lemons.");
-    label->SetAlignment(HA_CENTER, VA_CENTER);
+    panel_ = panel->CreateChild<UIElement>();
+    panel_->SetFixedSize(panel->GetSize());
 }
 
 void Inventory::Update(float timeStep)
@@ -59,25 +57,44 @@ void Inventory::Update(float timeStep)
     Input *input = GetSubsystem<Input>();
 
     if (!input->GetKeyDown(KEY_TAB)) {
-        panel_->SetVisible(false);
+        panel_->GetParent()->SetVisible(false);
         return;
     }
 
-    panel_->SetVisible(true);
+    if (dirty_) {
+        panel_->RemoveAllChildren();
 
-	if (myPickup == true)
-	{
-		Text *label = panel_->CreateChild<Text>();
-		label->SetFont("Fonts/Anonymous Pro.ttf");
-		label->SetColor(Color::WHITE);
-		label->SetText("Tape");
-		label->SetAlignment(HA_LEFT, VA_CENTER);
-		//would be nice to add the object into the inventory rather than just text.
-	}
-	
+        int x = PADDING;
+        int y = PADDING;
+        for (Vector<SharedPtr<Pickup>>::ConstIterator i = items_.Begin(); i != items_.End(); ++i) {
+            UIElement *item = panel_->CreateChild<UIElement>();
+            item->SetFixedSize(200, 200);
+            item->SetPosition(x, y);
+
+            Sprite *background = item->CreateChild<Sprite>();
+            background->SetFixedSize(item->GetSize());
+            background->SetColor(Color::WHITE);
+            background->SetOpacity(0.2f);
+
+            Text *label = item->CreateChild<Text>();
+            label->SetFont("Fonts/Anonymous Pro.ttf");
+            label->SetColor(Color::WHITE);
+            label->SetText((*i)->GetPickupType());
+            label->SetAlignment(HA_CENTER, VA_CENTER);
+
+            x += item->GetWidth() + PADDING;
+            if (x > panel_->GetWidth() - PADDING) {
+                x = 0;
+                y += item->GetHeight() + PADDING;
+            }
+        }
+    }
+
+    panel_->GetParent()->SetVisible(true);
 }
 
-void Inventory::AddToInventory(bool itemAdded)
+void Inventory::AddItem(Pickup *item)
 {
-	myPickup = itemAdded;
+    items_.Push(SharedPtr<Pickup>(item));
+    dirty_ = true;
 }
