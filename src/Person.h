@@ -7,7 +7,7 @@ class Person: public Urho3D::LogicComponent
     OBJECT(Person)
 
 private:
-    static constexpr float MOVE_SPEED = 2.0f;
+    static const float MOVE_SPEED;
 
 public:
     Person(Urho3D::Context *context);

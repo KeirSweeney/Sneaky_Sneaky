@@ -6,6 +6,9 @@ class Door: public Urho3D::LogicComponent
 {
     OBJECT(Door)
 
+private:
+	static const float DOOR_OFFSET;
+
 public:
     Door(Urho3D::Context *context);
     static void RegisterObject(Urho3D::Context* context);

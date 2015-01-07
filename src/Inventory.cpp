@@ -36,7 +36,7 @@ void Inventory::DelayedStart()
     UI *ui = GetSubsystem<UI>();
 
     panel_ = ui->GetRoot()->CreateChild<UIElement>();
-    panel_->SetFixedSize(panel_->GetParent()->GetSize() - IntVector2(100.0f, 100.0f));
+    panel_->SetFixedSize(panel_->GetParent()->GetSize() - IntVector2(100, 100));
     panel_->SetAlignment(HA_CENTER, VA_CENTER);
     panel_->SetVisible(false);
 

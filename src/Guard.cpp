@@ -1,6 +1,5 @@
 #include "Guard.h"
 
-
 #include "Context.h"
 #include "Node.h"
 #include "Scene.h"
@@ -17,6 +16,10 @@
 #include "Light.h"
 
 using namespace Urho3D;
+
+const float Guard::MOVE_SPEED = 1.0f;
+const float Guard::VIEW_DISTANCE = 5.0f;
+const float Guard::VIEW_ANGLE = 90.0f;
 
 Guard::Guard(Context *context):
     LogicComponent(context),

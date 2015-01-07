@@ -17,6 +17,8 @@
 
 using namespace Urho3D;
 
+const float Person::MOVE_SPEED = 2.0f;
+
 Person::Person(Context *context):
     LogicComponent(context)
 {

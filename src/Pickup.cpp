@@ -9,6 +9,10 @@
 
 using namespace Urho3D;
 
+const float Pickup::ROTATION_SPEED = 30.0f;
+const float Pickup::HEIGHT_MIN = 0.2f;
+const float Pickup::HEIGHT_MAX = 0.4f;
+
 Pickup::Pickup(Context *context):
     LogicComponent(context),
     height_(0.0f)

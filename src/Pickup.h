@@ -7,9 +7,9 @@ class Pickup: public Urho3D::LogicComponent
     OBJECT(Pickup)
 
 private:
-    static constexpr float ROTATION_SPEED = 30.0f;
-    static constexpr float HEIGHT_MIN = 0.2f;
-    static constexpr float HEIGHT_MAX = 0.4f;
+    static const float ROTATION_SPEED;
+    static const float HEIGHT_MIN;
+    static const float HEIGHT_MAX;
 
 public:
     Pickup(Urho3D::Context *context);

@@ -66,8 +66,8 @@ void Terminal::Update(float timeStep)
 
     Graphics *graphics = GetSubsystem<Graphics>();
     IntVector2 uiPosition;
-    uiPosition.x_ = round((screenPosition.x_ * graphics->GetWidth()) - (panel_->GetWidth() / 2.0f));
-    uiPosition.y_ = round((screenPosition.y_ * graphics->GetHeight()) - (panel_->GetHeight() / 2.0f));
+    uiPosition.x_ = (int)round((screenPosition.x_ * graphics->GetWidth()) - (panel_->GetWidth() / 2.0f));
+    uiPosition.y_ = (int)round((screenPosition.y_ * graphics->GetHeight()) - (panel_->GetHeight() / 2.0f));
 
     panel_->SetPosition(uiPosition);
     panel_->SetVisible(true);

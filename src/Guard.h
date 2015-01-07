@@ -7,9 +7,9 @@ class Guard:public Urho3D::LogicComponent
     OBJECT(Guard)
 
 private:
-    static constexpr float MOVE_SPEED = 1.0f;
-    static constexpr float VIEW_DISTANCE = 5.0f;
-    static constexpr float VIEW_ANGLE = 90.0f;
+    static const float MOVE_SPEED;
+	static const float VIEW_DISTANCE;
+	static const float VIEW_ANGLE;
 
 public:
     Guard(Urho3D::Context *context);

@@ -12,6 +12,8 @@
 
 using namespace Urho3D;
 
+const float Door::DOOR_OFFSET = -1.275f;
+
 Door::Door(Context *context):
     LogicComponent(context)
 {
@@ -42,7 +44,7 @@ void Door::Update(float timeStep)
     Node *person = GetScene()->GetChild("Person", true);
 
     if (!colliders.Empty() && colliders[0]->GetNode() == person) {
-        node_->SetPosition(Vector3(-1.275f, 0.0f, 0.0f));
+		node_->SetPosition(Vector3(DOOR_OFFSET, 0.0f, 0.0f));
 
         person->GetComponent<Person>()->SetTarget(person->GetPosition() + (person->GetDirection() * 0.01f));
     } else {
