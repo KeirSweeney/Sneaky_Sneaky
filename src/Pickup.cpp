@@ -64,13 +64,9 @@ void Pickup::Update(float timeStep)
 	if (!colliders.Empty() && colliders[0]->GetNode() == person) 
 	{
 		Inventory *inv = person->GetComponent<Inventory>();
-		inv->AddToInventory("Tape");
-		//node_->SetPosition(Vector3(1.0f, 0.0f, 0.0f));
+		inv->AddToInventory(true);
+		node_->Remove();
 		//move pickup to players inventory
-		
-	}
-	else 
-	{
 		
 	}
 

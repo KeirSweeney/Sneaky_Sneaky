@@ -18,7 +18,7 @@ public:
 public:
     void DelayedStart();
     void Update(float timeStep);
-	void AddToInventory(Urho3D::String pickupName);
+	void AddToInventory(bool itemAdded);
 	
 
 private:

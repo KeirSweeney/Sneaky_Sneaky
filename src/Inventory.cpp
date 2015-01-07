@@ -19,7 +19,7 @@
 #include "Input.h"
 
 using namespace Urho3D;
-Urho3D::String myPickup;
+bool myPickup;
 
 Inventory::Inventory(Context *context):
     LogicComponent(context)
@@ -64,10 +64,20 @@ void Inventory::Update(float timeStep)
     }
 
     panel_->SetVisible(true);
+
+	if (myPickup == true)
+	{
+		Text *label = panel_->CreateChild<Text>();
+		label->SetFont("Fonts/Anonymous Pro.ttf");
+		label->SetColor(Color::WHITE);
+		label->SetText("Tape");
+		label->SetAlignment(HA_LEFT, VA_CENTER);
+		//would be nice to add the object into the inventory rather than just text.
+	}
 	
 }
 
-void AddToInventory(String pickupName)
+void Inventory::AddToInventory(bool itemAdded)
 {
-	myPickup = pickupName;
+	myPickup = itemAdded;
 }
