@@ -1,0 +1,5 @@
+<room>
+    <object position="0 0 4.5" scale="6.5" model="CoolerBase" material="FlatGrey"></object>
+    <object position="0 0 4.5" scale="6.5" model="CoolerBottle" material="CoolerBottle"></object>
+    <object position="0.5 0 4.5" angles="0 90 0" scale="17" model="CabinetBottom" material="CabinetBottom"></object>
+</room>
