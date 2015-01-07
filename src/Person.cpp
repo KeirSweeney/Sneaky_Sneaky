@@ -33,7 +33,7 @@ const Vector3 Person::DIRECTION_NW = Vector3(-0.707f, 0.0f, 0.707f);
 
 Person::Person(Context *context):
     LogicComponent(context),
-	moveState_(MS_NONE)
+    moveState_(MS_NONE)
 {
 }
 
@@ -46,11 +46,11 @@ void Person::RegisterObject(Context* context)
 
 void Person::DelayedStart()
 {
-	ResourceCache *cache = GetSubsystem<ResourceCache>();
-	frontMaterial_ = cache->GetResource<Material>("Materials/MaverickFront.xml");
-	backMaterial_ = cache->GetResource<Material>("Materials/MaverickBack.xml");
-	leftMaterial_ = cache->GetResource<Material>("Materials/MaverickLeft.xml");
-	rightMaterial_ = cache->GetResource<Material>("Materials/MaverickRight.xml");
+    ResourceCache *cache = GetSubsystem<ResourceCache>();
+    frontMaterial_ = cache->GetResource<Material>("Materials/MaverickFront.xml");
+    backMaterial_ = cache->GetResource<Material>("Materials/MaverickBack.xml");
+    leftMaterial_ = cache->GetResource<Material>("Materials/MaverickLeft.xml");
+    rightMaterial_ = cache->GetResource<Material>("Materials/MaverickRight.xml");
 }
 
 void Person::Update(float timeStep)
@@ -105,47 +105,47 @@ void Person::Update(float timeStep)
 
     Vector3 offset = next - position;
     offset.y_ = 0.0f;
-	float distance = offset.LengthSquared();
+    float distance = offset.LengthSquared();
 
-	if ((path_.Size() == 1 && distance < (0.25f * 0.25f)) || distance < (MOVE_SPEED * MOVE_SPEED * timeStep * timeStep)) {
+    if ((path_.Size() == 1 && distance < (0.25f * 0.25f)) || distance < (MOVE_SPEED * MOVE_SPEED * timeStep * timeStep)) {
         path_.Erase(0);
     }
 
-	offset.Normalize();
+    offset.Normalize();
 
-	Vector3 direction;
-	MoveState moveState;
-	float angleDot = 0.0f;
-	float bestAngleDot = 0.0f;
+    float angleDot;
+    float bestAngleDot = -INFINITY;
+    Vector3 direction;
+    MoveState moveState;
 
-	if (moveState_ != MS_DIAGONAL && (angleDot = offset.DotProduct(DIRECTION_N)) > bestAngleDot) { bestAngleDot = angleDot; direction = DIRECTION_N; moveState = MS_CARDINAL; }
-	if (moveState_ != MS_CARDINAL && (angleDot = offset.DotProduct(DIRECTION_NE)) > bestAngleDot) { bestAngleDot = angleDot; direction = DIRECTION_NE; moveState = MS_DIAGONAL; }
-	if (moveState_ != MS_DIAGONAL && (angleDot = offset.DotProduct(DIRECTION_E)) > bestAngleDot) { bestAngleDot = angleDot; direction = DIRECTION_E; moveState = MS_CARDINAL; }
-	if (moveState_ != MS_CARDINAL && (angleDot = offset.DotProduct(DIRECTION_SE)) > bestAngleDot) { bestAngleDot = angleDot; direction = DIRECTION_SE; moveState = MS_DIAGONAL; }
-	if (moveState_ != MS_DIAGONAL && (angleDot = offset.DotProduct(DIRECTION_S)) > bestAngleDot) { bestAngleDot = angleDot; direction = DIRECTION_S; moveState = MS_CARDINAL; }
-	if (moveState_ != MS_CARDINAL && (angleDot = offset.DotProduct(DIRECTION_SW)) > bestAngleDot) { bestAngleDot = angleDot; direction = DIRECTION_SW; moveState = MS_DIAGONAL; }
-	if (moveState_ != MS_DIAGONAL && (angleDot = offset.DotProduct(DIRECTION_W)) > bestAngleDot) { bestAngleDot = angleDot; direction = DIRECTION_W; moveState = MS_CARDINAL; }
-	if (moveState_ != MS_CARDINAL && (angleDot = offset.DotProduct(DIRECTION_NW)) > bestAngleDot) { bestAngleDot = angleDot; direction = DIRECTION_NW; moveState = MS_DIAGONAL; }
+    if (moveState_ != MS_DIAGONAL && (angleDot = offset.DotProduct(DIRECTION_N)) > bestAngleDot) { bestAngleDot = angleDot; direction = DIRECTION_N; moveState = MS_CARDINAL; }
+    if (moveState_ != MS_CARDINAL && (angleDot = offset.DotProduct(DIRECTION_NE)) > bestAngleDot) { bestAngleDot = angleDot; direction = DIRECTION_NE; moveState = MS_DIAGONAL; }
+    if (moveState_ != MS_DIAGONAL && (angleDot = offset.DotProduct(DIRECTION_E)) > bestAngleDot) { bestAngleDot = angleDot; direction = DIRECTION_E; moveState = MS_CARDINAL; }
+    if (moveState_ != MS_CARDINAL && (angleDot = offset.DotProduct(DIRECTION_SE)) > bestAngleDot) { bestAngleDot = angleDot; direction = DIRECTION_SE; moveState = MS_DIAGONAL; }
+    if (moveState_ != MS_DIAGONAL && (angleDot = offset.DotProduct(DIRECTION_S)) > bestAngleDot) { bestAngleDot = angleDot; direction = DIRECTION_S; moveState = MS_CARDINAL; }
+    if (moveState_ != MS_CARDINAL && (angleDot = offset.DotProduct(DIRECTION_SW)) > bestAngleDot) { bestAngleDot = angleDot; direction = DIRECTION_SW; moveState = MS_DIAGONAL; }
+    if (moveState_ != MS_DIAGONAL && (angleDot = offset.DotProduct(DIRECTION_W)) > bestAngleDot) { bestAngleDot = angleDot; direction = DIRECTION_W; moveState = MS_CARDINAL; }
+    if (moveState_ != MS_CARDINAL && (angleDot = offset.DotProduct(DIRECTION_NW)) > bestAngleDot) { bestAngleDot = angleDot; direction = DIRECTION_NW; moveState = MS_DIAGONAL; }
 
-	if (moveState_ != MS_NONE && direction != lastDirection_) {
-		moveState_ = MS_NONE;
-		return;
-	}
+    if (moveState_ != MS_NONE && direction != lastDirection_) {
+        moveState_ = MS_NONE;
+        return;
+    }
 
-	StaticModel *model = node_->GetComponent<StaticModel>();
-	if (direction == DIRECTION_E) {
-		model->SetMaterial(leftMaterial_);
-	} else if (direction == DIRECTION_W) {
-		model->SetMaterial(rightMaterial_);
-	} else if (direction == DIRECTION_N || direction == DIRECTION_NE || direction == DIRECTION_NW) {
-		model->SetMaterial(backMaterial_);
-	} else {
-		model->SetMaterial(frontMaterial_);
-	}
+    StaticModel *model = node_->GetComponent<StaticModel>();
+    if (direction == DIRECTION_E) {
+        model->SetMaterial(leftMaterial_);
+    } else if (direction == DIRECTION_W) {
+        model->SetMaterial(rightMaterial_);
+    } else if (direction == DIRECTION_N || direction == DIRECTION_NE || direction == DIRECTION_NW) {
+        model->SetMaterial(backMaterial_);
+    } else {
+        model->SetMaterial(frontMaterial_);
+    }
 
-	moveState_ = moveState;
-	lastDirection_ = direction;
-	rigidBody->SetLinearVelocity(direction * MOVE_SPEED);
+    moveState_ = moveState;
+    lastDirection_ = direction;
+    rigidBody->SetLinearVelocity(direction * MOVE_SPEED);
 }
 
 void Person::SetTarget(Vector3 target)
