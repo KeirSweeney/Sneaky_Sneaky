@@ -20,6 +20,7 @@ using namespace Urho3D;
 const float Guard::MOVE_SPEED = 1.0f;
 const float Guard::VIEW_DISTANCE = 5.0f;
 const float Guard::VIEW_ANGLE = 90.0f;
+const float Guard::DETECT_MOVE_SPEED = 1.5f;
 
 Guard::Guard(Context *context):
     LogicComponent(context),
@@ -40,7 +41,7 @@ void Guard::Update(float timeStep)
     bool playerDetected = DetectPlayer(personNode);
 
     Light *light = node_->GetChild((unsigned)0)->GetComponent<Light>();
-    light->SetColor(playerDetected ? Color::RED : Color::WHITE);
+    light->SetColor(playerDetected ? Color::RED : Color::WHITE); //this is too beautiful for me to handle.....
 
     if (!playerDetected) {
         FollowWaypoints(timeStep);
@@ -74,13 +75,13 @@ void Guard::FollowPlayer(float timeStep, Node *player)
     Vector3 offset = next - guardPosition;
     offset.y_ = 0.0f;
 
-    if (offset.LengthSquared() < (MOVE_SPEED * MOVE_SPEED * timeStep * timeStep)) {
+	if (offset.LengthSquared() < (DETECT_MOVE_SPEED * DETECT_MOVE_SPEED * timeStep * timeStep)) {
         path_.Erase(0);
     }
 
     offset.Normalize();
     node_->SetDirection(offset);
-    rigidBody->SetLinearVelocity(offset * MOVE_SPEED);
+	rigidBody->SetLinearVelocity(offset * DETECT_MOVE_SPEED);
 }
 
 void Guard::FollowWaypoints(float timeStep)

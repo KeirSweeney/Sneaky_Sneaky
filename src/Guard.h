@@ -10,6 +10,7 @@ private:
     static const float MOVE_SPEED;
 	static const float VIEW_DISTANCE;
 	static const float VIEW_ANGLE;
+	static const float Guard::DETECT_MOVE_SPEED;
 
 public:
     Guard(Urho3D::Context *context);
