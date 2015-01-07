@@ -450,6 +450,26 @@ void Game::HandleUpdate(StringHash eventType, VariantMap &eventData)
     bool debugRendering = debugGeometry_ || debugPhysics_ || debugNavigation_;
     renderPath->SetEnabled("FXAA3", !debugRendering);
     renderPath->SetEnabled("BloomHDR", !debugRendering);
+
+#if 0
+    static float colorTimer = 0.0f;
+
+    if (colorTimer >= 0.2f) {
+        colorTimer = 0.0f;
+
+        PODVector<Node *> nodes;
+        scene_->GetChildrenWithComponent<Light>(nodes, true);
+        for (PODVector<Node *>::ConstIterator i = nodes.Begin(); i != nodes.End(); ++i) {
+            Color c;
+            c.FromHSV(Random(1.0f), 1.0f, 1.0f);
+            Light *l = (*i)->GetComponent<Light>();
+            l->SetColor(c);
+            l->SetCastShadows((Rand() % 2) == 0);
+        }
+    }
+
+    colorTimer += eventData[Update::P_TIMESTEP].GetFloat();
+#endif
 }
 
 void Game::HandlePostRenderUpdate(StringHash eventType, VariantMap &eventData)
