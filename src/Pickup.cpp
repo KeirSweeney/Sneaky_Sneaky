@@ -10,6 +10,7 @@
 #include "RigidBody.h"
 #include "Person.h"
 #include "ValueAnimation.h"
+#include "Inventory.h"
 
 
 using namespace Urho3D;
@@ -62,7 +63,10 @@ void Pickup::Update(float timeStep)
 
 	if (!colliders.Empty() && colliders[0]->GetNode() == person) 
 	{
-		node_->SetPosition(Vector3(1.0f, 0.0f, 0.0f));
+		Inventory *inv = person->GetComponent<Inventory>();
+		inv->AddToInventory("Tape");
+		//node_->SetPosition(Vector3(1.0f, 0.0f, 0.0f));
+		//move pickup to players inventory
 		
 	}
 	else 

@@ -1,4 +1,5 @@
 #include "Inventory.h"
+#include "Pickup.h"
 
 #include "Context.h"
 #include "Node.h"
@@ -18,6 +19,7 @@
 #include "Input.h"
 
 using namespace Urho3D;
+Urho3D::String myPickup;
 
 Inventory::Inventory(Context *context):
     LogicComponent(context)
@@ -62,4 +64,10 @@ void Inventory::Update(float timeStep)
     }
 
     panel_->SetVisible(true);
+	
+}
+
+void AddToInventory(String pickupName)
+{
+	myPickup = pickupName;
 }
