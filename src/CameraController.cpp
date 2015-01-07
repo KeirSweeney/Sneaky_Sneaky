@@ -52,3 +52,8 @@ void CameraController::Update(float timeStep)
     Vector3 cameraPosition = node_->GetPosition();
     node_->SetPosition(cameraPosition + (position - cameraPosition) * 2.0f * timeStep);
 }
+
+float CameraController::GetYawAngle()
+{
+    return cameraYaw_;
+}

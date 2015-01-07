@@ -14,6 +14,9 @@ public:
     void DelayedStart();
     void Update(float timeStep);
 
+public:
+    float GetYawAngle();
+
 private:
     float cameraYaw_;
     float targetCameraYaw_;
