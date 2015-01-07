@@ -35,6 +35,7 @@
 #include "Pickup.h"
 #include "Guard.h"
 #include "Inventory.h"
+#include "UI.h"
 
 #include <ctime>
 
@@ -118,6 +119,7 @@ void Game::Stop()
 
 void Game::LoadLevel()
 {
+    UI *ui = GetSubsystem<UI>();
     ResourceCache *cache = GetSubsystem<ResourceCache>();
 
     Image *levelImage = cache->GetResource<Image>(ToString("Levels/%d.png", currentLevel_ + 1));
@@ -130,6 +132,7 @@ void Game::LoadLevel()
         return;
     }
 
+    ui->GetRoot()->RemoveAllChildren();
     scene_->Clear();
 
     // Required components for 3D rendering.
