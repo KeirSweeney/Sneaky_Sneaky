@@ -3,9 +3,14 @@
 #include "Context.h"
 #include "Node.h"
 #include "Scene.h"
+#include "NavigationMesh.h"
+#include "Log.h"
+#include "DebugRenderer.h"
 #include "Profiler.h"
 #include "RigidBody.h"
+#include "Person.h"
 #include "ValueAnimation.h"
+
 
 using namespace Urho3D;
 
@@ -47,4 +52,37 @@ void Pickup::Update(float timeStep)
     Vector3 position = node_->GetPosition();
     position.y_ = height_;
     node_->SetPosition(position);
+
+	if (!trigger_) {
+		return;
+	}
+
+	//RigidBody *rigidBody = node_->GetComponent<RigidBody>();
+
+	//PODVector<RigidBody *> colliders;
+	//rigidBody->GetCollidingBodies(colliders);
+
+	//Node *person = GetScene()->GetChild("Person", true);
+
+	//if (!colliders.Empty() && colliders[0]->GetNode() == person) 
+	//{
+	//	LOGERROR("Collision");
+	//	
+	//}
+	//else 
+	//{
+	//	
+	//}
+
+
+}
+
+void Pickup::SetTriggerNode(Node *trigger)
+{
+	trigger_ = trigger;
+}
+
+Node *Pickup::GetTriggerNode() const
+{
+	return trigger_;
 }
