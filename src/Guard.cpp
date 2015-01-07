@@ -14,6 +14,7 @@
 #include "Octree.h"
 #include "UI.h"
 #include "Light.h"
+#include "Game.h"
 
 using namespace Urho3D;
 
@@ -36,7 +37,20 @@ void Guard::RegisterObject(Context* context)
 
 void Guard::Update(float timeStep)
 {
+    RigidBody *rigidBody = node_->GetComponent<RigidBody>();
     Node *personNode = GetScene()->GetChild("Person", true);
+
+    PODVector<RigidBody *> colliders;
+    rigidBody->GetCollidingBodies(colliders);
+
+    for (PODVector<RigidBody *>::ConstIterator i = colliders.Begin(); i != colliders.End(); ++i) {
+        if ((*i)->GetNode() != personNode) {
+            continue;
+        }
+
+        GetSubsystem<Game>()->LoadLevel(false);
+        return;
+    }
 
     bool playerDetected = DetectPlayer(personNode);
 
@@ -46,6 +60,7 @@ void Guard::Update(float timeStep)
     if (!playerDetected) {
         FollowWaypoints(timeStep);
     } else {
+        hasSeenPlayer_ = true;
         FollowPlayer(timeStep, personNode);
     }
 }
@@ -118,6 +133,11 @@ void Guard::FollowWaypoints(float timeStep)
 void Guard::SetWaypoints(PODVector<Vector3> &waypoints)
 {
     path_ = waypoints_ = waypoints;
+}
+
+bool Guard::HasSeenPlayer()
+{
+    return hasSeenPlayer_;
 }
 
 bool Guard::DetectPlayer(Node *player)

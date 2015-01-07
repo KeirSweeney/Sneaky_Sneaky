@@ -107,7 +107,7 @@ void Person::Update(float timeStep)
     offset.y_ = 0.0f;
     float distance = offset.LengthSquared();
 
-    if ((path_.Size() == 1 && distance < (0.25f * 0.25f)) || distance < (MOVE_SPEED * MOVE_SPEED * timeStep * timeStep)) {
+    if (distance < (0.25f * 0.25f) || distance < (MOVE_SPEED * MOVE_SPEED * timeStep * timeStep)) {
         path_.Erase(0);
     }
 

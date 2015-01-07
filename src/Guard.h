@@ -26,9 +26,11 @@ private:
 
 public:
     void SetWaypoints(Urho3D::PODVector<Urho3D::Vector3> &waypoints);
+    bool HasSeenPlayer();
 
 private:
     Urho3D::PODVector<Urho3D::Vector3> path_;
     Urho3D::PODVector<Urho3D::Vector3> waypoints_;
     bool wasFollowingPlayer_;
+    bool hasSeenPlayer_;
 };

@@ -20,9 +20,10 @@ public:
     void Start();
     void Stop();
 
-private:
-    void LoadLevel();
+public:
+    void LoadLevel(bool next);
 
+private:
     void HandleUpdate(Urho3D::StringHash eventType, Urho3D::VariantMap &eventData);
     void HandlePostRenderUpdate(Urho3D::StringHash eventType, Urho3D::VariantMap &eventData);
 

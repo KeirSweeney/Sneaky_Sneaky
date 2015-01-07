@@ -69,6 +69,9 @@ void Game::Start()
     // Seed the random number generator.
     SetRandomSeed((unsigned int)time(NULL));
 
+    // We need to call back from the components for level transitions.
+    context_->RegisterSubsystem(this);
+
     ResourceCache *cache = GetSubsystem<ResourceCache>();
 
     debugHud_ = engine_->CreateDebugHud();
@@ -106,7 +109,7 @@ void Game::Start()
     input->SetMouseVisible(true);
     input->SetMouseMode(MM_ABSOLUTE);
 
-    LoadLevel();
+    LoadLevel(false);
 
     SubscribeToEvent(E_UPDATE, HANDLER(Game, HandleUpdate));
     SubscribeToEvent(E_POSTRENDERUPDATE, HANDLER(Game, HandlePostRenderUpdate));
@@ -117,16 +120,20 @@ void Game::Stop()
     engine_->DumpResources(true);
 }
 
-void Game::LoadLevel()
+void Game::LoadLevel(bool next)
 {
     UI *ui = GetSubsystem<UI>();
     ResourceCache *cache = GetSubsystem<ResourceCache>();
+
+    if (next) {
+        currentLevel_++;
+    }
 
     Image *levelImage = cache->GetResource<Image>(ToString("Levels/%d.png", currentLevel_ + 1));
     if (!levelImage) {
         if (currentLevel_ != 0) {
             currentLevel_ = 0;
-            LoadLevel();
+            LoadLevel(false);
         }
 
         return;
@@ -443,8 +450,7 @@ void Game::HandleUpdate(StringHash eventType, VariantMap &eventData)
     }
 
     if (input->GetKeyPress(KEY_N)) {
-        currentLevel_++;
-        LoadLevel();
+        LoadLevel(true);
     }
 
     Renderer *renderer = GetSubsystem<Renderer>();
