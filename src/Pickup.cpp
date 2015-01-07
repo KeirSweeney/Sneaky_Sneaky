@@ -52,37 +52,25 @@ void Pickup::Update(float timeStep)
     Vector3 position = node_->GetPosition();
     position.y_ = height_;
     node_->SetPosition(position);
+		
+	RigidBody *rigidBody = node_->GetComponent<RigidBody>();
 
-	if (!trigger_) {
-		return;
+	PODVector<RigidBody *> colliders;
+	rigidBody->GetCollidingBodies(colliders);
+
+	Node *person = GetScene()->GetChild("Person", true);
+
+	if (!colliders.Empty() && colliders[0]->GetNode() == person) 
+	{
+		node_->SetPosition(Vector3(1.0f, 0.0f, 0.0f));
+		
+	}
+	else 
+	{
+		
 	}
 
-	//RigidBody *rigidBody = node_->GetComponent<RigidBody>();
-
-	//PODVector<RigidBody *> colliders;
-	//rigidBody->GetCollidingBodies(colliders);
-
-	//Node *person = GetScene()->GetChild("Person", true);
-
-	//if (!colliders.Empty() && colliders[0]->GetNode() == person) 
-	//{
-	//	LOGERROR("Collision");
-	//	
-	//}
-	//else 
-	//{
-	//	
-	//}
-
 
 }
 
-void Pickup::SetTriggerNode(Node *trigger)
-{
-	trigger_ = trigger;
-}
 
-Node *Pickup::GetTriggerNode() const
-{
-	return trigger_;
-}

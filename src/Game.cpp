@@ -230,20 +230,8 @@ void Game::LoadLevel()
                     model->SetMaterial(cache->GetResource<Material>("Materials/" + child.GetAttribute("material") + ".xml"));
                     model->SetCastShadows(true);
 
-					if (model->GetAttribute("model") == "Pickup") //not sure how to get the model name from the XML
-					{
-
-						Node *pickupTriggerNode = floorNode->CreateChild();
-
-						RigidBody *pickupTriggerRigidBody = pickupTriggerNode->CreateComponent<RigidBody>();
-						pickupTriggerRigidBody->SetTrigger(true);
-
-						Pickup *pickup = childNode->CreateComponent<Pickup>();
-						pickup->SetTriggerNode(pickupTriggerNode);
-					}
-
-					CollisionShape *collisionShape = childNode->CreateComponent<CollisionShape>();
-					collisionShape->SetBox(model->GetBoundingBox().Size(), model->GetBoundingBox().Center());
+                    CollisionShape *collisionShape = childNode->CreateComponent<CollisionShape>();
+                    collisionShape->SetBox(model->GetBoundingBox().Size(), model->GetBoundingBox().Center());
 
                     if (child.HasAttribute("interaction")) {
                         childNode->CreateComponent(child.GetAttribute("interaction"));
