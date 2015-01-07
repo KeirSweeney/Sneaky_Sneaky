@@ -257,7 +257,7 @@ void Game::LoadLevel()
 
                     Node *guardNode = roomContentsNode->CreateChild("Guard");
                     guardNode->SetWorldPosition(waypoints[0]);
-                    guardNode->Scale(Vector3(1.0f, 1.8f, 1.0f));
+                    guardNode->Scale(Vector3(0.6f, 1.8f, 1.0f));
 
                     StaticModel *guardModel = guardNode->CreateComponent<StaticModel>();
                     guardModel->SetModel(cache->GetResource<Model>("Models/PersonFlat.mdl"));
@@ -270,7 +270,7 @@ void Game::LoadLevel()
                     guardRigidBody->SetAngularFactor(Vector3::ZERO);
 
                     CollisionShape *guardCollisionShape = guardNode->CreateComponent<CollisionShape>();
-                    guardCollisionShape->SetCylinder(0.5f, 1.0f, Vector3(0.0f, 0.5f, 0.0f));
+                    guardCollisionShape->SetCylinder(1.0f, 1.0f, Vector3(0.0f, 0.5f, 0.0f));
 
                     Node *guardLightNode = guardNode->CreateChild();
                     guardLightNode->SetPosition(Vector3(0.0f, 0.75f, 0.0f));
@@ -368,11 +368,11 @@ void Game::LoadLevel()
 
     Node *personNode = scene_->CreateChild("Person");
     personNode->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
-    personNode->Scale(Vector3(1.0f, 1.8f, 1.0f));
+    personNode->Scale(Vector3(0.6f, 1.8f, 1.0f));
 
     StaticModel *personModel = personNode->CreateComponent<StaticModel>();
     personModel->SetModel(cache->GetResource<Model>("Models/PersonFlat.mdl"));
-    personModel->SetMaterial(cache->GetResource<Material>("Materials/Person.xml"));
+    personModel->SetMaterial(cache->GetResource<Material>("Materials/MaverickFront.xml"));
     personModel->SetCastShadows(true);
 
     RigidBody *personRigidBody = personNode->CreateComponent<RigidBody>();
@@ -381,7 +381,7 @@ void Game::LoadLevel()
     personRigidBody->SetAngularFactor(Vector3::ZERO);
 
     CollisionShape *personCollisionShape = personNode->CreateComponent<CollisionShape>();
-    personCollisionShape->SetCylinder(0.5f, 1.0f, Vector3(0.0f, 0.5f, 0.0f));
+    personCollisionShape->SetCylinder(1.0f, 1.0f, Vector3(0.0f, 0.5f, 0.0f));
 
     personNode->CreateComponent<Person>();
     personNode->CreateComponent<Inventory>();
