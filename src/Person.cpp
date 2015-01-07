@@ -110,27 +110,14 @@ void Person::Update(float timeStep)
 
     StaticModel *model = node_->GetComponent<StaticModel>();
     if (angle < -120.0f || angle > 120.0f) {
-        model->SetMaterial(backMaterial_);
+        model->SetMaterial(frontMaterial_);
     } else if (angle < -60.0f) {
         model->SetMaterial(leftMaterial_);
     } else if (angle > 60.0f) {
         model->SetMaterial(rightMaterial_);
     } else {
-        model->SetMaterial(frontMaterial_);
-    }
-
-#if 0
-
-    if (direction == DIRECTION_E) {
-        model->SetMaterial(leftMaterial_);
-    } else if (direction == DIRECTION_W) {
-        model->SetMaterial(rightMaterial_);
-    } else if (direction == DIRECTION_N || direction == DIRECTION_NE || direction == DIRECTION_NW) {
-        model->SetMaterial(frontMaterial_);
-    } else {
         model->SetMaterial(backMaterial_);
     }
-#endif
 
     rigidBody->SetLinearVelocity(offset * MOVE_SPEED);
 }
