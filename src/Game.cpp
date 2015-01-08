@@ -54,7 +54,7 @@ Game::Game(Context *context):
 
 void Game::Setup()
 {
-    engineParameters_["WindowTitle"] = "SneakySneaky";
+    engineParameters_["WindowTitle"] = "The Traitor";
     engineParameters_["FullScreen"] = false;
     engineParameters_["Multisample"] = 8;
     engineParameters_["VSync"] = true;
