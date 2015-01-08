@@ -21,7 +21,8 @@ public:
     void Stop();
 
 public:
-    void LoadLevel(bool next);
+    void LoadLevel();
+    void EndLevel(bool died);
 
 private:
     void HandleUpdate(Urho3D::StringHash eventType, Urho3D::VariantMap &eventData);
@@ -31,6 +32,13 @@ private:
     Urho3D::SharedPtr<Urho3D::DebugHud> debugHud_;
     Urho3D::SharedPtr<Urho3D::Scene> scene_;
     int currentLevel_;
+    float levelTime_;
+    enum GameState {
+        GS_MENU,
+        GS_PLAYING,
+        GS_DEAD,
+        GS_COMPLETED,
+    } gameState_;
 
     bool debugGeometry_;
     bool debugPhysics_;

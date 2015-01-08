@@ -36,6 +36,8 @@
 #include "Guard.h"
 #include "Inventory.h"
 #include "UI.h"
+#include "Sprite.h"
+#include "Stairs.h"
 
 #include <ctime>
 
@@ -45,7 +47,7 @@ DEFINE_APPLICATION_MAIN(Game)
 
 Game::Game(Context *context):
     Application(context),
-    currentLevel_(0),
+    currentLevel_(0), levelTime_(0.0f), gameState_(GS_PLAYING),
     debugGeometry_(false), debugPhysics_(false), debugNavigation_(false), debugDepthTest_(true)
 {
 }
@@ -87,6 +89,7 @@ void Game::Start()
     Person::RegisterObject(context_);
     Pickup::RegisterObject(context_);
     Terminal::RegisterObject(context_);
+    Stairs::RegisterObject(context_);
 
     SharedPtr<Viewport> viewport(new Viewport(context_, scene_, NULL));
 
@@ -109,7 +112,7 @@ void Game::Start()
     input->SetMouseVisible(true);
     input->SetMouseMode(MM_ABSOLUTE);
 
-    LoadLevel(false);
+    LoadLevel();
 
     SubscribeToEvent(E_UPDATE, HANDLER(Game, HandleUpdate));
     SubscribeToEvent(E_POSTRENDERUPDATE, HANDLER(Game, HandlePostRenderUpdate));
@@ -120,24 +123,27 @@ void Game::Stop()
     engine_->DumpResources(true);
 }
 
-void Game::LoadLevel(bool next)
+void Game::LoadLevel()
 {
     UI *ui = GetSubsystem<UI>();
     ResourceCache *cache = GetSubsystem<ResourceCache>();
 
-    if (next) {
+    if (gameState_ == GS_COMPLETED) {
         currentLevel_++;
     }
+    gameState_ = GS_PLAYING;
 
     Image *levelImage = cache->GetResource<Image>(ToString("Levels/%d.png", currentLevel_ + 1));
     if (!levelImage) {
         if (currentLevel_ != 0) {
             currentLevel_ = 0;
-            LoadLevel(false);
+            LoadLevel();
         }
 
         return;
     }
+
+    levelTime_ = 0.0f;
 
     ui->GetRoot()->RemoveAllChildren();
     scene_->Clear();
@@ -423,12 +429,66 @@ void Game::LoadLevel(bool next)
     renderer->GetViewport(0)->SetCamera(camera);
 }
 
+void Game::EndLevel(bool died)
+{
+    PODVector<Node *> nodes;
+    scene_->GetChildrenWithComponent<StaticModel>(nodes, true);
+
+    for (PODVector<Node *>::ConstIterator i = nodes.Begin(); i != nodes.End(); ++i) {
+        Node *node = *i;
+
+        Vector<SharedPtr<Component>> components = node->GetComponents();
+        for (Vector<SharedPtr<Component>>::ConstIterator ii = components.Begin(); ii != components.End(); ++ii) {
+            Component *component = *ii;
+
+            if (component->GetType() == "StaticModel") {
+                continue;
+            }
+
+            component->SetEnabled(false);
+        }
+    }
+
+    UI *ui = GetSubsystem<UI>();
+
+    UIElement *panel = ui->GetRoot()->CreateChild<UIElement>();
+    panel->SetFixedSize(panel->GetParent()->GetSize());
+    panel->SetAlignment(HA_CENTER, VA_CENTER);
+
+    Sprite *background = panel->CreateChild<Sprite>();
+    background->SetFixedSize(panel->GetSize());
+    background->SetColor(Color::BLACK);
+    background->SetOpacity(0.6f);
+
+    Text *label = panel->CreateChild<Text>();
+    label->SetFont("Fonts/Anonymous Pro.ttf");
+    label->SetColor(Color::WHITE);
+    label->SetAlignment(HA_CENTER, VA_CENTER);
+
+    if (died) {
+        label->SetText("You've been brutally murdered for your crimes against the company.\n\nPress [space] to try your hand again.");
+    } else {
+        label->SetText("Against all odds, you made it past security and on to the next floor.\n\nPress [space] to continue the adventure.");
+    }
+
+    gameState_ = died ? GS_DEAD : GS_COMPLETED;
+}
+
 void Game::HandleUpdate(StringHash eventType, VariantMap &eventData)
 {
-    (void)eventType; (void)eventData;
+    (void)eventType;
 
     Input *input = GetSubsystem<Input>();
 
+    float timeStep = eventData[Update::P_TIMESTEP].GetFloat();
+
+    if (gameState_ == GS_PLAYING) {
+        levelTime_ += timeStep;
+    } else if (input->GetKeyPress(KEY_SPACE)) {
+        LoadLevel();
+    }
+
+#if 1
     if (input->GetKeyPress(KEY_0)) {
         debugDepthTest_ = !debugDepthTest_;
     }
@@ -449,8 +509,8 @@ void Game::HandleUpdate(StringHash eventType, VariantMap &eventData)
         debugHud_->SetMode(debugHud_->GetMode() == DEBUGHUD_SHOW_NONE ? DEBUGHUD_SHOW_ALL : DEBUGHUD_SHOW_NONE);
     }
 
-    if (input->GetKeyPress(KEY_N)) {
-        LoadLevel(true);
+    if (gameState_ == GS_PLAYING && input->GetKeyPress(KEY_N)) {
+        EndLevel(false);
     }
 
     Renderer *renderer = GetSubsystem<Renderer>();
@@ -459,6 +519,7 @@ void Game::HandleUpdate(StringHash eventType, VariantMap &eventData)
     bool debugRendering = debugGeometry_ || debugPhysics_ || debugNavigation_;
     renderPath->SetEnabled("FXAA3", !debugRendering);
     renderPath->SetEnabled("BloomHDR", !debugRendering);
+#endif
 
 #if 0
     static float colorTimer = 0.0f;
@@ -477,7 +538,7 @@ void Game::HandleUpdate(StringHash eventType, VariantMap &eventData)
         }
     }
 
-    colorTimer += eventData[Update::P_TIMESTEP].GetFloat();
+    colorTimer += timeStep;
 #endif
 }
 

@@ -53,7 +53,7 @@ void Terminal::DelayedStart()
 void Terminal::Update(float timeStep)
 {
     Vector3 terminalPosition = node_->GetWorldPosition();
-    Vector3 personPosition = GetScene()->GetChild("Person", true)->GetPosition();
+    Vector3 personPosition = GetScene()->GetChild("Person", true)->GetWorldPosition();
     Vector3 personOffset = terminalPosition - personPosition;
 
     if (personOffset.LengthSquared() > (2.0f * 2.0f)) {

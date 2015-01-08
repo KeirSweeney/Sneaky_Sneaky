@@ -48,7 +48,7 @@ void Guard::Update(float timeStep)
             continue;
         }
 
-        GetSubsystem<Game>()->LoadLevel(false);
+        GetSubsystem<Game>()->EndLevel(true);
         return;
     }
 
