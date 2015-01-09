@@ -15,7 +15,6 @@
 #include "Graphics.h"
 #include "UIElement.h"
 #include "Text.h"
-#include "Octree.h"
 
 using namespace Urho3D;
 
@@ -88,26 +87,14 @@ bool Terminal::playerNear(Node *player)
     Vector3 forward = -node_->GetWorldDirection();
     difference.Normalize();
 
-    DebugRenderer *debug = node_->GetScene()->GetComponent<DebugRenderer>();
-    debug->AddLine(terminalPosition, terminalPosition + forward, Color::BLUE);
-    debug->AddLine(terminalPosition, terminalPosition + difference, Color::RED);
+    //DebugRenderer *debug = node_->GetScene()->GetComponent<DebugRenderer>();
+    //debug->AddLine(terminalPosition, terminalPosition + forward, Color::BLUE);
+    //debug->AddLine(terminalPosition, terminalPosition + difference, Color::RED);
 
     if (forward.DotProduct(difference) < Cos(VIEW_ANGLE / 2.0f)) {
         return false;
     }
 
-    Ray ray(terminalPosition + Vector3(0.0f, 1.6f, 0.0f) + (forward * 0.25f), difference);
-    debug->AddLine(ray.origin_, ray.origin_ + (ray.direction_ * VIEW_DISTANCE), Color::WHITE);
-
-    PODVector<RayQueryResult> result;
-    RayOctreeQuery query(result, ray, RAY_TRIANGLE, M_INFINITY, DRAWABLE_GEOMETRY);
-
-    Octree *octree = GetScene()->GetComponent<Octree>();
-    octree->RaycastSingle(query);
-
-    if (result.Empty() || result[0].node_ != player) {
-        return false;
-    }
 
     return true;
 }
