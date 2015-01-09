@@ -19,5 +19,10 @@ public:
     void Update(float timeStep);
 
 private:
+    static const float VIEW_DISTANCE;
+    static const float VIEW_ANGLE;
+    bool playerNear(Urho3D::Node *player);
+
+private:
     Urho3D::UIElement *panel_;
 };
