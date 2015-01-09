@@ -465,11 +465,47 @@ void Game::EndLevel(bool died)
     label->SetColor(Color::WHITE);
     label->SetAlignment(HA_CENTER, VA_CENTER);
 
+    char buffer[512];
     if (died) {
-        label->SetText("You've been brutally murdered for your crimes against the company.\n\nPress [space] to try your hand again.");
+        snprintf(buffer, sizeof(buffer),
+                 "You've been brutally murdered for your crimes against the company.\n"
+                 "\n"
+                 "Press [space] to try your hand again.");
     } else {
-        label->SetText("Against all odds, you made it past security and on to the next floor.\n\nPress [space] to continue the adventure.");
+        int m = levelTime_ / 60.0f;
+        int s = levelTime_ - (m * 60);
+        int ms = (levelTime_ * 100.0f) - (s * 100);
+
+        PODVector<Node *> guards;
+        scene_->GetChildrenWithComponent<Guard>(guards, true);
+
+        int guardCount = 0;
+        for (PODVector<Node *>::ConstIterator i = guards.Begin(); i != guards.End(); ++i) {
+            if ((*i)->GetComponent<Guard>()->HasSeenPlayer()) {
+                LOGERRORF("%d %d", guards.Size(), guardCount);
+                guardCount++;
+            }
+        }
+
+        int pickupCount = scene_->GetChild("Person", true)->GetComponent<Inventory>()->GetItemCount();
+
+        int score = ((300.0f - levelTime_) + (guardCount * -100.0f) + (pickupCount * 50.0f)) * 5.0f;
+
+        snprintf(buffer, sizeof(buffer),
+                 "Against all odds, you made it past security and on to the next floor.\n"
+                 "\n"
+                 "Press [space] to continue the adventure.\n"
+                 "\n"
+                 "\n"
+                 "           Completion Time: %02d:%02d.%03d\n"
+                 "            Seen By Guards: %d time%s\n"
+                 "         Pickups Collected: %d\n"
+                 "      ---------------------------------\n"
+                 "                     Score: %d",
+                 m, s, ms, guardCount, (guardCount != 1) ? "s" : "", pickupCount, score);
     }
+
+    label->SetText(buffer);
 
     gameState_ = died ? GS_DEAD : GS_COMPLETED;
 }

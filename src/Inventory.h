@@ -26,6 +26,7 @@ public:
 
 public:
     void AddItem(Pickup *item);
+    int GetItemCount();
 
 private:
     bool dirty_;

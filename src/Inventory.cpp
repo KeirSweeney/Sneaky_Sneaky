@@ -98,3 +98,8 @@ void Inventory::AddItem(Pickup *item)
     items_.Push(SharedPtr<Pickup>(item));
     dirty_ = true;
 }
+
+int Inventory::GetItemCount()
+{
+    return items_.Size();
+}
