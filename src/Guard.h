@@ -2,6 +2,10 @@
 
 #include "LogicComponent.h"
 
+namespace Urho3D {
+    class Material;
+}
+
 class Guard:public Urho3D::LogicComponent
 {
     OBJECT(Guard)
@@ -17,6 +21,7 @@ public:
     static void RegisterObject(Urho3D::Context *context);
 
 public:
+    void DelayedStart();
     void Update(float timeStep);
 
 private:
@@ -33,4 +38,8 @@ private:
     Urho3D::PODVector<Urho3D::Vector3> waypoints_;
     bool wasFollowingPlayer_;
     bool hasSeenPlayer_;
+    Urho3D::Material *frontMaterial_;
+    Urho3D::Material *backMaterial_;
+    Urho3D::Material *leftMaterial_;
+    Urho3D::Material *rightMaterial_;
 };

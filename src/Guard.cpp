@@ -15,6 +15,9 @@
 #include "UI.h"
 #include "Light.h"
 #include "Game.h"
+#include "Material.h"
+#include "StaticModel.h"
+#include "ResourceCache.h"
 
 using namespace Urho3D;
 
@@ -33,6 +36,15 @@ void Guard::RegisterObject(Context* context)
 {
     context->RegisterFactory<Guard>("Logic");
     COPY_BASE_ATTRIBUTES(LogicComponent);
+}
+
+void Guard::DelayedStart()
+{
+    ResourceCache *cache = GetSubsystem<ResourceCache>();
+    frontMaterial_ = cache->GetResource<Material>("Materials/MaverickFront.xml");
+    backMaterial_ = cache->GetResource<Material>("Materials/MaverickBack.xml");
+    leftMaterial_ = cache->GetResource<Material>("Materials/MaverickLeft.xml");
+    rightMaterial_ = cache->GetResource<Material>("Materials/MaverickRight.xml");
 }
 
 void Guard::Update(float timeStep)
@@ -63,6 +75,9 @@ void Guard::Update(float timeStep)
         hasSeenPlayer_ = true;
         FollowPlayer(timeStep, personNode);
     }
+
+    //rigidBody->SetLinearVelocity(offset * MOVE_SPEED);
+
 }
 
 void Guard::FollowPlayer(float timeStep, Node *player)
@@ -90,11 +105,25 @@ void Guard::FollowPlayer(float timeStep, Node *player)
     Vector3 offset = next - guardPosition;
     offset.y_ = 0.0f;
 
+    offset.Normalize();
+    float angle = Quaternion(node_->GetDirection(), offset).YawAngle();
+
+    StaticModel *model = node_->GetComponent<StaticModel>();
+    if (angle < -120.0f || angle > 120.0f) {
+        model->SetMaterial(frontMaterial_);
+    } else if (angle < -60.0f) {
+        model->SetMaterial(leftMaterial_);
+    } else if (angle > 60.0f) {
+        model->SetMaterial(rightMaterial_);
+    } else {
+        model->SetMaterial(backMaterial_);
+    }
+
+
 	if (offset.LengthSquared() < (DETECT_MOVE_SPEED * DETECT_MOVE_SPEED * timeStep * timeStep)) {
         path_.Erase(0);
     }
 
-    offset.Normalize();
     node_->SetDirection(offset);
 	rigidBody->SetLinearVelocity(offset * DETECT_MOVE_SPEED);
 }
@@ -120,7 +149,6 @@ void Guard::FollowWaypoints(float timeStep)
 
     Vector3 offset = next - position;
     offset.y_ = 0.0f;
-
     if (offset.LengthSquared() < (MOVE_SPEED * MOVE_SPEED * timeStep * timeStep)) {
         path_.Erase(0);
     }
