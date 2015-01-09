@@ -10,6 +10,10 @@ class Terminal: public Urho3D::LogicComponent
 {
     OBJECT(Terminal)
 
+private:
+    static const float VIEW_DISTANCE;
+    static const float VIEW_ANGLE;
+
 public:
     Terminal(Urho3D::Context *context);
     static void RegisterObject(Urho3D::Context* context);
@@ -19,9 +23,7 @@ public:
     void Update(float timeStep);
 
 private:
-    static const float VIEW_DISTANCE;
-    static const float VIEW_ANGLE;
-    bool playerNear(Urho3D::Node *player);
+    bool CanPlayerInteract();
 
 private:
     Urho3D::UIElement *panel_;

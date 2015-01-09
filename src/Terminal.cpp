@@ -15,10 +15,11 @@
 #include "Graphics.h"
 #include "UIElement.h"
 #include "Text.h"
+#include "Renderer.h"
 
 using namespace Urho3D;
 
-const float Terminal::VIEW_DISTANCE = 2.0f;
+const float Terminal::VIEW_DISTANCE = 1.5f;
 const float Terminal::VIEW_ANGLE = 90.0f;
 
 Terminal::Terminal(Context *context):
@@ -55,13 +56,16 @@ void Terminal::DelayedStart()
 
 void Terminal::Update(float timeStep)
 {
-    Node *person = GetScene()->GetChild("Person", true);
-    Vector3 terminalPosition = node_->GetWorldPosition();
+    Vector3 position = node_->GetWorldPosition();
 
-    bool atTerminal = playerNear(person);
+    if (!CanPlayerInteract()) {
+        panel_->SetVisible(false);
+        return;
+    }
 
-    Camera *camera = GetScene()->GetChild("Camera", true)->GetComponent<Camera>();
-    Vector2 screenPosition = camera->WorldToScreenPoint(terminalPosition);
+    Renderer *renderer = GetSubsystem<Renderer>();
+    Camera *camera = renderer->GetViewport(0)->GetCamera();
+    Vector2 screenPosition = camera->WorldToScreenPoint(position);
 
     Graphics *graphics = GetSubsystem<Graphics>();
     IntVector2 uiPosition;
@@ -69,18 +73,17 @@ void Terminal::Update(float timeStep)
     uiPosition.y_ = (int)round((screenPosition.y_ * graphics->GetHeight()) - (panel_->GetHeight() / 2.0f));
 
     panel_->SetPosition(uiPosition);
-    panel_->SetVisible(atTerminal ? true : false); //learning from you Ash :P haha
+    panel_->SetVisible(true);
 
 }
-bool Terminal::playerNear(Node *player)
+bool Terminal::CanPlayerInteract()
 {
     Vector3 terminalPosition = node_->GetWorldPosition();
     Vector3 personPosition = GetScene()->GetChild("Person", true)->GetWorldPosition();
     Vector3 difference = personPosition - terminalPosition;
 
-    if(difference.LengthSquared() > VIEW_DISTANCE * VIEW_DISTANCE)
+    if(difference.LengthSquared() > (VIEW_DISTANCE * VIEW_DISTANCE))
     {
-        panel_->SetVisible(false);
         return false;
     }
 
@@ -94,7 +97,6 @@ bool Terminal::playerNear(Node *player)
     if (forward.DotProduct(difference) < Cos(VIEW_ANGLE / 2.0f)) {
         return false;
     }
-
 
     return true;
 }
