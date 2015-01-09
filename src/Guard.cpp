@@ -18,6 +18,8 @@
 #include "Material.h"
 #include "StaticModel.h"
 #include "ResourceCache.h"
+#include "Renderer.h"
+#include "CameraController.h"
 
 using namespace Urho3D;
 
@@ -28,6 +30,7 @@ const float Guard::DETECT_MOVE_SPEED = 1.5f;
 
 Guard::Guard(Context *context):
     LogicComponent(context),
+    hasSeenPlayer_(false),
     wasFollowingPlayer_(false)
 {
 }
@@ -45,15 +48,16 @@ void Guard::DelayedStart()
     backMaterial_ = cache->GetResource<Material>("Materials/MaverickBack.xml");
     leftMaterial_ = cache->GetResource<Material>("Materials/MaverickLeft.xml");
     rightMaterial_ = cache->GetResource<Material>("Materials/MaverickRight.xml");
+
+    rigidBody_ = node_->GetComponent<RigidBody>();
 }
 
 void Guard::Update(float timeStep)
 {
-    RigidBody *rigidBody = node_->GetComponent<RigidBody>();
     Node *personNode = GetScene()->GetChild("Person", true);
 
     PODVector<RigidBody *> colliders;
-    rigidBody->GetCollidingBodies(colliders);
+    rigidBody_->GetCollidingBodies(colliders);
 
     for (PODVector<RigidBody *>::ConstIterator i = colliders.Begin(); i != colliders.End(); ++i) {
         if ((*i)->GetNode() != personNode) {
@@ -64,49 +68,37 @@ void Guard::Update(float timeStep)
         return;
     }
 
-    bool playerDetected = DetectPlayer(personNode);
+    Renderer *renderer = GetSubsystem<Renderer>();
+    Camera *camera = renderer->GetViewport(0)->GetCamera();
+    CameraController *cameraController = camera->GetNode()->GetParent()->GetComponent<CameraController>();
+    node_->SetWorldRotation(Quaternion(cameraController->GetYawAngle(), Vector3::UP));
 
-    Light *light = node_->GetChild((unsigned)0)->GetComponent<Light>();
-    light->SetColor(playerDetected ? Color::RED : Color::WHITE); //this is too beautiful for me to handle.....
+    bool guardMoving = rigidBody_->GetLinearVelocity().LengthSquared() > 0.0f;
+    bool playerDetected = guardMoving && DetectPlayer(personNode);
 
-    if (!playerDetected) {
-        FollowWaypoints(timeStep);
-    } else {
+    if (playerDetected) {
         hasSeenPlayer_ = true;
         FollowPlayer(timeStep, personNode);
+    } else {
+        FollowWaypoints(timeStep);
     }
 
-    //rigidBody->SetLinearVelocity(offset * MOVE_SPEED);
-
-}
-
-void Guard::FollowPlayer(float timeStep, Node *player)
-{
-    NavigationMesh *navMesh = GetScene()->GetComponent<NavigationMesh>();
-
-    RigidBody *rigidBody = node_->GetComponent<RigidBody>();
-
-    Vector3 guardPosition = node_->GetWorldPosition();
-    Vector3 playerPosition = player->GetWorldPosition();
-
-    wasFollowingPlayer_ = true;
-
-    Vector3 target = navMesh->FindNearestPoint(playerPosition);
-    navMesh->FindPath(path_, guardPosition, target);
-    path_.Erase(0);
-
-    if (path_.Empty()) {
-        rigidBody->SetLinearVelocity(Vector3::ZERO);
+    Vector3 velocity = rigidBody_->GetLinearVelocity();
+    guardMoving = velocity.LengthSquared() > 0.0f;
+    if (!guardMoving) {
         return;
     }
 
-    Vector3 next = path_.Front();
+    Quaternion rotation = Quaternion(Vector3::FORWARD, velocity);
 
-    Vector3 offset = next - guardPosition;
-    offset.y_ = 0.0f;
+    Node *lightNode = node_->GetChild("SearchLight");
+    lightNode->SetWorldRotation(rotation);
+    lightNode->Rotate(Quaternion(30.0f, Vector3::RIGHT));
 
-    offset.Normalize();
-    float angle = Quaternion(node_->GetDirection(), offset).YawAngle();
+    Light *light = lightNode->GetComponent<Light>();
+    light->SetColor(guardMoving ? (playerDetected ? Color::RED : Color::WHITE) : Color::BLACK);
+
+    float angle = rotation.YawAngle();
 
     StaticModel *model = node_->GetComponent<StaticModel>();
     if (angle < -120.0f || angle > 120.0f) {
@@ -118,19 +110,41 @@ void Guard::FollowPlayer(float timeStep, Node *player)
     } else {
         model->SetMaterial(backMaterial_);
     }
+}
 
+void Guard::FollowPlayer(float timeStep, Node *player)
+{
+    NavigationMesh *navMesh = GetScene()->GetComponent<NavigationMesh>();
+
+    Vector3 guardPosition = node_->GetWorldPosition();
+    Vector3 playerPosition = player->GetWorldPosition();
+
+    wasFollowingPlayer_ = true;
+
+    Vector3 target = navMesh->FindNearestPoint(playerPosition);
+    navMesh->FindPath(path_, guardPosition, target);
+    path_.Erase(0);
+
+    if (path_.Empty()) {
+        rigidBody_->SetLinearVelocity(Vector3::ZERO);
+        return;
+    }
+
+    Vector3 next = path_.Front();
+
+    Vector3 offset = next - guardPosition;
+    offset.y_ = 0.0f;
 
 	if (offset.LengthSquared() < (DETECT_MOVE_SPEED * DETECT_MOVE_SPEED * timeStep * timeStep)) {
         path_.Erase(0);
     }
 
-    node_->SetDirection(offset);
-	rigidBody->SetLinearVelocity(offset * DETECT_MOVE_SPEED);
+    offset.Normalize();
+    rigidBody_->SetLinearVelocity(offset * DETECT_MOVE_SPEED);
 }
 
 void Guard::FollowWaypoints(float timeStep)
 {
-    RigidBody *rigidBody = node_->GetComponent<RigidBody>();
     Vector3 position = node_->GetWorldPosition();
 
     if (wasFollowingPlayer_ && path_.Empty()) {
@@ -149,13 +163,13 @@ void Guard::FollowWaypoints(float timeStep)
 
     Vector3 offset = next - position;
     offset.y_ = 0.0f;
+
     if (offset.LengthSquared() < (MOVE_SPEED * MOVE_SPEED * timeStep * timeStep)) {
         path_.Erase(0);
     }
 
     offset.Normalize();
-    node_->SetDirection(offset);
-    rigidBody->SetLinearVelocity(offset * MOVE_SPEED);
+    rigidBody_->SetLinearVelocity(offset * MOVE_SPEED);
 }
 
 void Guard::SetWaypoints(PODVector<Vector3> &waypoints)
@@ -174,33 +188,39 @@ bool Guard::DetectPlayer(Node *player)
     Vector3 playerPosition = player->GetWorldPosition();
     Vector3 difference = (playerPosition - guardPosition);
 
-   if (difference.LengthSquared() > (VIEW_DISTANCE * VIEW_DISTANCE)) {
+    float length = difference.Length();
+    if (length > VIEW_DISTANCE) {
         return false;
-   }
+    }
 
-   Vector3 forward = node_->GetWorldDirection();
-   difference.Normalize();
+    Vector3 forward = rigidBody_->GetLinearVelocity();
 
-   //DebugRenderer *debug = node_->GetScene()->GetComponent<DebugRenderer>();
-   //debug->AddLine(guardPosition, guardPosition + forward, Color::BLUE);
-   //debug->AddLine(guardPosition, guardPosition + difference, Color::RED);
+    forward.Normalize();
+    difference.Normalize();
 
-   if (forward.DotProduct(difference) < Cos(VIEW_ANGLE / 2.0f)) {
+    //DebugRenderer *debug = node_->GetScene()->GetComponent<DebugRenderer>();
+    //debug->AddLine(guardPosition, guardPosition + forward, Color::BLUE);
+
+    if (forward.DotProduct(difference) < Cos(VIEW_ANGLE / 2.0f)) {
+       //debug->AddLine(guardPosition, guardPosition + difference, Color::RED);
        return false;
-   }
+    }
 
-   Ray ray(guardPosition + Vector3(0.0f, 1.6f, 0.0f) + (forward * 0.25f), difference);
-   //debug->AddLine(ray.origin_, ray.origin_ + (ray.direction_ * VIEW_DISTANCE), Color::WHITE);
+    //debug->AddLine(guardPosition, guardPosition + difference, Color::GREEN);
 
-   PODVector<RayQueryResult> result;
-   RayOctreeQuery query(result, ray, RAY_TRIANGLE, M_INFINITY, DRAWABLE_GEOMETRY);
+    Ray ray(guardPosition + Vector3(0.0f, 1.6f, 0.0f) + (forward * 0.25f), difference);
 
-   Octree *octree = GetScene()->GetComponent<Octree>();
-   octree->RaycastSingle(query);
+    PODVector<RayQueryResult> result;
+    RayOctreeQuery query(result, ray, RAY_TRIANGLE, length, DRAWABLE_GEOMETRY);
 
-   if (result.Empty() || result[0].node_ != player) {
+    Octree *octree = GetScene()->GetComponent<Octree>();
+    octree->RaycastSingle(query);
+
+    if (!result.Empty() && result[0].node_ != player) {
+       //debug->AddLine(ray.origin_, ray.origin_ + (ray.direction_ * length), Color::RED);
        return false;
-   }
+    }
 
-   return true;
+    //debug->AddLine(ray.origin_, ray.origin_ + (ray.direction_ * length), Color::GREEN);
+    return true;
 }

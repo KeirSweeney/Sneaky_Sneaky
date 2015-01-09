@@ -3,6 +3,7 @@
 #include "LogicComponent.h"
 
 namespace Urho3D {
+    class RigidBody;
     class Material;
 }
 
@@ -34,10 +35,11 @@ public:
     bool HasSeenPlayer();
 
 private:
+    Urho3D::RigidBody *rigidBody_;
     Urho3D::PODVector<Urho3D::Vector3> path_;
     Urho3D::PODVector<Urho3D::Vector3> waypoints_;
-    bool wasFollowingPlayer_;
     bool hasSeenPlayer_;
+    bool wasFollowingPlayer_;
     Urho3D::Material *frontMaterial_;
     Urho3D::Material *backMaterial_;
     Urho3D::Material *leftMaterial_;

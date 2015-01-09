@@ -288,7 +288,7 @@ void Game::LoadLevel()
                     CollisionShape *guardCollisionShape = guardNode->CreateComponent<CollisionShape>();
                     guardCollisionShape->SetCylinder(1.0f, 1.0f, Vector3(0.0f, 0.5f, 0.0f));
 
-                    Node *guardLightNode = guardNode->CreateChild();
+                    Node *guardLightNode = guardNode->CreateChild("SearchLight");
                     guardLightNode->SetPosition(Vector3(0.0f, 0.75f, 0.0f));
                     guardLightNode->SetRotation(Quaternion(30.0f, Vector3::RIGHT));
 
