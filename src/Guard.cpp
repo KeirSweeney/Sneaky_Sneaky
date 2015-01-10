@@ -216,7 +216,7 @@ bool Guard::DetectPlayer(Node *player)
     Octree *octree = GetScene()->GetComponent<Octree>();
     octree->RaycastSingle(query);
 
-    if (!result.Empty() && result[0].node_ != player) {
+    if (!result.Empty() && result[0].node_ != player && result[0].node_->GetParent() != player) {
        //debug->AddLine(ray.origin_, ray.origin_ + (ray.direction_ * length), Color::RED);
        return false;
     }

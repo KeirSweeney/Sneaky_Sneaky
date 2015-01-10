@@ -42,6 +42,8 @@ void Person::DelayedStart()
     backMaterial_ = cache->GetResource<Material>("Materials/MaverickBack.xml");
     leftMaterial_ = cache->GetResource<Material>("Materials/MaverickLeft.xml");
     rightMaterial_ = cache->GetResource<Material>("Materials/MaverickRight.xml");
+    frontShadowMaterial_ = cache->GetResource<Material>("Materials/MaverickFrontShadow.xml");
+    leftShadowMaterial_ = cache->GetResource<Material>("Materials/MaverickLeftShadow.xml");
 }
 
 void Person::Update(float timeStep)
@@ -109,14 +111,19 @@ void Person::Update(float timeStep)
     float angle = Quaternion(node_->GetDirection(), offset).YawAngle();
 
     StaticModel *model = node_->GetComponent<StaticModel>();
+    StaticModel *shadowModel = node_->GetChild("ShadowCaster")->GetComponent<StaticModel>();
     if (angle < -120.0f || angle > 120.0f) {
         model->SetMaterial(frontMaterial_);
+        shadowModel->SetMaterial(leftShadowMaterial_);
     } else if (angle < -60.0f) {
         model->SetMaterial(leftMaterial_);
+        shadowModel->SetMaterial(frontShadowMaterial_);
     } else if (angle > 60.0f) {
         model->SetMaterial(rightMaterial_);
+        shadowModel->SetMaterial(frontShadowMaterial_);
     } else {
         model->SetMaterial(backMaterial_);
+        shadowModel->SetMaterial(leftShadowMaterial_);
     }
 
     rigidBody->SetLinearVelocity(offset * MOVE_SPEED);

@@ -391,6 +391,14 @@ void Game::LoadLevel()
     personModel->SetMaterial(cache->GetResource<Material>("Materials/MaverickFront.xml"));
     personModel->SetCastShadows(true);
 
+    Node *personShadowNode = personNode->CreateChild("ShadowCaster");
+    personShadowNode->SetRotation(Quaternion(90.0f, Vector3::UP));
+
+    StaticModel *personShadowModel = personShadowNode->CreateComponent<StaticModel>();
+    personShadowModel->SetModel(cache->GetResource<Model>("Models/PersonFlat.mdl"));
+    personShadowModel->SetMaterial(cache->GetResource<Material>("Materials/MaverickLeftShadow.xml"));
+    personShadowModel->SetCastShadows(true);
+
     RigidBody *personRigidBody = personNode->CreateComponent<RigidBody>();
     personRigidBody->SetMass(100.0f);
     personRigidBody->SetFriction(0.0f);

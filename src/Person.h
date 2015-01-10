@@ -30,4 +30,6 @@ private:
 	Urho3D::Material *backMaterial_;
 	Urho3D::Material *leftMaterial_;
 	Urho3D::Material *rightMaterial_;
+    Urho3D::Material *frontShadowMaterial_;
+    Urho3D::Material *leftShadowMaterial_;
 };
