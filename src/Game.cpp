@@ -1,5 +1,9 @@
 #include "Game.h"
 
+#ifdef GOOGLE_BREAKPAD
+#include "client/mac/handler/exception_handler.h"
+#endif
+
 #include "Camera.h"
 #include "CollisionShape.h"
 #include "CoreEvents.h"
@@ -42,6 +46,23 @@
 #include <ctime>
 #include <cstdio>
 
+#ifdef GOOGLE_BREAKPAD
+#define Component Urho3D::Component
+
+bool BreakpadFilterCallback(void *context)
+{
+    (void)context;
+    return true;
+}
+
+bool BreakpadMinidumpCallback(const char *dump_dir, const char *minidump_id, void *context, bool succeeded)
+{
+    (void)context;
+    fprintf(stderr, "Crash dump written to '%s/%s.dmp'. Give it to Asher plz.\n", dump_dir, minidump_id);
+    return succeeded;
+}
+#endif
+
 using namespace Urho3D;
 
 DEFINE_APPLICATION_MAIN(Game)
@@ -51,6 +72,9 @@ Game::Game(Context *context):
     currentLevel_(0), levelTime_(0.0f), gameState_(GS_PLAYING),
     debugGeometry_(false), debugPhysics_(false), debugNavigation_(false), debugDepthTest_(true)
 {
+#ifdef GOOGLE_BREAKPAD
+    exceptionHandler_ = new google_breakpad::ExceptionHandler(".", BreakpadFilterCallback, BreakpadMinidumpCallback, NULL, true, NULL);
+#endif
 }
 
 void Game::Setup()
@@ -556,6 +580,12 @@ void Game::HandleUpdate(StringHash eventType, VariantMap &eventData)
 
     if (gameState_ == GS_PLAYING && input->GetKeyPress(KEY_N)) {
         EndLevel(false);
+    }
+
+    if (input->GetKeyPress(KEY_C)) {
+        // CRASH EVERYTHING!
+        volatile int *lol = NULL;
+        *lol = 0xDEADBEEF;
     }
 
     Renderer *renderer = GetSubsystem<Renderer>();

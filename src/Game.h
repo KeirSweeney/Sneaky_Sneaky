@@ -2,6 +2,12 @@
 
 #include "Application.h"
 
+#ifdef GOOGLE_BREAKPAD
+namespace google_breakpad {
+    class ExceptionHandler;
+}
+#endif
+
 namespace Urho3D {
     class DebugHud;
     class Scene;
@@ -29,6 +35,9 @@ private:
     void HandlePostRenderUpdate(Urho3D::StringHash eventType, Urho3D::VariantMap &eventData);
 
 private:
+#ifdef GOOGLE_BREAKPAD
+    google_breakpad::ExceptionHandler *exceptionHandler_;
+#endif
     Urho3D::SharedPtr<Urho3D::DebugHud> debugHud_;
     Urho3D::SharedPtr<Urho3D::Scene> scene_;
     int currentLevel_;

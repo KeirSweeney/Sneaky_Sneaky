@@ -55,8 +55,16 @@ endif()
 
 add_dependencies(${PROJECT_NAME} Urho3D)
 
+if (APPLE)
+    add_definitions(-DGOOGLE_BREAKPAD)
+    add_subdirectory(Breakpad)
+    include_directories(${CMAKE_CURRENT_SOURCE_DIR}/Breakpad)
+    add_dependencies(${PROJECT_NAME} Breakpad)
+    target_link_libraries(${PROJECT_NAME} Breakpad)
+endif()
+
 if(UNIX)
-	target_link_libraries(${PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/Urho3D/Lib/${URHO3D_LIB_NAME})
+    target_link_libraries(${PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/Urho3D/Lib/${URHO3D_LIB_NAME})
     add_custom_command(
         TARGET ${PROJECT_NAME} POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E create_symlink
@@ -65,7 +73,7 @@ if(UNIX)
         ${CMAKE_SOURCE_DIR}/data $<TARGET_FILE_DIR:${PROJECT_NAME}>/data
     )
 else()
-	target_link_libraries(${PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/Urho3D/Lib/${CMAKE_SHARED_LIBRARY_PREFIX}Urho3D${URHO3D_VERSION_SUFFIX}$<$<CONFIG:Debug>:_d>.lib)
+    target_link_libraries(${PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/Urho3D/Lib/${CMAKE_SHARED_LIBRARY_PREFIX}Urho3D${URHO3D_VERSION_SUFFIX}$<$<CONFIG:Debug>:_d>.lib)
     add_custom_command(
         TARGET ${PROJECT_NAME} POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy
