@@ -509,9 +509,9 @@ void Game::EndLevel(bool died)
                  "\n"
                  "Press [space] to try your hand again.");
     } else {
-        int m = levelTime_ / 60.0f;
-        int s = levelTime_ - (m * 60);
-        int ms = (levelTime_ * 100.0f) - (s * 100);
+        int m = (int)(levelTime_ / 60.0f);
+        int s = (int)levelTime_ - (m * 60);
+        int ms = (int)(levelTime_ * 100.0f) - (s * 100);
 
         PODVector<Node *> guards;
         scene_->GetChildrenWithComponent<Guard>(guards, true);
@@ -526,7 +526,7 @@ void Game::EndLevel(bool died)
 
         int pickupCount = scene_->GetChild("Person", true)->GetComponent<Inventory>()->GetItemCount();
 
-        int score = ((300.0f - levelTime_) + (guardCount * -100.0f) + (pickupCount * 50.0f)) * 5.0f;
+        int score = (int)(((300.0f - levelTime_) + (guardCount * -100.0f) + (pickupCount * 50.0f)) * 5.0f);
 
         snprintf(buffer, sizeof(buffer),
                  "Against all odds, you made it past security and on to the next floor.\n"
