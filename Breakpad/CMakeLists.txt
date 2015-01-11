@@ -1,4 +1,5 @@
 if(APPLE)
+    add_definitions(-DN_UNDF=0x0)
     set(SRC_LIST
         "client/mac/handler/breakpad_nlist_64.cc"
         "client/mac/handler/dynamic_images.cc"
@@ -18,7 +19,25 @@ if(APPLE)
         "common/mac/bootstrap_compat.cc"
     )
     set(DUMP_SRC_LIST
-        ""
+        "tools/mac/dump_syms/dump_syms_tool.mm"
+        "common/mac/dump_syms.mm"
+        "common/dwarf/bytereader.cc"
+        "common/dwarf/dwarf2reader.cc"
+        "common/dwarf/dwarf2diehandler.cc"
+        "common/stabs_reader.cc"
+        "common/stabs_to_module.cc"
+        "common/dwarf_cu_to_module.cc"
+        "common/dwarf_cfi_to_module.cc"
+        "common/mac/arch_utilities.cc"
+        "common/mac/file_id.cc"
+        "common/module.cc"
+        "common/mac/macho_reader.cc"
+        "common/language.cc"
+        "common/md5.cc"
+        "common/mac/macho_id.cc"
+        "common/dwarf_line_to_module.cc"
+        "common/mac/macho_utilities.cc"
+        "common/mac/macho_walker.cc"
     )
 elseif(UNIX) 
     set(SRC_LIST "")
@@ -41,18 +60,21 @@ elseif(WIN32)
 endif()
 
 include_directories(".")
-add_library(Breakpad STATIC ${SRC_LIST})
+
+add_library(breakpad STATIC ${SRC_LIST})
 
 if(WIN32)
     get_filename_component(VS_DIR [HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\VisualStudio\\12.0\\Setup\\VS;ProductDir] REALPATH CACHE)
     include_directories("${VS_DIR}/DIA SDK/include")
 endif()
 
-add_executable(BreakpadDump ${DUMP_SRC_LIST})
+add_executable(dump_syms ${DUMP_SRC_LIST})
 
 if(APPLE)
     find_library(CORE_FOUNDATION CoreFoundation)
-    target_link_libraries(Breakpad ${CORE_FOUNDATION})
+    target_link_libraries(breakpad ${CORE_FOUNDATION})
+    find_library(FOUNDATION Foundation)
+    target_link_libraries(dump_syms ${FOUNDATION})
 elseif(WIN32)
-    target_link_libraries(BreakpadDump "ImageHlp.lib" "${VS_DIR}/DIA SDK/lib/amd64/diaguids.lib")
+    target_link_libraries(dump_syms "ImageHlp.lib" "${VS_DIR}/DIA SDK/lib/amd64/diaguids.lib")
 endif()

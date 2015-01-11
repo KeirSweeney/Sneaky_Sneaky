@@ -40,7 +40,7 @@
 #include "Stairs.h"
 
 #ifdef GOOGLE_BREAKPAD
-#ifdef APPLE
+#ifdef __APPLE__
 #include "client/mac/handler/exception_handler.h"
 #else
 #include "client/windows/handler/exception_handler.h"
@@ -57,7 +57,7 @@
 #ifdef GOOGLE_BREAKPAD
 #define Component Urho3D::Component
 
-#ifdef APPLE
+#ifdef __APPLE__
 bool BreakpadFilterCallback(void *context)
 {
     (void)context;
@@ -96,7 +96,7 @@ Game::Game(Context *context):
     debugGeometry_(false), debugPhysics_(false), debugNavigation_(false), debugDepthTest_(true)
 {
 #ifdef GOOGLE_BREAKPAD
-#ifdef APPLE
+#ifdef __APPLE__
     exceptionHandler_ = new google_breakpad::ExceptionHandler(".", BreakpadFilterCallback, BreakpadMinidumpCallback, NULL, true, NULL);
 #else
 	exceptionHandler_ = new google_breakpad::ExceptionHandler(L".", BreakpadFilterCallback, BreakpadMinidumpCallback, NULL, google_breakpad::ExceptionHandler::HANDLER_ALL);

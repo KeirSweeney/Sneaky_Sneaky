@@ -25,8 +25,7 @@ endif()
 aux_source_directory(src SRC_LIST)
 add_executable(${PROJECT_NAME} WIN32 ${SRC_LIST})
 
-externalproject_add(
-    Urho3D
+externalproject_add(Urho3D
     SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/Urho3D/Source
     CMAKE_ARGS -DURHO3D_64BIT=1 -DURHO3D_ANGELSCRIPT=0 -DURHO3D_NETWORK=0 -DURHO3D_URHO2D=0 -DURHO3D_TOOLS=1 -DURHO3D_MINIDUMPS=0 -DURHO3D_FILEWATCHER=0 -DURHO3D_OPENGL=1 -DURHO3D_LIB_TYPE=SHARED -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DCMAKE_CONFIGURATION_TYPES=${CMAKE_CONFIGURATION_TYPES}
     BUILD_IN_SOURCE 0
@@ -64,8 +63,8 @@ if(1)
     add_definitions(-DGOOGLE_BREAKPAD)
     add_subdirectory(Breakpad)
     include_directories(${CMAKE_CURRENT_SOURCE_DIR}/Breakpad)
-    add_dependencies(${PROJECT_NAME} Breakpad)
-    target_link_libraries(${PROJECT_NAME} Breakpad)
+    add_dependencies(${PROJECT_NAME} breakpad)
+    target_link_libraries(${PROJECT_NAME} breakpad)
 endif()
 
 if(UNIX)
