@@ -46,6 +46,10 @@
 #include <ctime>
 #include <cstdio>
 
+#ifdef _MSC_VER
+#define snprintf sprintf_s
+#endif
+
 #ifdef GOOGLE_BREAKPAD
 #define Component Urho3D::Component
 
