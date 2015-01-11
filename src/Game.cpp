@@ -583,6 +583,7 @@ void Game::HandleUpdate(StringHash eventType, VariantMap &eventData)
     }
 
     if (gameState_ == GS_PLAYING && input->GetKeyPress(KEY_R)) {
+        GetSubsystem<ResourceCache>()->ReleaseAllResources(true);
         LoadLevel();
     }
 
