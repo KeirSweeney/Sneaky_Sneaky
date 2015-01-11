@@ -582,6 +582,10 @@ void Game::HandleUpdate(StringHash eventType, VariantMap &eventData)
         debugHud_->SetMode(debugHud_->GetMode() == DEBUGHUD_SHOW_NONE ? DEBUGHUD_SHOW_ALL : DEBUGHUD_SHOW_NONE);
     }
 
+    if (gameState_ == GS_PLAYING && input->GetKeyPress(KEY_R)) {
+        LoadLevel();
+    }
+
     if (gameState_ == GS_PLAYING && input->GetKeyPress(KEY_N)) {
         EndLevel(false);
     }
