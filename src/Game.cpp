@@ -40,6 +40,7 @@
 #include "Stairs.h"
 
 #include <ctime>
+#include <cstdio>
 
 using namespace Urho3D;
 
