@@ -75,6 +75,8 @@ if(UNIX)
         ${CMAKE_CURRENT_SOURCE_DIR}/Urho3D/Lib/${URHO3D_LIB_NAME} $<TARGET_FILE_DIR:${PROJECT_NAME}>/${URHO3D_LIB_NAME}
         COMMAND ${CMAKE_COMMAND} -E create_symlink
         ${CMAKE_SOURCE_DIR}/data $<TARGET_FILE_DIR:${PROJECT_NAME}>/data
+        COMMAND ${CMAKE_COMMAND} -E create_symlink
+        ${CMAKE_CURRENT_SOURCE_DIR}/Urho3D/Bin/AssetImporter $<TARGET_FILE_DIR:${PROJECT_NAME}>/AssetImporter
     )
 else()
     target_link_libraries(${PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/Urho3D/Lib/${CMAKE_SHARED_LIBRARY_PREFIX}Urho3D${URHO3D_VERSION_SUFFIX}$<$<CONFIG:Debug>:_d>.lib)
@@ -86,5 +88,7 @@ else()
         $<TARGET_FILE_DIR:${PROJECT_NAME}>/data
         COMMAND ${CMAKE_COMMAND} -E copy_directory
         ${CMAKE_SOURCE_DIR}/data $<TARGET_FILE_DIR:${PROJECT_NAME}>/data
+        COMMAND ${CMAKE_COMMAND} -E copy
+        ${CMAKE_CURRENT_SOURCE_DIR}/Urho3D/Bin/AssetImporter $<TARGET_FILE_DIR:${PROJECT_NAME}>/AssetImporter
     )
 endif()
