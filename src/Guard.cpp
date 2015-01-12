@@ -190,12 +190,12 @@ bool Guard::DetectPlayer(Node *player)
 
     float length = difference.Length();
     if (length > VIEW_DISTANCE) {
-        return false;
+        return false; //if the player is too far away from the guard then return false and exit the function.
     }
 
-    Vector3 forward = rigidBody_->GetLinearVelocity();
+    Vector3 forward = rigidBody_->GetLinearVelocity(); //this stores the way that the guard is looking in the game.
 
-    forward.Normalize();
+    forward.Normalize(); //normalize is used for when we use dot product.
     difference.Normalize();
 
     //DebugRenderer *debug = node_->GetScene()->GetComponent<DebugRenderer>();
@@ -203,24 +203,30 @@ bool Guard::DetectPlayer(Node *player)
 
     if (forward.DotProduct(difference) < Cos(VIEW_ANGLE / 2.0f)) {
        //debug->AddLine(guardPosition, guardPosition + difference, Color::RED);
-       return false;
+       return false; // this if statement is used to see if the player is within the guards FOV.
+                        //If he is not then it retruns false and exits the function.
     }
 
     //debug->AddLine(guardPosition, guardPosition + difference, Color::GREEN);
 
     Ray ray(guardPosition + Vector3(0.0f, 1.6f, 0.0f) + (forward * 0.25f), difference);
+    //this creates a raycast from an increased y value near to his eyes in the forward direction of
+        //where he is looking to the difference of positions from the guard to the player.
 
-    PODVector<RayQueryResult> result;
+    PODVector<RayQueryResult> result; //stores all of the objects the ray collides with into a vector.
     RayOctreeQuery query(result, ray, RAY_TRIANGLE, length, DRAWABLE_GEOMETRY);
+    //the query here checks the result vector at the ray cast from the guards at length.
+        // And checks all of the triangles of the objects and only hits drawble geometry.
 
     Octree *octree = GetScene()->GetComponent<Octree>();
-    octree->RaycastSingle(query);
+    octree->RaycastSingle(query);//we apply our Ray query here.
 
     if (!result.Empty() && result[0].node_ != player && result[0].node_->GetParent() != player) {
        //debug->AddLine(ray.origin_, ray.origin_ + (ray.direction_ * length), Color::RED);
-       return false;
+       return false; //If the ray hits anything except the player it returns false and exits the loop.
     }
 
     //debug->AddLine(ray.origin_, ray.origin_ + (ray.direction_ * length), Color::GREEN);
-    return true;
+    return true; //And finnally after all the checks, we know that the guard can see the player, is close enough,
+                    //and that there is no object obscuring the guards FOV.
 }
