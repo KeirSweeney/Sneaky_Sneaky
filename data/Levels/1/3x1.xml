@@ -1,0 +1,20 @@
+<room>
+<object position="-2.5 0 1.5" angles="0 90 0" scale="15" model="Table" material="Green"></object>
+<object position="2.5 0 1.5" angles="0 -90 0" scale="15" model="Table" material="Green"></object>
+<object position="0 0 0" angles="0 0 0" scale="15" model="Table" material="Green"></object>
+<object position="-2 0 0" angles="0 0 0" scale="15" model="Table" material="Green"></object>
+<object position="2 0 0" angles="0 0 0" scale="15" model="Table" material="Green"></object>
+<object position="-2.5 0 -1.5" angles="0 90 0" scale="15" model="Table" material="Green"></object>
+<object position="2.5 0 -1.5" angles="0 -90 0" scale="15" model="Table" material="Green"></object>
+ <object position="0 0.75 0" scale="5" model="Terminal" material="Terminal" interaction="Terminal"></object>
+<object position="-1.6 0 -0.8" angles="0 90 0" scale="20" model="CabinetShut" material="CabinetShut"></object>
+<object position="-1.2 0 -0.8" angles="0 90 0" scale="20" model="CabinetShut" material="CabinetShut"></object>
+<object position="1.2 0 -0.8" angles="0 90 0" scale="20" model="CabinetShut" material="CabinetShut"></object>
+<object position="1.6 0 -0.8" angles="0 90 0" scale="20" model="CabinetShut" material="CabinetShut"></object>
+<guard>
+        <waypoint position="-4 0 4"></waypoint>
+        <waypoint position="4 0 4"></waypoint>
+        <waypoint position="4 0 -4"></waypoint>
+        <waypoint position="-4 0 -4"></waypoint>
+    </guard>
+</room>
