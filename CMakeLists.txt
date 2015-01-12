@@ -78,6 +78,30 @@ if(UNIX)
         COMMAND ${CMAKE_COMMAND} -E create_symlink
         ${CMAKE_CURRENT_SOURCE_DIR}/Urho3D/Bin/AssetImporter${CMAKE_EXECUTABLE_SUFFIX} $<TARGET_FILE_DIR:${PROJECT_NAME}>/AssetImporter${CMAKE_EXECUTABLE_SUFFIX}
     )
+
+    if(APPLE)
+        get_property(PROJECT_LOCATION TARGET ${PROJECT_NAME} PROPERTY LOCATION)
+
+        add_custom_command(
+            OUTPUT ${PROJECT_LOCATION}.sym
+            COMMAND dsymutil ${PROJECT_LOCATION}
+            COMMAND strip -S ${PROJECT_LOCATION}
+            COMMAND $<TARGET_FILE:dump_syms> -g ${PROJECT_LOCATION}.dSYM ${PROJECT_LOCATION} > ${PROJECT_LOCATION}.sym
+            MAIN_DEPENDENCY ${PROJECT_LOCATION}
+        )
+
+        file(UPLOAD ${PROJECT_LOCATION}.sym "https://traitor.limetech.org/symbols" TIMEOUT 30)
+
+        add_custom_command(
+            OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/Urho3D/Lib/${URHO3D_LIB_NAME}.sym
+            COMMAND dsymutil ${CMAKE_CURRENT_SOURCE_DIR}/Urho3D/Lib/${URHO3D_LIB_NAME}
+            COMMAND strip -S ${CMAKE_CURRENT_SOURCE_DIR}/Urho3D/Lib/${URHO3D_LIB_NAME}
+            COMMAND $<TARGET_FILE:dump_syms> -g ${CMAKE_CURRENT_SOURCE_DIR}/Urho3D/Lib/${URHO3D_LIB_NAME}.dSYM ${CMAKE_CURRENT_SOURCE_DIR}/Urho3D/Lib/${URHO3D_LIB_NAME} > ${CMAKE_CURRENT_SOURCE_DIR}/Urho3D/Lib/${URHO3D_LIB_NAME}.sym
+            MAIN_DEPENDENCY ${CMAKE_CURRENT_SOURCE_DIR}/Urho3D/Lib/${URHO3D_LIB_NAME}
+        )
+
+        file(UPLOAD ${CMAKE_CURRENT_SOURCE_DIR}/Urho3D/Lib/${URHO3D_LIB_NAME}.sym "https://traitor.limetech.org/symbols" TIMEOUT 30)
+    endif()
 else()
     target_link_libraries(${PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/Urho3D/Lib/${CMAKE_SHARED_LIBRARY_PREFIX}Urho3D${URHO3D_VERSION_SUFFIX}$<$<CONFIG:Debug>:_d>.lib)
     add_custom_command(
