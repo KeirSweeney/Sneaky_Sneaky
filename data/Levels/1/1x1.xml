@@ -1,14 +1,27 @@
 <room>
-    <object position="0 1.5 5" angles="-90 0 0" model="Sign" material="PosterMap"></object>
-    <object position="-2 0 4.5" scale="15" model="Table" material="FlatGrey"></object>
+    <object position="-4 0 4.5" scale="15" model="Table" material="FlatGrey"></object>
     <object position="0 0 4.5" scale="15" model="Table" material="FlatGrey"></object>
-    <object position="2 0 4.5" scale="15" model="Table" material="FlatGrey"></object>
+    <object position="4 0 4.5" scale="15" model="Table" material="FlatGrey"></object>
+    <object position="-4.5 0 0" angles="0 -90 0" scale="15" model="Table" material="FlatGrey"></object>
+    <object position="-4.5 0 -2" angles="0 -90 0" scale="15" model="Table" material="FlatGrey"></object>
+<object position="4.5 0 -2" angles="0 90 0" scale="15" model="Table" material="FlatGrey"></object>
+<object position="-4.63 0 2.6" angles="0 0 0" scale="20" model="CabinetShut" material="CabinetShut"></object>
+<object position="-4.63 0 1.8" angles="0 0 0" scale="20" model="CabinetShut" material="CabinetShut"></object>
     <object position="0 0.75 4.5" scale="5" model="Terminal" material="Terminal" interaction="Terminal"></object>
-    <object position="0 0 1.5" scale="1" model="Pickup" material="Pickup" interaction="Pickup"></object>
-    <guard>
+<object position="2 0 4.5" scale="6.5" model="CoolerBase" material="FlatGrey"></object>
+    <object position="2 0 4.5" scale="6.5" model="CoolerBottle" material="CoolerBottle"></object>
+    <object position="1.25 0 4.5" angles="0 90 0" scale="20" model="CabinetBottom" material="CabinetBottom"></object>
+    <object position="0 0 4.2" angles="0 180 0" scale="5" model="Seat" material="Seat"></object>
+    <object position="0.65 0.8 4.2" angles="0 -90 0" scale="5" model="Lamp" material="Lamp"></object>
+    <object position="-1.37 0 4.5" angles="0 90 0" scale="20" model="CabinetMiddle" material="CabinetMiddle"></object>
+    <object position="-2 0 4.5" angles="0 90 0" scale="20" model="CabinetTop" material="CabinetTop"></object>
+    <object position="-2.63 0 4.5" angles="0 90 0" scale="20" model="CabinetShut" material="CabinetShut"></object>
+<!--    
+<guard>
         <waypoint position="0 0 2.5"></waypoint>
         <waypoint position="2.5 0 0"></waypoint>
         <waypoint position="-2.5 0 0"></waypoint>
         <waypoint position="0 0 -2.5"></waypoint>
     </guard>
+-->
 </room>

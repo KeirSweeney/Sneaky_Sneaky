@@ -1,0 +1,7 @@
+<room> 
+<object position="4.5  0 1.0" angles="0 180 0" scale="20" model="CabinetShut" material="CabinetShut"></object>
+ <object position="4.5 0 -1.0" angles="0 180 0" scale="20" model="CabinetShut" material="CabinetShut"></object>
+
+<object position="1.0 0 -4.5" angles="0 -90 0" scale="20" model="CabinetShut" material="CabinetShut"></object>
+ <object position="-1.0 0 -4.5" angles="0 -90 0" scale="20" model="CabinetShut" material="CabinetShut"></object>
+</room>
