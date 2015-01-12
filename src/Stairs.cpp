@@ -27,6 +27,7 @@ void Stairs::DelayedStart()
 {
     node_->CreateComponent<Navigable>();
 
+    // Create a number of weak lights up the center of the staircase to provide some extra lighting.
     Node *lightNode = node_->CreateChild("StairLight");
     lightNode->SetPosition(Vector3(0.0f, 6.0f, 0.0f));
     lightNode->SetDirection(Vector3::DOWN);

@@ -46,6 +46,7 @@ void Door::Update(float timeStep)
     if (!colliders.Empty() && colliders[0]->GetNode() == person) {
 		node_->SetPosition(Vector3(DOOR_OFFSET, 0.0f, 0.0f));
 
+        // This is a temporary hack for moving the player through the door.
 		person->GetComponent<Person>()->SetTarget(person->GetPosition() + (colliders[0]->GetLinearVelocity() * 0.01f));
     } else {
         node_->SetPosition(Vector3::ZERO);

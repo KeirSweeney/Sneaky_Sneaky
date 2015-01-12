@@ -123,9 +123,11 @@ void Game::Start()
     // Seed the random number generator.
     SetRandomSeed((unsigned int)time(NULL));
 
-    // We need to call back from the components for level transitions.
+    // We need to call back from the components for level transitions,
+    // this stores our instance for access in the global store.
     context_->RegisterSubsystem(this);
 
+    // ResourceCache handles loading files from disk.
     ResourceCache *cache = GetSubsystem<ResourceCache>();
 
     debugHud_ = engine_->CreateDebugHud();
@@ -134,6 +136,7 @@ void Game::Start()
 
     scene_ = new Scene(context_);
 
+    // We need to register our custom component classes before they can be used.
     CameraController::RegisterObject(context_);
     Door::RegisterObject(context_);
     Guard::RegisterObject(context_);
@@ -156,8 +159,13 @@ void Game::Start()
 
     Renderer *renderer = GetSubsystem<Renderer>();
     renderer->SetViewport(0, viewport);
+
+    // Increase shadow quality to max.
     renderer->SetShadowMapSize(2048);
     renderer->SetShadowQuality(QUALITY_MAX);
+
+    // We need HDR rendering due to the simple materials and number of lights.
+    // Without this, there are numerous lighting artifacts.
     renderer->SetHDRRendering(true);
 
     Input *input = GetSubsystem<Input>();
@@ -180,11 +188,14 @@ void Game::LoadLevel()
     UI *ui = GetSubsystem<UI>();
     ResourceCache *cache = GetSubsystem<ResourceCache>();
 
+    // If the player has completed the level (rather than dying), advance to the next.
     if (gameState_ == GS_COMPLETED) {
         currentLevel_++;
     }
     gameState_ = GS_PLAYING;
 
+    // The floor layout is defined using a pixel image.
+    // If we can't load the next level, try and go back to the first level.
     Image *levelImage = cache->GetResource<Image>(ToString("Levels/%d.png", currentLevel_ + 1));
     if (!levelImage) {
         if (currentLevel_ != 0) {
@@ -195,8 +206,11 @@ void Game::LoadLevel()
         return;
     }
 
+    // Reset the score counter.
     levelTime_ = 0.0f;
 
+    // Remove all UI and scene elements,
+    // they will be recreated for the level by the rest of this function.
     ui->GetRoot()->RemoveAllChildren();
     scene_->Clear();
 
@@ -211,6 +225,7 @@ void Game::LoadLevel()
     zone->SetFogStart(50.0f);
     zone->SetFogEnd(200.0f);
 
+    // The NavigationMesh is used for pathfinding.
     NavigationMesh *navigationMesh = scene_->CreateComponent<NavigationMesh>();
     navigationMesh->SetCellSize(0.2f);
     navigationMesh->SetAgentRadius(0.25f);
@@ -218,18 +233,29 @@ void Game::LoadLevel()
     navigationMesh->SetAgentMaxClimb(0.0f);
     navigationMesh->SetAgentMaxSlope(5.0f);
 
+    // PhysicsWorld holds all physics objects (and can be used to setup things like gravity).
     scene_->CreateComponent<PhysicsWorld>();
 
+    // ooooooooooo
+    // oxoxoxoxoxo
+    // ooooooooooo
+    // oxoxoxoxoxo
+    // ooooooooooo
+    // The above 11x5 pixel "image" shows which pixels would affect the floor.
+    // Loop through the image pixels used to define the floor tiles.
     int imageWidth = levelImage->GetWidth();
     int imageHeight = levelImage->GetHeight();
     int width = (imageWidth - 1) / 2;
     int height = (imageHeight - 1) / 2;
     for (int x = 0; x < width; ++x) {
         for (int y = 0; y < height; ++y) {
+            // If the pixel for this tile is transparent (less than 50% alpha), skip over it.
             if (levelImage->GetPixel(1 + (x * 2), (imageHeight - 1) - (1 + (y * 2))).a_ < 0.5f) {
                 continue;
             }
 
+            // Create a node and place it at the correct world coordinates.
+            // Floor tiles are 11m x 11m.
             Node *floorNode = scene_->CreateChild();
             floorNode->SetPosition(Vector3(x * 11.0f, 0.0f, y * 11.0f));
 
@@ -243,6 +269,8 @@ void Game::LoadLevel()
             floorModel->SetModel(cache->GetResource<Model>("Models/Floor.mdl"));
             floorModel->SetMaterial(cache->GetResource<Material>("Materials/FlatGrey.xml"));
 
+            // Create 4 evenly spaced lights for each room.
+            // Each light has a brightness of 20% to provide full lighting (when combiend with the 20% camera light).
             const float floorLightHeight = 3.0f;
 
             Node *floorLightNode = floorNode->CreateChild();
@@ -263,6 +291,7 @@ void Game::LoadLevel()
             floorLightNode = floorLightNode->Clone();
             floorLightNode->SetPosition(Vector3(2.75f, floorLightHeight, 2.75f));
 
+            // Label the room with its number for development.
             Node *roomLabelNode = floorNode->CreateChild();
             roomLabelNode->SetPosition(Vector3(0.0f, 0.1f, 0.0f));
             roomLabelNode->SetRotation(Quaternion(90.0f, Vector3::RIGHT));
@@ -272,11 +301,10 @@ void Game::LoadLevel()
             roomLabel->SetText(ToString("%dx%d", x + 1, y + 1));
             roomLabel->SetFont(cache->GetResource<Font>("Fonts/Anonymous Pro.sdf"));
             roomLabel->SetColor(Color::WHITE);
-            //roomLabel->SetTextEffect(TE_STROKE);
-            //roomLabel->SetEffectColor(Color::BLACK);
             roomLabel->SetAlignment(HA_CENTER, VA_CENTER);
             roomLabel->SetFaceCameraMode(FC_ROTATE_Y);
 
+            // Try and load the XML file that defines the contents for the room.
             XMLFile *roomContents = cache->GetResource<XMLFile>(ToString("Levels/%d/%dx%d.xml", currentLevel_ + 1, x + 1, y + 1));
             if (roomContents) {
                 Node *roomContentsNode = floorNode->CreateChild();
@@ -301,6 +329,7 @@ void Game::LoadLevel()
                     CollisionShape *collisionShape = childNode->CreateComponent<CollisionShape>();
                     collisionShape->SetBox(model->GetBoundingBox().Size(), model->GetBoundingBox().Center());
 
+                    // If the object specifies a component for interaction, create it, else mark it for navmesh generation.
                     if (child.HasAttribute("interaction")) {
                         childNode->CreateComponent(child.GetAttribute("interaction"));
                     } else {
@@ -315,6 +344,7 @@ void Game::LoadLevel()
                     PODVector<Vector3> waypoints;
                     XMLElement waypoint = child.GetChild("waypoint");
                     while (waypoint) {
+                        // The guard waypoints need to be converted to world space.
                         waypoints.Push(roomContentsNode->GetWorldPosition() + waypoint.GetVector3("position"));
                         waypoint = waypoint.GetNext("waypoint");
                     }
@@ -360,21 +390,35 @@ void Game::LoadLevel()
         }
     }
 
+    // oxoxoxoxoxo
+    // xoxoxoxoxox
+    // oxoxoxoxoxo
+    // xoxoxoxoxox
+    // oxoxoxoxoxo
+    // The above 11x5 pixel "image" shows which pixels would affect the walls.
+    // Loop through the image pixels used to define the wall types.
     for (int x = 0; x < imageWidth; ++x) {
         for (int y = 0; y < imageHeight; ++y) {
+            // (x % 2) returns a boolean indicated whether x is even or odd.
+            // If the x and y coordinates are both even, or the x and y coordinates are both odd, this isn't a pixel we're interested in.
             if ((x % 2) == (y % 2)) {
                 continue;
             }
 
+            // Get the color of the image pixel. The y coordinate needs to be flipped.
             Color color = levelImage->GetPixel(x, (imageHeight - 1) - y);
+
+            // If it's transparent, pass on it.
             if (color.a_ < 0.5f) {
                 continue;
             }
 
             Node *wallNode = scene_->CreateChild();
 
+            // Walls have to be offset by half the room size.
             Vector3 position(-5.5f + (x * 5.5f), 0.0f, -5.5f + (y * 5.5f));
 
+            // If the wall is vertical, we need to rotate the model.
             if ((y % 2) != 0) {
                 wallNode->SetRotation(Quaternion(90.0f, Vector3::UP));
             }
@@ -384,6 +428,7 @@ void Game::LoadLevel()
             wallNode->CreateComponent<Navigable>()->SetRecursive(false);
             wallNode->CreateComponent<RigidBody>();
 
+            // Select which model to load based on the pixel color.
             String wallType("");
             if (color == Color::WHITE) {
                 wallType = "Filler";
@@ -494,9 +539,11 @@ void Game::EndLevel(bool died)
     PODVector<Node *> nodes;
     scene_->GetChildrenWithComponent<StaticModel>(nodes, true);
 
+    // Loop through all scene nodes with a StaticModel component.
     for (PODVector<Node *>::ConstIterator i = nodes.Begin(); i != nodes.End(); ++i) {
         Node *node = *i;
 
+        // Loop through all its components and disable all of them apart from the StaticModel.
         Vector<SharedPtr<Component>> components = node->GetComponents();
         for (Vector<SharedPtr<Component>>::ConstIterator ii = components.Begin(); ii != components.End(); ++ii) {
             Component *component = *ii;
@@ -623,6 +670,7 @@ void Game::HandleUpdate(StringHash eventType, VariantMap &eventData)
     Renderer *renderer = GetSubsystem<Renderer>();
     RenderPath *renderPath = renderer->GetDefaultRenderPath();
 
+    // The post-processing effects don't play nicely with the debug rendering.
     bool debugRendering = debugGeometry_ || debugPhysics_ || debugNavigation_;
     renderPath->SetEnabled("FXAA3", !debugRendering);
     renderPath->SetEnabled("BloomHDR", !debugRendering);

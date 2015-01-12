@@ -61,6 +61,8 @@ void Inventory::Update(float timeStep)
         return;
     }
 
+    // If we're marked as dirty, remove all the UI children
+    // and recreate them from the current inventory contents.
     if (dirty_) {
         panel_->RemoveAllChildren();
 
