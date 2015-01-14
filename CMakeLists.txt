@@ -25,6 +25,9 @@ endif()
 aux_source_directory(src SRC_LIST)
 add_executable(${PROJECT_NAME} WIN32 ${SRC_LIST})
 
+add_custom_target(DumpSymbols SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/DumpSymbols.cmake)
+set_source_files_properties(${CMAKE_CURRENT_SOURCE_DIR}/DumpSymbols.cmake PROPERTIES HEADER_FILE_ONLY TRUE)
+
 if(UNIX)
     set(URHO3D_VERSION_SUFFIX ".0")
     set(URHO3D_LIB_NAME ${CMAKE_SHARED_LIBRARY_PREFIX}Urho3D${URHO3D_VERSION_SUFFIX}${CMAKE_SHARED_LIBRARY_SUFFIX})
