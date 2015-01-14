@@ -39,14 +39,6 @@
 #include "Sprite.h"
 #include "Stairs.h"
 
-#ifdef GOOGLE_BREAKPAD
-#ifdef __APPLE__
-#include "client/mac/handler/exception_handler.h"
-#else
-#include "client/windows/handler/exception_handler.h"
-#endif
-#endif
-
 #include <ctime>
 #include <cstdio>
 
@@ -54,54 +46,15 @@
 #define snprintf sprintf_s
 #endif
 
-#ifdef GOOGLE_BREAKPAD
-#define Component Urho3D::Component
-
-#ifdef __APPLE__
-bool BreakpadFilterCallback(void *context)
-{
-    (void)context;
-    return true;
-}
-
-bool BreakpadMinidumpCallback(const char *dump_dir, const char *minidump_id, void *context, bool succeeded)
-{
-    (void)context;
-    fprintf(stderr, "Crash dump written to '%s/%s.dmp'.\n", dump_dir, minidump_id);
-    return succeeded;
-}
-#else
-bool BreakpadFilterCallback(void *context, EXCEPTION_POINTERS *exinfo, MDRawAssertionInfo *assertion)
-{
-	(void)context; (void)exinfo; (void)assertion;
-	return true;
-}
-
-bool BreakpadMinidumpCallback(const wchar_t *dump_path, const wchar_t *minidump_id, void *context, EXCEPTION_POINTERS *exinfo, MDRawAssertionInfo *assertion, bool succeeded)
-{
-	(void)context; (void)exinfo; (void)assertion;
-	fprintf(stderr, "Crash dump written to '%ws/%ws.dmp'.\n", dump_path, minidump_id);
-	return succeeded;
-}
-#endif
-#endif
-
 using namespace Urho3D;
 
 DEFINE_APPLICATION_MAIN(Game)
 
 Game::Game(Context *context):
-    Application(context),
+    Application(context), crashHandler_(context),
     currentLevel_(0), levelTime_(0.0f), gameState_(GS_PLAYING),
     debugGeometry_(false), debugPhysics_(false), debugNavigation_(false), debugDepthTest_(true)
 {
-#ifdef GOOGLE_BREAKPAD
-#ifdef __APPLE__
-    exceptionHandler_ = new google_breakpad::ExceptionHandler(".", BreakpadFilterCallback, BreakpadMinidumpCallback, NULL, true, NULL);
-#else
-	exceptionHandler_ = new google_breakpad::ExceptionHandler(L".", BreakpadFilterCallback, BreakpadMinidumpCallback, NULL, google_breakpad::ExceptionHandler::HANDLER_ALL);
-#endif
-#endif
 }
 
 void Game::Setup()
