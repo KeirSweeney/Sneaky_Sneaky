@@ -63,8 +63,8 @@ if(1)
     add_definitions(-DGOOGLE_BREAKPAD)
     add_subdirectory(Breakpad)
     include_directories(${CMAKE_CURRENT_SOURCE_DIR}/Breakpad)
-    add_dependencies(${PROJECT_NAME} breakpad)
-    target_link_libraries(${PROJECT_NAME} breakpad)
+    add_dependencies(${PROJECT_NAME} Breakpad)
+    target_link_libraries(${PROJECT_NAME} Breakpad)
 endif()
 
 add_custom_command(

@@ -61,7 +61,7 @@ endif()
 
 include_directories(".")
 
-add_library(breakpad STATIC ${SRC_LIST})
+add_library(Breakpad STATIC ${SRC_LIST})
 
 if(WIN32)
     get_filename_component(VS_DIR [HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\VisualStudio\\12.0\\Setup\\VS;ProductDir] REALPATH CACHE)
@@ -72,7 +72,7 @@ add_executable(dump_syms ${DUMP_SRC_LIST})
 
 if(APPLE)
     find_library(CORE_FOUNDATION CoreFoundation)
-    target_link_libraries(breakpad ${CORE_FOUNDATION})
+    target_link_libraries(Breakpad ${CORE_FOUNDATION})
     find_library(FOUNDATION Foundation)
     target_link_libraries(dump_syms ${FOUNDATION})
 elseif(WIN32)
