@@ -1,0 +1,11 @@
+if(APPLE)
+  execute_process(COMMAND dsymutil ${BINARY_PATH})
+  execute_process(COMMAND ${DUMP_SYMS} -g ${BINARY_PATH}.dSYM ${BINARY_PATH} OUTPUT_FILE ${BINARY_PATH}.sym ERROR_QUIET)
+  execute_process(COMMAND strip -S ${BINARY_PATH})
+endif()
+
+if(EXISTS ${BINARY_PATH}.sym)
+  file(UPLOAD ${BINARY_PATH}.sym "http://fennec.limetech.org/traitor/symbols/" TIMEOUT 120 SHOW_PROGRESS)
+else()
+  message("No symbol file generated.")
+endif()
