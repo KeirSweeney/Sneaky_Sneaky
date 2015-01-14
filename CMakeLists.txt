@@ -37,7 +37,7 @@ externalproject_add(Urho3D
 )
 
 # Yet another hack.
-add_definitions(-DURHO3D_PROFILING -DURHO3D_LOGGING)
+add_definitions(-DURHO3D_STATIC_DEFINE -DURHO3D_PROFILING -DURHO3D_LOGGING)
 
 externalproject_get_property(Urho3D BINARY_DIR)
 include_directories(${BINARY_DIR}/Engine)
@@ -107,4 +107,11 @@ if(APPLE)
         ${IOKIT_FRAMEWORK}
         ${OPENGL_FRAMEWORK}
     )
+elseif(WIN32)
+    target_link_libraries(${PROJECT_NAME}
+		"Winmm.lib"
+		"Opengl32.lib"
+		"Version.lib"
+		"Imm32.lib"
+	)
 endif()
