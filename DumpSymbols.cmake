@@ -2,6 +2,8 @@ if(APPLE)
   execute_process(COMMAND dsymutil ${BINARY_PATH})
   execute_process(COMMAND ${DUMP_SYMS} -g ${BINARY_PATH}.dSYM ${BINARY_PATH} OUTPUT_FILE ${BINARY_PATH}.sym ERROR_QUIET)
   execute_process(COMMAND strip -S ${BINARY_PATH})
+else()
+  execute_process(COMMAND ${DUMP_SYMS} ${BINARY_PATH} OUTPUT_FILE ${BINARY_PATH}.sym ERROR_QUIET)
 endif()
 
 if(EXISTS ${BINARY_PATH}.sym)
