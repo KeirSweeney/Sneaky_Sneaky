@@ -38,6 +38,7 @@
 #include "UI.h"
 #include "Sprite.h"
 #include "Stairs.h"
+#include "Analytics.h"
 
 #include <ctime>
 #include <cstdio>
@@ -55,6 +56,11 @@ Game::Game(Context *context):
     currentLevel_(0), levelTime_(0.0f), gameState_(GS_PLAYING),
     debugGeometry_(false), debugPhysics_(false), debugNavigation_(false), debugDepthTest_(true)
 {
+    // We need to call back from the components for level transitions,
+    // this stores our instance for access in the global store.
+    context->RegisterSubsystem(this);
+
+    context->RegisterSubsystem(new Analytics(context));
 }
 
 void Game::Setup()
@@ -75,10 +81,6 @@ void Game::Start()
 {
     // Seed the random number generator.
     SetRandomSeed((unsigned int)time(NULL));
-
-    // We need to call back from the components for level transitions,
-    // this stores our instance for access in the global store.
-    context_->RegisterSubsystem(this);
 
     // ResourceCache handles loading files from disk.
     ResourceCache *cache = GetSubsystem<ResourceCache>();
@@ -129,6 +131,8 @@ void Game::Start()
 
     SubscribeToEvent(E_UPDATE, HANDLER(Game, HandleUpdate));
     SubscribeToEvent(E_POSTRENDERUPDATE, HANDLER(Game, HandlePostRenderUpdate));
+
+    GetSubsystem<Analytics>()->SendLaunchEvent();
 }
 
 void Game::Stop()
@@ -525,8 +529,12 @@ void Game::EndLevel(bool died)
     label->SetColor(Color::WHITE);
     label->SetAlignment(HA_CENTER, VA_CENTER);
 
+    Node *person = scene_->GetChild("Person", true);
+
     char buffer[512];
     if (died) {
+        GetSubsystem<Analytics>()->SendLevelFailedEvent(currentLevel_, person->GetWorldPosition());
+
         snprintf(buffer, sizeof(buffer),
                  "You've been brutally murdered for your crimes against the company.\n"
                  "\n"
@@ -542,14 +550,15 @@ void Game::EndLevel(bool died)
         int guardCount = 0;
         for (PODVector<Node *>::ConstIterator i = guards.Begin(); i != guards.End(); ++i) {
             if ((*i)->GetComponent<Guard>()->HasSeenPlayer()) {
-                LOGERRORF("%d %d", guards.Size(), guardCount);
                 guardCount++;
             }
         }
 
-        int pickupCount = scene_->GetChild("Person", true)->GetComponent<Inventory>()->GetItemCount();
+        int pickupCount = person->GetComponent<Inventory>()->GetItemCount();
 
         int score = (int)(((300.0f - levelTime_) + (guardCount * -100.0f) + (pickupCount * 50.0f)) * 5.0f);
+
+        GetSubsystem<Analytics>()->SendLevelCompletedEvent(currentLevel_, levelTime_, guardCount, pickupCount, score);
 
         snprintf(buffer, sizeof(buffer),
                  "Against all odds, you made it past security and on to the next floor.\n"
