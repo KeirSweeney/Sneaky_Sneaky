@@ -109,9 +109,9 @@ if(APPLE)
     )
 elseif(WIN32)
     target_link_libraries(${PROJECT_NAME}
-		"Winmm.lib"
-		"Opengl32.lib"
-		"Version.lib"
-		"Imm32.lib"
-	)
+        "Winmm.lib"
+        "Opengl32.lib"
+        "Version.lib"
+        "Imm32.lib"
+    )
 endif()
