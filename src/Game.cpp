@@ -529,11 +529,22 @@ void Game::EndLevel(bool died)
     label->SetColor(Color::WHITE);
     label->SetAlignment(HA_CENTER, VA_CENTER);
 
+    PODVector<Node *> guards;
+    scene_->GetChildrenWithComponent<Guard>(guards, true);
+
+    int guardCount = 0;
+    for (PODVector<Node *>::ConstIterator i = guards.Begin(); i != guards.End(); ++i) {
+        if ((*i)->GetComponent<Guard>()->HasSeenPlayer()) {
+            guardCount++;
+        }
+    }
+
     Node *person = scene_->GetChild("Person", true);
+    int pickupCount = person->GetComponent<Inventory>()->GetItemCount();
 
     char buffer[512];
     if (died) {
-        GetSubsystem<Analytics>()->SendLevelFailedEvent(currentLevel_, person->GetWorldPosition());
+        GetSubsystem<Analytics>()->SendLevelFailedEvent(currentLevel_, levelTime_, guardCount, pickupCount, person->GetWorldPosition());
 
         snprintf(buffer, sizeof(buffer),
                  "You've been brutally murdered for your crimes against the company.\n"
@@ -543,18 +554,6 @@ void Game::EndLevel(bool died)
         int m = (int)(levelTime_ / 60.0f);
         int s = (int)levelTime_ - (m * 60);
         int ms = (int)(levelTime_ * 100.0f) - (s * 100);
-
-        PODVector<Node *> guards;
-        scene_->GetChildrenWithComponent<Guard>(guards, true);
-
-        int guardCount = 0;
-        for (PODVector<Node *>::ConstIterator i = guards.Begin(); i != guards.End(); ++i) {
-            if ((*i)->GetComponent<Guard>()->HasSeenPlayer()) {
-                guardCount++;
-            }
-        }
-
-        int pickupCount = person->GetComponent<Inventory>()->GetItemCount();
 
         int score = (int)(((300.0f - levelTime_) + (guardCount * -100.0f) + (pickupCount * 50.0f)) * 5.0f);
 

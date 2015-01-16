@@ -25,5 +25,5 @@ private:
 public:
     void SendLaunchEvent();
     void SendLevelCompletedEvent(int level, float levelTime, int guardCount, int pickupCount, int score);
-    void SendLevelFailedEvent(int level, Urho3D::Vector3 playerPosition);
+    void SendLevelFailedEvent(int level, float levelTime, int guardCount, int pickupCount, Urho3D::Vector3 playerPosition);
 };

@@ -39,11 +39,7 @@ externalproject_add(Urho3D
 # Yet another hack.
 add_definitions(-DURHO3D_STATIC_DEFINE -DURHO3D_PROFILING -DURHO3D_LOGGING)
 
-if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/.git/refs/heads/master)
-    file(READ ${CMAKE_CURRENT_SOURCE_DIR}/.git/refs/heads/master GIT_HEAD)
-    string(STRIP ${GIT_HEAD} GIT_HEAD)
-endif()
-add_definitions(-DCMAKE_SYSTEM_NAME="${CMAKE_SYSTEM_NAME}" -DCMAKE_GENERATOR="${CMAKE_GENERATOR}" -DCMAKE_CXX_COMPILER_ID="${CMAKE_CXX_COMPILER_ID}" -DGIT_HEAD="${GIT_HEAD}")
+add_definitions(-DCMAKE_SYSTEM_NAME="${CMAKE_SYSTEM_NAME}" -DCMAKE_GENERATOR="${CMAKE_GENERATOR}" -DCMAKE_CXX_COMPILER_ID="${CMAKE_CXX_COMPILER_ID}")
 
 externalproject_get_property(Urho3D BINARY_DIR)
 include_directories(${BINARY_DIR}/Engine)

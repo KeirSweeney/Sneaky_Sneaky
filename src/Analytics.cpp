@@ -43,7 +43,6 @@ void Analytics::SendLaunchEvent()
         {"platform", CMAKE_SYSTEM_NAME},
         {"generator", CMAKE_GENERATOR},
         {"compiler", CMAKE_CXX_COMPILER_ID},
-        {"git-head", GIT_HEAD},
     });
 }
 
@@ -58,10 +57,13 @@ void Analytics::SendLevelCompletedEvent(int level, float levelTime, int guardCou
     });
 }
 
-void Analytics::SendLevelFailedEvent(int level, Vector3 playerPosition)
+void Analytics::SendLevelFailedEvent(int level, float levelTime, int guardCount, int pickupCount, Vector3 playerPosition)
 {
     SendGameEvent("level-failed", {
         {"level", String(level)},
+        {"level-time", String(levelTime)},
+        {"guard-count", String(guardCount)},
+        {"pickup-count", String(pickupCount)},
         {"player-position", playerPosition.ToString()},
     });
 }
