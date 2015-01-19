@@ -105,3 +105,17 @@ int Inventory::GetItemCount()
 {
     return items_.Size();
 }
+
+SharedPtr<Pickup> Inventory::GetThrowableItem()
+{
+    if(items_.Empty())
+    {
+        return SharedPtr<Pickup>();
+    }
+
+    Urho3D::SharedPtr<Pickup> item = items_.Back();
+    items_.Pop();
+
+    return item;
+
+}

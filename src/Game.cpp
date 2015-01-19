@@ -1,4 +1,5 @@
 #include "Game.h"
+#include "Thrower.h"
 
 #include "Camera.h"
 #include "CollisionShape.h"
@@ -100,6 +101,7 @@ void Game::Start()
     Pickup::RegisterObject(context_);
     Terminal::RegisterObject(context_);
     Stairs::RegisterObject(context_);
+    Thrower::RegisterObject(context_);
 
     SharedPtr<Viewport> viewport(new Viewport(context_, scene_, NULL));
 
@@ -217,7 +219,8 @@ void Game::LoadLevel()
             floorNode->SetPosition(Vector3(x * 11.0f, 0.0f, y * 11.0f));
 
             floorNode->CreateComponent<Navigable>()->SetRecursive(false);
-            floorNode->CreateComponent<RigidBody>();
+            RigidBody * floorRigidBody = floorNode->CreateComponent<RigidBody>();
+            floorRigidBody->SetRestitution(0.5f);
 
             CollisionShape *floorCollisionShape = floorNode->CreateComponent<CollisionShape>();
             floorCollisionShape->SetBox(Vector3(11.0f, 1.0f, 11.0f), Vector3(0.0f, -0.5f, 0.0f));
@@ -463,6 +466,7 @@ void Game::LoadLevel()
 
     personNode->CreateComponent<Person>();
     personNode->CreateComponent<Inventory>();
+    personNode->CreateComponent<Thrower>();
 
     Node *cameraTargetNode = scene_->CreateChild();
     cameraTargetNode->CreateComponent<CameraController>();
