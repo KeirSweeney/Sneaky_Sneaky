@@ -1,6 +1,7 @@
 #include "Thrower.h"
 #include "Pickup.h"
 #include "Inventory.h"
+#include "SelfDestroy.h"
 
 #include "Context.h"
 #include "Node.h"
@@ -24,6 +25,7 @@ Thrower::Thrower(Context *context):
 void Thrower::RegisterObject(Context* context)
 {
     context->RegisterFactory<Thrower>("Logic");
+    SelfDestroy::RegisterObject(context);
 
     COPY_BASE_ATTRIBUTES(LogicComponent);
 }
@@ -59,6 +61,8 @@ void Thrower::Update(float timeStep)
     itemRigidBody->SetRestitution(1.0f);
     itemRigidBody->SetLinearVelocity((playerRigidBody->GetLinearVelocity() * 4.0f) + Vector3(0.0f, 1.6f, 0.0f));
 
+    SelfDestroy *selfDest = itemNode->CreateComponent<SelfDestroy>();
+    selfDest->SetLifeTime(7.0f);
 
 
 
