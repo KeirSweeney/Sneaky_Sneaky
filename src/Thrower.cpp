@@ -64,25 +64,22 @@ void Thrower::Update(float timeStep)
     itemRigidBody->SetRestitution(1.0f);
     itemRigidBody->SetLinearVelocity((playerRigidBody->GetLinearVelocity() * 4.0f) + Vector3(0.0f, 1.6f, 0.0f));
 
+    ResourceCache *cache = GetSubsystem<ResourceCache>();
+
+    ParticleEmitter *particleEmmiter = itemNode->CreateComponent<ParticleEmitter>();
+    particleEmmiter->SetEffect(cache->GetResource<ParticleEffect>("Particle/Smoke.xml"));
+    if(!particleEmmiter)
+    {
+        LOGERROR("No particle emitter");
+    }
+
+
+    particleEmmiter->SetEmitting(true);
+
+
     SelfDestroy *selfDest = itemNode->CreateComponent<SelfDestroy>();
     selfDest->SetLifeTime(7.0f);
 
-    PODVector<Vector3> pastPosition;
-    pastPosition.Push(itemNode->GetWorldPosition());
-
-    ResourceCache *cache = GetSubsystem<ResourceCache>();
-    //ParticleEffect *particleEffect = cache->GetResource<ParticleEffect>("Urho3D/Bin/Data/Textures/Smoke.dds");
-    //particleEffect->Load(cache->GetResource<XMLFile>("Urho3D/Bin/Data/Particle/Smoke.xml"));
-
-    //if(!particleEffect)
-    //{
-    //    return;
-    //}
-
-
-    ParticleEmitter *particleEmmiter = itemNode->CreateComponent<ParticleEmitter>();
-    particleEmmiter->SetAttribute(cache->GetResource<XMLFile>("Urho3D/Bin/Data/Particle/Smoke.xml"));
-   // particleEmmiter->SetEffect(particleEffect);
 
 
 }
