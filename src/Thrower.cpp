@@ -12,6 +12,9 @@
 #include "RigidBody.h"
 #include "Person.h"
 #include "Input.h"
+#include "ParticleEmitter.h"
+#include "ParticleEffect.h"
+#include "ResourceCache.h"
 
 
 using namespace Urho3D;
@@ -64,6 +67,22 @@ void Thrower::Update(float timeStep)
     SelfDestroy *selfDest = itemNode->CreateComponent<SelfDestroy>();
     selfDest->SetLifeTime(7.0f);
 
+    PODVector<Vector3> pastPosition;
+    pastPosition.Push(itemNode->GetWorldPosition());
+
+    ResourceCache *cache = GetSubsystem<ResourceCache>();
+    //ParticleEffect *particleEffect = cache->GetResource<ParticleEffect>("Urho3D/Bin/Data/Textures/Smoke.dds");
+    //particleEffect->Load(cache->GetResource<XMLFile>("Urho3D/Bin/Data/Particle/Smoke.xml"));
+
+    //if(!particleEffect)
+    //{
+    //    return;
+    //}
+
+
+    ParticleEmitter *particleEmmiter = itemNode->CreateComponent<ParticleEmitter>();
+    particleEmmiter->SetAttribute(cache->GetResource<XMLFile>("Urho3D/Bin/Data/Particle/Smoke.xml"));
+   // particleEmmiter->SetEffect(particleEffect);
 
 
 }
