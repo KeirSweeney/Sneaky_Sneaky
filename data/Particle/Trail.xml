@@ -1,0 +1,14 @@
+<particleemitter>
+    <material name="Materials/Trail.xml" />
+    <relative enable="false" />
+    <numparticles value="10000" />
+    <activetime value="3" />
+    <inactivetime value="0" />
+    <emissionrate value="100" />
+    <velocity value="0" />
+    <particlesize value="0.02 0.02" />
+    <timetolive value="2" />
+    <colorfade color="0.05 0.05 0.05 0" time="0" />
+    <colorfade color="0.2 0.05 0.05 1" time="0.25" />
+    <colorfade color="0.1 0.1 0.1 0" time="2" />
+</particleemitter>

@@ -46,7 +46,11 @@ void Thrower::Update(float timeStep)
     }
 
     Inventory *inv = node_->GetComponent<Inventory>();
-    SharedPtr<Pickup> item =  inv->GetThrowableItem();
+    SharedPtr<Pickup> item = inv->GetThrowableItem();
+
+    if (item.Null()) {
+        return;
+    }
 
     item->GetNode()->SetEnabled(true);
 
@@ -65,20 +69,9 @@ void Thrower::Update(float timeStep)
 
     ResourceCache *cache = GetSubsystem<ResourceCache>();
 
-    ParticleEmitter *particleEmmiter = itemNode->CreateComponent<ParticleEmitter>();
-    particleEmmiter->SetEffect(cache->GetResource<ParticleEffect>("Particle/Smoke.xml"));
-    if(!particleEmmiter)
-    {
-        LOGERROR("No particle emitter");
-    }
+    ParticleEmitter *particleEmitter = itemNode->CreateComponent<ParticleEmitter>();
+    particleEmitter->SetEffect(cache->GetResource<ParticleEffect>("Particle/Trail.xml"));
 
-
-    particleEmmiter->SetEmitting(true);
-
-
-    SelfDestroy *selfDest = itemNode->CreateComponent<SelfDestroy>();
-    selfDest->SetLifeTime(7.0f);
-
-
-
+    SelfDestroy *selfDestroy = itemNode->CreateComponent<SelfDestroy>();
+    selfDestroy->SetLifeTime(7.0f);
 }
