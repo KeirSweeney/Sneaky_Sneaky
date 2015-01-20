@@ -12,7 +12,6 @@
 #include "ValueAnimation.h"
 #include "Inventory.h"
 
-
 using namespace Urho3D;
 
 const float Pickup::ROTATION_SPEED = 30.0f;
@@ -68,8 +67,6 @@ void Pickup::Update(float timeStep)
 
         node_->SetEnabled(false);
 	}
-
-
 }
 
 String Pickup::GetPickupType()

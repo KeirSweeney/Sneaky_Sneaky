@@ -3,7 +3,6 @@
 #include "Application.h"
 
 #include "CrashHandler.h"
-#include "Analytics.h"
 
 namespace Urho3D {
     class DebugHud;

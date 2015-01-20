@@ -24,5 +24,4 @@ public:
 
 protected:
     float height_;
-
 };

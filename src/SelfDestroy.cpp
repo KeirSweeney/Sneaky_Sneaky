@@ -1,4 +1,5 @@
 #include "SelfDestroy.h"
+
 #include "Pickup.h"
 #include "Inventory.h"
 
@@ -13,9 +14,7 @@
 #include "Input.h"
 #include "StaticModel.h"
 
-
 using namespace Urho3D;
-
 
 SelfDestroy::SelfDestroy(Context *context):
     LogicComponent(context),
@@ -36,31 +35,23 @@ void SelfDestroy::DelayedStart()
 
 void SelfDestroy::Update(float timeStep)
 {
-    if(lifeTime_ == 0.0f)
-    {
+    if (lifeTime_ == 0.0f) {
         return;
     }
 
-    if(decayTime_ <= 0)
-    {
+    if (decayTime_ <= 0) {
         StaticModel *model = node_->GetComponent<StaticModel>();
         model->SetEnabled(!model->IsEnabled());
         decayTime_ = lifeTime_ * 0.1f;
-    }
-    else
-    {
+    } else {
         decayTime_ -= timeStep;
     }
 
-
     lifeTime_ -= timeStep;
 
-    if(lifeTime_ <= 0.0f)
-    {
+    if (lifeTime_ <= 0.0f) {
         node_->Remove();
     }
-
-
 }
 
 void SelfDestroy::SetLifeTime(float lifeTime)

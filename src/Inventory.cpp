@@ -1,4 +1,5 @@
 #include "Inventory.h"
+
 #include "Pickup.h"
 
 #include "Context.h"
@@ -115,7 +116,5 @@ SharedPtr<Pickup> Inventory::GetThrowableItem()
 
     Urho3D::SharedPtr<Pickup> item = items_.Back();
     items_.Pop();
-
     return item;
-
 }

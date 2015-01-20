@@ -6,7 +6,6 @@ class SelfDestroy: public Urho3D::LogicComponent
 {
     OBJECT(SelfDestroy)
 
-
 public:
     SelfDestroy(Urho3D::Context *context);
     static void RegisterObject(Urho3D::Context* context);
@@ -17,8 +16,6 @@ public:
 
 public:
     void SetLifeTime(float lifeTime);
-
-
 
 private:
     float lifeTime_;

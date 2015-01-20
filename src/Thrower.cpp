@@ -1,4 +1,5 @@
 #include "Thrower.h"
+
 #include "Pickup.h"
 #include "Inventory.h"
 #include "SelfDestroy.h"
@@ -16,9 +17,7 @@
 #include "ParticleEffect.h"
 #include "ResourceCache.h"
 
-
 using namespace Urho3D;
-
 
 Thrower::Thrower(Context *context):
     LogicComponent(context)
@@ -83,5 +82,3 @@ void Thrower::Update(float timeStep)
 
 
 }
-
-
