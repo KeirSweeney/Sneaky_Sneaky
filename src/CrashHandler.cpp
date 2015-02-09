@@ -1,11 +1,15 @@
 #include "CrashHandler.h"
 
+#include "Analytics.h"
+
 #ifdef GOOGLE_BREAKPAD
 #ifdef __APPLE__
 #include "client/mac/handler/exception_handler.h"
 #else //__APPLE__
 #include "client/windows/handler/exception_handler.h"
 #endif //__APPLE__
+
+using namespace Urho3D;
 
 #ifdef __APPLE__
 bool BreakpadFilterCallback(void *context)
@@ -18,6 +22,11 @@ bool BreakpadMinidumpCallback(const char *dump_dir, const char *minidump_id, voi
 {
     (void)context;
     fprintf(stderr, "Crash dump written to '%s/%s.dmp'.\n", dump_dir, minidump_id);
+
+    Analytics *analytics = ((CrashHandler *)context)->GetSubsystem<Analytics>();
+    analytics->SendCrashEvent(String(minidump_id));
+    analytics->FlushEvents();
+
     return succeeded;
 }
 #else //__APPLE__
@@ -31,12 +40,15 @@ bool BreakpadMinidumpCallback(const wchar_t *dump_path, const wchar_t *minidump_
 {
     (void)context; (void)exinfo; (void)assertion;
     fprintf(stderr, "Crash dump written to '%ws/%ws.dmp'.\n", dump_path, minidump_id);
+
+    Analytics *analytics = ((CrashHandler *)context)->GetSubsystem<Analytics>();
+    analytics->SendCrashEvent(String(minidump_id));
+    analytics->FlushEvents();
+
     return succeeded;
 }
 #endif //__APPLE__
 #endif //GOOGLE_BREAKPAD
-
-using namespace Urho3D;
 
 CrashHandler::CrashHandler(Context *context):
     Object(context), exceptionHandler_(NULL)
