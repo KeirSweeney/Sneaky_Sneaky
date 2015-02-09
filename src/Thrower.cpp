@@ -55,17 +55,17 @@ void Thrower::Update(float timeStep)
     item->GetNode()->SetEnabled(true);
 
     Node *itemNode = item->GetNode();
-    Node *playerNode = GetScene()->GetChild("Person", true);
 
-    RigidBody *itemRigidBody = itemNode->GetComponent<RigidBody>();
-    RigidBody *playerRigidBody = playerNode->GetComponent<RigidBody>();
+    RigidBody *itemRigidBody = itemNode->GetComponent<RigidBody>();    
+    Person *person = node_->GetComponent<Person>();
+    Vector3 personDirection = person->GetDirection();
 
-    itemNode->SetWorldPosition(playerNode->GetWorldPosition()+(playerRigidBody->GetLinearVelocity() * 0.5f) + Vector3(0.0f, 1.6f, 0.0f));
+    itemNode->SetWorldPosition(node_->GetWorldPosition()+(personDirection * 0.5f) + Vector3(0.0f, 1.6f, 0.0f));
     item->SetEnabled(false);
     itemRigidBody->SetTrigger(false);
     itemRigidBody->SetMass(1.0f);
     itemRigidBody->SetRestitution(1.0f);
-    itemRigidBody->SetLinearVelocity((playerRigidBody->GetLinearVelocity() * 4.0f) + Vector3(0.0f, 1.6f, 0.0f));
+    itemRigidBody->SetLinearVelocity((personDirection * 4.0f) + Vector3(0.0f, 1.6f, 0.0f));
 
     ResourceCache *cache = GetSubsystem<ResourceCache>();
 

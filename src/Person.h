@@ -23,6 +23,7 @@ public:
 
 public:
     void SetTarget(Urho3D::Vector3 target);
+    Urho3D::Vector3 GetDirection() const;
 
 private:
     Urho3D::PODVector<Urho3D::Vector3> path_;
@@ -32,4 +33,5 @@ private:
 	Urho3D::Material *rightMaterial_;
     Urho3D::Material *frontShadowMaterial_;
     Urho3D::Material *leftShadowMaterial_;
+    Urho3D::Vector3 direction_;
 };

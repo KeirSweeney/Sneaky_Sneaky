@@ -47,7 +47,7 @@ void Person::DelayedStart()
 }
 
 void Person::Update(float timeStep)
-{
+{       
     UI *ui = GetSubsystem<UI>();
     Input *input = GetSubsystem<Input>();
     NavigationMesh *navMesh = GetScene()->GetComponent<NavigationMesh>();
@@ -127,6 +127,7 @@ void Person::Update(float timeStep)
     }
 
     rigidBody->SetLinearVelocity(offset * MOVE_SPEED);
+    direction_ = offset;
 }
 
 void Person::SetTarget(Vector3 target)
@@ -134,3 +135,10 @@ void Person::SetTarget(Vector3 target)
     path_.Clear();
     path_.Push(target);
 }
+
+Vector3 Person::GetDirection() const
+{
+    return direction_;
+}
+
+
