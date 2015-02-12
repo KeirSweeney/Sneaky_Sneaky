@@ -13,6 +13,11 @@
 #include "Person.h"
 #include "Input.h"
 #include "StaticModel.h"
+#include "Audio.h"
+#include "SoundSource.h"
+#include "SoundSource3D.h"
+#include "Sound.h"
+#include "ResourceCache.h"
 
 using namespace Urho3D;
 
@@ -48,9 +53,14 @@ void SelfDestroy::Update(float timeStep)
     }
 
     lifeTime_ -= timeStep;
+    ResourceCache *cache = GetSubsystem<ResourceCache>();
+    Sound *destroySound = cache->GetResource<Sound>("Audio/Explosion.wav"); //will need to move this out of update.
+    SoundSource *source = node_->CreateComponent<SoundSource>();
+    source->SetAutoRemove(false);
 
-    if (lifeTime_ <= 0.0f) {
-        node_->Remove();
+    if (lifeTime_ <= 0.0f) { 
+        source->Play(destroySound);
+        node_->Remove(); //not working, maybe because the node is destroyed before it can make the sound or the node_createcomponent is wrong as it already has the component?
     }
 }
 

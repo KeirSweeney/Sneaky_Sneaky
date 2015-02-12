@@ -36,6 +36,11 @@ void Thrower::RegisterObject(Context* context)
     COPY_BASE_ATTRIBUTES(LogicComponent);
 }
 
+void Thrower::Start()
+{
+    //SubscribeToEvent(E_NODECOLLSION,HANDLER(Thrower,HandleNodeCollision));
+}
+
 void Thrower::DelayedStart()
 { 
 }
@@ -85,3 +90,9 @@ void Thrower::Update(float timeStep)
     SelfDestroy *selfDestroy = itemNode->CreateComponent<SelfDestroy>();
     selfDestroy->SetLifeTime(7.0f);
 }
+
+/*void Thrower::HandleNodeCollision(StringHash eventType, VariantMap &eventData)
+{
+
+
+}*/
