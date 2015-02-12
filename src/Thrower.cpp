@@ -60,10 +60,11 @@ void Thrower::Update(float timeStep)
     Node *itemNode = item->GetNode();
 
     ResourceCache *cache = GetSubsystem<ResourceCache>();
-    Sound *throwSound = cache->GetResource<Sound>("Audio/HitHurt.wav");
+    Sound *throwSound = cache->GetResource<Sound>("Audio/HitHurt.wav"); //will need to move this out of update.
 
-    SoundSource *soundSource = itemNode->CreateComponent<SoundSource>();
-    soundSource->Play(throwSound);
+    SoundSource *source = itemNode->CreateComponent<SoundSource>();
+    source->SetAutoRemove(true);
+    source->Play(throwSound);
 
     RigidBody *itemRigidBody = itemNode->GetComponent<RigidBody>();    
     Person *person = node_->GetComponent<Person>();
