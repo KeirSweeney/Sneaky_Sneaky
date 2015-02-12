@@ -16,6 +16,10 @@
 #include "ParticleEmitter.h"
 #include "ParticleEffect.h"
 #include "ResourceCache.h"
+#include "Audio.h"
+#include "SoundSource.h"
+#include "SoundSource3D.h"
+#include "Sound.h"
 
 using namespace Urho3D;
 
@@ -33,7 +37,7 @@ void Thrower::RegisterObject(Context* context)
 }
 
 void Thrower::DelayedStart()
-{
+{ 
 }
 
 void Thrower::Update(float timeStep)
@@ -53,8 +57,13 @@ void Thrower::Update(float timeStep)
     }
 
     item->GetNode()->SetEnabled(true);
-
     Node *itemNode = item->GetNode();
+
+    ResourceCache *cache = GetSubsystem<ResourceCache>();
+    Sound *throwSound = cache->GetResource<Sound>("Audio/HitHurt.wav");
+
+    SoundSource *soundSource = itemNode->CreateComponent<SoundSource>();
+    soundSource->Play(throwSound);
 
     RigidBody *itemRigidBody = itemNode->GetComponent<RigidBody>();    
     Person *person = node_->GetComponent<Person>();
@@ -67,7 +76,7 @@ void Thrower::Update(float timeStep)
     itemRigidBody->SetRestitution(1.0f);
     itemRigidBody->SetLinearVelocity((personDirection * 4.0f) + Vector3(0.0f, 1.6f, 0.0f));
 
-    ResourceCache *cache = GetSubsystem<ResourceCache>();
+
 
     ParticleEmitter *particleEmitter = itemNode->CreateComponent<ParticleEmitter>();
     particleEmitter->SetEffect(cache->GetResource<ParticleEffect>("Particle/Trail.xml"));

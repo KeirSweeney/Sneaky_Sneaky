@@ -40,6 +40,8 @@
 #include "Sprite.h"
 #include "Stairs.h"
 #include "Analytics.h"
+#include "Audio.h"
+#include "SoundListener.h"
 
 #include <ctime>
 #include <cstdio>
@@ -474,6 +476,8 @@ void Game::LoadLevel()
     Node *cameraNode = cameraTargetNode->CreateChild("Camera");
     cameraNode->SetPosition(Vector3(0.0f, 14.0f, -8.0f));
     cameraNode->SetRotation(Quaternion(60.0f, Vector3::RIGHT));
+    SoundListener *cameraListener = cameraNode->CreateComponent<SoundListener>();
+    GetSubsystem<Audio>()->SetListener(cameraListener);
 
     Camera *camera = cameraNode->CreateComponent<Camera>();
     camera->SetFarClip(zone->GetFogEnd());
