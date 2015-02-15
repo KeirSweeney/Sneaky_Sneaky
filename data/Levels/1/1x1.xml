@@ -7,7 +7,7 @@
 <object position="4.5 0 -2" angles="0 90 0" scale="15" model="Table" material="FlatGrey"></object>
 <object position="-4.63 0 2.6" angles="0 0 0" scale="20" model="CabinetShut" material="CabinetShut"></object>
 <object position="-4.63 0 1.8" angles="0 0 0" scale="20" model="CabinetShut" material="CabinetShut"></object>
-    <object position="0 0.75 4.5" scale="5" model="Terminal" material="Terminal" interaction="Terminal"></object>
+    <object position="0 0.75 4.5" scale="5" model="Terminal" material="Terminal" interaction="Terminal" displaysize="800 300">Well, the way they make shows is, they make one show. That show's called a pilot. Then they show that show to the people who make shows, and on the strength of that one show they decide if they're going to make more shows. Some pilots get picked and become television programs. Some don't, become nothing. She starred in one of the ones that became nothing.</object>
 <object position="2 0 4.5" scale="6.5" model="CoolerBase" material="FlatGrey"></object>
     <object position="2 0 4.5" scale="6.5" model="CoolerBottle" material="CoolerBottle"></object>
     <object position="1.25 0 4.5" angles="0 90 0" scale="20" model="CabinetBottom" material="CabinetBottom"></object>
