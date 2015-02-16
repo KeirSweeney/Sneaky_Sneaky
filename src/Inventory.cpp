@@ -109,12 +109,21 @@ int Inventory::GetItemCount()
 
 SharedPtr<Pickup> Inventory::GetThrowableItem()
 {
-    if(items_.Empty())
-    {
-        return SharedPtr<Pickup>();
+    Urho3D::SharedPtr<Pickup> returnItem;
+
+    for (Vector<SharedPtr<Pickup>>::ConstIterator i = items_.Begin(); i != items_.End(); ++i) {
+        Urho3D::SharedPtr<Pickup> item = *i;
+        if(item->GetPickupType() == "Pickup")
+        {
+            returnItem = item;
+            break;
+        }
     }
 
-    Urho3D::SharedPtr<Pickup> item = items_.Back();
-    items_.Pop();
-    return item;
+    if(returnItem.NotNull())
+    {
+        items_.Remove(returnItem);
+    }
+
+    return returnItem;
 }
