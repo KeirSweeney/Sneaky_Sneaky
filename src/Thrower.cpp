@@ -20,6 +20,7 @@
 #include "SoundSource.h"
 #include "SoundSource3D.h"
 #include "Sound.h"
+#include "PhysicsEvents.h"
 
 using namespace Urho3D;
 
@@ -38,7 +39,7 @@ void Thrower::RegisterObject(Context* context)
 
 void Thrower::Start()
 {
-    //SubscribeToEvent(E_NODECOLLSION,HANDLER(Thrower,HandleNodeCollision));
+
 }
 
 void Thrower::DelayedStart()
@@ -81,18 +82,25 @@ void Thrower::Update(float timeStep)
     itemRigidBody->SetMass(1.0f);
     itemRigidBody->SetRestitution(1.0f);
     itemRigidBody->SetLinearVelocity((personDirection * 4.0f) + Vector3(0.0f, 1.6f, 0.0f));
-
-
+    itemNode->SubscribeToEvent(itemNode,E_NODECOLLISIONSTART,HANDLER(Thrower,HandleNodeCollision));
 
     ParticleEmitter *particleEmitter = itemNode->CreateComponent<ParticleEmitter>();
     particleEmitter->SetEffect(cache->GetResource<ParticleEffect>("Particle/Trail.xml"));
 
     SelfDestroy *selfDestroy = itemNode->CreateComponent<SelfDestroy>();
     selfDestroy->SetLifeTime(7.0f);
+
+    SoundSource *soundSource = itemNode->CreateComponent<SoundSource>();
 }
 
-/*void Thrower::HandleNodeCollision(StringHash eventType, VariantMap &eventData)
+void Thrower::HandleNodeCollision(StringHash eventType, VariantMap &eventData)
 {
+    Node *itemNode = ((RigidBody *)eventData[NodeCollisionStart::P_BODY].GetPtr())->GetNode();
+    SoundSource *soundSource = itemNode->GetComponent<SoundSource>();
+    if (soundSource->IsPlaying()) {
+        return;
+    }
 
+    soundSource->Play(GetSubsystem<ResourceCache>()->GetResource<Sound>("Audio/HitHurt.wav"));
 
-}*/
+}

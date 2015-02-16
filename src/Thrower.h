@@ -14,4 +14,7 @@ public:
     void Start();
     void DelayedStart();
     void Update(float timeStep);
+
+public:
+    void HandleNodeCollision(Urho3D::StringHash eventType, Urho3D::VariantMap &eventData);
 };

@@ -53,12 +53,15 @@ void SelfDestroy::Update(float timeStep)
     }
 
     lifeTime_ -= timeStep;
-    ResourceCache *cache = GetSubsystem<ResourceCache>();
-    Sound *destroySound = cache->GetResource<Sound>("Audio/Explosion.wav"); //will need to move this out of update.
-    SoundSource *source = node_->CreateComponent<SoundSource>();
-    source->SetAutoRemove(false);
 
     if (lifeTime_ <= 0.0f) { 
+        ResourceCache *cache = GetSubsystem<ResourceCache>();
+        Sound *destroySound = cache->GetResource<Sound>("Audio/Explosion.wav"); //will need to move this out of update.
+        Node *soundNode = node_->GetScene()->CreateChild();
+        soundNode->SetPosition(node_->GetPosition());
+        SoundSource *source = soundNode->CreateComponent<SoundSource>();
+        source->SetAutoRemove(true);
+
         source->Play(destroySound);
         node_->Remove(); //not working, maybe because the node is destroyed before it can make the sound or the node_createcomponent is wrong as it already has the component?
     }
