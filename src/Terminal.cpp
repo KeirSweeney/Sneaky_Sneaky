@@ -19,11 +19,12 @@
 
 using namespace Urho3D;
 
-const float Terminal::VIEW_DISTANCE = 1.5f;
+const float Terminal::VIEW_DISTANCE = 2.0f;
 const float Terminal::VIEW_ANGLE = 90.0f;
 
 Terminal::Terminal(Context *context):
-    LogicComponent(context)
+    InteractableComponent(context),
+    displayWidth_(200), displayHeight_(100), content_("Lemons.")
 {
 }
 
@@ -31,7 +32,18 @@ void Terminal::RegisterObject(Context* context)
 {
     context->RegisterFactory<Terminal>("Logic");
 
-    COPY_BASE_ATTRIBUTES(LogicComponent);
+    COPY_BASE_ATTRIBUTES(InteractableComponent);
+}
+
+void Terminal::LoadFromXML(const XMLElement &xml)
+{
+    if (xml.HasAttribute("displaysize")) {
+        IntVector2 displaySize = xml.GetIntVector2("displaysize");
+        displayWidth_ = displaySize.x_;
+        displayHeight_ = displaySize.y_;
+    }
+
+    content_ = xml.GetValue();
 }
 
 void Terminal::DelayedStart()
@@ -39,7 +51,7 @@ void Terminal::DelayedStart()
     UI *ui = GetSubsystem<UI>();
 
     panel_ = ui->GetRoot()->CreateChild<UIElement>();
-    panel_->SetFixedSize(200, 100);
+    panel_->SetFixedSize(displayWidth_, displayHeight_);
     panel_->SetVisible(false);
 
     Sprite *background = panel_->CreateChild<Sprite>();
@@ -48,9 +60,11 @@ void Terminal::DelayedStart()
     background->SetOpacity(0.6f);
 
     Text *label = panel_->CreateChild<Text>();
+    label->SetFixedSize(panel_->GetSize() - IntVector2(20, 20));
     label->SetFont("Fonts/Anonymous Pro.ttf");
     label->SetColor(Color::WHITE);
-    label->SetText("Lemons.");
+    label->SetWordwrap(true);
+    label->SetText(content_);
     label->SetAlignment(HA_CENTER, VA_CENTER);
 }
 
@@ -76,6 +90,7 @@ void Terminal::Update(float timeStep)
     panel_->SetVisible(true);
 
 }
+
 bool Terminal::CanPlayerInteract()
 {
     Vector3 terminalPosition = node_->GetWorldPosition();

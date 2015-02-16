@@ -42,6 +42,7 @@
 #include "Analytics.h"
 #include "Audio.h"
 #include "SoundListener.h"
+#include "InteractableComponent.h"
 
 #include <ctime>
 #include <cstdio>
@@ -95,6 +96,7 @@ void Game::Start()
     scene_ = new Scene(context_);
 
     // We need to register our custom component classes before they can be used.
+    InteractableComponent::RegisterObject(context_);
     CameraController::RegisterObject(context_);
     Door::RegisterObject(context_);
     Guard::RegisterObject(context_);
@@ -293,7 +295,17 @@ void Game::LoadLevel()
 
                     // If the object specifies a component for interaction, create it, else mark it for navmesh generation.
                     if (child.HasAttribute("interaction")) {
-                        childNode->CreateComponent(child.GetAttribute("interaction"));
+                        Component *component = childNode->CreateComponent(child.GetAttribute("interaction"));
+                        if (component) {
+                            InteractableComponent *interactableComponent = dynamic_cast<InteractableComponent *>(component);
+                            if (interactableComponent) {
+                                interactableComponent->LoadFromXML(child);
+                            } else {
+                                LOGWARNINGF("Component %s doesn't inherit from InteractableComponent", child.GetAttribute("interaction").CString());
+                            }
+                        } else {
+                            LOGERRORF("Failed to create interaction component: %s", child.GetAttribute("interaction").CString());
+                        }
                     } else {
                         childNode->CreateComponent<Navigable>();
                     }
