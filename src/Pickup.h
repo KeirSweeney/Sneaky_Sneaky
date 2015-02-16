@@ -1,8 +1,8 @@
 #pragma once
 
-#include "LogicComponent.h"
+#include "InteractableComponent.h"
 
-class Pickup: public Urho3D::LogicComponent
+class Pickup: public InteractableComponent
 {
     OBJECT(Pickup)
 
@@ -18,10 +18,12 @@ public:
 public:
     void DelayedStart();
     void Update(float timeStep);
+    void LoadFromXML(const Urho3D::XMLElement &xml);
 
 public:
     Urho3D::String GetPickupType();
 
 protected:
     float height_;
+    Urho3D::String type_;
 };

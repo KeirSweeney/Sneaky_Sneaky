@@ -19,7 +19,7 @@ const float Pickup::HEIGHT_MIN = 0.2f;
 const float Pickup::HEIGHT_MAX = 0.4f;
 
 Pickup::Pickup(Context *context):
-    LogicComponent(context),
+    InteractableComponent(context),
     height_(0.0f)
 {
 }
@@ -30,6 +30,11 @@ void Pickup::RegisterObject(Context* context)
 
     COPY_BASE_ATTRIBUTES(LogicComponent);
     ATTRIBUTE("Height", float, height_, 0.0f, AM_DEFAULT);
+}
+
+void Pickup::LoadFromXML(const XMLElement &xml)
+{
+    type_ = xml.GetAttribute("model");
 }
 
 void Pickup::DelayedStart()
@@ -71,7 +76,7 @@ void Pickup::Update(float timeStep)
 
 String Pickup::GetPickupType()
 {
-    return "Tape";
+    return type_;
 }
 
 
