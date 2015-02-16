@@ -3,6 +3,7 @@
 #include "Pickup.h"
 #include "Inventory.h"
 #include "SelfDestroy.h"
+#include "Guard.h"
 
 #include "Context.h"
 #include "Node.h"
@@ -102,5 +103,28 @@ void Thrower::HandleNodeCollision(StringHash eventType, VariantMap &eventData)
     }
 
     soundSource->Play(GetSubsystem<ResourceCache>()->GetResource<Sound>("Audio/HitHurt.wav"));
+
+    DistractGuard(itemNode);
+
+}
+
+void Thrower::DistractGuard(Node *itemNode)
+{
+    Vector3 itemPos = itemNode->GetPosition();
+    PODVector<Node *> guards;
+    itemNode->GetScene()->GetChildrenWithComponent<Guard>(guards,true);
+    for (PODVector<Node *>::ConstIterator i = guards.Begin(); i != guards.End(); ++i)
+    {
+        Node *guardNode = *i;
+        Vector3 offset = guardNode->GetPosition() - itemPos;
+        if(offset.LengthSquared() > (2.0f * 2.0f))
+        {
+            continue;
+        }
+
+        Guard *guard = guardNode->GetComponent<Guard>();
+        guard->HeardSound();
+
+    }
 
 }
