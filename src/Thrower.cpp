@@ -82,15 +82,19 @@ void Thrower::Update(float timeStep)
     itemRigidBody->SetMass(1.0f);
     itemRigidBody->SetRestitution(1.0f);
     itemRigidBody->SetLinearVelocity((personDirection * 4.0f) + Vector3(0.0f, 1.6f, 0.0f));
-    itemNode->SubscribeToEvent(itemNode,E_NODECOLLISIONSTART,HANDLER(Thrower,HandleNodeCollision));
-
-    ParticleEmitter *particleEmitter = itemNode->CreateComponent<ParticleEmitter>();
-    particleEmitter->SetEffect(cache->GetResource<ParticleEffect>("Particle/Trail.xml"));
+    itemNode->SubscribeToEvent(itemNode, E_NODECOLLISIONSTART, HANDLER(Thrower, HandleNodeCollision));
 
     SelfDestroy *selfDestroy = itemNode->CreateComponent<SelfDestroy>();
     selfDestroy->SetLifeTime(7.0f);
 
     SoundSource *soundSource = itemNode->CreateComponent<SoundSource>();
+
+    Node *particleEmitterNode = itemNode->CreateChild();
+    particleEmitterNode->SetPosition(itemRigidBody->GetCenterOfMass());
+    particleEmitterNode->SetScale(Vector3(5.0f, 5.0f, 5.0f) / itemNode->GetScale());
+
+    ParticleEmitter *particleEmitter = particleEmitterNode->CreateComponent<ParticleEmitter>();
+    particleEmitter->SetEffect(cache->GetResource<ParticleEffect>("Particle/Trail.xml"));
 }
 
 void Thrower::HandleNodeCollision(StringHash eventType, VariantMap &eventData)
