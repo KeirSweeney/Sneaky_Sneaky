@@ -1,0 +1,7 @@
+255,255,0 - Yellow = Stairs
+0,255,255 - Cyan = Boss
+
+Wright's Ltd = 1-3
+Hard Corp = 4-6
+Dark Inc = 7-9
+Wife's Room = 10
