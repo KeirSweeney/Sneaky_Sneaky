@@ -33,7 +33,7 @@ private:
 public:
     void SetWaypoints(Urho3D::PODVector<Urho3D::Vector3> &waypoints);
     bool HasSeenPlayer();
-    void HeardSound();
+    void HeardSound(Urho3D::Vector3 position);
 
 private:
     Urho3D::RigidBody *rigidBody_;
@@ -47,4 +47,5 @@ private:
     Urho3D::Material *rightMaterial_;
 
     bool willHearSound_;
+    Urho3D::Vector3 soundPosition_;
 };
