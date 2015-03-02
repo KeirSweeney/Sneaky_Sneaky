@@ -1,20 +1,38 @@
 <room>
-<object position="-2.5 0 1.5" angles="0 90 0" scale="15" model="Table" material="Green"></object>
-<object position="2.5 0 1.5" angles="0 -90 0" scale="15" model="Table" material="Green"></object>
-<object position="0 0 0" angles="0 0 0" scale="15" model="Table" material="Green"></object>
-<object position="-2 0 0" angles="0 0 0" scale="15" model="Table" material="Green"></object>
-<object position="2 0 0" angles="0 0 0" scale="15" model="Table" material="Green"></object>
-<object position="-2.5 0 -1.5" angles="0 90 0" scale="15" model="Table" material="Green"></object>
-<object position="2.5 0 -1.5" angles="0 -90 0" scale="15" model="Table" material="Green"></object>
- <object position="0 0.75 0" scale="5" model="Terminal" material="Terminal" interaction="Terminal"></object>
-<object position="-1.6 0 -0.8" angles="0 90 0" scale="20" model="CabinetShut" material="CabinetShut"></object>
-<object position="-1.2 0 -0.8" angles="0 90 0" scale="20" model="CabinetShut" material="CabinetShut"></object>
-<object position="1.2 0 -0.8" angles="0 90 0" scale="20" model="CabinetShut" material="CabinetShut"></object>
-<object position="1.6 0 -0.8" angles="0 90 0" scale="20" model="CabinetShut" material="CabinetShut"></object>
-<guard>
-        <waypoint position="-4 0 4"></waypoint>
-        <waypoint position="4 0 4"></waypoint>
-        <waypoint position="4 0 -4"></waypoint>
-        <waypoint position="-4 0 -4"></waypoint>
-    </guard>
+
+  <!-- SCREENS BEHIND RECEPTION-->
+  <object position="-5 0 -4" angles="0 90 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>
+  <object position="-5 0 -2.5" angles="0 90 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>
+  <object position="-5 0 -1" angles="0 90 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>
+  <object position="-5 0 0.5" angles="0 90 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>
+  <object position="-5 0 4" angles="0 90 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>
+
+  <!-- CUBLICLE AND DESK ARRANGEMENT ON EAST WALL-->
+  <object position="4 0 0" angles="0 0 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>
+  <object position="2.5 0 0" angles="0 0 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>
+  <object position="1 0 0" angles="0 0 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>
+  <object position="-0.5 0 0" angles="0 0 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>
+  <object position="4.5 0 -2" angles="0 90 0" scale="20" model="Table" material="FlatGrey"></object>
+  <object position="4.5 0 2" angles="0 90 0" scale="20" model="Table" material="FlatGrey"></object>
+
+  <object position="4.5 1 2" angles="0 90 0" scale="5" model="Terminal" material="Terminal"></object>
+  <object position="4.5 1 -2" angles="0 90 0" scale="5" model="Terminal" material="Terminal"></object>
+  <object position="4 0 2" angles="0 -80 0" scale="6.5" model ="Seat" material="Seat"></object>
+  <object position="3.8 0 -2" angles="0 -103 0" scale="6.5" model ="Seat" material="Seat"></object>
+
+  <!-- CABINETS TO LOOT -->
+  <object position="-4.5 0 -1" angles="0 0 0" scale="25" model="CabinetBottom" material="CabinetBottom"></object>
+  <object position="-4.5 0 -1.6" angles="0 0 0" scale="25" model="CabinetShut" material="CabinetShut"></object>
+
+  <!-- COOLER -->
+  <object position="-4.5 0 -3" angles="0 -90 0" scale="6" model="CoolerBase" material="FlatGrey"></object>
+  <object position="-4.5 0 -3" angles="0 -90 0" scale="6" model="CoolerBottle" material="CoolerBottle"></object>
+
+  <guard>
+    <waypoint position="2.7 0 -2"></waypoint>
+    <waypoint position="-3 0 -2"></waypoint>
+    <waypoint position="-3 0 0"></waypoint>
+    <waypoint position="-3 0 -2"></waypoint>
+  </guard>
+  
 </room>

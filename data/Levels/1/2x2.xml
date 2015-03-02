@@ -1,0 +1,13 @@
+<room>
+
+  <object position="0 0 -0.38" angles="0 180 0" scale="50" model="SofaLength" material="Sofa"></object>
+  <object position="0 0 0.38" angles="0 0 0" scale="50" model="SofaLength" material="Sofa"></object>
+  <object position="1.5 0 0" angles="0 0 0" scale="50" model="SofaEnd" material="Sofa"></object>
+  <object position="-1.5 0 0" angles="0 180 0" scale="50" model="SofaEnd" material="Sofa"></object>
+
+  <guard>
+    <waypoint position="-4 0 4"></waypoint>
+    <waypoint position="-4 0 -4"></waypoint>
+  </guard>
+  
+ </room>

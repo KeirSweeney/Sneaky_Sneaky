@@ -1,3 +1,36 @@
 <room>
-    <object scale="0.75" model="Stairs" material="FlatGrey" interaction="Stairs"></object>
+  <!-- CUBICLE ARRANGEMENT-->
+  <object position="4 0 -2" angles="0 0 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>
+  <object position="2.5 0 -2" angles="0 0 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>
+  <object position="1 0 -2" angles="0 0 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>
+  <object position="-0.5 0 -2" angles="0 0 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>
+
+  <object position="-1.2 0 -1.2" angles="0 90 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>
+  <object position="-1.2 0 0.3" angles="0 90 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>
+  <object position="-1.2 0 1.8" angles="0 90 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>
+  <object position="1.8 0 -1.2" angles="0 90 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>
+  <object position="1.8 0 0.3" angles="0 90 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>
+  <object position="1.8 0 1.8" angles="0 90 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>
+
+  <!--DESKS-->
+  <object position="3.3 0 -1.2" angles="0 180 0" scale="20" model="Table" material="FlatGrey"></object>
+  <object position="0.2 0 -1.2" angles="0 180 0" scale="20" model="Table" material="FlatGrey"></object>
+  <object position="3.8 0 -0.2" angles="0 30 0" scale="6.5" model ="Seat" material="Seat"></object>
+  <object position="0 0 -0.8" angles="0 -10 0" scale="6.5" model ="Seat" material="Seat"></object>
+  <object position="3 1 -1.2" angles="0 195 0" scale="5" model="Terminal" material="Terminal"></object>
+  <object position="0.2 1 -1.2" angles="0 180 0" scale="5" model="Terminal" material="Terminal"></object>
+
+  <object position="4.5 0 4.5" angles="0 180 0" scale="25" model="CabinetTop" material="CabinetTop"></object>
+  <object position="4.5 0 3.9" angles="0 180 0" scale="25" model="CabinetShut" material="CabinetShut"></object>
+  <object position="4.5 0 3.3" angles="0 180 0" scale="25" model="CabinetShut" material="CabinetShut"></object>
+
+  <guard>
+    <waypoint position="3.5 0 1"></waypoint>
+    <waypoint position="3.5 0 4"></waypoint>
+    <waypoint position="-3.5 0 4"></waypoint>
+    <waypoint position="-3.5 0 1"></waypoint>
+    <waypoint position="-3.5 0 4"></waypoint>
+    <waypoint position="3.5 0 4"></waypoint>
+  </guard>
+
 </room>
