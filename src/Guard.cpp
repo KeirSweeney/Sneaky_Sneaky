@@ -76,11 +76,14 @@ void Guard::Update(float timeStep)
     bool guardMoving = rigidBody_->GetLinearVelocity().LengthSquared() > 0.0f;
     bool playerDetected = guardMoving && DetectPlayer(personNode);
 
+
+
     if (playerDetected) {
         hasSeenPlayer_ = true;
         FollowPlayer(timeStep, personNode);
     } else {
         FollowWaypoints(timeStep);
+        willHearSound_ = false;
     }
 
     Vector3 velocity = rigidBody_->GetLinearVelocity();
@@ -180,6 +183,11 @@ void Guard::SetWaypoints(PODVector<Vector3> &waypoints)
 bool Guard::HasSeenPlayer()
 {
     return hasSeenPlayer_;
+}
+
+void Guard::HeardSound()
+{
+    willHearSound_ = true;
 }
 
 bool Guard::DetectPlayer(Node *player)

@@ -17,4 +17,7 @@ public:
 
 public:
     void HandleNodeCollision(Urho3D::StringHash eventType, Urho3D::VariantMap &eventData);
+
+public:
+    void DistractGuard(Urho3D::Node *itemNode);
 };
