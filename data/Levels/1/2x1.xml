@@ -12,7 +12,8 @@
   <object position="-2.5 0 4.5" angles="0 180 0" scale="50" model="SofaLength" material="Sofa"></object>
   <object position="-2.5 0 -4.5" angles="0 0 0" scale="50" model="SofaLength" material="Sofa"></object>
 
-  <object position="4.2 0 -4.2" angles="0 -90 0" scale="20" model="Copier" material="Copier"></object>
+  <object position="3.5 0 -4.2" angles="0 -90 0" scale="17.5" model="Copier" material="Copier"></object>
+  <object position="4.9 0 -4.2" angles="0 -15 0" scale="8" model="PrinterBoxes" material="PrinterBoxes"></object>
 
   <object position="3.6 0 4.5" angles="0 90 0" scale="25" model="CabinetMiddle" material="CabinetMiddle"></object>
   <object position="4.2 0 4.5" angles="0 90 0" scale="25" model="CabinetShut" material="CabinetShut"></object>

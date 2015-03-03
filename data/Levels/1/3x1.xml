@@ -14,13 +14,14 @@
   <object position="-0.5 0 0" angles="0 0 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>
   <object position="4.5 0 -2" angles="0 90 0" scale="20" model="Table" material="FlatGrey"></object>
   <object position="4.5 0 2" angles="0 90 0" scale="20" model="Table" material="FlatGrey"></object>
-
+  <object position="4.5 1 -1.2" angles="0 190 0" scale="5" model="Lamp" material="Lamp"></object>
   <object position="4.5 1 2" angles="0 90 0" scale="5" model="Terminal" material="Terminal"></object>
   <object position="4.5 1 -2" angles="0 90 0" scale="5" model="Terminal" material="Terminal"></object>
   <object position="4 0 2" angles="0 -80 0" scale="6.5" model ="Seat" material="Seat"></object>
   <object position="3.8 0 -2" angles="0 -103 0" scale="6.5" model ="Seat" material="Seat"></object>
+  <object position="4.5 0 -4" angles="0 90 0" scale="8" model="PrinterBoxes" material="PrinterBoxes"></object>
 
-  <!-- CABINETS TO LOOT -->
+  <!-- CABINETS -->
   <object position="-4.5 0 -1" angles="0 0 0" scale="25" model="CabinetBottom" material="CabinetBottom"></object>
   <object position="-4.5 0 -1.6" angles="0 0 0" scale="25" model="CabinetShut" material="CabinetShut"></object>
 
