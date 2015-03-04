@@ -1,4 +1,4 @@
 <room>
-
-
+  <!--END ROOM-->
+  <object scale="0.75" model="Stairs" material="FlatGrey" interaction="Stairs"></object>
 </room>

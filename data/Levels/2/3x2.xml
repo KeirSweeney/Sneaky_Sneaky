@@ -1,4 +1,15 @@
 <room>
+  <!-- SOFAS -->
+  <!--right -->
+  <object position="4.5 -0.01 2.9" angles="0 -90 0" scale="50" model="SofaLength" material="Sofa"></object>
+  <object position="4.5 0 -0.1" angles="0 -90 0" scale="50" model="SofaLength" material="Sofa"></object>
+  <!-- left -->
+  <object position="-4.5 -0.01 2.9" angles="0 90 0" scale="50" model="SofaLength" material="Sofa"></object>
+  <object position="-4.5 0 -0.1" angles="0 90 0" scale="50" model="SofaLength" material="Sofa"></object>
 
-
+  <!--COOLER AND COPPIER -->
+  <object position="-4.5 0 -2" angles="0 -90 0" scale="6" model="CoolerBase" material="FlatGrey"></object>
+  <object position="-4.5 0 -2" angles="0 -90 0" scale="6" model="CoolerBottle" material="CoolerBottle"></object>
+  <object position="-4.3 0 -4" angles="0 0 0" scale="17.5" model="Copier" material="Copier"></object>
+  
 </room>

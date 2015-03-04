@@ -1,20 +1,22 @@
 <room>
-  
-  <!--PICK-UP-ABLE PUNCHCARD 
-  THIS ONE OPENS THE DOOR INTO RECEPTION-->
-  <object position="3.2 0 4.5" scale="10" model="Punchcard" material="Pickup" interaction="Pickup"></object>
-  
-  <!--SOFAS IN FRONT OF ENTRANCE-->
-  <object position="4.5 0 3" angles="0 -90 0" scale="50" model="SofaLength" material="Sofa"></object>
-  <object position="4.5 0 -3" angles="0 -90 0" scale="50" model="SofaLength" material="Sofa"></object>
-  <object position="1 0 4.5" angles="0 180 0" scale="50" model="SofaLength" material="Sofa"></object>
-  <object position="1 0 -4.5" angles="0 0 0" scale="50" model="SofaLength" material="Sofa"></object>
 
-  <!--COOLER SIZE AND HEIGHT-->
-  <object position="-1.2 0 4.5" scale="6" model="CoolerBase" material="FlatGrey"></object>
-  <object position="-1.2 0 4.5" scale="6" model="CoolerBottle" material="CoolerBottle"></object>
+  <!--KEYCARD-->
+  <object position="-0.8 0 4.5" scale="10" model="Punchcard" material="Pickup" interaction="Pickup"></object>
 
-  <object position="-1.2 0 -4.5" angles="0 180 0" scale="6" model="CoolerBase" material="FlatGrey"></object>
-  <object position="-1.2 0 -4.5" angles="0 180 0" scale="6" model="CoolerBottle" material="CoolerBottle"></object>
+  <!--SOFAS-->
+  <object position="4.6 0 -3.5" angles="0 -90 0" scale="50" model="SofaLength" material="Sofa"></object>
+  <object position="4.6 0 3.5" angles="0 -90 0" scale="50" model="SofaLength" material="Sofa"></object>
+  <object position="3.2 -0.01 4.6" angles="0 180 0" scale="50" model="SofaLength" material="Sofa"></object>
+  <object position="3.2 -0.01 -4.6" angles="0 0 0" scale="50" model="SofaLength" material="Sofa"></object>
+  <object position="4.96 0 -2" angles="0 -90 0" scale="50" model="SofaEnd" material="Sofa"></object>
+  <object position="4.96 0 2" angles="0 90 0" scale="50" model="SofaEnd" material="Sofa"></object>
+  <object position="1.8 0 4.95" angles="0 180 0" scale="50" model="SofaEnd" material="Sofa"></object>
+  <object position="1.8 0 -4.95" angles="0 180 0" scale="50" model="SofaEnd" material="Sofa"></object>
+
+  <!--COOLERS-->
+  <object position="0 0 4.5" scale="6" model="CoolerBase" material="FlatGrey"></object>
+  <object position="0 0 4.5" scale="6" model="CoolerBottle" material="CoolerBottle"></object>
+  <object position="0 0 -4.5" angles="0 180 0" scale="6" model="CoolerBase" material="FlatGrey"></object>
+  <object position="0 0 -4.5" angles="0 180 0" scale="6" model="CoolerBottle" material="CoolerBottle"></object>
 
 </room>
