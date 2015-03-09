@@ -4,7 +4,12 @@
   <object position="3.5 0 0" angles="0 -90 0" scale="20" model="Table" material="FlatGrey"></object>
   <object position="4.5 0 -0.5" angles="0 93 0" scale="6.5" model ="Seat" material="Seat"></object>
   <object position="3.5 1 -0.8" angles="0 20 0" scale="5" model="Lamp" material="Lamp"></object>
-  <object position="3.5 1 0.5" angles="0 -55 0" scale="5" model="Terminal" material="Terminal">E-mail : vicky.reception@wrightsltd.com/nVicky!/nWhat's all this I here about you 'borrowing' paper-clips out of the office stationery cupbord? Do you think we're made of money here??/nH.Chippingfort - C.E.O.</object>
+  <object position="3.5 1 0.5" angles="0 -55 0" scale="5" model="Terminal" material="Terminal" interaction="Terminal" displaysize="800 300">E-mail: vicky.reception@wrightsltd.com
+
+Vicky!
+What's all this I here about you 'borrowing' paper-clips out of the office stationery cupbord? Do you think we're made of money here??
+
+H.Chippingfort - C.E.O.</object>
 
   <!-- SOFAS -->
   <object position="0.6 0 4.5" angles="0 180 0" scale="50" model="SofaLength" material="Sofa"></object>
