@@ -1,4 +1,7 @@
 <room>
+  <!-- BIN (woooo!) -->
+  <object position="3.5 0 -3" angles="0 0 0" scale="5" model="Bin" material="CubicleDivider"></object>
+  <object position="-3.5 0 3" angles="0 0 0" scale="5" model="Bin" material="CubicleDivider"></object>
 
   <!--KEYCARD-->
   <object position="3.5 0 3.5" scale="10" model="Punchcard" material="Pickup" interaction="Pickup"></object>

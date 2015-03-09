@@ -1,4 +1,6 @@
 <room>
+  <!-- BIN (woooo!) -->
+  <object position="3.5 0 -1.5" angles="0 0 0" scale="5" model="Bin" material="CubicleDivider"></object>
 
   <!-- RECEPTION DESK, CHAIR. LAMP & TERMINAL -->
   <object position="3.5 0 0" angles="0 -90 0" scale="20" model="Table" material="FlatGrey"></object>
