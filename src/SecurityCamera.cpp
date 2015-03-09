@@ -1,4 +1,4 @@
-#include "Guard.h"
+#include "SecurityCamera.h"
 
 #include "Context.h"
 #include "Node.h"
@@ -20,221 +20,146 @@
 #include "ResourceCache.h"
 #include "Renderer.h"
 #include "CameraController.h"
+#include "Log.h"
 
 using namespace Urho3D;
 
-const float Guard::MOVE_SPEED = 1.0f;
-const float Guard::VIEW_DISTANCE = 5.0f;
-const float Guard::VIEW_ANGLE = 90.0f;
-const float Guard::DETECT_MOVE_SPEED = 1.5f;
+const float SecurityCamera::VIEW_DISTANCE = 5.0f; //Distance the camera can see
+const float SecurityCamera::VIEW_ANGLE = 90.0f; //How much the camera can see in terms of angle
 
-Guard::Guard(Context *context):
-    LogicComponent(context),
+SecurityCamera::SecurityCamera(Context *context) :
+	InteractableComponent(context),
     hasSeenPlayer_(false),
-    wasFollowingPlayer_(false)
+	rotatingToPlayer_(false)
 {
 }
 
-void Guard::RegisterObject(Context* context)
+void SecurityCamera::RegisterObject(Context* context)
 {
-    context->RegisterFactory<Guard>("Logic");
+	context->RegisterFactory<SecurityCamera>("Logic");
     COPY_BASE_ATTRIBUTES(LogicComponent);
 }
 
-void Guard::DelayedStart()
+void SecurityCamera::DelayedStart()
 {
-    ResourceCache *cache = GetSubsystem<ResourceCache>();
-    frontMaterial_ = cache->GetResource<Material>("Materials/MaverickFront.xml");
-    backMaterial_ = cache->GetResource<Material>("Materials/MaverickBack.xml");
-    leftMaterial_ = cache->GetResource<Material>("Materials/MaverickLeft.xml");
-    rightMaterial_ = cache->GetResource<Material>("Materials/MaverickRight.xml");
-
     rigidBody_ = node_->GetComponent<RigidBody>();
+
+	CAMERA_START_ROT = node_->GetRotation().YawAngle();
+
+	//Give the security camera an initial angular velocity (We want it to rotate)
 }
 
-void Guard::Update(float timeStep)
+void SecurityCamera::Update(float timeStep)
 {
-    Node *personNode = GetScene()->GetChild("Person", true);
+	Node *personNode = GetScene()->GetChild("Person", true);
 
-    PODVector<RigidBody *> colliders;
-    rigidBody_->GetCollidingBodies(colliders);
+	Vector3 securityCameraAngularVelocity = rigidBody_->GetAngularVelocity();//Store security camera angular velocity
 
-    for (PODVector<RigidBody *>::ConstIterator i = colliders.Begin(); i != colliders.End(); ++i) {
-        if ((*i)->GetNode() != personNode) {
-            continue;
-        }
+	//Now check if it has or doesn't have angular velocity
+	bool camersHasAngularVelocity = false;
+//	if (securityCameraAngularVelocity.Data > 0) //Check if camera has angular velocity more than 0
+	//	camersHasAngularVelocity = true; //If it does, then its rotating
 
-        GetSubsystem<Game>()->EndLevel(true);
-        return;
-    }
+	//DebugRenderer *debug = node_->GetScene()->GetComponent<DebugRenderer>();
+	//debug->AddLine(cameraRotating, cameraRotating, Color::BLUE);
 
-    Renderer *renderer = GetSubsystem<Renderer>();
-    Camera *camera = renderer->GetViewport(0)->GetCamera();
-    CameraController *cameraController = camera->GetNode()->GetParent()->GetComponent<CameraController>();
-    node_->SetWorldRotation(Quaternion(cameraController->GetYawAngle(), Vector3::UP));
+	node_->Rotate(Quaternion(0.0f, CAMERA_ROT_SPEED * timeStep, 0.0f),TS_PARENT);
 
-    bool guardMoving = rigidBody_->GetLinearVelocity().LengthSquared() > 0.0f;
-    bool playerDetected = guardMoving && DetectPlayer(personNode);
+	//If 'DetectPlayer' returns true camera angular attributes should be adjusted to look at the player
+	
+	/*bool playerDetected = DetectPlayer(personNode);
 
+	if (playerDetected) {
+		hasSeenPlayer_ = true;
+		CameraRotateOnPlayer(timeStep, personNode);//Rotate camera to the node the player is standing on
+	}
+	else {
+		ResetCamera(timeStep); //Reset camera when the player is no longer detected and reset its behaviour back to 'searching' (Pivoting left and right by flipping angular velocity)
+		hasSeenPlayer_ = false;
+	}*/
 
-
-    if (playerDetected) {
-        hasSeenPlayer_ = true;
-        FollowPlayer(timeStep, personNode);
-    } else {
-        FollowWaypoints(timeStep);
-        willHearSound_ = false;
-    }
-
-    Vector3 velocity = rigidBody_->GetLinearVelocity();
-    guardMoving = velocity.LengthSquared() > 0.0f;
-    if (!guardMoving) {
-        return;
-    }
-
-    Quaternion rotation = Quaternion(Vector3::FORWARD, velocity);
-
-    Node *lightNode = node_->GetChild("SearchLight");
-    lightNode->SetWorldRotation(rotation);
-    lightNode->Rotate(Quaternion(30.0f, Vector3::RIGHT));
-
-    Light *light = lightNode->GetComponent<Light>();
-    light->SetColor(guardMoving ? (playerDetected ? Color::RED : Color::WHITE) : Color::BLACK);
-
-    float angle = rotation.YawAngle();
-
-    StaticModel *model = node_->GetComponent<StaticModel>();
-    if (angle < -120.0f || angle > 120.0f) {
-        model->SetMaterial(frontMaterial_);
-    } else if (angle < -60.0f) {
-        model->SetMaterial(leftMaterial_);
-    } else if (angle > 60.0f) {
-        model->SetMaterial(rightMaterial_);
-    } else {
-        model->SetMaterial(backMaterial_);
-    }
+	Seeking(timeStep);
 }
 
-void Guard::FollowPlayer(float timeStep, Node *player)
+void SecurityCamera::Seeking(float timeStep) //In this function we want to give the camera an angular velocity, but we want to flip the angular velocity when it reaches an angle threshold (So it doesnt rotate 180 degrees)
 {
-    NavigationMesh *navMesh = GetScene()->GetComponent<NavigationMesh>();
+	//When player runs out of range reset camera behaviour to just rotate left and right with a given angle
+	//We want to reset camera behaviour when the player is no longer detected!
 
-    Vector3 guardPosition = node_->GetWorldPosition();
-    Vector3 playerPosition = player->GetWorldPosition();
+	
+	float currCameraRotation = (node_->GetRotation().YawAngle());
 
-    wasFollowingPlayer_ = true;
+	float diff = (CAMERA_START_ROT - currCameraRotation);
 
-    Vector3 target = navMesh->FindNearestPoint(playerPosition);
-    navMesh->FindPath(path_, guardPosition, target);
-    path_.Erase(0);
+	bool right = true;
+	
 
-    if (path_.Empty()) {
-        rigidBody_->SetLinearVelocity(Vector3::ZERO);
-        return;
-    }
+	if (diff <= -45.0f ) {
+		CAMERA_ROT_SPEED *= -1.0f;
+		right = false;
+		
+	}
 
-    Vector3 next = path_.Front();
+	LOGERRORF("Camera difference: %f", diff);
 
-    Vector3 offset = next - guardPosition;
-    offset.y_ = 0.0f;
+	//^Camera rotates right and left until player detected.^
 
-	if (offset.LengthSquared() < (DETECT_MOVE_SPEED * DETECT_MOVE_SPEED * timeStep * timeStep)) {
-        path_.Erase(0);
-    }
+	node_->Rotate(Quaternion(0.0f, CAMERA_ROT_SPEED * timeStep, 0.0f), TS_PARENT);
 
-    offset.Normalize();
-    rigidBody_->SetLinearVelocity(offset * DETECT_MOVE_SPEED);
 }
 
-void Guard::FollowWaypoints(float timeStep)
+bool SecurityCamera::DetectPlayer(Node *player)
 {
-    Vector3 position = node_->GetWorldPosition();
+	Vector3 cameraPosition = node_->GetWorldPosition(); //Get security camera position
+	Vector3 personPosition = player->GetWorldPosition();//Get player camera position
 
-    if (wasFollowingPlayer_ && path_.Empty()) {
-        NavigationMesh *navMesh = GetScene()->GetComponent<NavigationMesh>();
-        navMesh->FindPath(path_, position, waypoints_[0]);
-        path_.Erase(0);
 
-        wasFollowingPlayer_ = false;
-    }
+	Vector3 difference = (personPosition - cameraPosition); //Get vector difference between camera and player
 
-    if (path_.Empty()) {
-        path_ = waypoints_;
-    }
+	if (difference.LengthSquared() > (VIEW_DISTANCE * VIEW_DISTANCE)) //If difference is more than the distance, return false (Player isn't detected)
+	{
+		return false;
+	}
 
-    Vector3 next = path_.Front();
+	Vector3 forward = rigidBody_->GetLinearVelocity(); //this stores the direction the camera is looking
 
-    Vector3 offset = next - position;
-    offset.y_ = 0.0f;
+	forward.Normalize(); //normalize is used for when we use dot product.
+	difference.Normalize();
 
-    if (offset.LengthSquared() < (MOVE_SPEED * MOVE_SPEED * timeStep * timeStep)) {
-        path_.Erase(0);
-    }
+	//DebugRenderer *debug = node_->GetScene()->GetComponent<DebugRenderer>();
+	//debug->AddLine(guardPosition, guardPosition + forward, Color::BLUE);
 
-    offset.Normalize();
-    rigidBody_->SetLinearVelocity(offset * MOVE_SPEED);
+	//Check to see if player is in camera FOV
+	if (forward.DotProduct(difference) < Cos(VIEW_ANGLE / 2.0f)) { //At this point, the player is close enough to the camera, but we must check if it's in the FOV
+		return false;
+	}
+
+
+	Ray ray(cameraPosition + Vector3(0.0f, 1.6f, 0.0f) + (forward * 0.25f), difference);
+	PODVector<RayQueryResult> result; //stores all of the objects the ray collides with into a vector.
+	RayOctreeQuery query(result, ray, RAY_TRIANGLE, difference.LengthSquared(), DRAWABLE_GEOMETRY);
+
+	Octree *octree = GetScene()->GetComponent<Octree>();
+	octree->RaycastSingle(query);
+
+	if (!result.Empty() && result[0].node_ != player && result[0].node_->GetParent() != player) {
+		return false;
+	}
+	return true;
 }
 
-void Guard::SetWaypoints(PODVector<Vector3> &waypoints)
+
+void SecurityCamera::CameraRotateOnPlayer(float timeStep, Urho3D::Node *player)
 {
-    path_ = waypoints_ = waypoints;
-}
+	//Player is in reach and in the FOV of the camera, we must now rotate the camera to the player
+	//Rotate camera to player and update camera angle according to player..
+	//We dont need to run any checks in terms of distance and FOV here because this function wont be called if the player wasn't in FOV & distance.
 
-bool Guard::HasSeenPlayer()
-{
-    return hasSeenPlayer_;
-}
 
-void Guard::HeardSound()
-{
-    willHearSound_ = true;
-}
+	Vector3 cameraPosition = node_->GetWorldPosition(); //Get security camera position
+	Vector3 personPosition = player->GetWorldPosition();//Get player camera position
 
-bool Guard::DetectPlayer(Node *player)
-{
-    Vector3 guardPosition = node_->GetWorldPosition();
-    Vector3 playerPosition = player->GetWorldPosition();
-    Vector3 difference = (playerPosition - guardPosition);
+	Vector3 difference = (personPosition - cameraPosition);
 
-    float length = difference.Length();
-    if (length > VIEW_DISTANCE) {
-        return false; //if the player is too far away from the guard then return false and exit the function.
-    }
 
-    Vector3 forward = rigidBody_->GetLinearVelocity(); //this stores the way that the guard is looking in the game.
-
-    forward.Normalize(); //normalize is used for when we use dot product.
-    difference.Normalize();
-
-    //DebugRenderer *debug = node_->GetScene()->GetComponent<DebugRenderer>();
-    //debug->AddLine(guardPosition, guardPosition + forward, Color::BLUE);
-
-    if (forward.DotProduct(difference) < Cos(VIEW_ANGLE / 2.0f)) {
-       //debug->AddLine(guardPosition, guardPosition + difference, Color::RED);
-       return false; // this if statement is used to see if the player is within the guards FOV.
-                        //If he is not then it retruns false and exits the function.
-    }
-
-    //debug->AddLine(guardPosition, guardPosition + difference, Color::GREEN);
-
-    Ray ray(guardPosition + Vector3(0.0f, 1.6f, 0.0f) + (forward * 0.25f), difference);
-    //this creates a raycast from an increased y value near to his eyes in the forward direction of
-        //where he is looking to the difference of positions from the guard to the player.
-
-    PODVector<RayQueryResult> result; //stores all of the objects the ray collides with into a vector.
-    RayOctreeQuery query(result, ray, RAY_TRIANGLE, length, DRAWABLE_GEOMETRY);
-    //the query here checks the result vector at the ray cast from the guards at length.
-        // And checks all of the triangles of the objects and only hits drawble geometry.
-
-    Octree *octree = GetScene()->GetComponent<Octree>();
-    octree->RaycastSingle(query);//we apply our Ray query here.
-
-    if (!result.Empty() && result[0].node_ != player && result[0].node_->GetParent() != player) {
-       //debug->AddLine(ray.origin_, ray.origin_ + (ray.direction_ * length), Color::RED);
-       return false; //If the ray hits anything except the player it returns false and exits the loop.
-    }
-
-    //debug->AddLine(ray.origin_, ray.origin_ + (ray.direction_ * length), Color::GREEN);
-    return true; //And finnally after all the checks, we know that the guard can see the player, is close enough,
-                    //and that there is no object obscuring the guards FOV.
 }
