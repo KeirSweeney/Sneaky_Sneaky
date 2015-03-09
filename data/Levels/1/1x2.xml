@@ -1,4 +1,8 @@
 <room>
+  <!-- BIN (woooo!) -->
+  <object position="-3.5 0 3" angles="0 0 0" scale="5" model="Bin" material="CubicleDivider"></object>
+  <object position="3.5 0 3" angles="0 0 0" scale="5" model="Bin" material="CubicleDivider"></object>
+
   <!-- STANDARD ONE ROOM CUBICALS-->
   <object position="4 0 2" angles="0 0 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>
   <object position="2.5 0 2" angles="0 0 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>

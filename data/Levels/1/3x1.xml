@@ -1,4 +1,6 @@
 <room>
+  <!-- BIN (woooo!) -->
+  <object position="4.5 0 4.5" angles="0 0 0" scale="5" model="Bin" material="CubicleDivider"></object>
 
   <!-- SCREENS BEHIND RECEPTION-->
   <object position="-5 0 -4" angles="0 90 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>
