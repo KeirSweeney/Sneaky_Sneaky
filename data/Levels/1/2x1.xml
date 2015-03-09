@@ -1,20 +1,22 @@
 <room>
-    <object position="-2 0 4.5" scale="10" model="Punchcard" material="Pickup" interaction="Pickup"></object>
-<object position="-4.0 0 4.5" angles="0 0 0" scale="15" model="Table" material="FlatGrey"></object>
-<object position=" 0.85 0 4.5" angles="0 0 0" scale="15" model="Table" material="FlatGrey"></object>
-<object position="-0.4 0 4.5" angles="0 90 0" scale="20" model="CabinetShut" material="CabinetShut"></object>
-<object position="-0.9 0 4.5" angles="0 90 0" scale="20" model="CabinetShut" material="CabinetShut"></object>
-<object position="-2.8 0 4.5" scale="6.5" model="CoolerBottle" material="CoolerBottle"></object>
-<object position="-2.8 0 4.5" scale="6.5" model="CoolerBase" material="FlatGrey"></object>
-<object position=" 4.5 0 3.8" angles="0 90 0" scale="15" model="Table" material="FlatGrey"></object>
-<object position=" -4.0 0 -4.5" angles="0 180 0" scale="15" model="Table" material="FlatGrey"></object>
-<object position=" -2.0 0 -4.5" angles="0 180 0" scale="15" model="Table" material="FlatGrey"></object>
-<object position=" 3.5 0 -4.5" angles="0 180 0" scale="15" model="Table" material="FlatGrey"></object>
-<object position="1 0 4.2" angles="0 180 0" scale="5" model="Seat" material="Seat"></object>
-<object position="-4 0 4.2" angles="0 180 0" scale="5" model="Seat" material="Seat"></object>
-<object position="-4.15 0 -4.2" angles="0 0 0" scale="5" model="Seat" material="Seat"></object>
-<object position="2.1 0 -4.5" angles="0 -90 0" scale="20" model="CabinetTop" material="CabinetTop"></object>
-<object position="-0.05 0 -4.5" scale="10" model="Punchcard" material="Pickup" interaction="Pickup"></object>
-<object position="0.8 0 -4.5" angles="0 -90 0" scale="20" model="CabinetShut" material="CabinetShut"></object>
-<object position="-0.05 0 0" scale="1" model="Pickup" material="Pickup" interaction="Pickup"></object>
+
+  <!-- RECEPTION DESK, CHAIR. LAMP & TERMINAL -->
+  <object position="3.5 0 0" angles="0 -90 0" scale="20" model="Table" material="FlatGrey"></object>
+  <object position="4.5 0 -0.5" angles="0 93 0" scale="6.5" model ="Seat" material="Seat"></object>
+  <object position="3.5 1 -0.8" angles="0 20 0" scale="5" model="Lamp" material="Lamp"></object>
+  <object position="3.5 1 0.5" angles="0 -55 0" scale="5" model="Terminal" material="Terminal">E-mail : vicky.reception@wrightsltd.com/nVicky!/nWhat's all this I here about you 'borrowing' paper-clips out of the office stationery cupbord? Do you think we're made of money here??/nH.Chippingfort - C.E.O.</object>
+
+  <!-- SOFAS -->
+  <object position="0.6 0 4.5" angles="0 180 0" scale="50" model="SofaLength" material="Sofa"></object>
+  <object position="0.6 0 -4.5" angles="0 0 0" scale="50" model="SofaLength" material="Sofa"></object>
+  <object position="-2.4 -0.01 4.5" angles="0 180 0" scale="50" model="SofaLength" material="Sofa"></object>
+  <object position="-2.4 -0.01 -4.5" angles="0 0 0" scale="50" model="SofaLength" material="Sofa"></object>
+
+  <object position="3.5 0 -4.2" angles="0 -90 0" scale="17.5" model="Copier" material="Copier"></object>
+  <object position="4.9 0 -4.2" angles="0 -15 0" scale="8" model="PrinterBoxes" material="PrinterBoxes"></object>
+
+  <object position="3.6 0 4.5" angles="0 90 0" scale="25" model="CabinetMiddle" material="CabinetMiddle"></object>
+  <object position="4.2 0 4.5" angles="0 90 0" scale="25" model="CabinetShut" material="CabinetShut"></object>
+  <object position="4.8 0 4.5" angles="0 90 0" scale="25" model="CabinetTop" material="CabinetTop"></object>
+
 </room>

@@ -31,7 +31,8 @@ const float Guard::DETECT_MOVE_SPEED = 1.5f;
 Guard::Guard(Context *context):
     LogicComponent(context),
     hasSeenPlayer_(false),
-    wasFollowingPlayer_(false)
+    wasFollowingPlayer_(false),
+    willHearSound_(false)
 {
 }
 
@@ -74,16 +75,28 @@ void Guard::Update(float timeStep)
     node_->SetWorldRotation(Quaternion(cameraController->GetYawAngle(), Vector3::UP));
 
     bool guardMoving = rigidBody_->GetLinearVelocity().LengthSquared() > 0.0f;
-    bool playerDetected = guardMoving && DetectPlayer(personNode);
 
+    bool playerDetected = false;
+    if (guardMoving) {
+        if (willHearSound_) {
+            wasFollowingPlayer_ = true;
 
+            NavigationMesh *navMesh = GetScene()->GetComponent<NavigationMesh>();
+            Vector3 target = navMesh->FindNearestPoint(soundPosition_);
+            navMesh->FindPath(path_, node_->GetWorldPosition(), target);
+            path_.Erase(0);
+
+            willHearSound_ = false;
+        } else {
+            playerDetected = DetectPlayer(personNode);
+        }
+    }
 
     if (playerDetected) {
         hasSeenPlayer_ = true;
         FollowPlayer(timeStep, personNode);
     } else {
         FollowWaypoints(timeStep);
-        willHearSound_ = false;
     }
 
     Vector3 velocity = rigidBody_->GetLinearVelocity();
@@ -162,12 +175,25 @@ void Guard::FollowWaypoints(float timeStep)
         path_ = waypoints_;
     }
 
+#if 0
+    NavigationMesh *navMesh = node_->GetScene()->GetComponent<NavigationMesh>();
+    DebugRenderer *debug = node_->GetScene()->GetComponent<DebugRenderer>();
+    Vector3 last = position;
+    last.y_ += navMesh->GetCellHeight() * 2;
+    for (PODVector<Vector3>::ConstIterator i = path_.Begin(); i != path_.End(); ++i) {
+        Vector3 next = *i;
+        next.y_ += navMesh->GetCellHeight();
+        debug->AddLine(last, next, Color(255, 0, 0));
+        last = next;
+    }
+#endif
+
     Vector3 next = path_.Front();
 
     Vector3 offset = next - position;
     offset.y_ = 0.0f;
 
-    if (offset.LengthSquared() < (MOVE_SPEED * MOVE_SPEED * timeStep * timeStep)) {
+    if ((wasFollowingPlayer_ && path_.Size() == 1 && offset.LengthSquared() < (1.0f * 1.0f * timeStep * timeStep)) || (offset.LengthSquared() < (MOVE_SPEED * MOVE_SPEED * timeStep * timeStep))) {
         path_.Erase(0);
     }
 
@@ -185,9 +211,10 @@ bool Guard::HasSeenPlayer()
     return hasSeenPlayer_;
 }
 
-void Guard::HeardSound()
+void Guard::HeardSound(Vector3 position)
 {
     willHearSound_ = true;
+    soundPosition_ = position;
 }
 
 bool Guard::DetectPlayer(Node *player)

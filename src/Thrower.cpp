@@ -83,48 +83,48 @@ void Thrower::Update(float timeStep)
     itemRigidBody->SetMass(1.0f);
     itemRigidBody->SetRestitution(1.0f);
     itemRigidBody->SetLinearVelocity((personDirection * 4.0f) + Vector3(0.0f, 1.6f, 0.0f));
-    itemNode->SubscribeToEvent(itemNode,E_NODECOLLISIONSTART,HANDLER(Thrower,HandleNodeCollision));
-
-    ParticleEmitter *particleEmitter = itemNode->CreateComponent<ParticleEmitter>();
-    particleEmitter->SetEffect(cache->GetResource<ParticleEffect>("Particle/Trail.xml"));
+    itemNode->SubscribeToEvent(itemNode, E_NODECOLLISIONSTART, HANDLER(Thrower, HandleNodeCollision));
 
     SelfDestroy *selfDestroy = itemNode->CreateComponent<SelfDestroy>();
     selfDestroy->SetLifeTime(7.0f);
 
     SoundSource *soundSource = itemNode->CreateComponent<SoundSource>();
+
+    Node *particleEmitterNode = itemNode->CreateChild();
+    particleEmitterNode->SetPosition(itemRigidBody->GetCenterOfMass());
+    particleEmitterNode->SetScale(Vector3(5.0f, 5.0f, 5.0f) / itemNode->GetScale());
+
+    ParticleEmitter *particleEmitter = particleEmitterNode->CreateComponent<ParticleEmitter>();
+    particleEmitter->SetEffect(cache->GetResource<ParticleEffect>("Particle/Trail.xml"));
 }
 
 void Thrower::HandleNodeCollision(StringHash eventType, VariantMap &eventData)
 {
     Node *itemNode = ((RigidBody *)eventData[NodeCollisionStart::P_BODY].GetPtr())->GetNode();
     SoundSource *soundSource = itemNode->GetComponent<SoundSource>();
+
+    DistractGuard(itemNode);
+
     if (soundSource->IsPlaying()) {
         return;
     }
 
     soundSource->Play(GetSubsystem<ResourceCache>()->GetResource<Sound>("Audio/HitHurt.wav"));
-
-    DistractGuard(itemNode);
-
 }
 
 void Thrower::DistractGuard(Node *itemNode)
 {
-    Vector3 itemPos = itemNode->GetPosition();
+    Vector3 itemPos = itemNode->GetWorldPosition();
     PODVector<Node *> guards;
     itemNode->GetScene()->GetChildrenWithComponent<Guard>(guards,true);
-    for (PODVector<Node *>::ConstIterator i = guards.Begin(); i != guards.End(); ++i)
-    {
+    for (PODVector<Node *>::ConstIterator i = guards.Begin(); i != guards.End(); ++i) {
         Node *guardNode = *i;
-        Vector3 offset = guardNode->GetPosition() - itemPos;
-        if(offset.LengthSquared() > (2.0f * 2.0f))
-        {
+        Vector3 offset = guardNode->GetWorldPosition() - itemPos;
+        if(offset.LengthSquared() > (4.0f * 4.0f)) {
             continue;
         }
 
         Guard *guard = guardNode->GetComponent<Guard>();
-        guard->HeardSound();
-
+        guard->HeardSound(itemPos);
     }
-
 }

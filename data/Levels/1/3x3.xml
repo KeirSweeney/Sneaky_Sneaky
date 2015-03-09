@@ -1,0 +1,18 @@
+<room>
+  <!--END ROOM-->
+  <object scale="0.75" model="Stairs" material="FlatGrey" interaction="Stairs"></object>
+
+  <!-- STACKED CHAIRS -->
+  <object position="-4.5 0 4.5" angles="0 0 0" scale="6.5" model ="Seat" material="Seat"></object>
+  <object position="-4.5 1 4.5" angles="0 180 180" scale="6.5" model ="Seat" material="Seat"></object>
+  <object position="-3.5 0 4.5" angles="0 0 0" scale="6.5" model ="Seat" material="Seat"></object>
+  <object position="-3.5 1 4.5" angles="0 190 180" scale="6.5" model ="Seat" material="Seat"></object>
+  <object position="-2.5 0 4.5" angles="0 0 0" scale="6.5" model ="Seat" material="Seat"></object>
+  <object position="-2.5 1 4.5" angles="0 180 180" scale="6.5" model ="Seat" material="Seat"></object>
+
+  <object position="-4 0 -4.5" angles="0 180 0" scale="6.5" model ="Seat" material="Seat"></object>
+  <object position="-4 1 -4.5" angles="0 0 180" scale="6.5" model ="Seat" material="Seat"></object>
+  <object position="-3 0 -4.5" angles="0 180 0" scale="6.5" model ="Seat" material="Seat"></object>
+  <object position="-2.5 0.5 -4" angles="90 20 0" scale="6.5" model ="Seat" material="Seat"></object>
+
+</room>

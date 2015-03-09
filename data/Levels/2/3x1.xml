@@ -1,3 +1,26 @@
 <room>
-    <object scale="0.75" model="Stairs" material="FlatGrey" interaction="Stairs"></object>
+  <!--RECEPTION DESK-->
+  <object position="0 0 -3" angles="0 0 0" scale="20" model="Table" material="FlatGrey"></object>
+  <object position="0 0 -3.6" angles="0 195 0" scale="6.5" model ="Seat" material="Seat"></object>
+  <object position="0 1 -3" angles="0 0 0" scale="5" model="Terminal" material="Terminal"></object>
+  <object position="-0.78 1 -3.2" angles="0 100 0" scale="5" model="Lamp" material="Lamp"></object>
+
+  <!--CABINETS-->
+  <object position="2 0 -4.5" angles="0 -90 0" scale="25" model="CabinetShut" material="CabinetShut"></object>
+  <object position="2.6 0 -4.5" angles="0 -90 0" scale="25" model="CabinetTop" material="CabinetTop"></object>
+  <object position="3.2 0 -4.5" angles="0 -90 0" scale="25" model="CabinetShut" material="CabinetShut"></object>
+  <object position="3.8 0 -4.5" angles="0 -90 0" scale="25" model="CabinetMiddle" material="CabinetMiddle"></object>
+  <object position="-2 0 -4.5" angles="0 -90 0" scale="25" model="CabinetShut" material="CabinetShut"></object>
+  <object position="-2.6 0 -4.5" angles="0 -90 0" scale="25" model="CabinetShut" material="CabinetShut"></object>
+  <object position="-3.2 0 -4.5" angles="0 -90 0" scale="25" model="CabinetBottom" material="CabinetBottom"></object>
+  <object position="-3.8 0 -4.5" angles="0 -90 0" scale="25" model="CabinetMiddle" material="CabinetMiddle"></object>
+  <object position="-4.7 0 -4" angles="0 -90 0" scale="8" model="PrinterBoxes" material="PrinterBoxes"></object>
+
+  <!--SOFAS-->
+  <object position="4.5 -0.01 2.9" angles="0 -90 0" scale="50" model="SofaLength" material="Sofa"></object>
+  <object position="4.5 0 -0.1" angles="0 -90 0" scale="50" model="SofaLength" material="Sofa"></object>
+
+  <!--COOLER-->
+  <object position="-4.7 0 -1" angles="0 -90 0" scale="6" model="CoolerBase" material="FlatGrey"></object>
+  <object position="-4.7 0 -1" angles="0 -90 0" scale="6" model="CoolerBottle" material="CoolerBottle"></object>
 </room>
