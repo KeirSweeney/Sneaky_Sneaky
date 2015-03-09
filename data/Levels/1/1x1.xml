@@ -1,5 +1,5 @@
 <room>
-
+  
   <!--KEYCARD-->
   <object position="-0.8 0 4.5" scale="10" model="Punchcard" material="Pickup" interaction="Pickup"></object>
 

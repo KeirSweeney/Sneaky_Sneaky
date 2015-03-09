@@ -23,6 +23,8 @@
   <guard>
     <waypoint position="-4 0 3.5"></waypoint>
     <waypoint position="-4 0 -3.5"></waypoint>
+    <waypoint position="0 0 -3.5"></waypoint>
+    <waypoint position="-4 0 -3.5"></waypoint>
   </guard>
 
 </room>
