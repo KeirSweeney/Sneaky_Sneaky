@@ -43,7 +43,10 @@ void Terminal::LoadFromXML(const XMLElement &xml)
         displayHeight_ = displaySize.y_;
     }
 
-    content_ = xml.GetValue();
+    const String content = xml.GetValue();
+    if (!content.Empty()) {
+        content_ = content;
+    }
 }
 
 void Terminal::DelayedStart()
@@ -97,8 +100,7 @@ bool Terminal::CanPlayerInteract()
     Vector3 personPosition = GetScene()->GetChild("Person", true)->GetWorldPosition();
     Vector3 difference = personPosition - terminalPosition;
 
-    if(difference.LengthSquared() > (VIEW_DISTANCE * VIEW_DISTANCE))
-    {
+    if(difference.LengthSquared() > (VIEW_DISTANCE * VIEW_DISTANCE)) {
         return false;
     }
 
