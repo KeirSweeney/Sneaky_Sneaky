@@ -1,4 +1,8 @@
 <room>
+
+  <!--POSTER-->
+  <object position="-3 0.5 5" scale="1" model="PersonPlane" material="Poster3"></object>
+
   <!-- BIN (woooo!) -->
   <object position="4.5 0 4.5" angles="0 0 0" scale="5" model="Bin" material="CubicleDivider"></object>
 
@@ -8,6 +12,8 @@
   <object position="-5 0 -1" angles="0 90 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>
   <object position="-5 0 0.5" angles="0 90 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>
   <object position="-5 0 4" angles="0 90 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>
+  <object position="-1.1 0 -4" angles="0 90 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>
+  <object position="-1.1 0 -2.5" angles="0 90 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>
 
   <!-- CUBLICLE AND DESK ARRANGEMENT ON EAST WALL-->
   <object position="4 0 0" angles="0 0 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>
@@ -17,11 +23,21 @@
   <object position="4.5 0 -2" angles="0 90 0" scale="20" model="Table" material="FlatGrey"></object>
   <object position="4.5 0 2" angles="0 90 0" scale="20" model="Table" material="FlatGrey"></object>
   <object position="4.5 1 -1.2" angles="0 190 0" scale="5" model="Lamp" material="Lamp"></object>
-  <object position="4.5 1 2" angles="0 90 0" scale="5" model="Terminal" material="Terminal"></object>
-  <object position="4.5 1 -2" angles="0 90 0" scale="5" model="Terminal" material="Terminal"></object>
   <object position="4 0 2" angles="0 -80 0" scale="6.5" model ="Seat" material="Seat"></object>
   <object position="3.8 0 -2" angles="0 -103 0" scale="6.5" model ="Seat" material="Seat"></object>
   <object position="4.5 0 -4" angles="0 90 0" scale="8" model="PrinterBoxes" material="PrinterBoxes"></object>
+
+  <object position="4.5 1 2" angles="0 90 0" scale="5" model="Terminal" material="Terminal" interaction="Terminal" displaysize="400 150">STELLA'S PRIVATE LOG
+Poor Hellen, as if it weren't enough being head of HR here.
+I just heard her having a heated convo with Bob...
+Better process David's holiday denial form *sigh*</object>
+  <object position="4.5 1 -2" angles="0 90 0" scale="5" model="Terminal" material="Terminal" interaction="Terminal" displaysize="500 200">robert.h@wrightsltd.com
+  
+Robert,
+Here at Wright's Ltd we frown upon accusations of extortion, exploitation and assault.
+If you wish to file a formal complaint I will be happy to arrange a meeting with the CEO and the relevent parties involved.
+
+Hellen</object>
 
   <!-- CABINETS -->
   <object position="-4.5 0 -1" angles="0 0 0" scale="25" model="CabinetBottom" material="CabinetBottom"></object>
@@ -33,9 +49,11 @@
 
   <guard>
     <waypoint position="2.7 0 -2"></waypoint>
-    <waypoint position="-3 0 -2"></waypoint>
-    <waypoint position="-3 0 0"></waypoint>
-    <waypoint position="-3 0 -2"></waypoint>
+    <waypoint position="-3 0 -1"></waypoint>
+    <waypoint position="-3 0 2"></waypoint>
+    <waypoint position="2.7 0 2"></waypoint>
+    <waypoint position="-3 0 2"></waypoint>
+    <waypoint position="-3 0 -1"></waypoint>
   </guard>
   
 </room>

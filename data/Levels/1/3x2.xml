@@ -1,4 +1,5 @@
 <room>
+
   <!-- BIN (woooo!) -->
   <object position="4.5 0 2.5" angles="0 0 0" scale="5" model="Bin" material="CubicleDivider"></object>
   <object position="0.5 0.25 0" angles="0 20 90" scale="5" model="Bin" material="CubicleDivider"></object>
@@ -34,11 +35,16 @@
   <object position="0.2 0 -1.2" angles="0 180 0" scale="20" model="Table" material="FlatGrey"></object>
   <object position="1 1 -1.2" angles="0 -90 0" scale="5" model="Lamp" material="Lamp"></object>
   <object position="0 0 -0.8" angles="0 -10 0" scale="6.5" model ="Seat" material="Seat"></object>
-  <object position="0.2 1 -1.2" angles="0 180 0" scale="5" model="Terminal" material="Terminal"></object>
+  <object position="0.2 1 -1.2" angles="0 180 0" scale="5" model="Terminal" material="Terminal" interaction="Terminal" displaysize="500 100">ERROR 404 - Incriminating evidence Not Found</object>
 
   <object position="-2.7 0 -1.2" angles="0 180 0" scale="20" model="Table" material="FlatGrey"></object>
   <object position="-3 0 -0.8" angles="0 10 0" scale="6.5" model ="Seat" material="Seat"></object>
-  <object position="-3.1 1 -1.2" angles="0 180 0" scale="5" model="Terminal" material="Terminal"></object>
+  <object position="-3.1 1 -1.2" angles="0 180 0" scale="5" model="Terminal" material="Terminal" interaction="Terminal" displaysize="400 150">RAY PERSONAL LOG
+SHIT!
+Was that Bob?
+What the hell happened?
+He's been talking about quitting all week. The poor guy.
+I have to give him a cal...</object>
 
   <object position="4.5 0 4.5" angles="0 180 0" scale="25" model="CabinetTop" material="CabinetTop"></object>
   <object position="4.5 0 3.9" angles="0 180 0" scale="25" model="CabinetShut" material="CabinetShut"></object>

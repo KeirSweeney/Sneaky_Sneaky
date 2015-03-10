@@ -24,7 +24,5 @@
   <object position="0 0 4.5" scale="6" model="CoolerBottle" material="CoolerBottle"></object>
   <object position="0 0 -4.5" angles="0 180 0" scale="6" model="CoolerBase" material="FlatGrey"></object>
   <object position="0 0 -4.5" angles="0 180 0" scale="6" model="CoolerBottle" material="CoolerBottle"></object>
-
-  <object position="-2 0.5 5" scale="1" model="PersonPlane" material="TestPoster"></object>
-
+  
 </room>
