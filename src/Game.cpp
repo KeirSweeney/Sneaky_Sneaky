@@ -199,6 +199,8 @@ void Game::LoadLevel()
     // PhysicsWorld holds all physics objects (and can be used to setup things like gravity).
     scene_->CreateComponent<PhysicsWorld>();
 
+	Vector3 personPosition;
+
     // ooooooooooo
     // oxoxoxoxoxo
     // ooooooooooo
@@ -212,15 +214,24 @@ void Game::LoadLevel()
     int height = (imageHeight - 1) / 2;
     for (int x = 0; x < width; ++x) {
         for (int y = 0; y < height; ++y) {
-            // If the pixel for this tile is transparent (less than 50% alpha), skip over it.
-            if (levelImage->GetPixel(1 + (x * 2), (imageHeight - 1) - (1 + (y * 2))).a_ < 0.5f) {
-                continue;
-            }
+			// Get the color of the image pixel. The y coordinate needs to be flipped.
+			Color color = levelImage->GetPixel(1 + (x * 2), (imageHeight - 1) - (1 + (y * 2)));
+
+			// If it's transparent, pass on it.
+			if (color.a_ < 0.5f) {
+				continue;
+			}
+
+			Vector3 roomPosition(x * 11.0f, 0.0f, y * 11.0f);
+
+			if (color == Color::BLUE) {
+				personPosition = roomPosition;
+			}
 
             // Create a node and place it at the correct world coordinates.
             // Floor tiles are 11m x 11m.
             Node *floorNode = scene_->CreateChild();
-            floorNode->SetPosition(Vector3(x * 11.0f, 0.0f, y * 11.0f));
+            floorNode->SetPosition(roomPosition);
 
             floorNode->CreateComponent<Navigable>()->SetRecursive(false);
             RigidBody * floorRigidBody = floorNode->CreateComponent<RigidBody>();
@@ -454,7 +465,7 @@ void Game::LoadLevel()
     navigationMesh->Build();
 
     Node *personNode = scene_->CreateChild("Person");
-    personNode->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
+	personNode->SetPosition(personPosition);
     personNode->Scale(Vector3(0.6f, 1.8f, 1.0f));
 
     StaticModel *personModel = personNode->CreateComponent<StaticModel>();
