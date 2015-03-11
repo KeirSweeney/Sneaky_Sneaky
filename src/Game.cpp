@@ -494,11 +494,12 @@ void Game::LoadLevel()
     personNode->CreateComponent<Thrower>();
 
     Node *cameraTargetNode = scene_->CreateChild();
+	cameraTargetNode->SetPosition(personPosition + Vector3(0.0f, 5.0f, -5.0f));
     cameraTargetNode->CreateComponent<CameraController>();
 
     Node *cameraNode = cameraTargetNode->CreateChild("Camera");
-    cameraNode->SetPosition(Vector3(0.0f, 14.0f, -8.0f));
-    cameraNode->SetRotation(Quaternion(60.0f, Vector3::RIGHT));
+    cameraNode->SetPosition(Vector3(0.0f, 9.0f, -7.5f));
+    cameraNode->SetRotation(Quaternion(47.5f, Vector3::RIGHT));
     SoundListener *cameraListener = cameraNode->CreateComponent<SoundListener>();
     GetSubsystem<Audio>()->SetListener(cameraListener);
 
@@ -506,7 +507,7 @@ void Game::LoadLevel()
     camera->SetFarClip(zone->GetFogEnd());
 
     Node *cameraLightNode = cameraNode->CreateChild();
-    cameraLightNode->SetPosition(Vector3(0.0f, -2.0f, 0.0f));
+    cameraLightNode->SetPosition(Vector3(0.0f, -0.5f, 0.0f));
     cameraLightNode->SetRotation(Quaternion(-5.0f, Vector3::RIGHT));
 
     Light *cameraLight = cameraLightNode->CreateComponent<Light>();

@@ -18,6 +18,7 @@ public:
     float GetYawAngle();
 
 private:
+	Urho3D::IntVector2 cameraRoom_;
     float cameraYaw_;
     float targetCameraYaw_;
 };
