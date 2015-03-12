@@ -18,6 +18,7 @@
 #include "StaticModel.h"
 #include "ResourceCache.h"
 #include "CameraController.h"
+#include "ClickMarker.h"
 
 using namespace Urho3D;
 
@@ -31,6 +32,8 @@ Person::Person(Context *context):
 void Person::RegisterObject(Context* context)
 {
     context->RegisterFactory<Person>("Logic");
+
+	ClickMarker::RegisterObject(context);
 
     COPY_BASE_ATTRIBUTES(LogicComponent);
 }
@@ -47,7 +50,7 @@ void Person::DelayedStart()
 }
 
 void Person::Update(float timeStep)
-{       
+{
     UI *ui = GetSubsystem<UI>();
     Input *input = GetSubsystem<Input>();
     NavigationMesh *navMesh = GetScene()->GetComponent<NavigationMesh>();
@@ -75,6 +78,14 @@ void Person::Update(float timeStep)
         if (!result.Empty()) {
             //LOGERRORF("result[0].position_: %s", result[0].position_.ToString().CString());
             Vector3 target = navMesh->FindNearestPoint(result[0].position_);
+			target.y_ = 0.0f;
+
+			if (input->GetMouseButtonPress(MOUSEB_LEFT)) {
+				Node *markerNode = GetScene()->CreateChild();
+				markerNode->SetPosition(target);
+				markerNode->CreateComponent<ClickMarker>();
+			}
+
             navMesh->FindPath(path_, position, target);
             path_.Erase(0);
         }
