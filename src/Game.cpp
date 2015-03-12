@@ -1,6 +1,4 @@
 #include "Game.h"
-#include "Thrower.h"
-#include "SecurityCamera.h"
 
 #include "Camera.h"
 #include "CollisionShape.h"
@@ -44,7 +42,8 @@
 #include "Audio.h"
 #include "SoundListener.h"
 #include "InteractableComponent.h"
-
+#include "Thrower.h"
+#include "SecurityCamera.h"
 
 #include <ctime>
 #include <cstdio>
@@ -108,7 +107,7 @@ void Game::Start()
     Terminal::RegisterObject(context_);
     Stairs::RegisterObject(context_);
     Thrower::RegisterObject(context_);
-	SecurityCamera::RegisterObject(context_); //Security Camera object has been registered as a component
+    SecurityCamera::RegisterObject(context_);
 
     SharedPtr<Viewport> viewport(new Viewport(context_, scene_, NULL));
 
@@ -312,7 +311,6 @@ void Game::LoadLevel()
                         Component *component = childNode->CreateComponent(child.GetAttribute("interaction"));
                         if (component) {
                             InteractableComponent *interactableComponent = dynamic_cast<InteractableComponent *>(component);
-							LOGERRORF("Created interaction component: %s", component->GetTypeName().CString());
                             if (interactableComponent) {
                                 interactableComponent->LoadFromXML(child);
                             } else {
