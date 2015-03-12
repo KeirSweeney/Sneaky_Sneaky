@@ -1,9 +1,24 @@
 <room>
+
+  <!--KEYCARD-->
+  <object position="4 0 0" scale="10" model="Punchcard" material="Pickup" interaction="Pickup"></object>
+
   <!-- MANAGER'S DESK -->
   <object position="2.5 0 0" angles="0 -90 0" scale="20" model="Table" material="FlatGrey"></object>
   <object position="3.5 0 -0.7" angles="0 120 0" scale="6.5" model ="Seat" material="Seat_Gold"></object>
   <object position="2.5 1 -0.8" angles="0 0 0" scale="5" model="Lamp" material="Lamp_Gold"></object>
-  <object position="2.4 1 0.5" angles="0 -60 0" scale="5" model="Terminal" material="Terminal"></object>
+  <object position="2.4 1 0.5" angles="0 -60 0" scale="5" model="Terminal" material="Terminal" interaction="Terminal" displaysize="400 350">OUTBOX - Send?...(Y/N)
+
+nate.s@wrightsltd.com
+
+Yes, Nate, I'm fully aware of the situation with employee Polly.
+Need I remind you that we ARE a security corperation?
+The matter is entirely in hand and you need not concearn yourself with it further.
+I'll be expecting those pre-print figures in by 15:00 tomorrow Nate!
+Also, do not forget to leave the 3rd floor entry card on my seat as always.
+I DO hope your weekly review with Mr Chippingfort went well.
+
+Charlie Chester Mgr</object>
   <!-- minion seats -->
   <object position="1.5 0 -0.7" angles="0 -90 0" scale="6.5" model ="Seat" material="Seat"></object>
   <object position="1.5 0 0.5" angles="0 -96 0" scale="6.5" model ="Seat" material="Seat"></object>

@@ -1,0 +1,41 @@
+<room>
+  <!-- STANDARD ONE ROOM CUBICALS-->
+  <object position="2 0 4" angles="0 90 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>
+  <object position="2 0 2.5" angles="0 90 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>
+  <object position="2 0 -2.5" angles="0 90 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>
+  <object position="2 0 -4" angles="0 90 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>
+  <object position="-2 0 4" angles="0 90 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>
+  <object position="-2 0 2.5" angles="0 90 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>
+  <object position="-2 0 -2.5" angles="0 90 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>
+  <object position="-2 0 -4" angles="0 90 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>
+  <object position="-2.8 0 5" angles="0 0 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>
+  <object position="-4.3 0 5" angles="0 0 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>
+  <object position="2.8 0 5" angles="0 0 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>
+  <object position="4.3 0 5" angles="0 0 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>
+  <object position="-2.8 0 -5" angles="0 0 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>
+  <object position="-4.3 0 -5" angles="0 0 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>
+  <object position="2.8 0 -5" angles="0 0 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>
+  <object position="4.3 0 -5" angles="0 0 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>
+
+  <!--Tables-->
+  <object position="-3.5 0 -4.5" angles="0 180 0" scale="20" model="Table" material="FlatGrey"></object>
+  <object position="-3.5 0 4.5" angles="0 0 0" scale="20" model="Table" material="FlatGrey"></object>
+  <object position="3.5 0 -4.5" angles="0 180 0" scale="20" model="Table" material="FlatGrey"></object>
+  <object position="3.5 0 4.5" angles="0 0 0" scale="20" model="Table" material="FlatGrey"></object>
+  <!--Seats-->
+  <object position="-3.5 0 -4" angles="0 0 0" scale="6.5" model ="Seat" material="Seat"></object>
+  <object position="3.5 0 -4" angles="0 0 0" scale="6.5" model ="Seat" material="Seat"></object>
+  <object position="-3.5 0 4" angles="0 180 0" scale="6.5" model ="Seat" material="Seat"></object>
+  <object position="3.5 0 4" angles="0 180 0" scale="6.5" model ="Seat" material="Seat"></object>
+  <!--Lamps-->
+  <object position="-4.2 1 -4.5" angles="0 90 0" scale="5" model="Lamp" material="Lamp"></object>
+  <object position="2.8 1 -4.5" angles="0 90 0" scale="5" model="Lamp" material="Lamp"></object>
+  <object position="4.2 1 4.5" angles="0 -90 0" scale="5" model="Lamp" material="Lamp"></object>
+  <object position="-2.8 1 4.5" angles="0 -90 0" scale="5" model="Lamp" material="Lamp"></object>
+  <!--Terminals-->
+  <object position="-3.5 1 -4.5" angles="0 180 0" scale="5" model="Terminal" material="Terminal"></object>
+  <object position="3.5 1 -4.5" angles="0 180 0" scale="5" model="Terminal" material="Terminal"></object>
+  <object position="-3.5 1 4.5" angles="0 0 0" scale="5" model="Terminal" material="Terminal"></object>
+  <object position="3.5 1 4.5" angles="0 0 0" scale="5" model="Terminal" material="Terminal"></object>
+ 
+</room>

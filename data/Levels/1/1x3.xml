@@ -1,10 +1,13 @@
 <room>
+  <!--POSTER-->
+  <object position="0 0.5 5" angles="0 0 0" scale="1" model="PersonPlane" material="Poster2"></object>
+  
   <!-- BIN (woooo!) -->
   <object position="3.5 0 -3" angles="0 0 0" scale="5" model="Bin" material="CubicleDivider"></object>
   <object position="-3.5 0 3" angles="0 0 0" scale="5" model="Bin" material="CubicleDivider"></object>
 
   <!--KEYCARD-->
-  <object position="3.5 0 3.5" scale="10" model="Punchcard" material="Pickup" interaction="Pickup"></object>
+  <object position="3.5 0 2.5" scale="10" model="Punchcard" material="Pickup" interaction="Pickup"></object>
 
   <!-- STANDARD ONE ROOM CUBICALS-->
   <object position="4 0 2" angles="0 0 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>
@@ -31,10 +34,30 @@
   <object position="4.7 1 4.5" angles="0 225 0" scale="5" model="Lamp" material="Lamp"></object>
   <object position="4.5 1 -2.8" angles="0 180 0" scale="5" model="Lamp" material="Lamp"></object>
   <!--Terminals-->
-  <object position="-4.5 1 -3.5" angles="0 -90 0" scale="5" model="Terminal" material="Terminal"></object>
-  <object position="-4.5 1 3.8" angles="0 -75 0" scale="5" model="Terminal" material="Terminal"></object>
-  <object position="4.5 1 -3.5" angles="0 90 0" scale="5" model="Terminal" material="Terminal"></object>
-  <object position="4.5 1 3" angles="0 120 0" scale="5" model="Terminal" material="Terminal"></object>
+  <object position="-4.5 1 -3.5" angles="0 -90 0" scale="5" model="Terminal" material="Terminal" interaction="Terminal" displaysize="400 150">chris.f@wrightsltd.com
+
+I'M DONE!
+
+If you think I'm doing ANOTHER one of your dirty conracts, Chris, you're crazy!
+You have heard of Auditors, right?
+Do it yourself...
+I QUIT!
+
+Robert D###</object>
+  <object position="-4.5 1 3.8" angles="0 -75 0" scale="5" model="Terminal" material="Terminal" interaction="Terminal" displaysize="400 150">DIRK'S PRIVATE DIARY :
+I think Chris finally broke the camel's back.
+Bob just stromed out of the office and left his cubicle in a state.
+Damned if i'm cleaned his crap up!</object>
+  <object position="4.5 1 -3.5" angles="0 90 0" scale="5" model="Terminal" material="Terminal" interaction="Terminal" displaysize="400 150">EVELYN'S PRIVATE DIARY
+Did I just hear Bob make a break for it?
+Poor sod, Chris has been giving hi such a hard time lately. Think i'll keep my head down.</object>
+  <object position="4.5 1 3" angles="0 120 0" scale="5" model="Terminal" material="Terminal" interaction="Terminal" displaysize="500 200">A problem has been detected and windows has been shut down to prevent damage to your computer
+  
+A cup of coffee was recieved on a secondary processor with the allocated time interval.
+
+If this is the first time you've managed to total a keyboard and possibly fry your motherboard too... restart your computer (and hope for the best) If you do it again, follow these steps:
+
+etc etc...</object>
 
   <!-- SLACKING OFF CENTRE -->
   <object position="-4.5 0 -0.3" angles="0 90 0" scale="50" model="SofaLength" material="Sofa"></object>

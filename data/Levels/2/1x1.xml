@@ -1,5 +1,86 @@
 <room>
-  
+  <!--POSTER-->
+  <object position="-5 0.5 2" angles="0 -90 0" scale="1" model="PersonPlane" material="Poster3"></object>
 
+  <!--KEYCARD-->
+  <object position="2.3 0 5.5" scale="10" model="Punchcard" material="Pickup" interaction="Pickup"></object>
+
+  <!-- ****BOX COLLIDERS MUST BE REMOVED HERE AND A PAIR IN 1x2*** -->
+  <object position="2.8 0 5" angles="0 0 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>
+  <object position="4.3 0 5" angles="0 0 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>
+
+  <!-- STANDARD ONE ROOM CUBICALS-->
+  <object position="2 0 4" angles="0 90 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>
+  <object position="2 0 2.5" angles="0 90 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>
+  <object position="2 0 -2.5" angles="0 90 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>
+  <object position="2 0 -4" angles="0 90 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>
+  <object position="-2 0 4" angles="0 90 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>
+  <object position="-2 0 2.5" angles="0 90 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>
+  <object position="-2 0 -2.5" angles="0 90 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>
+  <object position="-2 0 -4" angles="0 90 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>
+  <object position="-2.8 0 5" angles="0 0 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>
+  <object position="-4.3 0 5" angles="0 0 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>
+  <object position="-2.8 0 -5" angles="0 0 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>
+  <object position="-4.3 0 -5" angles="0 0 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>
+  <object position="2.8 0 -5" angles="0 0 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>
+  <object position="4.3 0 -5" angles="0 0 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>
+
+  <!--Tables-->
+  <object position="-3.5 0 -4.5" angles="0 180 0" scale="20" model="Table" material="FlatGrey"></object>
+  <object position="-3.5 0 4.5" angles="0 0 0" scale="20" model="Table" material="FlatGrey"></object>
+  <object position="3.5 0 -4.5" angles="0 180 0" scale="20" model="Table" material="FlatGrey"></object>
+  <object position="3.5 0 4.5" angles="0 0 0" scale="20" model="Table" material="FlatGrey"></object>
+  <!--Seats-->
+  <object position="-3.8 0 -4" angles="0 -10 0" scale="6.5" model ="Seat" material="Seat"></object>
+  <object position="3.5 0 -4" angles="0 0 0" scale="6.5" model ="Seat" material="Seat"></object>
+  <object position="-3.5 0 4" angles="0 180 0" scale="6.5" model ="Seat" material="Seat"></object>
+  <object position="3 0 3.4" angles="0 200 0" scale="6.5" model ="Seat" material="Seat"></object>
+  <!--Lamps-->
+  <object position="-4.4 1 -4.7" angles="0 75 0" scale="5" model="Lamp" material="Lamp"></object>
+  <object position="2.8 1 -4.5" angles="0 90 0" scale="5" model="Lamp" material="Lamp"></object>
+  <object position="4.2 1 4.5" angles="0 -90 0" scale="5" model="Lamp" material="Lamp"></object>
+  <object position="-2.8 1 4.5" angles="0 -90 0" scale="5" model="Lamp" material="Lamp"></object>
+  <!--Terminals-->
+  <object position="-3.5 1 -4.5" angles="0 155 0" scale="5" model="Terminal" material="Terminal" interaction="Terminal" displaysize="300 100">Princess not found
+
+Could the Princess have been renamed, removed, or relocated?</object>
+  <object position="3.5 1 -4.5" angles="0 180 0" scale="5" model="Terminal" material="Terminal"></object>
+  <object position="-3.5 1 4.5" angles="0 0 0" scale="5" model="Terminal" material="Terminal"></object>
+  <object position="3.5 1 4.5" angles="0 12 0" scale="5" model="Terminal" material="Terminal" interaction="Terminal" displaysize="400 200">E-mail : polly.d@wrightsltd.com
+
+The copy punch card should be in the internals to you now Polly.
+How about that eh? Doing favours for Big Cheese Chester. Looks like the Manager's got a soft spot for you after all!
+How did he lose that thing in the first place? What an idiot!
+Wait... you HAVE got clearance for this right?....</object>
+
+  <!--PRINTERBOXES-->
+  <object position="-4.2 0 5.5" angles="0 0 0" scale="8" model="PrinterBoxes" material="PrinterBoxes"></object>
+  <object position="-2.8 0 5.5" angles="0 -5 0" scale="8" model="PrinterBoxes" material="PrinterBoxes"></object>
+  <object position="3.5 0 5.5" angles="0 10 0" scale="8" model="PrinterBoxes" material="PrinterBoxes"></object>
+  <object position="0.5 0 -4.5" angles="0 0 0" scale="8" model="PrinterBoxes" material="PrinterBoxes"></object>
+  <object position="1.5 0 -4.5" angles="0 90 0" scale="8" model="PrinterBoxes" material="PrinterBoxes"></object>
+
+  <!-- BIN -->
+  <object position="2.3 0 -2.3" angles="0 0 0" scale="5" model="Bin" material="CubicleDivider"></object>
+  <object position="-4.7 0 -3.5" angles="0 0 0" scale="5" model="Bin" material="CubicleDivider"></object>
+  <object position="-2.3 0 2.3" angles="0 0 0" scale="5" model="Bin" material="CubicleDivider"></object>
+
+  <!-- CABINETS -->
+  <object position="-4.5 0 -0.4" angles="0 0 0" scale="25" model="CabinetMiddle" material="CabinetMiddle"></object>
+  <object position="-4.5 0 0.4" angles="0 0 0" scale="25" model="CabinetShut" material="CabinetShut"></object>
+  <object position="-4.5 0 -1.2" angles="0 0 0" scale="25" model="CabinetBottom" material="CabinetBottom"></object>
+
+  <!-- COPPIER -->
+  <object position="-1 0 -4.4" angles="0 -90 0" scale="17.5" model="Copier" material="Copier"></object>
+
+  <guard>
+    <waypoint position="-3 0 -3"></waypoint>
+    <waypoint position="-3 0 3"></waypoint>
+  </guard>
+
+  <guard>
+    <waypoint position="0 0 14"></waypoint>
+    <waypoint position="0 0 -3.5"></waypoint>
+  </guard>
 
 </room>

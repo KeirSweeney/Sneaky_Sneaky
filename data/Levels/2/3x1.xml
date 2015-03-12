@@ -1,9 +1,20 @@
 <room>
   <!--RECEPTION DESK-->
-  <object position="0 0 -3" angles="0 0 0" scale="20" model="Table" material="FlatGrey"></object>
-  <object position="0 0 -3.6" angles="0 195 0" scale="6.5" model ="Seat" material="Seat"></object>
-  <object position="0 1 -3" angles="0 0 0" scale="5" model="Terminal" material="Terminal"></object>
-  <object position="-0.78 1 -3.2" angles="0 100 0" scale="5" model="Lamp" material="Lamp"></object>
+  <object position="0 0 -2.5" angles="0 0 0" scale="20" model="Table" material="FlatGrey"></object>
+  <object position="0 0 -3.1" angles="0 195 0" scale="6.5" model ="Seat" material="Seat"></object>
+  <object position="0 1 -2.5" angles="0 0 0" scale="5" model="Terminal" material="Terminal" interaction="Terminal" displaysize="400 200">E-mail : andy.w@wrightsltd.com
+
+Mr Walker, while I aplaud your efforts at keeping track of the activity within our company, I would ask that you do NOT impart sensative information to everybody else.
+Particularly not information regarding the management.
+
+H.Chippingfort - C.E.O.</object>
+  <object position="-0.78 1 -2.7" angles="0 100 0" scale="5" model="Lamp" material="Lamp"></object>
+
+  <!-- DIVIDERS -->
+  <object position="-4.2 0 5" angles="0 0 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>
+  <object position="-2.7 0 5" angles="0 0 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>
+  <object position="4.2 0 5" angles="0 0 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>
+  <object position="2.7 0 5" angles="0 0 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>
 
   <!--CABINETS-->
   <object position="2 0 -4.5" angles="0 -90 0" scale="25" model="CabinetShut" material="CabinetShut"></object>
@@ -17,8 +28,8 @@
   <object position="-4.7 0 -4" angles="0 -90 0" scale="8" model="PrinterBoxes" material="PrinterBoxes"></object>
 
   <!--SOFAS-->
-  <object position="4.5 -0.01 2.9" angles="0 -90 0" scale="50" model="SofaLength" material="Sofa"></object>
-  <object position="4.5 0 -0.1" angles="0 -90 0" scale="50" model="SofaLength" material="Sofa"></object>
+  <object position="4.7 0 2.9" angles="0 -90 0" scale="50" model="SofaLength" material="Sofa"></object>
+  <object position="4.7 -0.01 0" angles="0 -90 0" scale="50" model="SofaLength" material="Sofa"></object>
 
   <!--COOLER-->
   <object position="-4.7 0 -1" angles="0 -90 0" scale="6" model="CoolerBase" material="FlatGrey"></object>

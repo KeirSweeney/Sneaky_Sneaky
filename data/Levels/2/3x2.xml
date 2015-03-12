@@ -1,15 +1,27 @@
 <room>
+  <!--POSTER-->
+  <object position="-5 0.5 0" angles="0 -90 0" scale="1" model="PersonPlane" material="Poster4"></object>
+
   <!-- SOFAS -->
-  <!--right -->
-  <object position="4.5 -0.01 2.9" angles="0 -90 0" scale="50" model="SofaLength" material="Sofa"></object>
-  <object position="4.5 0 -0.1" angles="0 -90 0" scale="50" model="SofaLength" material="Sofa"></object>
-  <!-- left -->
-  <object position="-4.5 -0.01 2.9" angles="0 90 0" scale="50" model="SofaLength" material="Sofa"></object>
-  <object position="-4.5 0 -0.1" angles="0 90 0" scale="50" model="SofaLength" material="Sofa"></object>
+  <object position="4.6 -0.01 2" angles="0 -90 0" scale="50" model="SofaLength" material="Sofa"></object>
+  <object position="4.6 0 -1" angles="0 -90 0" scale="50" model="SofaLength" material="Sofa"></object>
+  <object position="5 -0.01 3.5" angles="0 -90 0" scale="50" model="SofaEnd" material="Sofa"></object>
+  <object position="5 -0.01 -2.5" angles="0 90 0" scale="50" model="SofaEnd" material="Sofa"></object>
+
+  <!-- COFFEE TABLE -->
+  <object position="2.5 0 2.2" angles="0 90 0" scale="25" model="CoffeeTableGlass" material="CoffeeTableGlass"></object>
+  <object position="2.5 0 2.2" angles="0 90 0" scale="25" model="CoffeeTableLegs" material="CoffeeTableLegs"></object>
+  <object position="2.5 0 -1.2" angles="0 90 0" scale="25" model="CoffeeTableGlass" material="CoffeeTableGlass"></object>
+  <object position="2.5 0 -1.2" angles="0 90 0" scale="25" model="CoffeeTableLegs" material="CoffeeTableLegs"></object>
 
   <!--COOLER AND COPPIER -->
   <object position="-4.5 0 -2" angles="0 -90 0" scale="6" model="CoolerBase" material="FlatGrey"></object>
   <object position="-4.5 0 -2" angles="0 -90 0" scale="6" model="CoolerBottle" material="CoolerBottle"></object>
   <object position="-4.3 0 -4" angles="0 0 0" scale="17.5" model="Copier" material="Copier"></object>
-  
+
+  <!-- VENDING MACHINE -->
+  <object position="-4.5 0 3" angles="0 -90 0" scale="15" model="VendingMachineBody" material="VendingMachineBody"></object>
+  <object position="-4.5 0 3" angles="0 -90 0" scale="15" model="VendingMachineFront" material="VendingMachineFrontRED"></object>
+  <object position="-4.5 0 1.5" angles="0 -90 0" scale="15" model="VendingMachineBody" material="VendingMachineBody"></object>
+  <object position="-4.5 0 1.5" angles="0 -90 0" scale="15" model="VendingMachineFront" material="VendingMachineFrontBLUE"></object>
 </room>

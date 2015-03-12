@@ -1,4 +1,78 @@
 <room>
 
+  <!--POSTER-->
+  <object position="-5 0.5 0" angles="0 -90 0" scale="1" model="PersonPlane" material="Poster1"></object>
+
+  <!-- ****BOX COLLIDERS MUST BE REMOVED HERE AND A PAIR IN 1x1*** -->
+  <object position="2.8 0 -5" angles="0 0 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>
+  <object position="4.3 0 -5" angles="0 0 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>
+
+
+  <!-- STANDARD ONE ROOM CUBICALS-->
+  <object position="2 0 -2.5" angles="0 90 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>
+  <object position="2 0 -4" angles="0 90 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>
+  <object position="-2 0 4" angles="0 90 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>
+  <object position="-2 0 2.5" angles="0 90 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>
+  <object position="-2 0 -2.5" angles="0 90 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>
+  <object position="-2 0 -4" angles="0 90 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>
+  <object position="-2.8 0 5" angles="0 0 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>
+  <object position="-4.3 0 5" angles="0 0 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>
+  <object position="-2.8 0 -5" angles="0 0 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>
+  <object position="-4.3 0 -5" angles="0 0 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>
+  <!--Tables-->
+  <object position="-3.5 0 -4.5" angles="0 180 0" scale="20" model="Table" material="FlatGrey"></object>
+  <object position="-3.5 0 4.5" angles="0 0 0" scale="20" model="Table" material="FlatGrey"></object>
+  <object position="3.5 0 -4.5" angles="0 180 0" scale="20" model="Table" material="FlatGrey"></object>
+  <!--Seats-->
+  <object position="-3.5 0 -4" angles="0 0 0" scale="6.5" model ="Seat" material="Seat"></object>
+  <object position="3.5 0 -4" angles="0 0 0" scale="6.5" model ="Seat" material="Seat"></object>
+  <object position="-3.5 0 4" angles="0 180 0" scale="6.5" model ="Seat" material="Seat"></object>
+  <!--Lamps-->
+  <object position="-4.2 1 -4.5" angles="0 90 0" scale="5" model="Lamp" material="Lamp"></object>
+  <object position="2.8 1 -4.5" angles="0 90 0" scale="5" model="Lamp" material="Lamp"></object>
+  <object position="-2.8 1 4.5" angles="0 -90 0" scale="5" model="Lamp" material="Lamp"></object>
+  <!--Terminals-->
+  <object position="-3.5 1 -4.5" angles="0 180 0" scale="5" model="Terminal" material="Terminal"></object>
+  <object position="3.5 1 -4.5" angles="0 180 0" scale="5" model="Terminal" material="Terminal" interaction="Terminal" displaysize="400 150">TERRY PERSONAL LOG
+She's a MANIAC!
+She said she's going to do it first thing tomorrow morning.
+Something about hiding the keycard close by my desk too... I wish she wouldn't scare me like this.
+SHE should try working right outside Chester's fucking door!</object>
+  <object position="-3.5 1 4.5" angles="0 0 0" scale="5" model="Terminal" material="Terminal" interaction="Terminal" displaysize="400 100">STUART PERSONAL LOG
+I could go for a coffee right about now...</object>
+
+  <!-- COOLER -->
+  <object position="-1.5 0 4.8" angles="0 0 0" scale="6" model="CoolerBase" material="FlatGrey"></object>
+  <object position="-1.5 0 4.8" angles="0 0 0" scale="6" model="CoolerBottle" material="CoolerBottle"></object>
+
+  <!-- VENDING MACHINE -->
+  <object position="4.5 0 3" angles="0 90 0" scale="15" model="VendingMachineBody" material="VendingMachineBody"></object>
+  <object position="4.5 0 3" angles="0 90 0" scale="15" model="VendingMachineFront" material="VendingMachineFrontRED"></object>
+  <object position="4.5 0 1.5" angles="0 90 0" scale="15" model="VendingMachineBody" material="VendingMachineBody"></object>
+  <object position="4.5 0 1.5" angles="0 90 0" scale="15" model="VendingMachineFront" material="VendingMachineFrontBLUE"></object>
+
+  <!-- CABINETS -->
+  <object position="-1.4 0 -2" angles="0 0 0" scale="25" model="CabinetBottom" material="CabinetBottom"></object>
+  <object position="-1.4 0 -3" angles="0 0 0" scale="25" model="CabinetShut" material="CabinetShut"></object>
+  <object position="1.4 0 -3" angles="0 180 0" scale="25" model="CabinetMiddle" material="CabinetMiddle"></object>
+  <object position="1.4 0 -2" angles="0 180 0" scale="25" model="CabinetShut" material="CabinetShut"></object>
+
+  <!--SOFA-->
+  <object position="2.5 0 4.5" angles="0 180 0" scale="50" model="SofaLength" material="Sofa"></object>
+ 
+  <!--PRINTERBOXES-->
+  <object position="4.5 0 4.2" angles="0 90 0" scale="8" model="PrinterBoxes" material="PrinterBoxes"></object>
+
+  <!-- BIN -->
+  <object position="2.3 0 -2.3" angles="0 0 0" scale="5" model="Bin" material="CubicleDivider"></object>
+  <object position="-4.7 0 3.5" angles="0 0 0" scale="5" model="Bin" material="CubicleDivider"></object>
+
+  <guard>
+    <waypoint position="-3.5 0 -3"></waypoint>
+    <waypoint position="-3.5 0 0"></waypoint>
+    <waypoint position="-1 0 0"></waypoint>
+    <waypoint position="-3.5 0 0"></waypoint>
+    <waypoint position="-3.5 0 3"></waypoint>
+  </guard>
 
 </room>
