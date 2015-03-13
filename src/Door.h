@@ -14,8 +14,8 @@ public:
     static void RegisterObject(Urho3D::Context* context);
     
 public:
-    void DelayedStart();
-    void Update(float timeStep);
+    void HandleNodeCollisionStart(Urho3D::StringHash eventType, Urho3D::VariantMap &eventData);
+    void HandleNodeCollisionEnd(Urho3D::StringHash eventType, Urho3D::VariantMap &eventData);
 
 public:
     void SetTriggerNode(Urho3D::Node *trigger);

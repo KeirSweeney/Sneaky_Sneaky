@@ -22,7 +22,7 @@ public:
     void Update(float timeStep);
 
 public:
-    void SetTarget(Urho3D::Vector3 target);
+    void SetPath(Urho3D::PODVector<Urho3D::Vector3> path);
     Urho3D::Vector3 GetDirection() const;
 
 private:

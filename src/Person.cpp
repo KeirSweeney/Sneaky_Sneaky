@@ -141,10 +141,10 @@ void Person::Update(float timeStep)
     direction_ = offset;
 }
 
-void Person::SetTarget(Vector3 target)
+void Person::SetPath(Urho3D::PODVector<Urho3D::Vector3> path)
 {
     path_.Clear();
-    path_.Push(target);
+    path_.Push(path);
 }
 
 Vector3 Person::GetDirection() const
