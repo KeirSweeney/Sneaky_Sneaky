@@ -28,7 +28,7 @@ void Pickup::RegisterObject(Context* context)
 {
     context->RegisterFactory<Pickup>("Logic");
 
-    COPY_BASE_ATTRIBUTES(LogicComponent);
+    COPY_BASE_ATTRIBUTES(InteractableComponent);
     ATTRIBUTE("Height", float, height_, 0.0f, AM_DEFAULT);
 }
 

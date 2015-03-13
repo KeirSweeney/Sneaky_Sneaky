@@ -8,7 +8,7 @@ class CameraController: public Urho3D::LogicComponent
 
 public:
     CameraController(Urho3D::Context *context);
-    static void RegisterObject(Urho3D::Context* context);
+    static void RegisterObject(Urho3D::Context *context);
     
 public:
     void DelayedStart();

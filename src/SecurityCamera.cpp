@@ -17,7 +17,7 @@ SecurityCamera::SecurityCamera(Context *context) :
 void SecurityCamera::RegisterObject(Context* context)
 {
 	context->RegisterFactory<SecurityCamera>("Logic");
-    COPY_BASE_ATTRIBUTES(LogicComponent);
+    COPY_BASE_ATTRIBUTES(InteractableComponent);
 }
 
 void SecurityCamera::DelayedStart()

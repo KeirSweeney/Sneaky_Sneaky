@@ -12,7 +12,7 @@ class ClickMarker: public Urho3D::LogicComponent
 
 public:
 	ClickMarker(Urho3D::Context *context);
-    static void RegisterObject(Urho3D::Context* context);
+    static void RegisterObject(Urho3D::Context *context);
     
 public:
     void Start();

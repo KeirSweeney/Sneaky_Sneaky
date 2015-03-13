@@ -11,7 +11,7 @@ private:
 
 public:
     Door(Urho3D::Context *context);
-    static void RegisterObject(Urho3D::Context* context);
+    static void RegisterObject(Urho3D::Context *context);
     
 public:
     void HandleNodeCollisionStart(Urho3D::StringHash eventType, Urho3D::VariantMap &eventData);

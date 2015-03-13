@@ -12,7 +12,7 @@
 using namespace Urho3D;
 
 Stairs::Stairs(Context *context):
-    LogicComponent(context)
+    InteractableComponent(context)
 {
 }
 
@@ -20,7 +20,7 @@ void Stairs::RegisterObject(Context* context)
 {
     context->RegisterFactory<Stairs>("Logic");
 
-    COPY_BASE_ATTRIBUTES(LogicComponent);
+    COPY_BASE_ATTRIBUTES(InteractableComponent);
 }
 
 void Stairs::DelayedStart()

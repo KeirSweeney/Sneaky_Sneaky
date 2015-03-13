@@ -18,7 +18,7 @@ private:
 
 public:
     Inventory(Urho3D::Context *context);
-    static void RegisterObject(Urho3D::Context* context);
+    static void RegisterObject(Urho3D::Context *context);
     
 public:
     void DelayedStart();

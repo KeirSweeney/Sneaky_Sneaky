@@ -16,7 +16,7 @@ private:
 
 public:
     Terminal(Urho3D::Context *context);
-    static void RegisterObject(Urho3D::Context* context);
+    static void RegisterObject(Urho3D::Context *context);
 
     void LoadFromXML(const Urho3D::XMLElement &xml);
     
