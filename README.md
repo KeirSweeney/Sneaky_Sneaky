@@ -58,12 +58,3 @@ After the first build is successful, a number of command-line tools will be crea
 ```
 Urho3D/Bin/AssetImporter model source/model.obj ./data/Models/Output.mdl -o -h -nm -nt -ns -nf
 ```
-
-Module Ownership
-----------------
-### Asher
-* Build System
-* Urho3D Submodule
-
-### Keir
-* Guard AI
