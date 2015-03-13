@@ -53,18 +53,18 @@ void Door::HandleNodeCollisionStart(StringHash eventType, VariantMap &eventData)
     if (doorHorizontal) {
         if (travelingUpRight) {
             path.Push(doorPosition + Vector3(-1.0f, 0.0f, 0.0f));
-            path.Push(doorPosition + Vector3(1.5f, 0.0f, 0.0f));
+            path.Push(doorPosition + Vector3(1.6f, 0.0f, 0.0f));
         } else {
             path.Push(doorPosition + Vector3(1.0f, 0.0f, 0.0f));
-            path.Push(doorPosition + Vector3(-1.5f, 0.0f, 0.0f));
+            path.Push(doorPosition + Vector3(-1.6f, 0.0f, 0.0f));
         }
     } else {
         if (travelingUpRight) {
             path.Push(doorPosition + Vector3(0.0f, 0.0f, -1.0f));
-            path.Push(doorPosition + Vector3(0.0f, 0.0f, 1.5f));
+            path.Push(doorPosition + Vector3(0.0f, 0.0f, 1.6f));
         } else {
             path.Push(doorPosition + Vector3(0.0f, 0.0f, 1.0f));
-            path.Push(doorPosition + Vector3(0.0f, 0.0f, -1.5f));
+            path.Push(doorPosition + Vector3(0.0f, 0.0f, -1.6f));
         }
     }
 

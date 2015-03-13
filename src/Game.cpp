@@ -296,17 +296,19 @@ void Game::LoadLevel()
                         childNode->SetScale(child.GetFloat("scale"));
                     }
 
-                    childNode->CreateComponent<RigidBody>();
-
                     StaticModel *model = childNode->CreateComponent<StaticModel>();
                     model->SetModel(cache->GetResource<Model>("Models/" + child.GetAttribute("model") + ".mdl"));
                     model->SetMaterial(cache->GetResource<Material>("Materials/" + child.GetAttribute("material") + ".xml"));
                     model->SetCastShadows(true);
 
-                    CollisionShape *collisionShape = childNode->CreateComponent<CollisionShape>();
-                    collisionShape->SetBox(model->GetBoundingBox().Size(), model->GetBoundingBox().Center());
+                    // If the object is interactable or collideable it needs a rigid body.
+                    if (child.HasAttribute("interaction") || !child.GetBool("nonsolid")) {
+                        childNode->CreateComponent<RigidBody>();
+                        CollisionShape *collisionShape = childNode->CreateComponent<CollisionShape>();
+                        collisionShape->SetBox(model->GetBoundingBox().Size(), model->GetBoundingBox().Center());
+                    }
 
-                    // If the object specifies a component for interaction, create it, else mark it for navmesh generation.
+                    // If the object specifies a component for interaction, create it, else mark it for navmesh generation if collideable.
                     if (child.HasAttribute("interaction")) {
                         Component *component = childNode->CreateComponent(child.GetAttribute("interaction"));
                         if (component) {
@@ -319,7 +321,7 @@ void Game::LoadLevel()
                         } else {
                             LOGERRORF("Failed to create interaction component: %s", child.GetAttribute("interaction").CString());
                         }
-                    } else {
+                    } else if (!child.GetBool("nonsolid")) {
                         childNode->CreateComponent<Navigable>();
                     }
 

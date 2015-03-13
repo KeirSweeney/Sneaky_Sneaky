@@ -28,7 +28,7 @@
 
   <!--DESKS-->
   <object position="3.3 0 -1.2" angles="0 180 0" scale="20" model="Table" material="FlatGrey"></object>
-  <object position="2.8 0.05 0.8" angles="10 40 90" scale="5" model="Lamp" material="Lamp"></object>
+  <object position="2.8 0.05 0.8" angles="10 40 90" scale="5" model="Lamp" material="Lamp" nonsolid="true"></object>
   <object position="3.8 0 -0.2" angles="0 30 0" scale="6.5" model ="Seat" material="Seat"></object>
   <object position="3 1 -1.2" angles="0 195 0" scale="5" model="Terminal" material="Terminal"></object>
 
