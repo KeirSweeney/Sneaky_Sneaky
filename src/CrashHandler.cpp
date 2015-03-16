@@ -27,7 +27,7 @@ bool BreakpadMinidumpCallback(const char *dump_dir, const char *minidump_id, voi
     analytics->SendCrashEvent(String(minidump_id));
     analytics->FlushEvents();
 
-    return succeeded;
+    return false;
 }
 #else //__APPLE__
 bool BreakpadFilterCallback(void *context, EXCEPTION_POINTERS *exinfo, MDRawAssertionInfo *assertion)
@@ -45,7 +45,7 @@ bool BreakpadMinidumpCallback(const wchar_t *dump_path, const wchar_t *minidump_
     analytics->SendCrashEvent(String(minidump_id));
     analytics->FlushEvents();
 
-    return succeeded;
+    return false;
 }
 #endif //__APPLE__
 #endif //GOOGLE_BREAKPAD
