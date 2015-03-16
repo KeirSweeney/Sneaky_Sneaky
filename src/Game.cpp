@@ -44,6 +44,7 @@
 #include "InteractableComponent.h"
 #include "Thrower.h"
 #include "SecurityCamera.h"
+#include "Laser.h"
 
 #include <ctime>
 #include <cstdio>
@@ -108,6 +109,7 @@ void Game::Start()
     Stairs::RegisterObject(context_);
     Thrower::RegisterObject(context_);
     SecurityCamera::RegisterObject(context_);
+    Laser::RegisterObject(context_);
 
     SharedPtr<Viewport> viewport(new Viewport(context_, scene_, NULL));
 

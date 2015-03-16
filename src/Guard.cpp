@@ -265,3 +265,9 @@ bool Guard::DetectPlayer(Node *player)
     return true; //And finnally after all the checks, we know that the guard can see the player, is close enough,
                     //and that there is no object obscuring the guards FOV.
 }
+
+void Guard::SetPath(Urho3D::PODVector<Urho3D::Vector3> path)
+{
+    path_.Clear();
+    path_.Push(path);
+}
