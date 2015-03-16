@@ -1,4 +1,31 @@
 <room>
 
-  
+  <!--SOFAS-->
+  <object position="-4.6 0 -3.5" angles="0 90 0" scale="50" model="SofaLength" material="Sofa_2ndFloor"></object>
+  <object position="-4.6 0 3.5" angles="0 90 0" scale="50" model="SofaLength" material="Sofa_2ndFloor"></object>
+  <object position="-3.2 -0.01 4.6" angles="0 180 0" scale="50" model="SofaLength" material="Sofa_2ndFloor"></object>
+  <object position="-3.2 -0.01 -4.6" angles="0 0 0" scale="50" model="SofaLength" material="Sofa_2ndFloor"></object>
+  <object position="-4.96 0 -2" angles="0 -90 0" scale="50" model="SofaEnd" material="Sofa_2ndFloor"></object>
+  <object position="-4.96 0 2" angles="0 90 0" scale="50" model="SofaEnd" material="Sofa_2ndFloor"></object>
+  <object position="-1.8 0 4.95" angles="0 0 0" scale="50" model="SofaEnd" material="Sofa_2ndFloor"></object>
+  <object position="-1.8 0 -4.95" angles="0 0 0" scale="50" model="SofaEnd" material="Sofa_2ndFloor"></object>
+
+  <!--PILLARS-->
+  <object position="4.7 0 1.5" angles="0 0 0" scale="39" model="Pillar" material="FlatGrey" nonsolid="true"></object>
+  <object position="4.7 0 -1.5" angles="0 0 0" scale="39" model="Pillar" material="FlatGrey" nonsolid="true"></object>
+
+  <!--COFFEE TABLE-->
+  <object position="-2.5 0 -3" angles="0 0 0" scale="25" model="CoffeeTableGlass" material="CoffeeTableGlass"></object>
+  <object position="-2.5 0 -3" angles="0 0 0" scale="25" model="CoffeeTableLegs" material="CoffeeTableLegs"></object>
+  <object position="-2.5 0 3" angles="0 0 0" scale="25" model="CoffeeTableGlass" material="CoffeeTableGlass"></object>
+  <object position="-2.5 0 3" angles="0 0 0" scale="25" model="CoffeeTableLegs" material="CoffeeTableLegs"></object>
+
+  <!-- VENDING MACHINE -->
+  <object position="0 0 -4.5" angles="0 180 0" scale="15" model="VendingMachineBody" material="VendingMachineBody"></object>
+  <object position="0 0 -4.5" angles="0 180 0" scale="15" model="VendingMachineFront" material="VendingMachineFrontRED"></object>
+
+  <!--COOLERS-->
+  <object position="0 0 4.5" scale="6" model="CoolerBase" material="FlatGrey"></object>
+  <object position="0 0 4.5" scale="6" model="CoolerBottle" material="CoolerBottle"></object>
+
 </room>

@@ -1,4 +1,18 @@
 <room>
+  <!--PILLARS-->
+  <object position="4.7 0 1.5" angles="0 0 0" scale="39" model="Pillar" material="FlatGrey" nonsolid="true"></object>
+  <object position="4.7 0 -1.5" angles="0 0 0" scale="39" model="Pillar" material="FlatGrey" nonsolid="true"></object>
+  <object position="-4.7 0 1.5" angles="0 0 0" scale="39" model="Pillar" material="FlatGrey" nonsolid="true"></object>
+  <object position="-4.7 0 -1.5" angles="0 0 0" scale="39" model="Pillar" material="FlatGrey" nonsolid="true"></object>
+  <object position="-1.5 0 4.7" angles="0 0 0" scale="39" model="Pillar" material="FlatGrey" nonsolid="true"></object>
+  <object position="1.5 0 4.7" angles="0 0 0" scale="39" model="Pillar" material="FlatGrey" nonsolid="true"></object>
+  <object position="-1.5 0 -4.7" angles="0 0 0" scale="39" model="Pillar" material="FlatGrey" nonsolid="true"></object>
+  <object position="1.5 0 -4.7" angles="0 0 0" scale="39" model="Pillar" material="FlatGrey" nonsolid="true"></object>
 
+  <!-- PICTURES -->
+  <object position="3.3 0.5 4.8" angles="0 -90 0" scale="20" model="PictureFrame" material="Dark_Oak"></object>
+  <object position="-3.3 0.5 4.8" angles="0 -90 0" scale="20" model="PictureFrame" material="Dark_Oak"></object>
+  <object position="-4.8 0.5 3.3" angles="0 180 0" scale="20" model="PictureFrame" material="Dark_Oak"></object>
+  <object position="4.8 0.5 3.3" angles="0 0 0" scale="20" model="PictureFrame" material="Dark_Oak"></object>
 
 </room>
