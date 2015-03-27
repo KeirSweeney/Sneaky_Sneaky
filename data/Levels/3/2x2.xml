@@ -28,6 +28,6 @@
   <object position="4.5 0 2.5" angles="0 180 0" scale="25" model="CabinetBottom" material="CabinetBottom"></object>
   
   <!-- RUG-->
-  <object position="2.5 0 -2.5" angles="90 -45 0" scale="3" model="PersonPlane" material="Rug_WL"></object>
+  <object position="2.5 0 -2.5" angles="90 -45 0" scale="3" model="PersonPlane" material="Rug_WL" nonsolid="true"></object>
 
 </room>
