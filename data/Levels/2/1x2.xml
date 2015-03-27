@@ -4,29 +4,29 @@
   <object position="-5 0.5 0" angles="0 -90 0" scale="1" model="PersonPlane" material="Poster1"></object>
 
   <!-- ****BOX COLLIDERS MUST BE REMOVED HERE AND A PAIR IN 1x1*** -->
-  <object position="2.8 0 -5" angles="0 0 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>
-  <object position="4.3 0 -5" angles="0 0 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>
+  <object position="2.8 0 -5" angles="0 0 0" scale="12.5" model="CubicleDivider" material="CubicleDivider_2ndFloor"></object>
+  <object position="4.3 0 -5" angles="0 0 0" scale="12.5" model="CubicleDivider" material="CubicleDivider_2ndFloor"></object>
 
 
   <!-- STANDARD ONE ROOM CUBICALS-->
-  <object position="2 0 -2.5" angles="0 90 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>
-  <object position="2 0 -4" angles="0 90 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>
-  <object position="-2 0 4" angles="0 90 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>
-  <object position="-2 0 2.5" angles="0 90 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>
-  <object position="-2 0 -2.5" angles="0 90 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>
-  <object position="-2 0 -4" angles="0 90 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>
-  <object position="-2.8 0 5" angles="0 0 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>
-  <object position="-4.3 0 5" angles="0 0 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>
-  <object position="-2.8 0 -5" angles="0 0 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>
-  <object position="-4.3 0 -5" angles="0 0 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>
+  <object position="2 0 -2.5" angles="0 90 0" scale="12.5" model="CubicleDivider" material="CubicleDivider_2ndFloor"></object>
+  <object position="2 0 -4" angles="0 90 0" scale="12.5" model="CubicleDivider" material="CubicleDivider_2ndFloor"></object>
+  <object position="-2 0 4" angles="0 90 0" scale="12.5" model="CubicleDivider" material="CubicleDivider_2ndFloor"></object>
+  <object position="-2 0 2.5" angles="0 90 0" scale="12.5" model="CubicleDivider" material="CubicleDivider_2ndFloor"></object>
+  <object position="-2 0 -2.5" angles="0 90 0" scale="12.5" model="CubicleDivider" material="CubicleDivider_2ndFloor"></object>
+  <object position="-2 0 -4" angles="0 90 0" scale="12.5" model="CubicleDivider" material="CubicleDivider_2ndFloor"></object>
+  <object position="-2.8 0 5" angles="0 0 0" scale="12.5" model="CubicleDivider" material="CubicleDivider_2ndFloor"></object>
+  <object position="-4.3 0 5" angles="0 0 0" scale="12.5" model="CubicleDivider" material="CubicleDivider_2ndFloor"></object>
+  <object position="-2.8 0 -5" angles="0 0 0" scale="12.5" model="CubicleDivider" material="CubicleDivider_2ndFloor"></object>
+  <object position="-4.3 0 -5" angles="0 0 0" scale="12.5" model="CubicleDivider" material="CubicleDivider_2ndFloor"></object>
   <!--Tables-->
   <object position="-3.5 0 -4.5" angles="0 180 0" scale="20" model="Table" material="FlatGrey"></object>
   <object position="-3.5 0 4.5" angles="0 0 0" scale="20" model="Table" material="FlatGrey"></object>
   <object position="3.5 0 -4.5" angles="0 180 0" scale="20" model="Table" material="FlatGrey"></object>
   <!--Seats-->
-  <object position="-3.5 0 -4" angles="0 0 0" scale="6.5" model ="Seat" material="Seat"></object>
-  <object position="3.5 0 -4" angles="0 0 0" scale="6.5" model ="Seat" material="Seat"></object>
-  <object position="-3.5 0 4" angles="0 180 0" scale="6.5" model ="Seat" material="Seat"></object>
+  <object position="-3.5 0 -4" angles="0 0 0" scale="6.5" model ="Seat" material="Seat_2ndFloor"></object>
+  <object position="3.5 0 -4" angles="0 0 0" scale="6.5" model ="Seat" material="Seat_2ndFloor"></object>
+  <object position="-3.5 0 4" angles="0 180 0" scale="6.5" model ="Seat" material="Seat_2ndFloor"></object>
   <!--Lamps-->
   <object position="-4.2 1 -4.5" angles="0 90 0" scale="5" model="Lamp" material="Lamp"></object>
   <object position="2.8 1 -4.5" angles="0 90 0" scale="5" model="Lamp" material="Lamp"></object>
@@ -58,7 +58,7 @@ I could go for a coffee right about now...</object>
   <object position="1.4 0 -2" angles="0 180 0" scale="25" model="CabinetShut" material="CabinetShut"></object>
 
   <!--SOFA-->
-  <object position="2.5 0 4.5" angles="0 180 0" scale="50" model="SofaLength" material="Sofa"></object>
+  <object position="2.5 0 4.5" angles="0 180 0" scale="50" model="SofaLength" material="Sofa_2ndFloor"></object>
  
   <!--PRINTERBOXES-->
   <object position="4.5 0 4.2" angles="0 90 0" scale="8" model="PrinterBoxes" material="PrinterBoxes"></object>

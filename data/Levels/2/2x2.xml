@@ -20,8 +20,8 @@ I DO hope your weekly review with Mr Chippingfort went well.
 
 Charlie Chester Mgr</object>
   <!-- minion seats -->
-  <object position="1.5 0 -0.7" angles="0 -90 0" scale="6.5" model ="Seat" material="Seat"></object>
-  <object position="1.5 0 0.5" angles="0 -96 0" scale="6.5" model ="Seat" material="Seat"></object>
+  <object position="1.5 0 -0.7" angles="0 -90 0" scale="6.5" model ="Seat" material="Seat_2ndFloor"></object>
+  <object position="1.5 0 0.5" angles="0 -96 0" scale="6.5" model ="Seat" material="Seat_2ndFloor"></object>
 
   <!-- COPPIER AND PAPER -->
   <object position="4.3 0 -3.8" angles="0 180 0" scale="17.5" model="Copier" material="Copier"></object>
@@ -29,10 +29,10 @@ Charlie Chester Mgr</object>
   <object position="3.5 0 4.4" angles="0 180 0" scale="8" model="PrinterBoxes" material="PrinterBoxes"></object>
 
   <!-- SOFAS -->
-  <object position="-4.6 0 3.5" angles="0 90 0" scale="50" model="SofaLength" material="Sofa"></object>
-  <object position="-4.95 0 2" angles="0 90 0" scale="50" model="SofaEnd" material="Sofa"></object>
-  <object position="-4.6 0 -3.5" angles="0 90 0" scale="50" model="SofaLength" material="Sofa"></object>
-  <object position="-4.95 0 -2" angles="0 -90 0" scale="50" model="SofaEnd" material="Sofa"></object>
+  <object position="-4.6 0 3.5" angles="0 90 0" scale="50" model="SofaLength" material="Sofa_2ndFloor"></object>
+  <object position="-4.95 0 2" angles="0 90 0" scale="50" model="SofaEnd" material="Sofa_2ndFloor"></object>
+  <object position="-4.6 0 -3.5" angles="0 90 0" scale="50" model="SofaLength" material="Sofa_2ndFloor"></object>
+  <object position="-4.95 0 -2" angles="0 -90 0" scale="50" model="SofaEnd" material="Sofa_2ndFloor"></object>
 
   <!-- BOTTOM CABINETS -->
   <object position="-1 0 -4.8" angles="0 -90 0" scale="25" model="CabinetShut" material="CabinetShut"></object>

@@ -3,10 +3,10 @@
   <object position="-5 0.5 0" angles="0 -90 0" scale="1" model="PersonPlane" material="Poster4"></object>
 
   <!-- SOFAS -->
-  <object position="4.6 -0.01 2" angles="0 -90 0" scale="50" model="SofaLength" material="Sofa"></object>
-  <object position="4.6 0 -1" angles="0 -90 0" scale="50" model="SofaLength" material="Sofa"></object>
-  <object position="5 -0.01 3.5" angles="0 -90 0" scale="50" model="SofaEnd" material="Sofa"></object>
-  <object position="5 -0.01 -2.5" angles="0 90 0" scale="50" model="SofaEnd" material="Sofa"></object>
+  <object position="4.6 -0.01 2" angles="0 -90 0" scale="50" model="SofaLength" material="Sofa_2ndFloor"></object>
+  <object position="4.6 0 -1" angles="0 -90 0" scale="50" model="SofaLength" material="Sofa_2ndFloor"></object>
+  <object position="5 -0.01 3.5" angles="0 -90 0" scale="50" model="SofaEnd" material="Sofa_2ndFloor"></object>
+  <object position="5 -0.01 -2.5" angles="0 90 0" scale="50" model="SofaEnd" material="Sofa_2ndFloor"></object>
 
   <!-- COFFEE TABLE -->
   <object position="2.5 0 2.2" angles="0 90 0" scale="25" model="CoffeeTableGlass" material="CoffeeTableGlass"></object>
