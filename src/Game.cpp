@@ -205,6 +205,35 @@ void Game::LoadLevel()
 
 	Vector3 personPosition;
 
+	XMLFile *levelXml = cache->GetResource<XMLFile>(ToString("Levels/%d.xml", currentLevel_ + 1));
+
+	bool levelLights = true;
+	Material *levelFloorMaterial = cache->GetResource<Material>("Materials/FlatGrey.xml");
+	Material *levelWallMaterial = levelFloorMaterial;
+	Material *levelDoorMaterial = levelWallMaterial;
+
+	if (levelXml) {
+		XMLElement levelRoot = levelXml->GetRoot();
+
+		if (levelRoot.HasAttribute("lights")) {
+			levelLights = levelRoot.GetBool("lights");
+		}
+
+		if (levelRoot.HasAttribute("floor")) {
+			levelFloorMaterial = cache->GetResource<Material>("Materials/" + levelRoot.GetAttribute("floor") + ".xml");
+		}
+
+		if (levelRoot.HasAttribute("walls")) {
+			levelWallMaterial = cache->GetResource<Material>("Materials/" + levelRoot.GetAttribute("walls") + ".xml");
+		}
+
+		if (levelRoot.HasAttribute("doors")) {
+			levelDoorMaterial = cache->GetResource<Material>("Materials/" + levelRoot.GetAttribute("doors") + ".xml");
+		} else {
+			levelDoorMaterial = levelWallMaterial;
+		}
+	}
+
 	// ooooooooooo
 	// oxoxoxoxoxo
 	// ooooooooooo
@@ -232,6 +261,24 @@ void Game::LoadLevel()
 				personPosition = roomPosition;
 			}
 
+			// Try and load the XML file that defines the contents for the room.
+			XMLFile *roomXml = cache->GetResource<XMLFile>(ToString("Levels/%d/%dx%d.xml", currentLevel_ + 1, x + 1, y + 1));
+
+			bool roomLights = levelLights;
+			Material *roomFloorMaterial = levelFloorMaterial;
+
+			if (roomXml) {
+				XMLElement roomRoot = roomXml->GetRoot();
+
+				if (roomRoot.HasAttribute("lights")) {
+					roomLights = roomRoot.GetBool("lights");
+				}
+
+				if (roomRoot.HasAttribute("floor")) {
+					roomFloorMaterial = cache->GetResource<Material>("Materials/" + roomRoot.GetAttribute("floor") + ".xml");
+				}
+			}
+
 			// Create a node and place it at the correct world coordinates.
 			// Floor tiles are 11m x 11m.
 			Node *floorNode = scene_->CreateChild();
@@ -246,30 +293,33 @@ void Game::LoadLevel()
 
 			StaticModel *floorModel = floorNode->CreateComponent<StaticModel>();
 			floorModel->SetModel(cache->GetResource<Model>("Models/Floor.mdl"));
-			floorModel->SetMaterial(cache->GetResource<Material>("Materials/FlatGrey.xml"));
+			floorModel->SetMaterial(roomFloorMaterial);
 
-			// Create 4 evenly spaced lights for each room.
-			// Each light has a brightness of 20% to provide full lighting (when combiend with the 20% camera light).
-			const float floorLightHeight = 3.0f;
+			if (roomLights) {
+				// Create 4 evenly spaced lights for each room.
+				// Each light has a brightness of 20% to provide full lighting (when combiend with the 20% camera light).
+				const float floorLightHeight = 3.0f;
 
-			Node *floorLightNode = floorNode->CreateChild();
-			floorLightNode->SetPosition(Vector3(-2.75f, floorLightHeight, -2.75f));
-			floorLightNode->SetDirection(Vector3::DOWN);
+				Node *floorLightNode = floorNode->CreateChild();
+				floorLightNode->SetPosition(Vector3(-2.75f, floorLightHeight, -2.75f));
+				floorLightNode->SetDirection(Vector3::DOWN);
 
-			Light *floorLight = floorLightNode->CreateComponent<Light>();
-			floorLight->SetLightType(LIGHT_POINT);
-			floorLight->SetBrightness(0.2f);
-			floorLight->SetColor(Color::WHITE);
+				Light *floorLight = floorLightNode->CreateComponent<Light>();
+				floorLight->SetLightType(LIGHT_POINT);
+				floorLight->SetBrightness(0.2f);
+				floorLight->SetColor(Color::WHITE);
 
-			floorLightNode = floorLightNode->Clone();
-			floorLightNode->SetPosition(Vector3(2.75f, floorLightHeight, -2.75f));
+				floorLightNode = floorLightNode->Clone();
+				floorLightNode->SetPosition(Vector3(2.75f, floorLightHeight, -2.75f));
 
-			floorLightNode = floorLightNode->Clone();
-			floorLightNode->SetPosition(Vector3(-2.75f, floorLightHeight, 2.75f));
+				floorLightNode = floorLightNode->Clone();
+				floorLightNode->SetPosition(Vector3(-2.75f, floorLightHeight, 2.75f));
 
-			floorLightNode = floorLightNode->Clone();
-			floorLightNode->SetPosition(Vector3(2.75f, floorLightHeight, 2.75f));
+				floorLightNode = floorLightNode->Clone();
+				floorLightNode->SetPosition(Vector3(2.75f, floorLightHeight, 2.75f));
+			}
 
+#if 1
 			// Label the room with its number for development.
 			Node *roomLabelNode = floorNode->CreateChild();
 			roomLabelNode->SetPosition(Vector3(0.0f, 0.1f, 0.0f));
@@ -282,13 +332,12 @@ void Game::LoadLevel()
 			roomLabel->SetColor(Color::WHITE);
 			roomLabel->SetAlignment(HA_CENTER, VA_CENTER);
 			roomLabel->SetFaceCameraMode(FC_ROTATE_Y);
+#endif
 
-			// Try and load the XML file that defines the contents for the room.
-			XMLFile *roomContents = cache->GetResource<XMLFile>(ToString("Levels/%d/%dx%d.xml", currentLevel_ + 1, x + 1, y + 1));
-			if (roomContents) {
+			if (roomXml) {
 				Node *roomContentsNode = floorNode->CreateChild();
 
-				XMLElement child = roomContents->GetRoot().GetChild("object");
+				XMLElement child = roomXml->GetRoot().GetChild("object");
 				while (child) {
 					Node *childNode = roomContentsNode->CreateChild();
 					childNode->SetPosition(child.GetVector3("position"));
@@ -330,7 +379,7 @@ void Game::LoadLevel()
 					child = child.GetNext("object");
 				}
 
-				child = roomContents->GetRoot().GetChild("guard");
+				child = roomXml->GetRoot().GetChild("guard");
 				while (child) {
 					PODVector<Vector3> waypoints;
 					XMLElement waypoint = child.GetChild("waypoint");
@@ -429,7 +478,7 @@ void Game::LoadLevel()
 
 			StaticModel *wallModel = wallNode->CreateComponent<StaticModel>();
 			wallModel->SetModel(cache->GetResource<Model>("Models/Wall" + wallType + ".mdl"));
-			wallModel->SetMaterial(cache->GetResource<Material>("Materials/FlatGrey.xml"));
+			wallModel->SetMaterial(levelWallMaterial);
 			wallModel->SetCastShadows(true);
 
 			CollisionShape *wallCollisionShape = wallNode->CreateComponent<CollisionShape>();
@@ -446,7 +495,7 @@ void Game::LoadLevel()
 
 					StaticModel *doorModel = doorNode->CreateComponent<StaticModel>();
 					doorModel->SetModel(cache->GetResource<Model>("Models/Door.mdl"));
-					doorModel->SetMaterial(cache->GetResource<Material>("Materials/FlatGrey.xml"));
+					doorModel->SetMaterial(levelDoorMaterial);
 					doorModel->SetCastShadows(true);
 
 					CollisionShape *doorCollisionShape = doorNode->CreateComponent<CollisionShape>();
