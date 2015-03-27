@@ -34,6 +34,7 @@ public:
     void SetWaypoints(Urho3D::PODVector<Urho3D::Vector3> &waypoints);
     bool HasSeenPlayer();
     void HeardSound(Urho3D::Vector3 position);
+    void SetPath(Urho3D::PODVector<Urho3D::Vector3> path);
 
 private:
     Urho3D::RigidBody *rigidBody_;
