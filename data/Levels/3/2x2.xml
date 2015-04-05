@@ -21,7 +21,7 @@
   <object position="-2.5 0 2.5" angles="0 135 0" scale="20" model="Table" material="Dark_Oak"></object>
   <object position="-3 0 3" angles="0 -45 0" scale="6.5" model ="Seat" material="Seat_3rdFloor"></object>
   <object position="-3 1 2" angles="0 45 0" scale="5" model="Lamp" material="Lamp"></object>
-  <object position="-2.5 1 2.5" angles="0 135 0" scale="5" model="Terminal" material="Terminal" interaction="Terminal"></object>
+  <object position="-2.5 1 2.5" angles="0 135 0" scale="5" model="Terminal" material="Terminal"></object>
 
   <!-- CABINET -->
   <object position="4.5 0 3.5" angles="0 180 0" scale="25" model="CabinetTop" material="CabinetTop"></object>

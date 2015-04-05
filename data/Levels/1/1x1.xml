@@ -1,6 +1,6 @@
 <!-- The floor and lights keys can also be specified per room, remember that lighting currently bleeds through walls so this isn't particularly useful at the moment. As with the level ones, the keys should only be specified if different from what the level specifies (or the default if the level doesn't) -->
-<room floor="Dark_Oak" lights="true">
-  
+<!--<room floor="Dark_Oak" lights="true"> -->
+<room>
   <!--KEYCARD-->
   <object position="-0.8 0 4.5" scale="10" model="Punchcard" material="Pickup" interaction="Pickup"></object>
 
@@ -25,5 +25,5 @@
   <object position="0 0 4.5" scale="6" model="CoolerBottle" material="CoolerBottle"></object>
   <object position="0 0 -4.5" angles="0 180 0" scale="6" model="CoolerBase" material="FlatGrey"></object>
   <object position="0 0 -4.5" angles="0 180 0" scale="6" model="CoolerBottle" material="CoolerBottle"></object>
-  
+
 </room>
