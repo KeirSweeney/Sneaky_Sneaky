@@ -344,7 +344,13 @@ void Game::LoadLevel()
 					Vector3 angles = child.GetVector3("angles");
 					childNode->SetRotation(Quaternion(angles.x_, angles.y_, angles.z_));
 					if (child.HasAttribute("scale")) {
-						childNode->SetScale(child.GetFloat("scale"));
+						String strScale = child.GetAttribute("scale");
+						Vector3 vecScale = ToVector3(strScale);
+						if (vecScale != Vector3::ZERO) {
+							childNode->SetScale(vecScale);
+						} else {
+							childNode->SetScale(ToFloat(strScale));
+						}
 					}
 
 					StaticModel *model = childNode->CreateComponent<StaticModel>();
