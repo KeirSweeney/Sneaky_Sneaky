@@ -14,8 +14,8 @@
   <object position="2.7 0 4.1" angles="0 10 0" scale="20" model="Table" material="FlatGrey"></object>
   <object position="4.5 0 3.5" angles="0 90 0" scale="20" model="Table" material="FlatGrey"></object>
   <!--Seats-->
-  <object position="-3.5 0 -3.4" angles="0 85 0" scale="6.5" model ="Seat" material="Seat"></object>
-  <object position="-2.0 0 -2.0" angles="0 0 0" scale="6.5" model ="Seat" material="Seat"></object>
+  <object position="-3.5 0 -3.4" angles="0 85 0" scale="6.5" model ="Seat" material="Seat_3rdFloor"></object>
+  <object position="-2.0 0 -2.0" angles="0 0 0" scale="6.5" model ="Seat" material="Seat_3rdFloor"></object>
 
   <!--Lamps-->
   <object position="4.5 1 2.8" angles="0 0 0" scale="5" model="Lamp" material="Lamp"></object>

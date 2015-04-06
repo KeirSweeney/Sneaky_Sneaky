@@ -32,6 +32,6 @@ H.Chippingfort - C.E.O.</object>
   <object position="4.7 -0.01 0" angles="0 -90 0" scale="50" model="SofaLength" material="Sofa_2ndFloor"></object>
 
   <!--COOLER-->
-  <object position="-4.7 0 -1" angles="0 -90 0" scale="6" model="CoolerBase" material="FlatGrey"></object>
-  <object position="-4.7 0 -1" angles="0 -90 0" scale="6" model="CoolerBottle" material="CoolerBottle"></object>
+  <object position="-4.7 0 -1.5" angles="0 -90 0" scale="6" model="CoolerBase" material="FlatGrey"></object>
+  <object position="-4.7 0 -1.5" angles="0 -90 0" scale="6" model="CoolerBottle" material="CoolerBottle"></object>
 </room>
