@@ -26,20 +26,38 @@
 using namespace Urho3D;
 
 Laser::Laser(Context *context):
-    LogicComponent(context),
+    InteractableComponent(context),
     lightPulse_(false),
-    lightTime_(0.0f)
+    lightTime_(0.0f),
+    laserTime_(0.0f),
+    laserInterval_(0.0f)
 {
 }
 
 void Laser::RegisterObject(Context* context)
 {
 	context->RegisterFactory<Laser>("Logic");
-	COPY_BASE_ATTRIBUTES(LogicComponent);
+    COPY_BASE_ATTRIBUTES(InteractableComponent);
+}
+
+void Laser::LoadFromXML(const XMLElement &xml)
+{
+    laserInterval_ = xml.GetFloat("interval");
 }
 
 void Laser::Update(float timeStep)
 {
+    if(laserInterval_ > 0.0f) {
+        laserTime_ += timeStep;
+
+        StaticModel *laserModel = node_->GetComponent<StaticModel>();
+
+        if(laserTime_ > laserInterval_) {
+            laserModel->SetEnabled(!laserModel->IsEnabled());
+            laserTime_ = 0.0f;
+        }
+    }
+
     if(!lightPulse_) {
         return;
     }
@@ -75,13 +93,19 @@ void Laser::DelayedStart()
 {
 	rigidBody_ = node_->GetComponent<RigidBody>();
 	rigidBody_->SetTrigger(true);
-	SubscribeToEvent(node_, E_NODECOLLISIONSTART, HANDLER(Laser, HandleNodeCollisionStart));
+    SubscribeToEvent(node_, E_NODECOLLISION, HANDLER(Laser, HandleNodeCollision));
 }
 
-void Laser::HandleNodeCollisionStart(StringHash eventType, VariantMap &eventData)
+void Laser::HandleNodeCollision(StringHash eventType, VariantMap &eventData)
 {
+    StaticModel *laserModel = node_->GetComponent<StaticModel>();
+
+    if(!laserModel->IsEnabled()) {
+        return;
+    }
+
 	Node *personNode = GetScene()->GetChild("Person", true);
-	Node *other = (Node *)eventData[NodeCollisionStart::P_OTHERNODE].GetPtr();
+    Node *other = (Node *)eventData[NodeCollision::P_OTHERNODE].GetPtr();
 
 	if(other != personNode) {
 		return;
