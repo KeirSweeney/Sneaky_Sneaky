@@ -15,12 +15,16 @@ public:
 	static void RegisterObject(Urho3D::Context *context);
 
 public:
-	void DelayedStart();
+    void Update(float timeStep);
+    void DelayedStart();
 
 public:
-	void HandleNodeCollisionStart(Urho3D::StringHash eventType, Urho3D::VariantMap &eventData);
+    void HandleNodeCollisionStart(Urho3D::StringHash eventType, Urho3D::VariantMap &eventData);
+
 
 private:
-	Urho3D::RigidBody *rigidBody_;
-	Urho3D::PODVector<Urho3D::Vector3> path_;
+    Urho3D::RigidBody *rigidBody_;
+    Urho3D::PODVector<Urho3D::Vector3> path_;
+    bool lightPulse_;
+    float lightTime_;
 };

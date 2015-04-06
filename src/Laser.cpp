@@ -26,7 +26,9 @@
 using namespace Urho3D;
 
 Laser::Laser(Context *context):
-	LogicComponent(context)
+    LogicComponent(context),
+    lightPulse_(false),
+    lightTime_(0.0f)
 {
 }
 
@@ -34,6 +36,39 @@ void Laser::RegisterObject(Context* context)
 {
 	context->RegisterFactory<Laser>("Logic");
 	COPY_BASE_ATTRIBUTES(LogicComponent);
+}
+
+void Laser::Update(float timeStep)
+{
+    if(!lightPulse_) {
+        return;
+    }
+    lightTime_ += timeStep * 0.5f;
+    if(lightTime_ > 5.0f) {
+        lightPulse_= false;
+        lightTime_ = 0;
+    }
+    Node *roomNode = node_->GetParent()->GetParent();
+    PODVector<Node *> nodes;
+
+    roomNode->GetChildrenWithComponent<Light>(nodes,true);
+
+    for (PODVector<Node *>::ConstIterator i =nodes.Begin(); i != nodes.End(); ++i) {
+        Node *lightNode = *i;
+
+        Light *light = lightNode->GetComponent<Light>();
+
+        if(lightPulse_) {
+            light->SetColor(Color::RED);
+            light->SetBrightness(Abs(Sin(lightTime_*360.0f)) * 0.4f);
+        }
+        else {
+            light->SetColor(Color::WHITE);
+            light->SetBrightness(0.2f);
+        }
+    }
+
+
 }
 
 void Laser::DelayedStart()
@@ -52,22 +87,14 @@ void Laser::HandleNodeCollisionStart(StringHash eventType, VariantMap &eventData
 		return;
 	}
 
-	Node *roomNode = node_->GetParent()->GetParent();
-	PODVector<Node *> nodes;
-
-	roomNode->GetChildrenWithComponent<Light>(nodes,true);
-
-	for (PODVector<Node *>::ConstIterator i =nodes.Begin(); i != nodes.End(); ++i) {
-		Node *lightNode = *i;
-
-		Light *light = lightNode->GetComponent<Light>();
-
-		light->SetColor(Color::RED);
-	}
+    lightPulse_ = true;
 
 	NavigationMesh *navMesh = GetScene()->GetComponent<NavigationMesh>();
 
 	Vector3 pointPath = personNode->GetWorldPosition();
+
+    Node *roomNode = node_->GetParent()->GetParent();
+    PODVector<Node *> nodes;
 
 	roomNode->GetChildrenWithComponent<Guard>(nodes,true);
 
