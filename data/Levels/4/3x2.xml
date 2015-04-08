@@ -1,4 +1,20 @@
 <room>
+  <!--Sign-->
+  <object position="0 1.1 5" angles="0 0 0" scale="1" model="PersonPlane" material="Isolation" nonsolid="true"></object>
 
+  <!--KEYCARD-->
+  <object position="4.5 0 -4" scale="10" model="Punchcard" material="Pickup" interaction="Pickup"></object>
+
+  <!--Poster-->
+  <object position="-3 0.5 -5" angles="0 180 0" scale="1" model="PersonPlane" material="BPoster1"></object>
+  <object position="-1 0.5 -5" angles="0 180 0" scale="1" model="PersonPlane" material="BPoster2"></object>
+  <object position="1 0.5 -5" angles="0 180 0" scale="1" model="PersonPlane" material="BPoster3"></object>
+  <object position="3 0.5 -5" angles="0 180 0" scale="1" model="PersonPlane" material="BPoster4"></object>
+
+  <!--Desk-->
+  <object position="0 0 0" angles="0 180 0" scale="20" model="Table" material="Mahogany"></object>
+  <object position="0 1 0" angles="0 180 0" scale="5" model="Terminal" material="Terminal_HC"></object>
+  <object position="-0.5 1 0" angles="0 180 0" scale="5" model="LampHC" material="Lamp"></object>
+  <object position="0 0 1" angles="0 0 0" scale="12.5" model ="ChairHC" material="Seat_HC"></object>
 
 </room>
