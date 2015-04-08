@@ -1,5 +1,4 @@
-<?xml version="1.0"?>
 <material>
-	<technique name="Techniques/Diff.xml" />
-	<texture unit="diffuse" name="Textures/HCseat_1stfloor.png" />
+  <technique name="Techniques/NoTexture.xml" />
+  <parameter name="MatDiffColor" value="0.6 0.6 0.4 1" />
 </material>

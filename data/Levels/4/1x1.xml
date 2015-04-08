@@ -1,9 +1,12 @@
 <room>
   <!--KEYCARD-->
-  <object position="-4.5 0 4" scale="10" model="Punchcard" material="Pickup" interaction="Pickup"></object>
+  <object position="-4.5 0 -4" scale="10" model="Punchcard" material="Pickup" interaction="Pickup"></object>
 
   <object position="-3.8 0 4.5" angles="0 75 0" scale="10" model="BrickPile" material="Brick"></object>
+  <object position="-4.5 0 4" angles="0 75 0" scale="6.5" model="Brick" material="Brick"></object>
 
+  <object position="-4.6 0 4.6" scale="5" model="bin" material="Seat_HC"></object>
+  
   <!-- CAMERA -->
   <object position="0 3 4.5" angles="0 180 0" scale="10" model="CameraBase" material="DefaultGrey"></object>
   <object position="0 3 4.5" angles="0 180 0" scale="10" model="Camera" material="DefaultGrey" interaction="SecurityCamera"></object>
@@ -18,6 +21,10 @@
 
   <!--Poster-->
   <object position="-5 0.5 -1.5" angles="0 -90 0" scale="1" model="PersonPlane" material="BPoster4"></object>
+
+  <!--Insub Card-->
+  <object position="3.1 0.2 -2.5" angles="0 10 0" scale="0.75" model="PersonPlane" material="Insubordination"></object>
+  <object position="3.1 0.2 -2.5" angles="0 190 0" scale="0.75" model="PersonPlane" material="Insubordination"></object>
 
   <!-- Desks-->
   <object position="-3 0 -3.5" angles="0 90 0" scale="20" model="Table" material="Mahogany"></object>
@@ -36,9 +43,11 @@
   <object position="0.5 0 -3.5" angles="0 -90 0" scale="12.5" model ="ChairHC" material="Seat_HC"></object>
 
   <object position="3 0 -3.5" angles="0 90 0" scale="20" model="Table" material="Mahogany"></object>
-  <object position="3 1 -3" angles="0 75 0" scale="5" model="Terminal" material="Terminal_HC"></object>
+  <object position="3 1 -3" angles="0 100 0" scale="5" model="Terminal" material="Terminal_HC" interaction="Terminal" displaysize="400 100">ANTON'S PRIVATE LOG
+I am not believeink it!
+Again I am receiving the "Insubordination" card for untidy desk!</object>
   <object position="3 1 -4" angles="0 90 0" scale="5" model="LampHC" material="Lamp"></object>
-  <object position="2.2 0 -3.4" angles="0 -110 0" scale="12.5" model ="ChairHC" material="Seat_HC"></object>
+  <object position="2.2 0 -4" angles="0 -110 0" scale="12.5" model ="ChairHC" material="Seat_HC"></object>
 
   <object position="-3 0 0.5" angles="0 90 0" scale="20" model="Table" material="Mahogany"></object>
   <object position="-3 1 0.5" angles="0 90 0" scale="5" model="Terminal" material="Terminal_HC"></object>
