@@ -1,8 +1,12 @@
 <room>
+  <!--Poster-->
+  <object position="2.5 0.5 -5" angles="0 180 0" scale="1" model="PersonPlane" material="BPoster3"></object>
+  <object position="3.5 0.5 -5" angles="0 180 10" scale="1" model="PersonPlane" material="BPoster3"></object>
+
   <!--Sector Sign-->
-  <object position="-5 1 0" angles="0 -90 0" scale="1" model="PersonPlane" material="SectorA" nonsolid="true"></object>
-  <object position="5 1 0" angles="0 90 0" scale="1" model="PersonPlane" material="SectorA" nonsolid="true"></object>
-  <object position="0 1 -5" angles="0 180 0" scale="1" model="PersonPlane" material="SectorA" nonsolid="true"></object>
+  <object position="-5 1 0" angles="0 -90 0" scale="1" model="PersonPlane" material="SectorB" nonsolid="true"></object>
+  <object position="5 1 0" angles="0 90 0" scale="1" model="PersonPlane" material="SectorB" nonsolid="true"></object>
+  <object position="0 1 -5" angles="0 180 0" scale="1" model="PersonPlane" material="SectorB" nonsolid="true"></object>
 
   <!-- Desks-->
   <object position="-3.8 0 -3" angles="0 180 0" scale="20" model="Table" material="Mahogany"></object>
