@@ -1,0 +1,6 @@
+<material>
+    <technique name="Techniques/DiffUnlitAlpha.xml" />
+    <texture unit="diffuse" name="Textures/SectorC.png" />
+    <parameter name="MatDiffColor" value="1 1 1 1" />
+    <depthbias constant="-0.00003" slopescaled="0" />
+</material>
