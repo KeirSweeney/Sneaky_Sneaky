@@ -4,9 +4,9 @@
   <object position="-5 0.5 -3.5" angles="0 -90 5" scale="1" model="PersonPlane" material="BPoster2"></object>
 
   <!--Sector Sign-->
-  <object position="-5 1 0" angles="0 -90 0" scale="1" model="PersonPlane" material="SectorD" nonsolid="true"></object>
-  <object position="0 1 5" angles="0 0 0" scale="1" model="PersonPlane" material="SectorD" nonsolid="true"></object>
-  <object position="0 1 -5" angles="0 180 0" scale="1" model="PersonPlane" material="SectorD" nonsolid="true"></object>
+  <object position="-5 1 0" angles="0 -90 0" scale="1" model="PersonPlane" material="SectorE" nonsolid="true"></object>
+  <object position="0 1 5" angles="0 0 0" scale="1" model="PersonPlane" material="SectorE" nonsolid="true"></object>
+  <object position="0 1 -5" angles="0 180 0" scale="1" model="PersonPlane" material="SectorE" nonsolid="true"></object>
 
   <!-- Desks-->
   <object position="-3 0 -3.8" angles="0 -90 0" scale="20" model="Table" material="Mahogany"></object>
@@ -54,5 +54,25 @@
   <object position="5 0 4.5" angles="0 90 0" scale="25" model="CabinetTop" material="CabinetTop_HC"></object>
   <object position="5.7 0 4.5" angles="0 90 0" scale="25" model="CabinetMiddle" material="CabinetMiddle_HC"></object>
   <object position="6.4 0 4.5" angles="0 90 0" scale="25" model="CabinetShut" material="CabinetShut_HC"></object>
+
+  <object position="0 0 0.5" angles="0 -90 0" scale="25" model="CabinetShut" material="CabinetShut_HC"></object>
+  <object position="-0.7 0 0.5" angles="0 -90 0" scale="25" model="CabinetTop" material="CabinetTop_HC"></object>
+  <object position="-1.4 0 0.5" angles="0 -90 0" scale="25" model="CabinetShut" material="CabinetShut_HC"></object>
+  <object position="0.7 0 0.5" angles="0 -90 0" scale="25" model="CabinetShut" material="CabinetShut_HC"></object>
+  <object position="0 0 -0.5" angles="0 90 0" scale="25" model="CabinetShut" material="CabinetShut_HC"></object>
+  <object position="-0.7 0 -0.5" angles="0 90 0" scale="25" model="CabinetShut" material="CabinetShut_HC"></object>
+  <object position="-1.4 0 -0.5" angles="0 90 0" scale="25" model="CabinetShut" material="CabinetShut_HC"></object>
+  <object position="0.7 0 -0.5" angles="0 90 0" scale="25" model="CabinetShut" material="CabinetShut_HC"></object>
+
+  <!-- Dividers-->
+  <object position="3.5 0 0.75" angles="0 90 0" scale="12.5" model="CubicleDivider" material="Mahogany"></object>
+  <object position="3.5 0 -0.75" angles="0 90 0" scale="12.5" model="CubicleDivider" material="Mahogany"></object>
+
+  <guard>
+    <waypoint position="-2.5 0 -2"></waypoint>
+    <waypoint position="-2.5 0 2"></waypoint>
+    <waypoint position="2 0 2"></waypoint>
+    <waypoint position="2 0 -2"></waypoint>
+  </guard>
 
 </room>
