@@ -20,6 +20,8 @@
 #include "ResourceCache.h"
 #include "Model.h"
 #include "Material.h"
+#include "Input.h"
+
 
 using namespace Urho3D;
 
@@ -39,23 +41,12 @@ void MrWright::RegisterObject(Context* context)
 
 void MrWright::Start()
 {
-	Node *roomNode = node_->GetParent();
-	PODVector<Node *> nodes;
+	
 
-	roomNode->GetChildrenWithComponent<InteractablePoster>(nodes, true);
-
-	ResourceCache *cache = GetSubsystem<ResourceCache>();
-
-	for (PODVector<Node *>::ConstIterator i = nodes.Begin(); i != nodes.End(); ++i) {
-		Node *posterNode = *i;
-
-		StaticModel *glyphModel = posterNode->GetComponent<StaticModel>();
-				
-	}		
-
-		//StaticModel *glyphModel = glyphs_[i] = glyphNode->CreateComponent<StaticModel>();
-		//glyphModel->SetModel(cache->GetResource<Model>("PersonPlane.mdl"));
-		//glyphModel->SetMaterial(cache->GetResource<Material>("Materials/Glyph" + String(i) + ".xml"));
+	//StaticModel *glyphModel = glyphs_[i] = glyphNode->CreateComponent<StaticModel>();
+	//glyphModel->SetModel(cache->GetResource<Model>("PersonPlane.mdl"));
+	//glyphModel->SetMaterial(cache->GetResource<Material>("Materials/Glyph" + String(i) + ".xml"));
+	
 	
 
 }
@@ -67,7 +58,8 @@ void MrWright::DelayedStart()
 
 void MrWright::Update(float timeStep)
 {
-	/*swapTimer_ += timeStep;
+	swapTimer_ += timeStep;
+	
 
 	if (swapTimer_ < 5.0f) {
 		return;
@@ -75,11 +67,39 @@ void MrWright::Update(float timeStep)
 	
 	swapTimer_ = 0.0f;
 
-	for (int i = 0; i < (6 - 1); ++i) {
-		int n = i + Rand() / (32767 / (6 - i) + 1);
-		Material *temp = glyphs_[n]->GetMaterial();
-		glyphs_[n]->SetMaterial(glyphs_[i]->GetMaterial());
-		glyphs_[i]->SetMaterial(temp);
-	} */
-}
+	Node *roomNode = node_->GetParent();
+	PODVector<Node *> nodes;
+	roomNode->GetChildrenWithComponent<InteractablePoster>(nodes, true);
+
+	if (nodes.Empty()) {
+		LOGERROR("ITS EMPTY");
+	}
+	
+	
+	ResourceCache *cache = GetSubsystem<ResourceCache>();
+
+
+	int m = nodes.Size();
+	while (m > 0) {
+		int n = Random(0, m--);
+
+		StaticModel *a = nodes[m]->GetComponent<StaticModel>();
+		StaticModel *b = nodes[n]->GetComponent<StaticModel>();
+
+		Material *t = a->GetMaterial();
+		a->SetMaterial(b->GetMaterial());
+		b->SetMaterial(t);
+	}
+			
+	
+
+	for (PODVector<Node *>::ConstIterator i = nodes.Begin(); i != nodes.End(); ++i) {
+		Node *posterNode = *i;
+
+		
+			
+		}
+	}
+
+
 

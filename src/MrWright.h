@@ -28,4 +28,5 @@ private:
     Urho3D::String content_;
 	Urho3D::SharedPtr<Urho3D::StaticModel> glyphs_[6];
 	float swapTimer_;
+
 };

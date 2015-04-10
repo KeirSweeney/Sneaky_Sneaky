@@ -1,12 +1,12 @@
 <room  floor="Dark_Oak_light">
 
    <!--GLYPH-->
-  <object position="-4.5 0.5 3.5" angles="0 -90 0" scale="1" model="PersonPlane" material="Poster2" interaction="InteractablePoster"></object>
-  <object position="-4.5 0.5 0" angles="0 -90 0" scale="1" model="PersonPlane" material="Poster2" interaction="InteractablePoster"></object>
-  <object position="-4.5 0.5 -3.5" angles="0 -90 0" scale="1" model="PersonPlane" material="Poster2" interaction="InteractablePoster"></object>
-  <object position="4.5 0.5 3.5" angles="0 90 0" scale="1" model="PersonPlane" material="Poster2" interaction="InteractablePoster"></object>
-  <object position="4.5 0.5 0" angles="0 90 0" scale="1" model="PersonPlane" material="Poster2" interaction="InteractablePoster"></object>
-  <object position="4.5 0.5 -3.5" angles="0 90 0" scale="1" model="PersonPlane" material="Poster2" interaction="InteractablePoster"></object>
+  <object position="-5 1 3.5" angles="0 -90 0" scale="1" model="PersonPlane" material="Glyph/1" interaction="InteractablePoster"></object>
+  <object position="-5 1 0" angles="0 -90 0" scale="1" model="PersonPlane" material="Glyph/2" interaction="InteractablePoster"></object>
+  <object position="-5 1 -3.5" angles="0 -90 0" scale="1" model="PersonPlane" material="Glyph/3" interaction="InteractablePoster"></object>
+  <object position="5 1 3.5" angles="0 90 0" scale="1" model="PersonPlane" material="Glyph/4" interaction="InteractablePoster"></object>
+  <object position="5 1 0" angles="0 90 0" scale="1" model="PersonPlane" material="Glyph/5" interaction="InteractablePoster"></object>
+  <object position="5 1 -3.5" angles="0 90 0" scale="1" model="PersonPlane" material="Glyph/6" interaction="InteractablePoster"></object>
 
 
   <!--PILLARS-->
@@ -14,7 +14,7 @@
   <object position="-1.5 0 -4.7" angles="0 0 0" scale="39" model="Pillar" material="FlatGrey" nonsolid="true"></object>
 
   <!-- MR WRIGHT -->
-  <object position="0 0.2 4.8" angles ="0 180 0" scale ="27" model="GiantScreen" material="Obsidian"></object>
+  <object position="0 0.2 4.8" angles ="0 180 0" scale ="27" model="GiantScreen" material="Obsidian" interaction="MrWright"></object>
 
   <!-- Tables'n'Terminals-->
   <!-- LEFT SIDE -->
