@@ -266,6 +266,7 @@ void Game::LoadLevel()
 
 			bool roomLights = levelLights;
 			Material *roomFloorMaterial = levelFloorMaterial;
+			String roomName;
 
 			if (roomXml) {
 				XMLElement roomRoot = roomXml->GetRoot();
@@ -277,12 +278,19 @@ void Game::LoadLevel()
 				if (roomRoot.HasAttribute("floor")) {
 					roomFloorMaterial = cache->GetResource<Material>("Materials/" + roomRoot.GetAttribute("floor") + ".xml");
 				}
+
+				roomName = roomRoot.GetAttribute("name");
 			}
 
 			// Create a node and place it at the correct world coordinates.
 			// Floor tiles are 11m x 11m.
-			Node *floorNode = scene_->CreateChild();
+			Node *floorNode = scene_->CreateChild(ToString("%dx%d", x + 1, y + 1));
 			floorNode->SetPosition(roomPosition);
+
+			// This is a giant hack.
+			if (!roomName.Empty()) {
+				floorNode->SetVar("label", roomName);
+			}
 
 			floorNode->CreateComponent<Navigable>()->SetRecursive(false);
 			RigidBody * floorRigidBody = floorNode->CreateComponent<RigidBody>();
