@@ -1,4 +1,4 @@
-<room>
+<room name ="Reception - Entrance">
 
   <!-- BIN (woooo!) -->
   <object position="3.5 0 -1.5" angles="0 0 0" scale="5" model="Bin" material="CubicleDivider"></object>

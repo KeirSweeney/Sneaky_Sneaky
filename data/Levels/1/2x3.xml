@@ -1,4 +1,4 @@
-<room>
+<room name="Refectory - Staff">
   <!-- CAMERA -->
   <object position="4.5 3 0" angles="0 -90 0" scale="10" model="CameraBase" material="DefaultGrey"></object>
   <object position="4.5 3 0" angles="0 -90 0" scale="10" model="Camera" material="DefaultGrey" interaction="SecurityCamera"></object>

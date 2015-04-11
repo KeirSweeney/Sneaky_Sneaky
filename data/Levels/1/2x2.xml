@@ -1,4 +1,4 @@
-<room>
+<room name="Refectory - Visitors">
   <!-- FULL ENDED SOFA-->
   <object position="1 0 0.62" angles="0 180 0" scale="50" model="SofaLength" material="Sofa"></object>
   <object position="1 0 1.38" angles="0 0 0" scale="50" model="SofaLength" material="Sofa"></object>

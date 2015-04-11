@@ -1,0 +1,6 @@
+<material>
+    <technique name="Techniques/DiffUnlitAlpha.xml" />
+    <texture unit="diffuse" name="Textures/panneling.jpg" />
+    <parameter name="MatDiffColor" value="0.2 0.2 0.2 1" />
+    <depthbias constant="-0.00003" slopescaled="0" />
+</material>
