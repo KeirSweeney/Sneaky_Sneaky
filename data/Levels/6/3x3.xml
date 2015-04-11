@@ -1,4 +1,7 @@
 <room>
+  <!--Goldstack-->
+  <object position="0 0 0" scale="30" model="BrickStack" material="GoldStack"></object>
+
   <!--Panneling-->
   <object position="-4 0 5" angles="0 0 0" scale="1" model="PersonPlane" material="Panneling" nonsolid="true"></object>
   <object position="-2 0 5" angles="0 0 0" scale="1" model="PersonPlane" material="Panneling" nonsolid="true"></object>
