@@ -549,6 +549,7 @@ void Game::LoadLevel()
 	personShadowModel->SetModel(cache->GetResource<Model>("Models/PersonFlat.mdl"));
 	personShadowModel->SetMaterial(cache->GetResource<Material>("Materials/MaverickLeftShadow.xml"));
 	personShadowModel->SetCastShadows(true);
+	personShadowModel->SetShadowMask(0x01);
 
 	RigidBody *personRigidBody = personNode->CreateComponent<RigidBody>();
 	personRigidBody->SetMass(100.0f);
@@ -586,6 +587,7 @@ void Game::LoadLevel()
 	cameraLight->SetFov(60.0f);
 	cameraLight->SetColor(Color::WHITE);
 	cameraLight->SetCastShadows(true);
+	cameraLight->SetLightMask(~0x01);
 	cameraLight->SetShapeTexture(cache->GetResource<Texture2D>("Textures/White.png"));
 
 	Renderer *renderer = GetSubsystem<Renderer>();
