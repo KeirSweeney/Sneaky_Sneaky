@@ -40,22 +40,9 @@ void MrWright::RegisterObject(Context* context)
 }
 
 
-void MrWright::Start()
-{
-	
+void MrWright::Start(){}
 
-	//StaticModel *glyphModel = glyphs_[i] = glyphNode->CreateComponent<StaticModel>();
-	//glyphModel->SetModel(cache->GetResource<Model>("PersonPlane.mdl"));
-	//glyphModel->SetMaterial(cache->GetResource<Material>("Materials/Glyph" + String(i) + ".xml"));
-	
-	
-
-}
-
-void MrWright::DelayedStart()
-{
- 
-}
+void MrWright::DelayedStart(){}
 
 void MrWright::Update(float timeStep)
 {
@@ -106,10 +93,7 @@ void MrWright::Update(float timeStep)
 
 	while (x >= 0) {
 
-		
-		
 			for (PODVector<Node *>::ConstIterator i = posterNodes.Begin(); i != posterNodes.End(); ++i) {
-
 
 				Node *thisPosterNodes = *i;
 				// at this point, were checing for the first terminal[5] and going through each poster to see if the diff is less than 0.5
@@ -139,13 +123,8 @@ void MrWright::Update(float timeStep)
 		
 	}
 	
-	LABEL:
-	for (PODVector<Node *>::ConstIterator i = posterNodes.Begin(); i != posterNodes.End(); ++i) {
-		Node *thisPosterNode = *i;
+LABEL:;
 
-		
-			
-		}
 	}
 
 
