@@ -1,4 +1,47 @@
 <room>
+  <!-- Poster -->
+  <object position="0 0.5 5" angles="0 0 0" scale="1" model="PersonPlane" material="BPoster2"></object>
+  <object position="0.8 0.5 4.9" angles="0 0 3" scale="1" model="PersonPlane" material="BPoster2"></object>
+  <object position="1.6 0.5 4.85" angles="0 0 6" scale="1" model="PersonPlane" material="BPoster2"></object>
 
+  <!--CHAIRS-->
+  <object position="-3.4 0 2.8" angles="0 -90 0" scale="12.5" model="ChairHC" material="Mahogany"></object>
+  <object position="-2.7 0 3.5" angles="0 0 0" scale="12.5" model="ChairHC" material="Mahogany"></object>
+  <object position="-1.9 0 3.5" angles="0 0 0" scale="12.5" model="ChairHC" material="Mahogany"></object>
+  <object position="-1.1 0 3.5" angles="0 0 0" scale="12.5" model="ChairHC" material="Mahogany"></object>
+  <object position="-0.3 0 2.8" angles="0 90 0" scale="12.5" model="ChairHC" material="Mahogany"></object>
+  <object position="-2.7 0 2.1" angles="0 180 0" scale="12.5" model="ChairHC" material="Mahogany"></object>
+  <object position="-1.9 0 2.1" angles="0 180 0" scale="12.5" model="ChairHC" material="Mahogany"></object>
+  <object position="-1.1 0 2.1" angles="0 180 0" scale="12.5" model="ChairHC" material="Mahogany"></object>
+
+  <object position="-3.4 0 -2.8" angles="0 -90 0" scale="12.5" model="ChairHC" material="Mahogany"></object>
+  <object position="-2.7 0 -3.5" angles="0 180 0" scale="12.5" model="ChairHC" material="Mahogany"></object>
+  <object position="-1.9 0 -3.5" angles="0 180 0" scale="12.5" model="ChairHC" material="Mahogany"></object>
+  <object position="-1.1 0 -3.5" angles="0 180 0" scale="12.5" model="ChairHC" material="Mahogany"></object>
+  <object position="-0.3 0 -2.8" angles="0 90 0" scale="12.5" model="ChairHC" material="Mahogany"></object>
+  <object position="-2.7 0 -2.1" angles="0 0 0" scale="12.5" model="ChairHC" material="Mahogany"></object>
+  <object position="-1.9 0 -2.1" angles="0 0 0" scale="12.5" model="ChairHC" material="Mahogany"></object>
+  <object position="-1.1 0 -2.1" angles="0 0 0" scale="12.5" model="ChairHC" material="Mahogany"></object>
+
+  <!--COFFEE TABLE-->
+  <object position="-1.9 0 2.8" angles="0 0 0" scale="25" model="CoffeeTableGlass" material="Seat_HC"></object>
+  <object position="-1.9 0 2.8" angles="0 0 0" scale="25" model="CoffeeTableLegs" material="Mahogany"></object>
+  <object position="-1.9 0 -2.8" angles="0 0 0" scale="25" model="CoffeeTableGlass" material="Seat_HC"></object>
+  <object position="-1.9 0 -2.8" angles="0 0 0" scale="25" model="CoffeeTableLegs" material="Mahogany"></object>
+
+  <!-- CAMERA -->
+  <object position="4.5 3 0" angles="0 -90 0" scale="10" model="CameraBase" material="DefaultGrey"></object>
+  <object position="4.5 3 0" angles="0 -90 0" scale="10" model="Camera" material="DefaultGrey" interaction="SecurityCamera"></object>
+
+  <object position="4.6 0 -4.6" scale="5" model="bin" material="Seat_HC"></object>
+  <object position="3 0 4.8" angles="0 0 0" scale="6" model="CoolerBase" material="FlatGrey"></object>
+  <object position="3 0 4.8" angles="0 0 0" scale="6" model="CoolerBottle" material="CoolerBottle"></object>
+
+  <object position="3.8 0 -4.5" angles="0 75 0" scale="10" model="BrickPile" material="Brick"></object>
+  <object position="4.5 0 -4" angles="0 75 0" scale="6.5" model="Brick" material="Brick"></object>
+
+  <!-- VENDING MACHINE -->
+  <object position="4 0 4.5" angles="0 0 0" scale="15" model="VendingMachineBody" material="VendingMachineBody"></object>
+  <object position="4 0 4.5" angles="0 0 0" scale="15" model="VendingMachineFront" material="VendingMachineFrontRED"></object>
 
 </room>

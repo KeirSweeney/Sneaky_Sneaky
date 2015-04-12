@@ -1,4 +1,41 @@
 <room>
+  <!--LASEREMITTER-->
+  <object position ="4 0.4 5" angles="0 180 0" scale="10" model="LaserEmitter" material="Lamp"></object>
+  <object position ="4 0.4 -5" angles="0 0 0" scale="10" model="LaserEmitter" material="Lamp"></object>
+  <object position ="-4 0.4 5" angles="0 180 0" scale="10" model="LaserEmitter" material="Lamp"></object>
+  <object position ="-4 0.4 -5" angles="0 0 0" scale="10" model="LaserEmitter" material="Lamp"></object>
 
+  <!--LASER-->
+  <object position ="4 0.4 -5" angles="90 0 0" scale="0.06 10 0.06" model="Laser" material="Laser" interaction="Laser" interval="2"></object>
+  <object position ="-4 0.4 -5" angles="90 0 0" scale="0.06 10 0.06" model="Laser" material="Laser" interaction="Laser" interval="2"></object>
 
+  <!--Dividers-->
+  <object position="-3 0 2.5" angles="0 0 0" scale="12.5" model="CubicleDivider" material="Mahogany"></object>
+  <object position="-1.5 0 2.5" angles="0 0 0" scale="12.5" model="CubicleDivider" material="Mahogany"></object>
+  <object position="-0 0 2.5" angles="0 0 0" scale="12.5" model="CubicleDivider" material="Mahogany"></object>
+  <object position="1.5 0 2.5" angles="0 0 0" scale="12.5" model="CubicleDivider" material="Mahogany"></object>
+  <object position="3 0 2.5" angles="0 0 0" scale="12.5" model="CubicleDivider" material="Mahogany"></object>
+  <object position="-3 0 -2.5" angles="0 0 0" scale="12.5" model="CubicleDivider" material="Mahogany"></object>
+  <object position="-1.5 0 -2.5" angles="0 0 0" scale="12.5" model="CubicleDivider" material="Mahogany"></object>
+  <object position="-0 0 -2.5" angles="0 0 0" scale="12.5" model="CubicleDivider" material="Mahogany"></object>
+  <object position="1.5 0 -2.5" angles="0 0 0" scale="12.5" model="CubicleDivider" material="Mahogany"></object>
+  <object position="3 0 -2.5" angles="0 0 0" scale="12.5" model="CubicleDivider" material="Mahogany"></object>
+
+  <guard>
+    <waypoint position="-4.5 0 4"></waypoint>
+    <waypoint position="4.5 0 4"></waypoint>
+    <waypoint position="4.5 0 3"></waypoint>
+    <waypoint position="4.5 0 4"></waypoint>
+    <waypoint position="-4.5 0 4"></waypoint>
+    <waypoint position="-4.5 0 3"></waypoint>
+  </guard>
+
+  <guard>
+    <waypoint position="4.5 0 -4"></waypoint>
+    <waypoint position="-4.5 0 -4"></waypoint>
+    <waypoint position="-4.5 0 -3"></waypoint>
+    <waypoint position="-4.5 0 -4"></waypoint>
+    <waypoint position="4.5 0 -4"></waypoint>
+    <waypoint position="4.5 0 -3"></waypoint>
+  </guard>
 </room>

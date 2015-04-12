@@ -12,12 +12,17 @@
 #include "Camera.h"
 #include "Graphics.h"
 #include "Octree.h"
+#include "UI.h"
+#include "Sprite.h"
+#include "UIElement.h"
+#include "Text.h"
 
 using namespace Urho3D;
 
 CameraController::CameraController(Context *context):
 	LogicComponent(context), cameraRoom_(),
-    cameraYaw_(0.0f), targetCameraYaw_(0.0f)
+	cameraYaw_(0.0f), targetCameraYaw_(0.0f),
+	panelYPosition_(50.0f)
 {
 }
 
@@ -32,6 +37,33 @@ void CameraController::DelayedStart()
 {
 	Vector3 position = GetScene()->GetChild("Person", true)->GetPosition();
 	cameraRoom_ = IntVector2((int)round(position.x_ / 11.0f), (int)round(position.z_ / 11.0f));
+	
+	const Variant &roomName = GetScene()->GetChild(ToString("%dx%d", cameraRoom_.x_ + 1, cameraRoom_.y_ + 1))->GetVar("label");
+
+	UI *ui = GetSubsystem<UI>();
+
+	showPanel_ = !roomName.IsEmpty();
+
+	panel_ = ui->GetRoot()->CreateChild<UIElement>();
+	panel_->SetFixedSize(panel_->GetParent()->GetWidth(), 50);
+	panel_->SetVerticalAlignment(VA_BOTTOM);
+	panel_->SetPosition(0, (int)panelYPosition_);
+
+	Sprite *background = panel_->CreateChild<Sprite>();
+	background->SetFixedSize(panel_->GetSize());
+	background->SetColor(Color::BLACK);
+	background->SetOpacity(0.6f);
+
+	label_ = panel_->CreateChild<Text>();
+	label_->SetFixedSize(panel_->GetSize() - IntVector2(20, 20));
+	label_->SetFont("Fonts/Anonymous Pro.ttf", 24);
+	label_->SetColor(Color::WHITE);
+	label_->SetTextAlignment(HA_CENTER);
+	label_->SetAlignment(HA_CENTER, VA_CENTER);
+
+	if (!roomName.IsEmpty()) {
+		label_->SetText(roomName.GetString());
+	}
 }
 
 void CameraController::Update(float timeStep)
@@ -56,6 +88,24 @@ void CameraController::Update(float timeStep)
 	} else if (room.y_ > cameraRoom_.y_) { // Up
 		targetCameraYaw_ = 0.0f;
 	}
+
+	if (room != cameraRoom_) {
+		const Variant &roomName = GetScene()->GetChild(ToString("%dx%d", room.x_ + 1, room.y_ + 1))->GetVar("label");
+
+		showPanel_ = !roomName.IsEmpty();
+
+		if (!roomName.IsEmpty()) {
+			label_->SetText(roomName.GetString());
+		}
+	}
+
+	if (showPanel_ && panelYPosition_ > 0.0f) {
+		panelYPosition_ -= timeStep * 50.0f;
+	} else if (!showPanel_ && panelYPosition_ < 50.0f) {
+		panelYPosition_ += timeStep * 50.0f;
+	}
+
+	panel_->SetPosition(0, (int)panelYPosition_);
 
 	cameraRoom_ = room;
 

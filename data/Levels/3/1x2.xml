@@ -7,6 +7,9 @@
   <object position="-1 0 3.4" angles="0 -90 0" scale="50" model="SofaLength" material="Sofa_3rdFloor"></object>
   <object position="-1 0 -3.4" angles="0 -90 0" scale="50" model="SofaLength" material="Sofa_3rdFloor"></object>
 
+  <!-- Lectern -->
+  <object position="-2.5 0 0" angles ="0 180 0" scale ="12.5" model="Lectern" material="Dark_Oak"></object>
+
   <!-- View screen -->
   <object position="-4.8 0.2 0" angles ="0 90 0" scale ="27" model="GiantScreen" material="Obsidian"></object>
 

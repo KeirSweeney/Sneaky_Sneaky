@@ -1,4 +1,30 @@
 <room>
+  <!--Warehouse Doors-->
+  <object position="-2 0 5" scale="1.25" model="PersonPlane" material="WarehouseDoors"></object>
+  <object position="2 0 5" scale="1.25" model="PersonPlane" material="WarehouseDoors"></object>
 
+  <!-- Brick Stack-->
+  <object position="-2 0 2" scale="30" model="BrickStack" material="BrickStack"></object>
+  <object position="2 0 2" scale="30" model="BrickStack" material="BrickStack"></object>
+  <object position="-2 0 -2" scale="30" model="BrickStack" material="BrickStack"></object>
+  <object position="2 0 -2" scale="30" model="BrickStack" material="BrickStack"></object>
+
+  <!-- Stray Bricks -->
+  <object position="4 0 -2" scale="6" model="Brick" material="Brick" nonsolid="true"></object>
+  <object position="4 0 3" angles="0 20 0" scale="6" model="Brick" material="Brick" nonsolid="true"></object>
+  <object position="-4 0 1" angles="0 -30 0" scale="6" model="Brick" material="Brick" nonsolid="true"></object>
+  <object position="0 0 -2" angles="0 -100 0" scale="6" model="Brick" material="Brick" nonsolid="true"></object>
+
+  <guard>
+    <waypoint position="4.5 0 4.5"></waypoint>
+    <waypoint position="4.5 0 -4.5"></waypoint>
+    <waypoint position="-4.5 0 -4.5"></waypoint>
+    <waypoint position="-4.5 0 4.5"></waypoint>
+  </guard>
+
+  <guard>
+    <waypoint position="0 0 4.5"></waypoint>
+    <waypoint position="0 0 -4.5"></waypoint>
+  </guard>
 
 </room>
