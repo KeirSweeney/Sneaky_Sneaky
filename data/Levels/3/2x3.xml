@@ -1,4 +1,4 @@
-<room  floor="Dark_Oak_light">
+<room  name="Henry Chippingfort's Office" floor="Dark_Oak_light">
   <!--PILLARS-->
   <object position="1.5 0 -4.7" angles="0 0 0" scale="39" model="Pillar" material="FlatGrey" nonsolid="true"></object>
   <object position="-1.5 0 -4.7" angles="0 0 0" scale="39" model="Pillar" material="FlatGrey" nonsolid="true"></object>

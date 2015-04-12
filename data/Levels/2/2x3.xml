@@ -1,4 +1,4 @@
-<room>
+<room name="Stairs to CEO's Office">
 
   <!--SOFAS-->
   <object position="-4.6 0 -3.5" angles="0 90 0" scale="50" model="SofaLength" material="Sofa_2ndFloor"></object>

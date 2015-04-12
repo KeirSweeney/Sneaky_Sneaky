@@ -1,4 +1,4 @@
-<room>
+<room name="Viewing Room">
   <!-- SOFAS -->
   <object position="3 0 3.4" angles="0 -90 0" scale="50" model="SofaLength" material="Sofa_3rdFloor"></object>
   <object position="3 0 -3.4" angles="0 -90 0" scale="50" model="SofaLength" material="Sofa_3rdFloor"></object>

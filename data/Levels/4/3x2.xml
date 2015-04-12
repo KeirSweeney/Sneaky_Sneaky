@@ -1,4 +1,4 @@
-<room>
+<room name="Isolation">
   <!--Sign-->
   <object position="0 1.1 5" angles="0 0 0" scale="1" model="PersonPlane" material="Isolation" nonsolid="true"></object>
 

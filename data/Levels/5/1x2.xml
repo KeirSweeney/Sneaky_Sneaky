@@ -1,4 +1,4 @@
-<room>
+<room name="Sector A">
   <!--LASEREMITTER-->
   <object position ="5 0.4 -3.7" angles="0 -90 0" scale="10" model="LaserEmitter" material="Lamp"></object>
   <object position ="-5 0.4 -3.7" angles="0 90 0" scale="10" model="LaserEmitter" material="Lamp"></object>

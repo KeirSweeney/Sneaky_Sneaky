@@ -1,4 +1,4 @@
-<room>
+<room name="Sector C">
   <!--Sector Sign-->
   <object position="5 1 0" angles="0 90 0" scale="1" model="PersonPlane" material="SectorC" nonsolid="true"></object>
   <object position="-5 1 0" angles="0 -90 0" scale="1" model="PersonPlane" material="SectorC" nonsolid="true"></object>

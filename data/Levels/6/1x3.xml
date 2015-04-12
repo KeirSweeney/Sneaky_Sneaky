@@ -1,4 +1,4 @@
-<room name="CEO Reception">
+<room name="Reception">
   <!-- SOFAS -->
   <object position="4.6 0 2" angles="0 -90 0" scale="50" model="SofaLength" material="Seat_HC"></object>
   <object position="5 -0.01 3.5" angles="0 -90 0" scale="50" model="SofaEnd" material="Seat_HC"></object>

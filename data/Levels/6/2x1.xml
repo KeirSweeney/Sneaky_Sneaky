@@ -1,4 +1,4 @@
-<room>
+<room name="'Conference Room'">
   <!--Panneling-->
   <object position="-5 0 5" angles="0 0 0" scale="1" model="PersonPlane" material="Panneling" nonsolid="true"></object>
   <object position="-4 0 5" angles="0 0 0" scale="1" model="PersonPlane" material="Panneling" nonsolid="true"></object>

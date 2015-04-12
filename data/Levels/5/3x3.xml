@@ -1,4 +1,4 @@
-<room>
+<room name="Sector D">
   <!--KEYCARD-->
   <object position="4.5 0 -4.5" scale="10" model="Punchcard" material="Pickup" interaction="Pickup"></object>
 
