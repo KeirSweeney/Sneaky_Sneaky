@@ -1,4 +1,8 @@
 <room  name="Henry Chippingfort's Office" floor="Dark_Oak_light">
+
+  <!--PADLOCK-->
+  <object position="0 0.5 -5" angles="0 0 0" scale="6.5" model ="Padlock" material="Lamp" interaction="Padlock" displaysize="200 50">Punchcard_2</object>
+
   <!--PILLARS-->
   <object position="1.5 0 -4.7" angles="0 0 0" scale="39" model="Pillar" material="FlatGrey" nonsolid="true"></object>
   <object position="-1.5 0 -4.7" angles="0 0 0" scale="39" model="Pillar" material="FlatGrey" nonsolid="true"></object>

@@ -1,7 +1,7 @@
 <room name="Mr Wright's Old Junk" lights ="false">
 
   <!--KEYCARD-->
-  <object position="-4.5 0 3.0" scale="10" model="Punchcard" material="Pickup" interaction="Pickup"></object>
+  <object position="-4.5 0 3.0" scale="10" model="Punchcard_2" material="Pickup" interaction="Pickup"></object>
 
   <!-- BIN (woooo!) -->
   <object position="2 0.2 0" angles="0 10 90" scale="5" model="Bin" material="CubicleDivider_3rdFloor"></object>

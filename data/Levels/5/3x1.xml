@@ -1,6 +1,6 @@
 <room name="Manager's Office">
   <!--KEYCARD-->
-  <object position="4.5 0 -4.5" scale="10" model="Punchcard" material="Pickup" interaction="Pickup"></object>
+  <object position="4.5 0 -4.5" scale="10" model="Punchcard_2" material="Pickup" interaction="Pickup"></object>
 
   <!-- RUG-->
   <object position="-1 0 -1.5" angles="90 0 0" scale="2.5" model="PersonPlane" material="Rug_HC" nonsolid="true"></object>
