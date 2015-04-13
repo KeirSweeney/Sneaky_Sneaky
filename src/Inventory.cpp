@@ -127,3 +127,7 @@ SharedPtr<Pickup> Inventory::GetThrowableItem()
 
     return returnItem;
 }
+
+const Vector<SharedPtr<Pickup>> &Inventory::GetItems() const {
+    return items_;
+}

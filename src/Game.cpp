@@ -45,6 +45,8 @@
 #include "Thrower.h"
 #include "SecurityCamera.h"
 #include "Laser.h"
+#include "MrWright.h"
+#include "Padlock.h"
 
 #include <ctime>
 #include <cstdio>
@@ -99,6 +101,7 @@ void Game::Start()
 
 	// We need to register our custom component classes before they can be used.
 	InteractableComponent::RegisterObject(context_);
+	InteractablePoster::RegisterObject(context_);
 	CameraController::RegisterObject(context_);
 	Door::RegisterObject(context_);
 	Guard::RegisterObject(context_);
@@ -110,6 +113,8 @@ void Game::Start()
 	Thrower::RegisterObject(context_);
 	SecurityCamera::RegisterObject(context_);
 	Laser::RegisterObject(context_);
+	MrWright::RegisterObject(context_);
+    Padlock::RegisterObject(context_);
 
 	SharedPtr<Viewport> viewport(new Viewport(context_, scene_, NULL));
 
