@@ -1,4 +1,7 @@
 <room name="Conference Room" floor="Mahogany_Light">
+  
+  <!--KEYCARD-->
+  <object position="4.5 0 -4.0" scale="10" model="Punchcard_1" material="Pickup" interaction="Pickup"></object>
 
   <!-- SOFAS -->
   <object position="3.4 0 3" angles="0 180 0" scale="50" model="SofaLength" material="Seat_HC"></object>
@@ -19,9 +22,6 @@
   <object position="4.7 0 4.2" angles="0 90 0" scale="15" model="VendingMachineFront" material="Mahogany"></object>
   <object position="-4.7 0 4.2" angles="0 -90 0" scale="15" model="VendingMachineBody" material="VendingMachineBody"></object>
   <object position="-4.7 0 4.2" angles="0 -90 0" scale="15" model="VendingMachineFront" material="Seat_HC"></object>
-
-  <!--KEYCARD-->
-  <object position="4.5 0 -4.0" scale="10" model="Punchcard" material="Pickup" interaction="Pickup"></object>
 
   <!-- BIN (woooo!) -->
   <object position="2.5 0 -4.8" angles="0 0 0" scale="5" model="Bin" material="Mahogany"></object>

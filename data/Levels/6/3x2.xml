@@ -1,5 +1,8 @@
 <room name="Security">
 
+  <!--PADLOCK-->
+  <object position="0 0.5 5" angles="0 0 0" scale="6.5" model ="Padlock" material="Lamp" interaction="Padlock" displaysize="200 50">Punchcard_1</object>
+
   <!-- Desks-->
   <object position="-3.8 0 -3" angles="0 180 0" scale="20" model="Table" material="Mahogany"></object>
   <object position="-3.9 1 -3" angles="0 180 0" scale="5" model="Terminal" material="Terminal_HC"></object>
@@ -31,6 +34,20 @@
   <object position="3.3 1 1" angles="0 0 0" scale="5" model="LampHC" material="Lamp"></object>
   <object position="3.9 0 1.5" angles="0 0 0" scale="12.5" model ="ChairHC" material="Seat_HC"></object>
 
+  <!-- CABINET -->
+  <object position="-3.1 0 -0.5" angles="0 90 0" scale="25" model="CabinetShut" material="CabinetShut_HC"></object>
+  <object position="-2.4 0 -0.5" angles="0 90 0" scale="25" model="CabinetShut" material="CabinetShut_HC"></object>
+  <object position="-1.7 0 -0.5" angles="0 90 0" scale="25" model="CabinetShut" material="CabinetShut_HC"></object>
+  <object position="-1 0 -0.5" angles="0 90 0" scale="25" model="CabinetShut" material="CabinetShut_HC"></object>
+  <object position="-0.3 0 -0.5" angles="0 90 0" scale="25" model="CabinetMiddle" material="CabinetMiddle_HC"></object>
+  <object position="0.4 0 -0.5" angles="0 90 0" scale="25" model="CabinetBottom" material="CabinetBottom_HC"></object>
+  <object position="-3.1 0 0.5" angles="0 -90 0" scale="25" model="CabinetShut" material="CabinetShut_HC"></object>
+  <object position="-2.4 0 0.5" angles="0 -90 0" scale="25" model="CabinetShut" material="CabinetShut_HC"></object>
+  <object position="-1.7 0 0.5" angles="0 -90 0" scale="25" model="CabinetShut" material="CabinetShut_HC"></object>
+  <object position="-1 0 0.5" angles="0 -90 0" scale="25" model="CabinetTop" material="CabinetTop_HC"></object>
+  <object position="-0.3 0 0.5" angles="0 -90 0" scale="25" model="CabinetShut" material="CabinetShut_HC"></object>
+  <object position="0.4 0 0.5" angles="0 -90 0" scale="25" model="CabinetShut" material="CabinetShut_HC"></object>
+
   <!--Panneling-->
   <object position="-4 0 5" angles="0 0 0" scale="1" model="PersonPlane" material="Panneling" nonsolid="true"></object>
   <object position="-2 0 5" angles="0 0 0" scale="1" model="PersonPlane" material="Panneling" nonsolid="true"></object>
@@ -49,5 +66,12 @@
   <object position="0 0 -5" angles="0 180 0" scale="1" model="PersonPlane" material="Panneling" nonsolid="true"></object>
   <object position="4 0 -5" angles="0 180 0" scale="1" model="PersonPlane" material="Panneling" nonsolid="true"></object>
   <object position="2 0 -5" angles="0 180 0" scale="1" model="PersonPlane" material="Panneling" nonsolid="true"></object>
+
+  <guard>
+    <waypoint position="2 0 2"></waypoint>
+    <waypoint position="2 0 -2"></waypoint>
+    <waypoint position="-4.5 0 -2"></waypoint>
+    <waypoint position="-4.5 0 2"></waypoint>
+  </guard>
 
 </room>
