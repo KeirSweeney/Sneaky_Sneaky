@@ -24,6 +24,7 @@
   <object position="-3 0 -2.7" angles="0 -110 0" scale="12.5" model ="ChairHC" material="Seat_HC"></object>
 
   <!--Panneling-->
+
   <object position="-4 0 5" angles="0 0 0" scale="1" model="PersonPlane" material="Panneling" nonsolid="true"></object>
   <object position="-2 0 5" angles="0 0 0" scale="1" model="PersonPlane" material="Panneling" nonsolid="true"></object>
   <object position="-0 0 5" angles="0 0 0" scale="1" model="PersonPlane" material="Panneling" nonsolid="true"></object>
@@ -44,6 +45,7 @@
 
   <object position="-4 0 -5" angles="0 180 0" scale="1" model="PersonPlane" material="Panneling" nonsolid="true"></object>
   <object position="-2 0 -5" angles="0 180 0" scale="1" model="PersonPlane" material="Panneling" nonsolid="true"></object>
+  <object position="0 0 -5" angles="0 180 0" scale="1.1" model="PersonPlane" material="DoorFrame" nonsolid="true"></object>
   <object position="4 0 -5" angles="0 180 0" scale="1" model="PersonPlane" material="Panneling" nonsolid="true"></object>
   <object position="2 0 -5" angles="0 180 0" scale="1" model="PersonPlane" material="Panneling" nonsolid="true"></object>
 

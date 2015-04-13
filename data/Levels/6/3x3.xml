@@ -1,4 +1,4 @@
-<room name="You saw nothing!">
+<room name="Bertha's Stash">
   <!--Goldstack-->
   <object position="0 0 0" scale="30" model="BrickStack" material="GoldStack"></object>
 
@@ -59,6 +59,7 @@
 
   <object position="-4 0 -5" angles="0 180 0" scale="1" model="PersonPlane" material="Panneling" nonsolid="true"></object>
   <object position="-2 0 -5" angles="0 180 0" scale="1" model="PersonPlane" material="Panneling" nonsolid="true"></object>
+  <object position="0 0 -5" angles="0 180 0" scale="1.1" model="PersonPlane" material="DoorFrame" nonsolid="true"></object>
   <object position="4 0 -5" angles="0 180 0" scale="1" model="PersonPlane" material="Panneling" nonsolid="true"></object>
   <object position="2 0 -5" angles="0 180 0" scale="1" model="PersonPlane" material="Panneling" nonsolid="true"></object>
 

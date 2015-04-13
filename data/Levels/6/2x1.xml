@@ -1,17 +1,53 @@
-<room name="'Conference Room'">
+<room name="Conference Room" floor="Mahogany_Light">
+
+  <!-- SOFAS -->
+  <object position="3.4 0 3" angles="0 180 0" scale="50" model="SofaLength" material="Seat_HC"></object>
+  <object position="3.4 0 1" angles="0 180 0" scale="50" model="SofaLength" material="Seat_HC"></object>
+  <object position="3.4 0 -1" angles="0 180 0" scale="50" model="SofaLength" material="Seat_HC"></object>
+  <object position="-3.4 0 3" angles="0 180 0" scale="50" model="SofaLength" material="Seat_HC"></object>
+  <object position="-3.4 0 1" angles="0 180 0" scale="50" model="SofaLength" material="Seat_HC"></object>
+  <object position="-3.4 0 -1" angles="0 180 0" scale="50" model="SofaLength" material="Seat_HC"></object>
+
+  <!-- Lectern -->
+  <object position="0 0 -2.5" angles ="0 90 0" scale ="12.5" model="Lectern" material="Lamp_Gold"></object>
+
+  <!-- View screen -->
+  <object position="0 0.2 -4.8" angles ="0 0 0" scale ="27" model="GiantScreen" material="Obsidian"></object>
+
+  <!-- Vending Machines -->
+  <object position="4.7 0 4.2" angles="0 90 0" scale="15" model="VendingMachineBody" material="VendingMachineBody"></object>
+  <object position="4.7 0 4.2" angles="0 90 0" scale="15" model="VendingMachineFront" material="Mahogany"></object>
+  <object position="-4.7 0 4.2" angles="0 -90 0" scale="15" model="VendingMachineBody" material="VendingMachineBody"></object>
+  <object position="-4.7 0 4.2" angles="0 -90 0" scale="15" model="VendingMachineFront" material="Seat_HC"></object>
+
+  <!--KEYCARD-->
+  <object position="4.5 0 -4.0" scale="10" model="Punchcard" material="Pickup" interaction="Pickup"></object>
+
+  <!-- BIN (woooo!) -->
+  <object position="2.5 0 -4.8" angles="0 0 0" scale="5" model="Bin" material="Mahogany"></object>
+
   <!--Panneling-->
-  <object position="-5 0 5" angles="0 0 0" scale="1" model="PersonPlane" material="Panneling" nonsolid="true"></object>
   <object position="-4 0 5" angles="0 0 0" scale="1" model="PersonPlane" material="Panneling" nonsolid="true"></object>
   <object position="-2 0 5" angles="0 0 0" scale="1" model="PersonPlane" material="Panneling" nonsolid="true"></object>
-  <object position="5 0 5" angles="0 0 0" scale="1" model="PersonPlane" material="Panneling" nonsolid="true"></object>
+  <object position="0 0 5" angles="0 0 0" scale="1.1" model="PersonPlane" material="DoorFrame" nonsolid="true"></object>
   <object position="4 0 5" angles="0 0 0" scale="1" model="PersonPlane" material="Panneling" nonsolid="true"></object>
   <object position="2 0 5" angles="0 0 0" scale="1" model="PersonPlane" material="Panneling" nonsolid="true"></object>
 
-  <object position="-5 0 -5" angles="0 180 0" scale="1" model="PersonPlane" material="Panneling" nonsolid="true"></object>
+  <object position="-5 0 4" angles="0 -90 0" scale="1" model="PersonPlane" material="Panneling" nonsolid="true"></object>
+  <object position="-5 0 2" angles="0 -90 0" scale="1" model="PersonPlane" material="Panneling" nonsolid="true"></object>
+  <object position="-5 0 0" angles="0 -90 0" scale="1" model="PersonPlane" material="Panneling" nonsolid="true"></object>
+  <object position="-5 0 -2" angles="0 -90 0" scale="1" model="PersonPlane" material="Panneling" nonsolid="true"></object>
+  <object position="-5 0 -4" angles="0 -90 0" scale="1" model="PersonPlane" material="Panneling" nonsolid="true"></object>
+
+  <object position="5 0 4" angles="0 90 0" scale="1" model="PersonPlane" material="Panneling" nonsolid="true"></object>
+  <object position="5 0 2" angles="0 90 0" scale="1" model="PersonPlane" material="Panneling" nonsolid="true"></object>
+  <object position="5 0 0" angles="0 90 0" scale="1" model="PersonPlane" material="Panneling" nonsolid="true"></object>
+  <object position="5 0 -2" angles="0 90 0" scale="1" model="PersonPlane" material="Panneling" nonsolid="true"></object>
+  <object position="5 0 -4" angles="0 90 0" scale="1" model="PersonPlane" material="Panneling" nonsolid="true"></object>
+
   <object position="-4 0 -5" angles="0 180 0" scale="1" model="PersonPlane" material="Panneling" nonsolid="true"></object>
   <object position="-2 0 -5" angles="0 180 0" scale="1" model="PersonPlane" material="Panneling" nonsolid="true"></object>
   <object position="0 0 -5" angles="0 180 0" scale="1" model="PersonPlane" material="Panneling" nonsolid="true"></object>
-  <object position="5 0 -5" angles="0 180 0" scale="1" model="PersonPlane" material="Panneling" nonsolid="true"></object>
   <object position="4 0 -5" angles="0 180 0" scale="1" model="PersonPlane" material="Panneling" nonsolid="true"></object>
   <object position="2 0 -5" angles="0 180 0" scale="1" model="PersonPlane" material="Panneling" nonsolid="true"></object>
 
