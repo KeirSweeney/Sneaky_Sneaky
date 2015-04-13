@@ -13,10 +13,13 @@ public:
 public:
     void DelayedStart();
     void Update(float timeStep);
+	bool SearchForPlayer(Urho3D::Node* personNode);
+	void AlertGuards();
 
 private:
     bool sweepingBack_;
     Urho3D::Quaternion startRotation_;
     float pitch_;
     float yaw_;
+	Urho3D::PODVector<Urho3D::Vector3> path_;
 };
