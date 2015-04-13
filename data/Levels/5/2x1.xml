@@ -1,6 +1,7 @@
 <room name="Refectory">
-  <!--PADLOCK-->
-  <object position="5 0.5 0" angles="0 90 0" scale="6.5" model ="Padlock" material="Lamp" interaction="Padlock" displaysize="200 50">Punchcard_1</object>
+
+  <!--KEYCARD-->
+  <object position="4.5 0 -4.5" scale="10" model="Punchcard_1" material="Pickup" interaction="Pickup"></object>
 
   <!-- Poster -->
   <object position="-2 0.5 5" angles="0 0 0" scale="1" model="PersonPlane" material="BPoster3"></object>
@@ -51,5 +52,13 @@
   <object position="-4.5 0 -3" angles="0 -90 0" scale="15" model="VendingMachineBody" material="VendingMachineBody"></object>
   <object position="-4.5 0 -3" angles="0 -90 0" scale="15" model="VendingMachineFront" material="Seat_HC"></object>
 
+  <guard>
+    <waypoint position="-4.5 0 4.5"></waypoint>
+    <waypoint position="1 0 4.5"></waypoint>
+    <waypoint position="4.5 0 0"></waypoint>
+    <waypoint position="4.5 0 -4.5"></waypoint>
+    <waypoint position="-1 0 -4.5"></waypoint>
+    <waypoint position="-4.5 0 0"></waypoint>
+  </guard>
 
 </room>

@@ -44,4 +44,11 @@
   <object position="4 0 4.5" angles="0 0 0" scale="15" model="VendingMachineBody" material="VendingMachineBody"></object>
   <object position="4 0 4.5" angles="0 0 0" scale="15" model="VendingMachineFront" material="VendingMachineFrontRED"></object>
 
+  <guard>
+    <waypoint position="-4.5 0 4.5"></waypoint>
+    <waypoint position="1 0 4.5"></waypoint>
+    <waypoint position="1 0 0"></waypoint>
+    <waypoint position="-4.5 0 0"></waypoint>
+  </guard>
+
 </room>

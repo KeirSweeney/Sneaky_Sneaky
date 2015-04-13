@@ -1,7 +1,7 @@
 <room name="Sector E">
 
   <!--PADLOCK-->
-  <object position="-5 0.5 0" angles="0 90 0" scale="6.5" model ="Padlock" material="Lamp" interaction="Padlock" displaysize="200 50">Punchcard_2</object>
+  <object position="-5 0.5 0" angles="0 -90 0" scale="6.5" model ="Padlock" material="Lamp" interaction="Padlock" displaysize="200 50">Punchcard_2</object>
 
   <!--Poster-->
   <object position="-4.95 0.5 -2.5" angles="0 -90 0" scale="1" model="PersonPlane" material="BPoster2"></object>

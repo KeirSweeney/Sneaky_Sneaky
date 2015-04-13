@@ -30,9 +30,4 @@
   <object position="0 0 -4.5" angles="0 180 0" scale="6" model="CoolerBase" material="FlatGrey"></object>
   <object position="0 0 -4.5" angles="0 180 0" scale="6" model="CoolerBottle" material="CoolerBottle"></object>
 
-
-  <!--LASEREMITTER-->
-  <object position ="-4 0.4 5" angles="0 180 0" scale="10" model="LaserEmitter" material="FlatGrey"></object>
-  <object position ="-4 0.4 -5" scale="10" model="LaserEmitter" material="FlatGrey"></object>
-
 </room>

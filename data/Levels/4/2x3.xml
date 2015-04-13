@@ -1,7 +1,7 @@
 <room name="Warehouse">
 
   <!--PADLOCK-->
-  <object position="0 0.5 -5" angles="0 0 0" scale="6.5" model ="Padlock" material="Lamp" interaction="Padlock" displaysize="200 50">Punchcard_2</object>
+  <object position="0 0.5 -5" angles="0 180 0" scale="6.5" model ="Padlock" material="Lamp" interaction="Padlock" displaysize="200 50">Punchcard_2</object>
 
   <!--Warehouse Doors-->
   <object position="-2 0 5" scale="1.25" model="PersonPlane" material="WarehouseDoors"></object>

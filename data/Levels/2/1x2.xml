@@ -6,9 +6,8 @@
   <!--POSTER-->
   <object position="-5 0.5 0" angles="0 -90 0" scale="1" model="PersonPlane" material="Poster1"></object>
 
-  <!-- ****BOX COLLIDERS MUST BE REMOVED HERE AND A PAIR IN 1x1*** -->
-  <object position="2.8 0 -5" angles="0 0 0" scale="12.5" model="CubicleDivider" material="CubicleDivider_2ndFloor"></object>
-  <object position="4.3 0 -5" angles="0 0 0" scale="12.5" model="CubicleDivider" material="CubicleDivider_2ndFloor"></object>
+  <object position="2.8 0 -5" angles="0 0 0" scale="12.5" model="CubicleDivider" material="CubicleDivider_2ndFloor" nonsolid="true"></object>
+  <object position="4.3 0 -5" angles="0 0 0" scale="12.5" model="CubicleDivider" material="CubicleDivider_2ndFloor" nonsolid="true"></object>
 
 
   <!-- STANDARD ONE ROOM CUBICALS-->
