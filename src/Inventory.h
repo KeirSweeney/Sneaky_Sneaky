@@ -28,6 +28,8 @@ public:
     void AddItem(Pickup *item);
     int GetItemCount();
     Urho3D::SharedPtr<Pickup> GetThrowableItem();
+    const Urho3D::Vector<Urho3D::SharedPtr<Pickup>> &GetItems() const;
+
 
 private:
     bool dirty_;
