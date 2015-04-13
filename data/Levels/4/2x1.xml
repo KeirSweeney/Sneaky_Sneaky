@@ -1,4 +1,58 @@
 <room>
+  <!--Desk-->
+  <object position="-3.5 0 2" angles="0 90 0" scale="20" model="Table" material="Mahogany"></object>
+  <object position="-3.5 1 1.8" angles="0 95 0" scale="5" model="Terminal" material="Terminal_HC"></object>
+  <object position="-3.5 1 2.5" angles="0 -80 0" scale="5" model="LampHC" material="Lamp"></object>
+  <object position="-4 0 2" angles="0 -93 0" scale="12.5" model ="ChairHC" material="Seat_HC"></object>
 
+  <object position="-3.5 0 -2" angles="0 90 0" scale="20" model="Table" material="Mahogany"></object>
+  <object position="-3.5 1 -2" angles="0 90 0" scale="5" model="Terminal" material="Terminal_HC"></object>
+  <object position="-3.5 1 -1.2" angles="0 -80 0" scale="5" model="LampHC" material="Lamp"></object>
+  <object position="-4 0 -2" angles="0 -90 0" scale="12.5" model ="ChairHC" material="Seat_HC"></object>
+
+  <!--LASEREMITTER-->
+  <object position ="-2 0.4 5" angles="0 180 0" scale="10" model="LaserEmitter" material="Lamp"></object>
+  <object position ="-2 0.4 -5" scale="10" model="LaserEmitter" material="Lamp"></object>
+
+  <!--LASER-->
+  <object position ="-2 0.4 5" angles="90 180 0" scale="0.06 10 0.06" model="Laser" material="Laser" interaction="Laser" interval="1"></object>
+
+  <!--Poster-->
+  <object position="-3 0.5 5" angles="0 0 10" scale="1" model="PersonPlane" material="BPoster2"></object>
+ 
+   <!--WaitingRoom-->
+  <object position="-0.8 0 -4.5" angles="0 180 0" scale="12.5" model="ChairHC" material="Mahogany"></object>
+  <object position="0 0 -4.5" angles="0 180 0" scale="12.5" model="ChairHC" material="Mahogany"></object>
+  <object position="0.8 0 -4.5" angles="0 180 0" scale="12.5" model="ChairHC" material="Mahogany"></object>
+  <object position="1.6 0 -4.5" angles="0 180 0" scale="12.5" model="ChairHC" material="Mahogany"></object>
+  <object position="2.4 0 -4.5" angles="0 180 0" scale="12.5" model="ChairHC" material="Mahogany"></object>
+  <object position="-0.8 0 -0.5" angles="0 0 0" scale="12.5" model="ChairHC" material="Mahogany"></object>
+  <object position="0 0 -0.5" angles="0 0 0" scale="12.5" model="ChairHC" material="Mahogany"></object>
+  <object position="0.8 0 -0.5" angles="0 0 0" scale="12.5" model="ChairHC" material="Mahogany"></object>
+  <object position="1.6 0 -0.5" angles="0 0 0" scale="12.5" model="ChairHC" material="Mahogany"></object>
+  <object position="2.4 0 -0.5" angles="0 0 0" scale="12.5" model="ChairHC" material="Mahogany"></object>
+  <object position="-0.8 0 0.5" angles="0 180 0" scale="12.5" model="ChairHC" material="Mahogany"></object>
+  <object position="0 0 0.5" angles="0 180 0" scale="12.5" model="ChairHC" material="Mahogany"></object>
+  <object position="0.8 0 0.5" angles="0 180 0" scale="12.5" model="ChairHC" material="Mahogany"></object>
+  <object position="1.6 0 0.5" angles="0 180 0" scale="12.5" model="ChairHC" material="Mahogany"></object>
+  <object position="2.4 0 0.5" angles="0 180 0" scale="12.5" model="ChairHC" material="Mahogany"></object>
+  <object position="-0.8 0 4.5" angles="0 0 0" scale="12.5" model="ChairHC" material="Mahogany"></object>
+  <object position="0 0 4.5" angles="0 0 0" scale="12.5" model="ChairHC" material="Mahogany"></object>
+  <object position="0.8 0 4.5" angles="0 0 0" scale="12.5" model="ChairHC" material="Mahogany"></object>
+  <object position="1.6 0 4.5" angles="0 0 0" scale="12.5" model="ChairHC" material="Mahogany"></object>
+  <object position="2.4 0 4.5" angles="0 0 0" scale="12.5" model="ChairHC" material="Mahogany"></object>
+
+  <guard>
+    <waypoint position="-1 0 2.5"></waypoint>
+    <waypoint position="-3 0 4"></waypoint>
+    <waypoint position="-5 0 4"></waypoint>
+    <waypoint position="-5 0 -4"></waypoint>
+    <waypoint position="-3 0 -4"></waypoint>
+    <waypoint position="-1 0 -2.5"></waypoint>
+    <waypoint position="-3 0 -4"></waypoint>
+    <waypoint position="-5 0 -4"></waypoint>
+    <waypoint position="-5 0 4"></waypoint>
+    <waypoint position="-3 0 4"></waypoint>
+  </guard>
 
 </room>

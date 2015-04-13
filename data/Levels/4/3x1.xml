@@ -1,4 +1,24 @@
 <room>
+  <!--LASEREMITTER-->
+  <object position ="-4 0.4 5" angles="0 180 0" scale="10" model="LaserEmitter" material="Lamp"></object>
+  <object position ="-4 0.4 -5" scale="10" model="LaserEmitter" material="Lamp"></object>
 
+  <!--LASER-->
+  <object position ="-4 0.4 5" angles="90 180 0" scale="0.06 10 0.06" model="Laser" material="Laser" interaction="Laser" interval="2"></object>
+
+  <!--Bricks-->
+  <object position="-3.8 0 4.5" angles="0 0 0" scale="10" model="BrickPile" material="Brick"></object>
+  <object position="-3.5 0 4" angles="0 120 0" scale="10" model="BrickPile" material="Brick"></object>
+  <object position="4 0 -3" angles="0 20 0" scale="10" model="BrickPile" material="Brick"></object>
+  <object position="2 0 -2" angles="0 20 0" scale="6" model="Brick" material="Brick"></object>
+  <object position="1 0 2" angles="0 60 0" scale="6" model="Brick" material="Brick"></object>
+
+  <!--POSTER-->
+  <object position="-2 0.5 5" angles="0 0 10" scale="1" model="PersonPlane" material="BPoster3"></object>
+  <object position="-1 0.5 4.99" angles="0 0 0" scale="1" model="PersonPlane" material="BPoster3"></object>
+  <object position="-0.1 0.4 4.9" angles="0 0 0" scale="1" model="PersonPlane" material="BPoster3"></object>
+ 
+  <object position="-5 0.5 -2.5" angles="-3 -90 0" scale="1" model="PersonPlane" material="BPoster1"></object>
+  <object position="-2.7 0 -3.5" angles="90 -20 90" scale="1" model="PersonPlane" material="BPoster1"></object>
 
 </room>
