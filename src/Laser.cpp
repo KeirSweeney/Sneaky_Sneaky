@@ -99,7 +99,7 @@ void Laser::DelayedStart()
 void Laser::HandleNodeCollision(StringHash eventType, VariantMap &eventData)
 {
     StaticModel *laserModel = node_->GetComponent<StaticModel>();
-
+    //work on de-activiating lasers with terminals. Terminal class, create new components, instead of message state, do laser state, if it is a laser, then find all the lasers in the room node and disable the lasers
     if(!laserModel->IsEnabled()) {
         return;
     }
