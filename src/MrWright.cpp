@@ -95,17 +95,15 @@ void MrWright::Update(float timeStep)
 
 			for (PODVector<Node *>::ConstIterator i = posterNodes.Begin(); i != posterNodes.End(); ++i) {
 
-				Node *thisPosterNodes = *i;
-				// at this point, were checing for the first terminal[5] and going through each poster to see if the diff is less than 0.5
+                Node *thisPosterNodes = *i;
 				Vector3 thisTerminalPos = terminalNodes[x]->GetWorldPosition();
 				Vector3 thisPosterPos = thisPosterNodes->GetWorldPosition();
 				Vector3 diff = thisPosterPos - thisTerminalPos;
 				float calc = abs(diff.LengthSquared());
 				LOGERRORF("diff %f", calc);
 
-				if (abs(diff.LengthSquared()) > 1.0f * 1.0f) {
+                if (calc > 1.0f * 1.0f) {
 					LOGERROR("Not Closest terminal");
-					//break;// its not the closest 
 				}
 				else {
 					StaticModel *c = thisPosterNodes->GetComponent<StaticModel>();
@@ -115,7 +113,6 @@ void MrWright::Update(float timeStep)
 					if (x < 0) {
 						goto LABEL;
 					}
-					//thisPosterNodes->Remove();
 					//do what we need with it then break out
 				}
 				LOGERRORF("x: %d", x);
@@ -126,6 +123,3 @@ void MrWright::Update(float timeStep)
 LABEL:;
 
 	}
-
-
-
