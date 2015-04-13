@@ -1,8 +1,12 @@
 <!-- The floor and lights keys can also be specified per room, remember that lighting currently bleeds through walls so this isn't particularly useful at the moment. As with the level ones, the keys should only be specified if different from what the level specifies (or the default if the level doesn't) -->
 <!--<room floor="Dark_Oak" lights="true"> -->
-<room name="The Foyer">
+<room name="Wright's Ltd Foyer">
+  
+  <!--PADLOCK-->
+  <object position="5 0.5 0" angles="0 90 0" scale="6.5" model ="Padlock" material="Lamp" interaction="Padlock" displaysize="200 50">Punchcard_1</object>
+
   <!--KEYCARD-->
-  <object position="-0.8 0 4.5" scale="10" model="Punchcard" material="Pickup" interaction="Pickup"></object>
+  <object position="-0.8 0 4.5" scale="10" model="Punchcard_1" material="Pickup" interaction="Pickup"></object>
 
   <!-- COFFEE TABLE -->
   <object position="2 0 2.7" angles="0 0 0" scale="25" model="CoffeeTableGlass" material="CoffeeTableGlass"></object>

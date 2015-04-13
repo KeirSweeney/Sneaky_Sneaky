@@ -1,4 +1,4 @@
-<room>
+<room name="Conference Room">
 
   <!--MEETING TABLE-->
   <object position="0 -0.4 -0.5" angles="0 90 0" scale="60" model="CoffeeTableGlass" material="Obsidian"></object>

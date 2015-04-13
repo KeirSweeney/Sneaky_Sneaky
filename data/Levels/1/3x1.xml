@@ -1,4 +1,4 @@
-<room>
+<room name="Human Resources">
 
   <!--POSTER-->
   <object position="-3 0.5 5" scale="1" model="PersonPlane" material="Poster3"></object>

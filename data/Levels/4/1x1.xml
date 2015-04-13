@@ -1,6 +1,6 @@
-<room>
+<room name="The 'Front Line'">
   <!--KEYCARD-->
-  <object position="-4.5 0 -4" scale="10" model="Punchcard" material="Pickup" interaction="Pickup"></object>
+  <object position="-4.5 0 -4" scale="10" model="Punchcard_1" material="Pickup" interaction="Pickup"></object>
 
   <object position="-3.8 0 4.5" angles="0 75 0" scale="10" model="BrickPile" material="Brick"></object>
   <object position="-4.5 0 4" angles="0 75 0" scale="6.5" model="Brick" material="Brick"></object>

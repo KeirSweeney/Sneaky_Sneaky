@@ -1,4 +1,4 @@
-<room>
+<room name="Waiting Room">
   <!--POSTER-->
   <object position="-5 0.5 0" angles="0 -90 0" scale="1" model="PersonPlane" material="Poster4"></object>
 

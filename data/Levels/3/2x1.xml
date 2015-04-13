@@ -1,4 +1,4 @@
-<room>
+<room name="Security">
   <!-- Wright's Junk Sign-->
   <object position="-5.0 0.3 -1.0" angles="0 -90 0" scale="0.5" model="PersonPlane" material="Wrights_Junk" nonsolid="true"></object>
 

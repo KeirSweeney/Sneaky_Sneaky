@@ -1,4 +1,8 @@
-<room>
+<room name="Viewing Room">
+
+  <!--KEYCARD-->
+  <object position="4.5 0 -4.0" scale="10" model="Punchcard_1" material="Pickup" interaction="Pickup"></object>
+
   <!-- SOFAS -->
   <object position="3 0 3.4" angles="0 -90 0" scale="50" model="SofaLength" material="Sofa_3rdFloor"></object>
   <object position="3 0 -3.4" angles="0 -90 0" scale="50" model="SofaLength" material="Sofa_3rdFloor"></object>
@@ -22,9 +26,6 @@
   <!--Pillars-->
   <object position="4.7 0 1.5" angles="0 0 0" scale="39" model="Pillar" material="FlatGrey" nonsolid="true"></object>
   <object position="4.7 0 -1.5" angles="0 0 0" scale="39" model="Pillar" material="FlatGrey" nonsolid="true"></object>
-
-  <!--KEYCARD-->
-  <object position="4.5 0 -4.0" scale="10" model="Punchcard" material="Pickup" interaction="Pickup"></object>
 
   <!-- BIN (woooo!) -->
   <object position="-4.8 0 2.5" angles="0 0 0" scale="5" model="Bin" material="CubicleDivider_3rdFloor"></object>

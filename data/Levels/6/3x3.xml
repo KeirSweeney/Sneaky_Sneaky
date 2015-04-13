@@ -1,4 +1,66 @@
-<room>
+<room name="Bertha's Stash">
+  <!--Goldstack-->
+  <object position="0 0 0" scale="30" model="BrickStack" material="GoldStack"></object>
 
+  <!--KEYCARD-->
+  <object position="-4.5 0 1" scale="10" model="Punchcard" material="Pickup" interaction="Pickup"></object>
+
+  <!-- Camera -->
+  <object position="0 3 -4.5" angles="0 0 0" scale="10" model="CameraBase" material="DefaultGrey"></object>
+  <object position="0 3 -4.5" angles="0 0 0" scale="10" model="Camera" material="DefaultGrey" interaction="SecurityCamera"></object>
+  <object position="0 3 4.5" angles="0 180 0" scale="10" model="CameraBase" material="DefaultGrey"></object>
+  <object position="0 3 4.5" angles="0 180 0" scale="10" model="Camera" material="DefaultGrey" interaction="SecurityCamera"></object>
+
+  <!--LASEREMITTER-->
+  <object position ="-3 0.4 5" angles="0 180 0" scale="10" model="LaserEmitter" material="Lamp"></object>
+  <object position ="-3 0.4 -5" angles="0 0 0" scale="10" model="LaserEmitter" material="Lamp"></object>
+  <object position ="3 0.4 5" angles="0 180 0" scale="10" model="LaserEmitter" material="Lamp"></object>
+  <object position ="3 0.4 -5" angles="0 0 0" scale="10" model="LaserEmitter" material="Lamp"></object>
+
+  <!--LASER-->
+  <object position ="-3 0.4 -5" angles="90 0 0" scale="0.06 10 0.06" model="Laser" material="Laser" interaction="Laser" interval="2"></object>
+  <object position ="3 0.4 -5" angles="90 0 0" scale="0.06 10 0.06" model="Laser" material="Laser" interaction="Laser" interval="2"></object>
+
+  <object position="-4 0 0" angles="0 0 0" scale="12.5" model="CubicleDivider" material="Mahogany"></object>
+  <object position="4 0 0" angles="0 0 0" scale="12.5" model="CubicleDivider" material="Mahogany"></object>
+
+  <guard>
+    <waypoint position="-2.5 0 -3"></waypoint>
+    <waypoint position="-2.5 0 3"></waypoint>
+    <waypoint position="2.5 0 3"></waypoint>
+    <waypoint position="2.5 0 -3"></waypoint>
+  </guard>
+
+  <guard>
+    <waypoint position="2.5 0 3"></waypoint>
+    <waypoint position="2.5 0 -3"></waypoint>
+    <waypoint position="-2.5 0 -3"></waypoint>
+    <waypoint position="-2.5 0 3"></waypoint>
+  </guard>
+
+  <!--Panneling-->
+  <object position="-4 0 5" angles="0 0 0" scale="1" model="PersonPlane" material="Panneling" nonsolid="true"></object>
+  <object position="-2 0 5" angles="0 0 0" scale="1" model="PersonPlane" material="Panneling" nonsolid="true"></object>
+  <object position="-0 0 5" angles="0 0 0" scale="1" model="PersonPlane" material="Panneling" nonsolid="true"></object>
+  <object position="4 0 5" angles="0 0 0" scale="1" model="PersonPlane" material="Panneling" nonsolid="true"></object>
+  <object position="2 0 5" angles="0 0 0" scale="1" model="PersonPlane" material="Panneling" nonsolid="true"></object>
+
+  <object position="-5 0 4" angles="0 -90 0" scale="1" model="PersonPlane" material="Panneling" nonsolid="true"></object>
+  <object position="-5 0 2" angles="0 -90 0" scale="1" model="PersonPlane" material="Panneling" nonsolid="true"></object>
+  <object position="-5 0 0" angles="0 -90 0" scale="1" model="PersonPlane" material="Panneling" nonsolid="true"></object>
+  <object position="-5 0 -2" angles="0 -90 0" scale="1" model="PersonPlane" material="Panneling" nonsolid="true"></object>
+  <object position="-5 0 -4" angles="0 -90 0" scale="1" model="PersonPlane" material="Panneling" nonsolid="true"></object>
+
+  <object position="5 0 4" angles="0 90 0" scale="1" model="PersonPlane" material="Panneling" nonsolid="true"></object>
+  <object position="5 0 2" angles="0 90 0" scale="1" model="PersonPlane" material="Panneling" nonsolid="true"></object>
+  <object position="5 0 0" angles="0 90 0" scale="1" model="PersonPlane" material="Panneling" nonsolid="true"></object>
+  <object position="5 0 -2" angles="0 90 0" scale="1" model="PersonPlane" material="Panneling" nonsolid="true"></object>
+  <object position="5 0 -4" angles="0 90 0" scale="1" model="PersonPlane" material="Panneling" nonsolid="true"></object>
+
+  <object position="-4 0 -5" angles="0 180 0" scale="1" model="PersonPlane" material="Panneling" nonsolid="true"></object>
+  <object position="-2 0 -5" angles="0 180 0" scale="1" model="PersonPlane" material="Panneling" nonsolid="true"></object>
+  <object position="0 0 -5" angles="0 180 0" scale="1.1" model="PersonPlane" material="DoorFrame" nonsolid="true"></object>
+  <object position="4 0 -5" angles="0 180 0" scale="1" model="PersonPlane" material="Panneling" nonsolid="true"></object>
+  <object position="2 0 -5" angles="0 180 0" scale="1" model="PersonPlane" material="Panneling" nonsolid="true"></object>
 
 </room>

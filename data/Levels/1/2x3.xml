@@ -1,4 +1,7 @@
-<room>
+<room name="Refectory - Staff">
+  <!--PADLOCK-->
+  <object position="5 0.5 0" angles="0 90 0" scale="6.5" model ="Padlock" material="Lamp" interaction="Padlock" displaysize="200 50">Punchcard_2</object>
+
   <!-- CAMERA -->
   <object position="4.5 3 0" angles="0 -90 0" scale="10" model="CameraBase" material="DefaultGrey"></object>
   <object position="4.5 3 0" angles="0 -90 0" scale="10" model="Camera" material="DefaultGrey" interaction="SecurityCamera"></object>

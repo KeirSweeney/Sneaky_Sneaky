@@ -1,4 +1,4 @@
-<room>
+<room name="Hard Corp Entrance">
   <!--LASEREMITTER-->
   <object position ="-4 0.4 5" angles="0 180 0" scale="10" model="LaserEmitter" material="Lamp"></object>
   <object position ="-4 0.4 -5" scale="10" model="LaserEmitter" material="Lamp"></object>

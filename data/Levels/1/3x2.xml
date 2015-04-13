@@ -1,4 +1,4 @@
-<room>
+<room name="Human Resources">
 
   <!-- BIN (woooo!) -->
   <object position="4.5 0 2.5" angles="0 0 0" scale="5" model="Bin" material="CubicleDivider"></object>

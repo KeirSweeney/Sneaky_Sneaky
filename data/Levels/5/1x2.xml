@@ -1,4 +1,8 @@
-<room>
+<room name="Sector A">
+
+  <!--PADLOCK-->
+  <object position="0 0.5 5" angles="0 0 0" scale="6.5" model ="Padlock" material="Lamp" interaction="Padlock" displaysize="200 50">Punchcard_2</object>
+
   <!--LASEREMITTER-->
   <object position ="5 0.4 -3.7" angles="0 -90 0" scale="10" model="LaserEmitter" material="Lamp"></object>
   <object position ="-5 0.4 -3.7" angles="0 90 0" scale="10" model="LaserEmitter" material="Lamp"></object>

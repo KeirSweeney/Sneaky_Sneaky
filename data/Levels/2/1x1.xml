@@ -3,7 +3,7 @@
   <object position="-5 0.5 2" angles="0 -90 0" scale="1" model="PersonPlane" material="Poster3"></object>
 
   <!--KEYCARD-->
-  <object position="2.3 0 5.5" scale="10" model="Punchcard" material="Pickup" interaction="Pickup"></object>
+  <object position="2.3 0 5.5" scale="10" model="Punchcard_1" material="Pickup" interaction="Pickup"></object>
 
   <!-- ****BOX COLLIDERS MUST BE REMOVED HERE AND A PAIR IN 1x2*** -->
   <object position="2.8 0 5" angles="0 0 0" scale="12.5" model="CubicleDivider" material="CubicleDivider_2ndFloor"></object>

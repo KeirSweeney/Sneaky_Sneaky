@@ -1,4 +1,4 @@
-<room>
+<room name="Reception">
   <!--Desk-->
   <object position="-3.5 0 2" angles="0 90 0" scale="20" model="Table" material="Mahogany"></object>
   <object position="-3.5 1 1.8" angles="0 95 0" scale="5" model="Terminal" material="Terminal_HC"></object>
