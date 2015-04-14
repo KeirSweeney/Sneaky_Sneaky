@@ -21,7 +21,7 @@
 #include "Model.h"
 #include "Material.h"
 #include "Input.h"
-#include "Terminal.h"
+#include "MrWrightTerminal.h"
 
 
 using namespace Urho3D;
@@ -95,7 +95,7 @@ void MrWright::Update(float timeStep)
 	PODVector<Node *> terminalNodes;
 
 	roomNode->GetChildrenWithComponent<InteractablePoster>(posterNodes, true);
-	roomNode->GetChildrenWithComponent<Terminal>(terminalNodes, true);
+	roomNode->GetChildrenWithComponent<MrWrightTerminal>(terminalNodes, true);
 
 	if (posterNodes.Empty()) {
 		LOGERROR("Poster nodes are empty");
@@ -141,7 +141,11 @@ void MrWright::Update(float timeStep)
 				else {
 					StaticModel *c = thisPosterNodes->GetComponent<StaticModel>();
 					LOGERROR("Found terminal");
-					String str = c->GetMaterial()->GetName(); //this is the current material above the closest terminal?
+					String str = c->GetMaterial()->GetName();
+
+					MrWrightTerminal *thisTerm = terminalNodes[x]->GetComponent<MrWrightTerminal>();
+					thisTerm->SetContent(str);
+					//this is the current material above the closest terminal?
 					LOGERRORF("MAterial NAme %s", str.CString()); // store a vector of 3 materials in an order, then if the terminals material matches the first one in the vector, remove that one from the vector
 					x--;
 					if (x < 0) {

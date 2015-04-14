@@ -24,7 +24,7 @@ const float MrWrightTerminal::VIEW_ANGLE = 90.0f;
 
 MrWrightTerminal::MrWrightTerminal(Context *context):
     InteractableComponent(context),
-    displayWidth_(200), displayHeight_(100), content_("Lemons.")
+    displayWidth_(200), displayHeight_(100), content_("")
 {
 }
 
@@ -43,10 +43,16 @@ void MrWrightTerminal::LoadFromXML(const XMLElement &xml)
         displayHeight_ = displaySize.y_;
     }
 
-    const String content = xml.GetValue();
-    if (!content.Empty()) {
-        content_ = content;
-    }
+    //const String content = xml.GetValue();
+    //if (!content.Empty()) {
+    //    content_ = content;
+    //}
+}
+
+void MrWrightTerminal::SetContent(String str)
+{
+	LOGERROR("SET TEXT");
+	content_ = str.CString();
 }
 
 void MrWrightTerminal::DelayedStart()
@@ -62,17 +68,19 @@ void MrWrightTerminal::DelayedStart()
     background->SetColor(Color::BLACK);
     background->SetOpacity(0.6f);
 
-    Text *label = panel_->CreateChild<Text>();
-    label->SetFixedSize(panel_->GetSize() - IntVector2(20, 20));
-    label->SetFont("Fonts/Anonymous Pro.ttf");
-    label->SetColor(Color::WHITE);
-    label->SetWordwrap(true);
-    label->SetText(content_);
-    label->SetAlignment(HA_CENTER, VA_CENTER);
+	label_ = panel_->CreateChild<Text>();
+	label_->SetFixedSize(panel_->GetSize() - IntVector2(20, 20));
+	label_->SetFont("Fonts/Anonymous Pro.ttf");
+	label_->SetColor(Color::WHITE);
+	label_->SetWordwrap(true);
+	label_->SetText(content_);
+	label_->SetAlignment(HA_CENTER, VA_CENTER);
 }
 
 void MrWrightTerminal::Update(float timeStep)
 {
+	label_->SetText(content_);
+
     Vector3 position = node_->GetWorldPosition();
 
     if (!CanPlayerInteract()) {

@@ -4,6 +4,7 @@
 
 namespace Urho3D {
     class UIElement;
+	class Text;
 }
 
 class MrWrightTerminal: public InteractableComponent
@@ -19,6 +20,7 @@ public:
     static void RegisterObject(Urho3D::Context *context);
 
     void LoadFromXML(const Urho3D::XMLElement &xml);
+	void SetContent(Urho3D::String str);
     
 public:
     void DelayedStart();
@@ -32,4 +34,5 @@ private:
     int displayHeight_;
     Urho3D::String content_;
     Urho3D::UIElement *panel_;
+	Urho3D::Text *label_;
 };
