@@ -47,6 +47,7 @@
 #include "Laser.h"
 #include "MrWright.h"
 #include "Padlock.h"
+#include "MrWrightTerminal.h"
 
 #include <ctime>
 #include <cstdio>
@@ -115,6 +116,7 @@ void Game::Start()
 	Laser::RegisterObject(context_);
 	MrWright::RegisterObject(context_);
     Padlock::RegisterObject(context_);
+	MrWrightTerminal::RegisterObject(context_);
 
 	SharedPtr<Viewport> viewport(new Viewport(context_, scene_, NULL));
 

@@ -134,7 +134,6 @@ void MrWright::Update(float timeStep)
 				Vector3 thisPosterPos = thisPosterNodes->GetWorldPosition();
 				Vector3 diff = thisPosterPos - thisTerminalPos;
 				float calc = abs(diff.LengthSquared());
-				LOGERRORF("diff %f", calc);
 
                 if (calc > 1.0f * 1.0f) {
 					LOGERROR("Not Closest terminal");
