@@ -17,12 +17,6 @@
   <!--LASER-->
   <object position ="4.5 0.4 -5" angles="90 0 0" scale="0.06 10 0.06" model="Laser" material="Laser" interaction="Laser" interval="2"></object>
 
-  <!-- Camera -->
-  <object position="0 3 -4.5" angles="0 0 0" scale="10" model="CameraBase" material="DefaultGrey"></object>
-  <object position="0 3 -4.5" angles="0 0 0" scale="10" model="Camera" material="DefaultGrey" interaction="SecurityCamera"></object>
-  <object position="0 3 4.5" angles="0 180 0" scale="10" model="CameraBase" material="DefaultGrey"></object>
-  <object position="0 3 4.5" angles="0 180 0" scale="10" model="Camera" material="DefaultGrey" interaction="SecurityCamera"></object>
-
   <!--Sofa-->
   <object position="-2.5 0 -4.5" angles="0 0 0" scale="50" model="SofaLength" material="Seat_HC"></object>
   <object position="2.5 0 -4.5" angles="0 0 0" scale="50" model="SofaLength" material="Seat_HC"></object>

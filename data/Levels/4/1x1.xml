@@ -7,10 +7,6 @@
 
   <object position="-4.6 0 4.6" scale="5" model="bin" material="Seat_HC"></object>
   
-  <!-- CAMERA -->
-  <object position="0 3 4.5" angles="0 180 0" scale="10" model="CameraBase" material="DefaultGrey"></object>
-  <object position="0 3 4.5" angles="0 180 0" scale="10" model="Camera" material="DefaultGrey" interaction="SecurityCamera"></object>
-
   <!-- Cabinets -->
   <object position="4.2 0 4.5" angles="0 90 0" scale="25" model="CabinetShut" material="CabinetShut_HC"></object>
   <object position="3.4 0 4.5" angles="0 90 0" scale="25" model="CabinetTop" material="CabinetTop_HC"></object>

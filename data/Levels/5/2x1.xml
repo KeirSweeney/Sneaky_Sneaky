@@ -33,12 +33,6 @@
   <object position="1.9 0 -2.8" angles="0 0 0" scale="25" model="CoffeeTableGlass" material="Seat_HC"></object>
   <object position="1.9 0 -2.8" angles="0 0 0" scale="25" model="CoffeeTableLegs" material="Mahogany"></object>
 
-  <!-- CAMERA -->
-  <object position="-4.5 3 0" angles="0 90 0" scale="10" model="CameraBase" material="DefaultGrey"></object>
-  <object position="-4.5 3 0" angles="0 90 0" scale="10" model="Camera" material="DefaultGrey" interaction="SecurityCamera"></object>
-  <object position="4.5 3 0" angles="0 -90 0" scale="10" model="CameraBase" material="DefaultGrey"></object>
-  <object position="4.5 3 0" angles="0 -90 0" scale="10" model="Camera" material="DefaultGrey" interaction="SecurityCamera"></object>
-
   <object position="-4.6 0 -4.6" scale="5" model="bin" material="Seat_HC"></object>
   <object position="3 0 4.8" angles="0 0 0" scale="6" model="CoolerBase" material="FlatGrey"></object>
   <object position="3 0 4.8" angles="0 0 0" scale="6" model="CoolerBottle" material="CoolerBottle"></object>

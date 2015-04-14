@@ -21,10 +21,6 @@
 
   <object position ="-5 0.4 4" angles="90 90 0" scale="0.06 10 0.06" model="Laser" material="Laser" interaction="Laser" interval="1"></object>
 
-  <!-- Camera -->
-  <object position="0 3 -4.5" angles="0 0 0" scale="10" model="CameraBase" material="DefaultGrey"></object>
-  <object position="0 3 -4.5" angles="0 0 0" scale="10" model="Camera" material="DefaultGrey" interaction="SecurityCamera"></object>
-
   <!--Poster-->
   <object position="-2.5 0.5 5" angles="0 0 0" scale="1" model="PersonPlane" material="BPoster4"></object>
   <object position="-3.5 0.5 5" angles="0 0 -5" scale="1" model="PersonPlane" material="BPoster4"></object>

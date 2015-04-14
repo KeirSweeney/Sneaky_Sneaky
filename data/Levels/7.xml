@@ -1,0 +1,2 @@
+<!-- The floor and walls materials and whether to place lights can be controlled by these keys. They should only be added if deviating from the default (if this XML file doesn't exist at all the defaults will also be used). You can also override the floor and lights keys for individual rooms. -->
+<level walls="Black_DI" doors="Black_DI"></level>
