@@ -4,6 +4,7 @@
 
 namespace Urho3D {
     class StaticModel;
+	class Material;
 }
 
 class MrWright : public InteractablePoster
@@ -21,6 +22,7 @@ public:
 	void Start();
     void DelayedStart();
     void Update(float timeStep);
+	void LoadMaterials();
 
 
 
@@ -28,5 +30,5 @@ private:
     Urho3D::String content_;
 	Urho3D::SharedPtr<Urho3D::StaticModel> glyphs_[6];
 	float swapTimer_;
-
+	Urho3D::Vector<Urho3D::PODVector<Urho3D::Material *>> sequences_;
 };

@@ -40,7 +40,41 @@ void MrWright::RegisterObject(Context* context)
 }
 
 
-void MrWright::Start(){}
+void MrWright::Start()
+{
+	LoadMaterials();
+}
+
+void MrWright::LoadMaterials()
+{
+	int glyphCount = 3;
+	int sequenceCount = 3;
+
+	Node *roomNode = node_->GetParent();
+
+	PODVector<Node *> posterNodes;
+	roomNode->GetChildrenWithComponent<InteractablePoster>(posterNodes, true);
+
+	PODVector<Material *> glyphs;
+	for (PODVector<Node *>::ConstIterator i = posterNodes.Begin(); i != posterNodes.End(); ++i) {
+		StaticModel *poster = (*i)->GetComponent<StaticModel>();
+		glyphs.Push(poster->GetMaterial());
+	}
+
+	for (int i = 0; i < sequenceCount; ++i) {
+		PODVector<Material *> glyphPool = glyphs;
+		PODVector<Material *> sequence;
+
+		for (int j = 0; j < glyphCount; ++j) {
+			int k = Random((int)glyphPool.Size());
+			sequence.Push(glyphPool[k]);
+			glyphPool.Erase(k);
+		}
+
+		sequences_.Push(sequence);
+		glyphCount++;
+	}
+}
 
 void MrWright::DelayedStart(){}
 
@@ -72,7 +106,7 @@ void MrWright::Update(float timeStep)
 	}
 	
 	ResourceCache *cache = GetSubsystem<ResourceCache>();
-
+	
 	int m = posterNodes.Size();
 	while (m > 0) {
 		int n = Random(0, m--);
@@ -108,7 +142,8 @@ void MrWright::Update(float timeStep)
 				else {
 					StaticModel *c = thisPosterNodes->GetComponent<StaticModel>();
 					LOGERROR("Found terminal");
-					c->GetMaterial(); //this is the current material above the closest terminal?
+					String str = c->GetMaterial()->GetName(); //this is the current material above the closest terminal?
+					LOGERRORF("MAterial NAme %s", str.CString()); // store a vector of 3 materials in an order, then if the terminals material matches the first one in the vector, remove that one from the vector
 					x--;
 					if (x < 0) {
 						goto LABEL;
