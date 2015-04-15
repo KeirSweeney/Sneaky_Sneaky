@@ -2,6 +2,11 @@
 
 #include "InteractableComponent.h"
 
+
+namespace Urho3D {
+	class RigidBody;
+	class Light;
+}
 class SecurityCamera: public InteractableComponent
 {
     OBJECT(SecurityCamera)
@@ -22,4 +27,6 @@ private:
     float pitch_;
     float yaw_;
 	Urho3D::PODVector<Urho3D::Vector3> path_;
+	Urho3D::RigidBody *rigidBody_;
+	Urho3D::Light *light_;
 };

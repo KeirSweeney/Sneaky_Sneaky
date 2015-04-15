@@ -9,6 +9,7 @@
 #include "Frustum.h"
 #include "Guard.h"
 #include "Light.h"
+#include "RigidBody.h"
 #include "NavigationMesh.h"
 
 
@@ -17,7 +18,7 @@ using namespace Urho3D;
 SecurityCamera::SecurityCamera(Context *context) :
     InteractableComponent(context),
     sweepingBack_(false),
-    pitch_(-30.0f), yaw_(0.0f)
+    pitch_(-55.0f), yaw_(0.0f)
 {
 }
 
@@ -30,6 +31,9 @@ void SecurityCamera::RegisterObject(Context* context)
 void SecurityCamera::DelayedStart()
 {
     startRotation_ = node_->GetWorldRotation();
+	rigidBody_ = node_->GetComponent<RigidBody>();
+	light_ = node_->CreateComponent<Light>();
+	light_->SetLightType(LIGHT_SPOT);
 }
 
 void SecurityCamera::Update(float timeStep)
@@ -44,6 +48,10 @@ void SecurityCamera::Update(float timeStep)
     node_->SetWorldRotation(startRotation_);
     node_->Rotate(Quaternion(pitch_, Vector3::LEFT));
     node_->Rotate(Quaternion(yaw_, Vector3::UP));
+
+	
+	Vector3 velocity = rigidBody_->GetLinearVelocity();
+	Quaternion rotation = Quaternion(Vector3::FORWARD, velocity);
 	
 	SearchForPlayer(personNode);
 }
@@ -89,7 +97,7 @@ bool SecurityCamera::SearchForPlayer(Node* player)
 
 	Octree *octree = GetScene()->GetComponent<Octree>();
 	octree->RaycastSingle(query);
-
+	
 	debug->AddLine(cameraPosition, playerPosition, Color::BLUE);
 
 	AlertGuards();
