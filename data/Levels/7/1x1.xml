@@ -1,4 +1,4 @@
-<room floor="Black_DI" lights="false">
+<room name="Refectory" floor="Black_DI" lights="false">
 
   <!--Sofas-->
   <object position="-3.5 0 4.6" angles="0 180 0" scale="50" model="SofaLength" material="Obsidian"></object>

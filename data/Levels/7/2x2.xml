@@ -1,27 +1,40 @@
-<room floor="Black_DI" lights="false">
+<room name="Reception" floor="Black_DI" lights="false">
 
   <!--PADLOCK-->
   <object position="0 0.5 5" angles="0 0 0" scale="6.5" model ="Padlock" material="NeonGreen" interaction="Padlock" displaysize="200 50">Punchcard_2</object>
 
+  <!--Reception Sign-->
+  <object position="2.5 2 2" angles="0 45 0" scale="1" model="PersonPlane" material="CPoster_Reception" nonsolid="true"></object>
+  <object position="2.5 2 2" angles="0 225 0" scale="1" model="PersonPlane" material="CPoster_Reception" nonsolid="true"></object>
+
   <!-- DanceFloor -->
-  <object position="0 0 -5" angles="90 0 0" scale="5" model="PersonPlane" material="Dancefloor"></object>
+  <object position="0 0 -4" angles="90 0 0" scale="4" model="PersonPlane" material="Dancefloor"></object>
 
   <!--Desk-->
-  <object position="2.5 0 2" angles="0 225 0 0" scale="20" model="Table" material="Obsidian"></object>
+  <object position="2.5 0 2" angles="0 225 0" scale="20" model="Table" material="Obsidian"></object>
   <object position="2.5 0 2.5" angles="0 45 0" scale="6.5" model ="Seat" material="Seat_DI"></object>
   <object position="2.5 1 2" angles="0 225 0" scale="5" model="Terminal" material="Terminal_DI"></object>
 
+  <!-- CABINETS -->
+  <object position="-4 0 4.5" angles="0 90 0" scale="25" model="CabinetMiddle" material="CabinetMiddle_DI"></object>
+  <object position="-3 0 4.5" angles="0 90 0" scale="25" model="CabinetShut" material="CabinetShut_DI"></object>
+  <object position="-2 0 4.5" angles="0 90 0" scale="25" model="CabinetBottom" material="CabinetBottom_DI"></object>
+
+  <!--Sofas-->
+  <object position="-3.5 0 -4.6" angles="0 0 0" scale="50" model="SofaLength" material="Obsidian"></object>
+  <object position="-2 0 -5" angles="0 0 0" scale="50" model="SofaEnd" material="Obsidian"></object>
+  <object position="3.5 0 -4.6" angles="0 0 0" scale="50" model="SofaLength" material="Obsidian"></object>
+  <object position="2 0 -5" angles="0 180 0" scale="50" model="SofaEnd" material="Obsidian"></object>
+  <object position="-4.6 0 -3.5" angles="0 90 0" scale="50" model="SofaLength" material="Obsidian"></object>
+  <object position="-5 0 -2" angles="0 -90 0" scale="50" model="SofaEnd" material="Obsidian"></object>
+  <object position="4.6 0 -3.5" angles="0 -90 0" scale="50" model="SofaLength" material="Obsidian"></object>
+  <object position="5 0 -2" angles="0 -90 0" scale="50" model="SofaEnd" material="Obsidian"></object>
+
   <guard>
-    <waypoint position="-4.5 0 4.5"></waypoint>
-    <waypoint position="4.5 0 4.5"></waypoint>
-    <waypoint position="4.5 0 -4.5"></waypoint>
-    <waypoint position="-4.5 0 -4.5"></waypoint>
-  </guard>
-  <guard>
-    <waypoint position="4.5 0 -4.5"></waypoint>
-    <waypoint position="-4.5 0 -4.5"></waypoint>
-    <waypoint position="-4.5 0 4.5"></waypoint>
-    <waypoint position="4.5 0 4.5"></waypoint>
+    <waypoint position="-3.5 0 1.5"></waypoint>
+    <waypoint position="1.5 0 1.5"></waypoint>
+    <waypoint position="1.5 0 -3.5"></waypoint>
+    <waypoint position="-3.5 0 -3.5"></waypoint>
   </guard>
 
 </room>

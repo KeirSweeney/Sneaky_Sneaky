@@ -7,22 +7,22 @@
   <object position="-1.5 0 4.5" angles="0 -90 0" scale="6" model="CoolerBottle" material="CoolerBottle"></object>
 
   <!-- STANDARD ONE ROOM CUBICALS-->
-  <object position="2 0 4" angles="0 90 0" scale="12.5" model="CubicleDivider" material="CubicleDivider_2ndFloor"></object>
-  <object position="2 0 2.5" angles="0 90 0" scale="12.5" model="CubicleDivider" material="CubicleDivider_2ndFloor"></object>
-  <object position="2 0 -2.5" angles="0 90 0" scale="12.5" model="CubicleDivider" material="CubicleDivider_2ndFloor"></object>
-  <object position="2 0 -4" angles="0 90 0" scale="12.5" model="CubicleDivider" material="CubicleDivider_2ndFloor"></object>
-  <object position="-2 0 4" angles="0 90 0" scale="12.5" model="CubicleDivider" material="CubicleDivider_2ndFloor"></object>
-  <object position="-2 0 2.5" angles="0 90 0" scale="12.5" model="CubicleDivider" material="CubicleDivider_2ndFloor"></object>
-  <object position="-2 0 -2.5" angles="0 90 0" scale="12.5" model="CubicleDivider" material="CubicleDivider_2ndFloor"></object>
-  <object position="-2 0 -4" angles="0 90 0" scale="12.5" model="CubicleDivider" material="CubicleDivider_2ndFloor"></object>
-  <object position="-2.8 0 5" angles="0 0 0" scale="12.5" model="CubicleDivider" material="CubicleDivider_2ndFloor"></object>
-  <object position="-4.3 0 5" angles="0 0 0" scale="12.5" model="CubicleDivider" material="CubicleDivider_2ndFloor"></object>
-  <object position="-2.8 0 -5" angles="0 0 0" scale="12.5" model="CubicleDivider" material="CubicleDivider_2ndFloor"></object>
-  <object position="-4.3 0 -5" angles="0 0 0" scale="12.5" model="CubicleDivider" material="CubicleDivider_2ndFloor"></object>
-  <object position="2.8 0 -5" angles="0 0 0" scale="12.5" model="CubicleDivider" material="CubicleDivider_2ndFloor"></object>
-  <object position="4.3 0 -5" angles="0 0 0" scale="12.5" model="CubicleDivider" material="CubicleDivider_2ndFloor"></object>
-  <object position="2.8 0 5" angles="0 0 0" scale="12.5" model="CubicleDivider" material="CubicleDivider_2ndFloor"></object>
-  <object position="4.3 0 5" angles="0 0 0" scale="12.5" model="CubicleDivider" material="CubicleDivider_2ndFloor"></object>
+  <object position="2 0 4" angles="0 90 0" scale="12.5" model="CubicleDivider" material="Obsidian"></object>
+  <object position="2 0 2.5" angles="0 90 0" scale="12.5" model="CubicleDivider" material="Obsidian"></object>
+  <object position="2 0 -2.5" angles="0 90 0" scale="12.5" model="CubicleDivider" material="Obsidian"></object>
+  <object position="2 0 -4" angles="0 90 0" scale="12.5" model="CubicleDivider" material="Obsidian"></object>
+  <object position="-2 0 4" angles="0 90 0" scale="12.5" model="CubicleDivider" material="Obsidian"></object>
+  <object position="-2 0 2.5" angles="0 90 0" scale="12.5" model="CubicleDivider" material="Obsidian"></object>
+  <object position="-2 0 -2.5" angles="0 90 0" scale="12.5" model="CubicleDivider" material="Obsidian"></object>
+  <object position="-2 0 -4" angles="0 90 0" scale="12.5" model="CubicleDivider" material="Obsidian"></object>
+  <object position="-2.8 0 5" angles="0 0 0" scale="12.5" model="CubicleDivider" material="Obsidian"></object>
+  <object position="-4.3 0 5" angles="0 0 0" scale="12.5" model="CubicleDivider" material="Obsidian"></object>
+  <object position="-2.8 0 -5" angles="0 0 0" scale="12.5" model="CubicleDivider" material="Obsidian"></object>
+  <object position="-4.3 0 -5" angles="0 0 0" scale="12.5" model="CubicleDivider" material="Obsidian"></object>
+  <object position="2.8 0 -5" angles="0 0 0" scale="12.5" model="CubicleDivider" material="Obsidian"></object>
+  <object position="4.3 0 -5" angles="0 0 0" scale="12.5" model="CubicleDivider" material="Obsidian"></object>
+  <object position="2.8 0 5" angles="0 0 0" scale="12.5" model="CubicleDivider" material="Obsidian"></object>
+  <object position="4.3 0 5" angles="0 0 0" scale="12.5" model="CubicleDivider" material="Obsidian"></object>
 
   <!--Tables-->
   <object position="-3.5 0 -4.5" angles="0 180 0" scale="20" model="Table" material="Obsidian"></object>
