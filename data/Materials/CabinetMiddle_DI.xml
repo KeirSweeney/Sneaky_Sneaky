@@ -2,4 +2,6 @@
 <material>
 	<technique name="Techniques/Diff.xml" />
 	<texture unit="diffuse" name="Textures/CabinetMiddle_DI.png" />
+  <parameter name="MatDiffColor" value="5 5 5 5" />
+
 </material>

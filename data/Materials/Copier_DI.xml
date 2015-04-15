@@ -1,7 +1,6 @@
 <?xml version="1.0"?>
 <material>
 	<technique name="Techniques/Diff.xml" />
-	<texture unit="diffuse" name="Textures/CabinetBottom_DI.png" />
+	<texture unit="diffuse" name="Textures/Copier_DI.png" />
   <parameter name="MatDiffColor" value="5 5 5 5" />
-
 </material>

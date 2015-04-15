@@ -1,5 +1,27 @@
 <room floor="Black_DI" lights="false">
 
+  <!--PADLOCK-->
+  <object position="0 0.5 5" angles="0 0 0" scale="6.5" model ="Padlock" material="NeonGreen" interaction="Padlock" displaysize="200 50">Punchcard_2</object>
 
+  <!-- DanceFloor -->
+  <object position="0 0 -5" angles="90 0 0" scale="5" model="PersonPlane" material="Dancefloor"></object>
+
+  <!--Desk-->
+  <object position="2.5 0 2" angles="0 225 0 0" scale="20" model="Table" material="Obsidian"></object>
+  <object position="2.5 0 2.5" angles="0 45 0" scale="6.5" model ="Seat" material="Seat_DI"></object>
+  <object position="2.5 1 2" angles="0 225 0" scale="5" model="Terminal" material="Terminal_DI"></object>
+
+  <guard>
+    <waypoint position="-4.5 0 4.5"></waypoint>
+    <waypoint position="4.5 0 4.5"></waypoint>
+    <waypoint position="4.5 0 -4.5"></waypoint>
+    <waypoint position="-4.5 0 -4.5"></waypoint>
+  </guard>
+  <guard>
+    <waypoint position="4.5 0 -4.5"></waypoint>
+    <waypoint position="-4.5 0 -4.5"></waypoint>
+    <waypoint position="-4.5 0 4.5"></waypoint>
+    <waypoint position="4.5 0 4.5"></waypoint>
+  </guard>
 
 </room>

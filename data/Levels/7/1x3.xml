@@ -1,5 +1,51 @@
 <room floor="Black_DI" lights="false">
 
+  <!--KEYCARD-->
+  <object position="-4.5 0 2.0" scale="10" model="Punchcard_2" material="NeonPink" interaction="Pickup"></object>
 
+  <object position="0 0.5 5" angles="0 0 0" scale="1" model="PersonPlane" material="CPoster2"></object>
 
+  <!--Cubical dividers -->
+  <object position="-1.5 0 2.5" angles="0 0 0" scale="12.5" model="CubicleDivider" material="Obsidian"></object>
+  <object position="1.5 0 2.5" angles="0 0 0" scale="12.5" model="CubicleDivider" material="Obsidian"></object>
+  <object position="2.25 0 1.75" angles="0 90 0" scale="12.5" model="CubicleDivider" material="Obsidian"></object>
+  <object position="2.25 0 0.25" angles="0 90 0" scale="12.5" model="CubicleDivider" material="Obsidian"></object>
+  <object position="-2.25 0 1.75" angles="0 90 0" scale="12.5" model="CubicleDivider" material="Obsidian"></object>
+  <object position="-2.25 0 0.25" angles="0 90 0" scale="12.5" model="CubicleDivider" material="Obsidian"></object>
+  <object position="-2.25 0 -1.25" angles="0 90 0" scale="12.5" model="CubicleDivider" material="Obsidian"></object>
+  <object position="2.25 0 -1.25" angles="0 90 0" scale="12.5" model="CubicleDivider" material="Obsidian"></object>
+  <object position="-1.5 0 -2.0" angles="0 0 0" scale="12.5" model="CubicleDivider" material="Obsidian"></object>
+  <object position="1.5 0 -2.0" angles="0 0 0" scale="12.5" model="CubicleDivider" material="Obsidian"></object>
+
+  <!--Tables-->
+  <object position="-1.6 0 1.2" angles="0 -90 0" scale="20" model="Table" material="Obsidian"></object>
+  <object position="1.6 0 -0.7" angles="0 90 0" scale="20" model="Table" material="Obsidian"></object>
+
+  <object position="-3 0 1" angles="0 0 0" scale="8" model="PrinterBoxes" material="Black_DI"></object>
+  <object position="-4.25 0 1" angles="0 10 0" scale="8" model="PrinterBoxes" material="Black_DI"></object>
+  <object position="-4.25 0.5 1" angles="0 0 0" scale="8" model="PrinterBoxes" material="Black_DI"></object>
+  <object position="-3 0.5 1" angles="0 10 0" scale="8" model="PrinterBoxes" material="Black_DI"></object>
+  <object position="-3 1 1" angles="0 0 0" scale="8" model="PrinterBoxes" material="Black_DI"></object>
+  <object position="-4.25 1 1" angles="0 10 0" scale="8" model="PrinterBoxes" material="Black_DI"></object>
+
+  <!--Seats-->
+  <object position="-1.2 0 1.2" angles="0 90 0" scale="6.5" model ="Seat" material="Seat_DI"></object>
+  <object position="1.2 0 -0.7" angles="0 -90 0" scale="6.5" model ="Seat" material="Seat_DI"></object>
+
+  <!--Terminals-->
+  <object position="-1.6 1 1.2" angles="0 -90 0" scale="5" model="Terminal" material="Terminal_DI"></object>
+  <object position="1.6 1 -0.7" angles="0 95 0" scale="5" model="Terminal" material="Terminal_DI"></object>
+
+  <!--Lamps-->
+  <object position="-1.6 1 0.3" angles="0 10 0" scale="5" model="Lamp" material="Obsidian"></object>
+  <object position="1.6 1 0" angles="0 180 0" scale="5" model="Lamp" material="Obsidian"></object>
+
+  <guard>
+    <waypoint position="-3.8 0 3.5"></waypoint>
+    <waypoint position="3.8 0 3.5"></waypoint>
+    <waypoint position="3.8 0 -3.25"></waypoint>
+    <waypoint position="-3.8 0 -3.25"></waypoint>
+    <waypoint position="3.8 0 -3.25"></waypoint>
+    <waypoint position="3.8 0 3.5"></waypoint>
+  </guard>
 </room>

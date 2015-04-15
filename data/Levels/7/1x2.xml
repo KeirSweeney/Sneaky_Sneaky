@@ -1,5 +1,67 @@
 <room floor="Black_DI" lights="false">
+  <!--POSTER-->
+  <object position="-5 0.5 2" angles="0 -90 0" scale="1" model="PersonPlane" material="CPoster3"></object>
 
+  <!-- STANDARD ONE ROOM CUBICALS-->
+  <object position="2 0 4" angles="0 90 0" scale="12.5" model="CubicleDivider" material="Obsidian"></object>
+  <object position="2 0 2.5" angles="0 90 0" scale="12.5" model="CubicleDivider" material="Obsidian"></object>
+  <object position="2 0 -2.5" angles="0 90 0" scale="12.5" model="CubicleDivider" material="Obsidian"></object>
+  <object position="2 0 -4" angles="0 90 0" scale="12.5" model="CubicleDivider" material="Obsidian"></object>
+  <object position="-2 0 4" angles="0 90 0" scale="12.5" model="CubicleDivider" material="Obsidian"></object>
+  <object position="-2 0 2.5" angles="0 90 0" scale="12.5" model="CubicleDivider" material="Obsidian"></object>
+  <object position="-2 0 -2.5" angles="0 90 0" scale="12.5" model="CubicleDivider" material="Obsidian"></object>
+  <object position="-2 0 -4" angles="0 90 0" scale="12.5" model="CubicleDivider" material="Obsidian"></object>
+  <object position="-2.8 0 5" angles="0 0 0" scale="12.5" model="CubicleDivider" material="Obsidian"></object>
+  <object position="-4.3 0 5" angles="0 0 0" scale="12.5" model="CubicleDivider" material="Obsidian"></object>
+  <object position="-2.8 0 -5" angles="0 0 0" scale="12.5" model="CubicleDivider" material="Obsidian"></object>
+  <object position="-4.3 0 -5" angles="0 0 0" scale="12.5" model="CubicleDivider" material="Obsidian"></object>
+  <object position="2.8 0 -5" angles="0 0 0" scale="12.5" model="CubicleDivider" material="Obsidian"></object>
+  <object position="4.3 0 -5" angles="0 0 0" scale="12.5" model="CubicleDivider" material="Obsidian"></object>
+  <object position="2.8 0 5" angles="0 0 0" scale="12.5" model="CubicleDivider" material="Obsidian"></object>
+  <object position="4.3 0 5" angles="0 0 0" scale="12.5" model="CubicleDivider" material="Obsidian"></object>
 
+  <!--Tables-->
+  <object position="-3.5 0 -4.5" angles="0 180 0" scale="20" model="Table" material="Obsidian"></object>
+  <object position="-3.5 0 4.5" angles="0 0 0" scale="20" model="Table" material="Obsidian"></object>
+  <object position="3.5 0 -4.5" angles="0 180 0" scale="20" model="Table" material="Obsidian"></object>
+  <object position="3.5 0 4.5" angles="0 0 0" scale="20" model="Table" material="Obsidian"></object>
+  <!--Seats-->
+  <object position="-3.8 0 -4" angles="0 -10 0" scale="6.5" model ="Seat" material="Seat_DI"></object>
+  <object position="3.5 0 -4" angles="0 0 0" scale="6.5" model ="Seat" material="Seat_DI"></object>
+  <object position="-3.5 0 4" angles="0 180 0" scale="6.5" model ="Seat" material="Seat_DI"></object>
+  <object position="3 0 3.4" angles="0 200 0" scale="6.5" model ="Seat" material="Seat_DI"></object>
+  <!--Lamps-->
+  <object position="-4.4 1 -4.7" angles="0 75 0" scale="5" model="Lamp" material="Obsidian"></object>
+  <object position="2.8 1 -4.5" angles="0 90 0" scale="5" model="Lamp" material="Obsidian"></object>
+  <object position="4.2 1 4.5" angles="0 -90 0" scale="5" model="Lamp" material="Obsidian"></object>
+  <object position="-2.8 1 4.5" angles="0 -90 0" scale="5" model="Lamp" material="Obsidian"></object>
+  <!--Terminals-->
+  <object position="-3.5 1 -4.5" angles="0 155 0" scale="5" model="Terminal" material="Terminal_DI"></object>
+  <object position="3.5 1 -4.5" angles="0 180 0" scale="5" model="Terminal" material="Terminal_DI"></object>
+  <object position="-3.5 1 4.5" angles="0 0 0" scale="5" model="Terminal" material="Terminal_DI"></object>
+  <object position="3.5 1 4.5" angles="0 12 0" scale="5" model="Terminal" material="Terminal_DI"></object>
+
+  <!-- BIN -->
+  <object position="2.3 0 -2.3" angles="0 0 0" scale="5" model="Bin" material="Obsidian"></object>
+  <object position="-4.7 0 -3.5" angles="0 0 0" scale="5" model="Bin" material="Obsidian"></object>
+  <object position="-2.3 0 2.3" angles="0 0 0" scale="5" model="Bin" material="Obsidian"></object>
+
+  <!-- CABINETS -->
+  <object position="-4.5 0 -0.4" angles="0 0 0" scale="25" model="CabinetMiddle" material="CabinetMiddle_DI"></object>
+  <object position="-4.5 0 0.4" angles="0 0 0" scale="25" model="CabinetShut" material="CabinetShut_DI"></object>
+  <object position="-4.5 0 -1.2" angles="0 0 0" scale="25" model="CabinetBottom" material="CabinetBottom_DI"></object>
+
+  <!-- COPPIER -->
+  <object position="-1.5 0 -3.4" angles="0 0 0" scale="17.5" model="Copier" material="Copier_DI"></object>
+
+  <guard>
+    <waypoint position="-3 0 -3"></waypoint>
+    <waypoint position="-3 0 3"></waypoint>
+  </guard>
+
+  <guard>
+    <waypoint position="0 0 14"></waypoint>
+    <waypoint position="0 0 -14"></waypoint>
+  </guard>
 
 </room>
