@@ -16,6 +16,7 @@ public:
 
 public:
     void Update(float timeStep);
+	void Start();
     void DelayedStart();
     void LoadFromXML(const Urho3D::XMLElement &xml);
 
@@ -29,4 +30,5 @@ private:
     float lightTime_;
     float laserTime_;
     float laserInterval_;
+	float laserDelay_;
 };
