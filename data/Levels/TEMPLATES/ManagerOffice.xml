@@ -35,8 +35,8 @@
   <object position="2 0 4.8" angles="0 90 0" scale="25" model="CabinetShut" material="CabinetShut"></object>
 
   <!-- CAMERA -->
-  <object position="0 3 4.5" angles="0 180 0" scale="10" model="CameraBase" material="DefaultGrey"></object>
-  <object position="0 3 4.5" angles="0 180 0" scale="10" model="Camera" material="DefaultGrey" interaction="SecurityCamera"></object>
-  <object position="0 3 -4.5" angles="0 0 0" scale="10" model="CameraBase" material="DefaultGrey"></object>
-  <object position="0 3 -4.5" angles="0 0 0" scale="10" model="Camera" material="DefaultGrey" interaction="SecurityCamera"></object>
+  <object position="0 3 4.5" angles="0 180 0" scale="10" model="CameraBase" material="SecurityCamera"></object>
+  <object position="0 3 4.5" angles="0 180 0" scale="10" model="Camera" material="SecurityCamera" interaction="SecurityCamera"></object>
+  <object position="0 3 -4.5" angles="0 0 0" scale="10" model="CameraBase" material="SecurityCamera"></object>
+  <object position="0 3 -4.5" angles="0 0 0" scale="10" model="Camera" material="SecurityCamera" interaction="SecurityCamera"></object>
 </room>

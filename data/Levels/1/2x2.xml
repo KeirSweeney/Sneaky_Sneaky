@@ -28,8 +28,8 @@
   <object position="1.8 0 -4.5" angles="0 180 0" scale="15" model="VendingMachineFront" material="VendingMachineFrontBLUE"></object>
 
   <!-- CAMERA -->
-  <object position="0 3 4.5" angles="0 180 0" scale="10" model="CameraBase" material="DefaultGrey"></object>
-  <object position="0 3 4.5" angles="0 180 0" scale="10" model="Camera" material="DefaultGrey" interaction="SecurityCamera"></object>
+  <object position="0 3 4.5" angles="0 180 0" scale="10" model="CameraBase" material="SecurityCamera"></object>
+  <object position="0 3 4.5" angles="0 180 0" scale="10" model="Camera" material="SecurityCamera" interaction="SecurityCamera"></object>
 
   <guard>
     <waypoint position="-3.5 0 3.5"></waypoint>
