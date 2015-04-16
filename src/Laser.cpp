@@ -43,10 +43,19 @@ void Laser::RegisterObject(Context* context)
 void Laser::LoadFromXML(const XMLElement &xml)
 {
     laserInterval_ = xml.GetFloat("interval");
+	laserDelay_ = xml.GetFloat("delay");
 }
 
 void Laser::Update(float timeStep)
 {
+	StaticModel *laserModel = node_->GetComponent<StaticModel>();
+
+	if (laserDelay_ > 0) {
+		laserModel->SetEnabled(false);
+		laserDelay_ -= timeStep;
+		return;
+	}
+
     if(laserInterval_ > 0.0f) {
         laserTime_ += timeStep;
 
@@ -87,6 +96,12 @@ void Laser::Update(float timeStep)
     }
 
 
+}
+
+void Laser::Start()
+{
+	StaticModel *laserModel = node_->GetComponent<StaticModel>();
+	laserModel->SetEnabled(false);
 }
 
 void Laser::DelayedStart()
