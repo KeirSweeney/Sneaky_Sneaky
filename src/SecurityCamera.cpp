@@ -33,6 +33,10 @@ void SecurityCamera::DelayedStart()
 
 	light_ = node_->CreateComponent<Light>();
 	light_->SetLightType(LIGHT_SPOT);
+	light_->SetBrightness(0.4f);
+	light_->SetColor(Color::WHITE);
+	light_->SetCastShadows(true);
+	light_->SetFov(30.0f);
 }
 
 void SecurityCamera::Update(float timeStep)
@@ -56,33 +60,25 @@ bool SecurityCamera::SearchForPlayer(Node* player)
 	Vector3 cameraPosition = node_->GetWorldPosition();
 	Vector3 cameraDirection = node_->GetWorldDirection();
 	Vector3 playerPosition = player->GetWorldPosition();
-	Vector3 difference = (playerPosition - cameraPosition);
 
-	difference.Normalize();
-
+#if 0
 	Frustum frustrum;
 	frustrum.Define(30.0f / 2.0f, 1.0f, 1.0f, M_MIN_NEARCLIP, 10.0f, Matrix3x4(cameraPosition, node_->GetWorldRotation(), 1.0f));
 
 	DebugRenderer *debug = node_->GetScene()->GetComponent<DebugRenderer>();
 	debug->AddFrustum(frustrum, Color::BLUE);
+#endif
 
-	if (cameraDirection.DotProduct(difference) < Cos(30.0f / 2.0f))
-	{
-		Node *roomNode = node_->GetParent()->GetParent();
+	Vector3 difference = (playerPosition - cameraPosition);
+	difference.Normalize();
 
-		PODVector<Node *> nodes;
-
-		roomNode->GetChildrenWithComponent<Light>(nodes, true);
-
-		for (PODVector<Node *>::ConstIterator i = nodes.Begin(); i != nodes.End(); ++i) {
-			Node *lightNode = *i;
-
-			Light *light = lightNode->GetComponent<Light>();
-
-			light->SetColor(Color::WHITE);
-		}
+	if (cameraDirection.DotProduct(difference) < Cos(30.0f / 2.0f)) {
+		light_->SetColor(Color::WHITE);
 		return false;
 	}
+
+#if 0
+	// Don't do a raycast for now, it is currently self-intersecting with the camera body.
 
 	Ray ray(cameraPosition + Vector3(0.0f, 4.6f, 0.0f), difference);
 	PODVector<RayQueryResult> result;
@@ -91,7 +87,13 @@ bool SecurityCamera::SearchForPlayer(Node* player)
 	Octree *octree = GetScene()->GetComponent<Octree>();
 	octree->RaycastSingle(query);
 
+	if (!result.Empty() && result[0].node_ != player && result[0].node_->GetParent() != player) {
+		light_->SetColor(Color::WHITE);
+		return false;
+	}
+#endif
 
+	light_->SetColor(Color::RED);
 	AlertGuards();
 
 	return true;
@@ -99,26 +101,15 @@ bool SecurityCamera::SearchForPlayer(Node* player)
 
 void SecurityCamera::AlertGuards()
 {
-	Node *personNode = GetScene()->GetChild("Person", true);
-
-	Node *roomNode = node_->GetParent()->GetParent();
-	PODVector<Node *> nodes;
-
-	roomNode->GetChildrenWithComponent<Light>(nodes, true);
-
-	for (PODVector<Node *>::ConstIterator i = nodes.Begin(); i != nodes.End(); ++i) {
-		Node *lightNode = *i;
-
-		Light *light = lightNode->GetComponent<Light>();
-
-		light->SetColor(Color::RED);
-	}
-
 	NavigationMesh *navMesh = GetScene()->GetComponent<NavigationMesh>();
 
-	Vector3 pointPath = personNode->GetWorldPosition();
+	Node *personNode = GetScene()->GetChild("Person", true);
+	Node *roomNode = node_->GetParent()->GetParent();
 
+	PODVector<Node *> nodes;
 	roomNode->GetChildrenWithComponent<Guard>(nodes, true);
+
+	Vector3 pointPath = personNode->GetWorldPosition();
 
 	for (PODVector<Node *>::ConstIterator i = nodes.Begin(); i != nodes.End(); ++i) {
 		Node *guardNode = *i;
