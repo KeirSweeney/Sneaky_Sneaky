@@ -10,11 +10,22 @@
   <object position="4.6 0 3.5" angles="0 -90 0" scale="50" model="SofaLength" material="Obsidian"></object>
   <object position="5 0 2" angles="0 90 0" scale="50" model="SofaEnd" material="Obsidian"></object>
 
+  <object position="-4.6 0 -1.5" angles="0 90 0" scale="50" model="SofaLength" material="Obsidian"></object>
+  <object position="-5 0 0" angles="0 -90 0" scale="50" model="SofaEnd" material="Obsidian"></object>
+  <object position="-5 0 -3" angles="0 90 0" scale="50" model="SofaEnd" material="Obsidian"></object>
+  <object position="4.6 0 -1.5" angles="0 -90 0" scale="50" model="SofaLength" material="Obsidian"></object>
+  <object position="5 0 0" angles="0 -90 0" scale="50" model="SofaEnd" material="Obsidian"></object>
+  <object position="5 0 -3" angles="0 90 0" scale="50" model="SofaEnd" material="Obsidian"></object>
+
   <!-- Coffee Tables-->
   <object position="-3 0 2.5" angles="0 90 0" scale="25" model="CoffeeTableGlass" material="CoffeeTableGlass"></object>
   <object position="-3 0 2.5" angles="0 90 0" scale="25" model="CoffeeTableLegs" material="NeonBlue"></object>
   <object position="3 0 2.5" angles="0 90 0" scale="25" model="CoffeeTableGlass" material="CoffeeTableGlass"></object>
   <object position="3 0 2.5" angles="0 90 0" scale="25" model="CoffeeTableLegs" material="NeonGreen"></object>
+  <object position="-3 0 -1.5" angles="0 90 0" scale="25" model="CoffeeTableGlass" material="CoffeeTableGlass"></object>
+  <object position="-3 0 -1.5" angles="0 90 0" scale="25" model="CoffeeTableLegs" material="NeonPink"></object>
+  <object position="3 0 -1.5" angles="0 90 0" scale="25" model="CoffeeTableGlass" material="CoffeeTableGlass"></object>
+  <object position="3 0 -1.5" angles="0 90 0" scale="25" model="CoffeeTableLegs" material="NeonYellow"></object>
 
   <!--Vending Machines-->
   <object position="-2.5 0 -4.5" angles="0 180 0" scale="15" model="VendingMachineBody" material="Obsidian"></object>
