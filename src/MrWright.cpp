@@ -34,7 +34,7 @@ InteractablePoster(context)
 
 void MrWright::RegisterObject(Context* context)
 {
-    context->RegisterFactory<MrWright>("Logic");
+	context->RegisterFactory<MrWright>("Logic");
 
 	COPY_BASE_ATTRIBUTES(InteractablePoster);
 }
@@ -81,12 +81,12 @@ void MrWright::DelayedStart(){}
 void MrWright::Update(float timeStep)
 {
 	swapTimer_ += timeStep;
-	
+
 
 	if (swapTimer_ < 5.0f) {
 		return;
 	}
-	
+
 	swapTimer_ = 0.0f;
 
 	Node *roomNode = node_->GetParent();
@@ -104,9 +104,9 @@ void MrWright::Update(float timeStep)
 	if (terminalNodes.Empty()) {
 		LOGERROR("Terminal nodes are empty");
 	}
-	
+
 	ResourceCache *cache = GetSubsystem<ResourceCache>();
-	
+
 	int m = posterNodes.Size();
 	while (m > 0) {
 		int n = Random(0, m--);
@@ -118,7 +118,7 @@ void MrWright::Update(float timeStep)
 		a->SetMaterial(b->GetMaterial());
 		b->SetMaterial(t);
 	}
-	
+
 	int x = terminalNodes.Size();
 	LOGERRORF("terminal nodes size: %d", x);
 	x -= 1;
@@ -129,13 +129,13 @@ void MrWright::Update(float timeStep)
 
 			for (PODVector<Node *>::ConstIterator i = posterNodes.Begin(); i != posterNodes.End(); ++i) {
 
-                Node *thisPosterNodes = *i;
+				Node *thisPosterNodes = *i;
 				Vector3 thisTerminalPos = terminalNodes[x]->GetWorldPosition();
 				Vector3 thisPosterPos = thisPosterNodes->GetWorldPosition();
 				Vector3 diff = thisPosterPos - thisTerminalPos;
-				float calc = abs(diff.LengthSquared());
+				float calc = Abs(diff.LengthSquared());
 
-                if (calc > 1.0f * 1.0f) {
+				if (calc > 1.0f * 1.0f) {
 					LOGERROR("Not Closest terminal");
 				}
 				else {
@@ -155,9 +155,9 @@ void MrWright::Update(float timeStep)
 				}
 				LOGERRORF("x: %d", x);
 			}
-		
+
 	}
-	
+
 LABEL:;
 
 	}

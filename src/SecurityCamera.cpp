@@ -16,21 +16,21 @@
 using namespace Urho3D;
 
 SecurityCamera::SecurityCamera(Context *context) :
-    InteractableComponent(context),
-    sweepingBack_(false),
-    pitch_(-55.0f), yaw_(0.0f)
+	InteractableComponent(context),
+	sweepingBack_(false),
+	pitch_(-55.0f), yaw_(0.0f)
 {
 }
 
 void SecurityCamera::RegisterObject(Context* context)
 {
 	context->RegisterFactory<SecurityCamera>("Logic");
-    COPY_BASE_ATTRIBUTES(InteractableComponent);
+	COPY_BASE_ATTRIBUTES(InteractableComponent);
 }
 
 void SecurityCamera::DelayedStart()
 {
-    startRotation_ = node_->GetWorldRotation();
+	startRotation_ = node_->GetWorldRotation();
 	rigidBody_ = node_->GetComponent<RigidBody>();
 	light_ = node_->CreateComponent<Light>();
 	light_->SetLightType(LIGHT_SPOT);
@@ -39,20 +39,20 @@ void SecurityCamera::DelayedStart()
 void SecurityCamera::Update(float timeStep)
 {
 	Node *personNode = GetScene()->GetChild("Person", true);
-    yaw_ += (sweepingBack_ ? -1.0f : 1.0f) * 20.0f * timeStep;
+	yaw_ += (sweepingBack_ ? -1.0f : 1.0f) * 20.0f * timeStep;
 
-    if (abs(yaw_) >= 45.0f) {
-        sweepingBack_ = !sweepingBack_;
-    }
+	if (Abs(yaw_) >= 45.0f) {
+		sweepingBack_ = !sweepingBack_;
+	}
 
-    node_->SetWorldRotation(startRotation_);
-    node_->Rotate(Quaternion(pitch_, Vector3::LEFT));
-    node_->Rotate(Quaternion(yaw_, Vector3::UP));
+	node_->SetWorldRotation(startRotation_);
+	node_->Rotate(Quaternion(pitch_, Vector3::LEFT));
+	node_->Rotate(Quaternion(yaw_, Vector3::UP));
 
-	
+
 	Vector3 velocity = rigidBody_->GetLinearVelocity();
 	Quaternion rotation = Quaternion(Vector3::FORWARD, velocity);
-	
+
 	SearchForPlayer(personNode);
 }
 
@@ -97,7 +97,7 @@ bool SecurityCamera::SearchForPlayer(Node* player)
 
 	Octree *octree = GetScene()->GetComponent<Octree>();
 	octree->RaycastSingle(query);
-	
+
 	debug->AddLine(cameraPosition, playerPosition, Color::BLUE);
 
 	AlertGuards();
