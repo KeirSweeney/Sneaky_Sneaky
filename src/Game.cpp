@@ -583,16 +583,12 @@ void Game::LoadLevel()
 	SoundListener *cameraListener = cameraNode->CreateComponent<SoundListener>();
 	GetSubsystem<Audio>()->SetListener(cameraListener);
 
-	//game audio
-	Sound *mainTheme = cache->GetResource<Sound>("Audio/MainTheme.wav"); //will need to move this out of update.
+	Sound *mainTheme = cache->GetResource<Sound>("Audio/MainTheme.ogg");
+	mainTheme->SetLooped(true);
 
 	SoundSource *source = cameraNode->CreateComponent<SoundSource>();
 	source->SetGain(0.1f);
-	source->SetAutoRemove(true);
 	source->Play(mainTheme);
-
-
-
 
 	Camera *camera = cameraNode->CreateComponent<Camera>();
 	camera->SetFarClip(zone->GetFogEnd());
