@@ -30,7 +30,7 @@ void SecurityCamera::RegisterObject(Context* context)
 void SecurityCamera::DelayedStart()
 {
 	startRotation_ = node_->GetWorldRotation();
-	rigidBody_ = node_->GetComponent<RigidBody>();
+
 	light_ = node_->CreateComponent<Light>();
 	light_->SetLightType(LIGHT_SPOT);
 }
@@ -47,9 +47,6 @@ void SecurityCamera::Update(float timeStep)
 	node_->SetWorldRotation(startRotation_);
 	node_->Rotate(Quaternion(pitch_, Vector3::LEFT));
 	node_->Rotate(Quaternion(yaw_, Vector3::UP));
-
-	Vector3 velocity = rigidBody_->GetLinearVelocity();
-	Quaternion rotation = Quaternion(Vector3::FORWARD, velocity);
 
 	SearchForPlayer(personNode);
 }
@@ -128,7 +125,8 @@ void SecurityCamera::AlertGuards()
 
 		Guard *guard = guardNode->GetComponent<Guard>();
 
-		navMesh->FindPath(path_, guardNode->GetWorldPosition(), pointPath);
-		guard->SetPath(path_);
+		Urho3D::PODVector<Urho3D::Vector3> path;
+		navMesh->FindPath(path, guardNode->GetWorldPosition(), pointPath);
+		guard->SetPath(path);
 	}
 }
