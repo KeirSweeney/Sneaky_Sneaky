@@ -37,17 +37,20 @@
   <object position="-1.6 1 0.3" angles="0 10 0" scale="5" model="Lamp" material="Obsidian"></object>
   <object position="1.6 1 0" angles="0 180 0" scale="5" model="Lamp" material="Obsidian"></object>
 
-  <guard>
-    <waypoint position="3.8 0 3.5"></waypoint>
-    <waypoint position="-3.8 0 3.5"></waypoint>
-    <waypoint position="-3.8 0 -3.25"></waypoint>
-    <waypoint position="3.8 0 -3.25"></waypoint>
-    <waypoint position="-3.8 0 -3.25"></waypoint>
-    <waypoint position="-3.8 0 3.5"></waypoint>
-  </guard>
+  <object position="-4.5 0 2" angles="0 0 0" scale="25" model="CabinetShut" material="CabinetShut_DI"></object>
+  <object position="-4.5 0 1.2" angles="0 0 0" scale="25" model="CabinetShut" material="CabinetShut_DI"></object>
+  <object position="-4.5 0 0.4" angles="0 0 0" scale="25" model="CabinetShut" material="CabinetShut_DI"></object>
+  <object position="-4.5 0 -0.4" angles="0 0 0" scale="25" model="CabinetTop" material="CabinetTop_DI"></object>
+  <object position="-4.5 0 -1.2" angles="0 0 0" scale="25" model="CabinetShut" material="CabinetShut_DI"></object>
+  <object position="-4.5 0 -2" angles="0 0 0" scale="25" model="CabinetBottom" material="CabinetBottom_DI"></object>
 
   <guard>
-    <waypoint position="0 0 4"></waypoint>
-    <waypoint position="0 0 -4"></waypoint>
+    <waypoint position="3.8 0 3.5"></waypoint>
+    <waypoint position="-3.5 0 3.5"></waypoint>
+    <waypoint position="-3.5 0 -3.25"></waypoint>
+    <waypoint position="3.8 0 -3.25"></waypoint>
+    <waypoint position="-3.5 0 -3.25"></waypoint>
+    <waypoint position="-3.5 0 3.5"></waypoint>
   </guard>
+
  </room>
