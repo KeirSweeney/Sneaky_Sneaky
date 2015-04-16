@@ -115,7 +115,7 @@ void Game::Start()
 	SecurityCamera::RegisterObject(context_);
 	Laser::RegisterObject(context_);
 	MrWright::RegisterObject(context_);
-    Padlock::RegisterObject(context_);
+	Padlock::RegisterObject(context_);
 	MrWrightTerminal::RegisterObject(context_);
 
 	SharedPtr<Viewport> viewport(new Viewport(context_, scene_, NULL));
@@ -202,7 +202,8 @@ void Game::LoadLevel()
 	// The NavigationMesh is used for pathfinding.
 	NavigationMesh *navigationMesh = scene_->CreateComponent<NavigationMesh>();
 	navigationMesh->SetCellSize(0.2f);
-	navigationMesh->SetAgentRadius(0.1f);
+	navigationMesh->SetCellHeight(0.05f);
+	navigationMesh->SetAgentRadius(0.15f);
 	navigationMesh->SetAgentHeight(1.8f - navigationMesh->GetCellHeight());
 	navigationMesh->SetAgentMaxClimb(0.0f);
 	navigationMesh->SetAgentMaxSlope(5.0f);
