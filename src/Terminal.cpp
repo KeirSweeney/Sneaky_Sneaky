@@ -91,13 +91,13 @@ void Terminal::Update(float timeStep)
 
     panel_->SetPosition(uiPosition);
     panel_->SetVisible(true);
-
 }
 
 bool Terminal::CanPlayerInteract()
 {
     Vector3 terminalPosition = node_->GetWorldPosition();
     Vector3 personPosition = GetScene()->GetChild("Person", true)->GetWorldPosition();
+
     Vector3 difference = personPosition - terminalPosition;
 
     if(difference.LengthSquared() > (VIEW_DISTANCE * VIEW_DISTANCE)) {
@@ -107,9 +107,11 @@ bool Terminal::CanPlayerInteract()
     Vector3 forward = -node_->GetWorldDirection();
     difference.Normalize();
 
-    //DebugRenderer *debug = node_->GetScene()->GetComponent<DebugRenderer>();
-    //debug->AddLine(terminalPosition, terminalPosition + forward, Color::BLUE);
-    //debug->AddLine(terminalPosition, terminalPosition + difference, Color::RED);
+#if 0
+	DebugRenderer *debug = node_->GetScene()->GetComponent<DebugRenderer>();
+	debug->AddLine(terminalPosition, terminalPosition + forward, Color::BLUE);
+	debug->AddLine(terminalPosition, terminalPosition + difference, Color::RED);
+#endif
 
     if (forward.DotProduct(difference) < Cos(VIEW_ANGLE / 2.0f)) {
         return false;

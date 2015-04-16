@@ -12,7 +12,6 @@
 #include "RigidBody.h"
 #include "NavigationMesh.h"
 
-
 using namespace Urho3D;
 
 SecurityCamera::SecurityCamera(Context *context) :
@@ -49,7 +48,6 @@ void SecurityCamera::Update(float timeStep)
 	node_->Rotate(Quaternion(pitch_, Vector3::LEFT));
 	node_->Rotate(Quaternion(yaw_, Vector3::UP));
 
-
 	Vector3 velocity = rigidBody_->GetLinearVelocity();
 	Quaternion rotation = Quaternion(Vector3::FORWARD, velocity);
 
@@ -58,8 +56,6 @@ void SecurityCamera::Update(float timeStep)
 
 bool SecurityCamera::SearchForPlayer(Node* player)
 {
-	DebugRenderer *debug = node_->GetScene()->GetComponent<DebugRenderer>();
-
 	Vector3 cameraPosition = node_->GetWorldPosition();
 	Vector3 cameraDirection = node_->GetWorldDirection();
 	Vector3 playerPosition = player->GetWorldPosition();
@@ -68,9 +64,9 @@ bool SecurityCamera::SearchForPlayer(Node* player)
 	difference.Normalize();
 
 	Frustum frustrum;
-
 	frustrum.Define(30.0f / 2.0f, 1.0f, 1.0f, M_MIN_NEARCLIP, 10.0f, Matrix3x4(cameraPosition, node_->GetWorldRotation(), 1.0f));
 
+	DebugRenderer *debug = node_->GetScene()->GetComponent<DebugRenderer>();
 	debug->AddFrustum(frustrum, Color::BLUE);
 
 	if (cameraDirection.DotProduct(difference) < Cos(30.0f / 2.0f))
@@ -98,7 +94,6 @@ bool SecurityCamera::SearchForPlayer(Node* player)
 	Octree *octree = GetScene()->GetComponent<Octree>();
 	octree->RaycastSingle(query);
 
-	debug->AddLine(cameraPosition, playerPosition, Color::BLUE);
 
 	AlertGuards();
 

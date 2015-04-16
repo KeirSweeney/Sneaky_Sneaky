@@ -8,6 +8,5 @@ class InteractablePoster : public Urho3D::LogicComponent
 
 public:
 	InteractablePoster(Urho3D::Context *context);
-    static void RegisterObject(Urho3D::Context *context);
-    
+	static void RegisterObject(Urho3D::Context *context);
 };

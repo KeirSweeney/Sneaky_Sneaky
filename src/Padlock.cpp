@@ -98,26 +98,21 @@ void Padlock::Update(float timeStep)
     panel_->SetVisible(true);
 
     Node *personNode = GetScene()->GetChild("Person", true);
-    Inventory *inv = personNode->GetComponent<Inventory>();
+	Inventory *inventory = personNode->GetComponent<Inventory>();
 
-    const Vector<SharedPtr<Pickup>> &items = inv->GetItems();
-
-    if(items.Empty()) {
-        LOGERROR("ITEMS IS EMPTY");
-    }
+	const Vector<SharedPtr<Pickup>> &items = inventory->GetItems();
 
     for (Vector<SharedPtr<Pickup>>::ConstIterator i = items.Begin(); i != items.End(); ++i) {
         Urho3D::SharedPtr<Pickup> item = *i;
 
-        if(item->GetPickupType() == content_) {
-            StaticModel *model = node_->GetComponent<StaticModel>();
-            RigidBody *rigidNode = node_->GetComponent<RigidBody>();
-            model->SetEnabled(false);
-            rigidNode->SetEnabled(false);
-            panel_->SetVisible(false);
-        }
+		if(item->GetPickupType() != content_) {
+			continue;
   }
 
+		node_->SetEnabled(false);
+		panel_->SetVisible(false);
+		break;
+	}
 }
 
 bool Padlock::CanPlayerInteract()

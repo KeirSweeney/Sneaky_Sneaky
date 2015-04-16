@@ -23,12 +23,10 @@
 #include "Input.h"
 #include "MrWrightTerminal.h"
 
-
 using namespace Urho3D;
 
-
 MrWright::MrWright(Context *context):
-InteractablePoster(context)
+	InteractablePoster(context)
 {
 }
 
@@ -38,7 +36,6 @@ void MrWright::RegisterObject(Context* context)
 
 	COPY_BASE_ATTRIBUTES(InteractablePoster);
 }
-
 
 void MrWright::Start()
 {
@@ -75,8 +72,6 @@ void MrWright::LoadMaterials()
 		glyphCount++;
 	}
 }
-
-void MrWright::DelayedStart(){}
 
 void MrWright::Update(float timeStep)
 {

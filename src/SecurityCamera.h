@@ -2,7 +2,6 @@
 
 #include "InteractableComponent.h"
 
-
 namespace Urho3D {
 	class RigidBody;
 	class Light;

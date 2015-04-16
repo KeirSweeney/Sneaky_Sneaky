@@ -26,105 +26,96 @@
 using namespace Urho3D;
 
 Thrower::Thrower(Context *context):
-    LogicComponent(context)
+	LogicComponent(context)
 {
 }
 
 void Thrower::RegisterObject(Context* context)
 {
-    context->RegisterFactory<Thrower>("Logic");
-    SelfDestroy::RegisterObject(context);
+	context->RegisterFactory<Thrower>("Logic");
+	SelfDestroy::RegisterObject(context);
 
-    COPY_BASE_ATTRIBUTES(LogicComponent);
-}
-
-void Thrower::Start()
-{
-
-}
-
-void Thrower::DelayedStart()
-{ 
+	COPY_BASE_ATTRIBUTES(LogicComponent);
 }
 
 void Thrower::Update(float timeStep)
 {
-    Input *input = GetSubsystem<Input>();
+	Input *input = GetSubsystem<Input>();
 
-    if(!input->GetKeyPress(KEY_T))
-    {
-        return;
-    }
+	if(!input->GetKeyPress(KEY_T)) {
+		return;
+	}
 
-    Inventory *inv = node_->GetComponent<Inventory>();
-    SharedPtr<Pickup> item = inv->GetThrowableItem();
+	Inventory *inv = node_->GetComponent<Inventory>();
+	SharedPtr<Pickup> item = inv->GetThrowableItem();
 
-    if (item.Null()) {
-        return;
-    }
+	if (item.Null()) {
+		return;
+	}
 
-    item->GetNode()->SetEnabled(true);
-    Node *itemNode = item->GetNode();
+	item->GetNode()->SetEnabled(true);
+	Node *itemNode = item->GetNode();
 
-    ResourceCache *cache = GetSubsystem<ResourceCache>();
-    Sound *throwSound = cache->GetResource<Sound>("Audio/HitHurt.wav"); //will need to move this out of update.
+	ResourceCache *cache = GetSubsystem<ResourceCache>();
+	Sound *throwSound = cache->GetResource<Sound>("Audio/HitHurt.wav"); //will need to move this out of update.
 
-    SoundSource *source = itemNode->CreateComponent<SoundSource>();
-    source->SetAutoRemove(true);
-    source->Play(throwSound);
+	SoundSource *source = itemNode->CreateComponent<SoundSource>();
+	source->SetAutoRemove(true);
+	source->Play(throwSound);
 
-    RigidBody *itemRigidBody = itemNode->GetComponent<RigidBody>();    
-    Person *person = node_->GetComponent<Person>();
-    Vector3 personDirection = person->GetDirection();
+	RigidBody *itemRigidBody = itemNode->GetComponent<RigidBody>();
+	Person *person = node_->GetComponent<Person>();
+	Vector3 personDirection = person->GetDirection();
 
-    itemNode->SetWorldPosition(node_->GetWorldPosition()+(personDirection * 0.5f) + Vector3(0.0f, 1.6f, 0.0f));
-    item->SetEnabled(false);
-    itemRigidBody->SetTrigger(false);
-    itemRigidBody->SetMass(1.0f);
-    itemRigidBody->SetRestitution(1.0f);
-    itemRigidBody->SetLinearVelocity((personDirection * 4.0f) + Vector3(0.0f, 1.6f, 0.0f));
-    itemNode->SubscribeToEvent(itemNode, E_NODECOLLISIONSTART, HANDLER(Thrower, HandleNodeCollision));
+	itemNode->SetWorldPosition(node_->GetWorldPosition()+(personDirection * 0.5f) + Vector3(0.0f, 1.6f, 0.0f));
+	item->SetEnabled(false);
+	itemRigidBody->SetTrigger(false);
+	itemRigidBody->SetMass(1.0f);
+	itemRigidBody->SetRestitution(1.0f);
+	itemRigidBody->SetLinearVelocity((personDirection * 4.0f) + Vector3(0.0f, 1.6f, 0.0f));
+	itemNode->SubscribeToEvent(itemNode, E_NODECOLLISIONSTART, HANDLER(Thrower, HandleNodeCollision));
 
-    SelfDestroy *selfDestroy = itemNode->CreateComponent<SelfDestroy>();
-    selfDestroy->SetLifeTime(7.0f);
+	SelfDestroy *selfDestroy = itemNode->CreateComponent<SelfDestroy>();
+	selfDestroy->SetLifeTime(7.0f);
 
-    SoundSource *soundSource = itemNode->CreateComponent<SoundSource>();
+	SoundSource *soundSource = itemNode->CreateComponent<SoundSource>();
 
-    Node *particleEmitterNode = itemNode->CreateChild();
-    particleEmitterNode->SetPosition(itemRigidBody->GetCenterOfMass());
-    particleEmitterNode->SetScale(Vector3(5.0f, 5.0f, 5.0f) / itemNode->GetScale());
+	Node *particleEmitterNode = itemNode->CreateChild();
+	particleEmitterNode->SetPosition(itemRigidBody->GetCenterOfMass());
+	particleEmitterNode->SetScale(Vector3(5.0f, 5.0f, 5.0f) / itemNode->GetScale());
 
-    ParticleEmitter *particleEmitter = particleEmitterNode->CreateComponent<ParticleEmitter>();
-    particleEmitter->SetEffect(cache->GetResource<ParticleEffect>("Particle/Trail.xml"));
+	ParticleEmitter *particleEmitter = particleEmitterNode->CreateComponent<ParticleEmitter>();
+	particleEmitter->SetEffect(cache->GetResource<ParticleEffect>("Particle/Trail.xml"));
 }
 
 void Thrower::HandleNodeCollision(StringHash eventType, VariantMap &eventData)
 {
-    Node *itemNode = ((RigidBody *)eventData[NodeCollisionStart::P_BODY].GetPtr())->GetNode();
-    SoundSource *soundSource = itemNode->GetComponent<SoundSource>();
+	Node *itemNode = ((RigidBody *)eventData[NodeCollisionStart::P_BODY].GetPtr())->GetNode();
+	SoundSource *soundSource = itemNode->GetComponent<SoundSource>();
 
-    DistractGuard(itemNode);
+	DistractGuard(itemNode);
 
-    if (soundSource->IsPlaying()) {
-        return;
-    }
+	if (soundSource->IsPlaying()) {
+		return;
+	}
 
-    soundSource->Play(GetSubsystem<ResourceCache>()->GetResource<Sound>("Audio/HitHurt.wav"));
+	soundSource->Play(GetSubsystem<ResourceCache>()->GetResource<Sound>("Audio/HitHurt.wav"));
 }
 
 void Thrower::DistractGuard(Node *itemNode)
 {
-    Vector3 itemPos = itemNode->GetWorldPosition();
-    PODVector<Node *> guards;
-    itemNode->GetScene()->GetChildrenWithComponent<Guard>(guards,true);
-    for (PODVector<Node *>::ConstIterator i = guards.Begin(); i != guards.End(); ++i) {
-        Node *guardNode = *i;
-        Vector3 offset = guardNode->GetWorldPosition() - itemPos;
-        if(offset.LengthSquared() > (4.0f * 4.0f)) {
-            continue;
-        }
+	Vector3 itemPos = itemNode->GetWorldPosition();
+	PODVector<Node *> guards;
+	itemNode->GetScene()->GetChildrenWithComponent<Guard>(guards,true);
+	for (PODVector<Node *>::ConstIterator i = guards.Begin(); i != guards.End(); ++i) {
+		Node *guardNode = *i;
 
-        Guard *guard = guardNode->GetComponent<Guard>();
-        guard->HeardSound(itemPos);
-    }
+		Vector3 offset = guardNode->GetWorldPosition() - itemPos;
+		if(offset.LengthSquared() > (4.0f * 4.0f)) {
+			continue;
+		}
+
+		Guard *guard = guardNode->GetComponent<Guard>();
+		guard->HeardSound(itemPos);
+	}
 }
