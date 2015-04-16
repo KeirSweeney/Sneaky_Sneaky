@@ -28,9 +28,8 @@ using namespace Urho3D;
 Laser::Laser(Context *context):
 	InteractableComponent(context),
 	lightPulse_(false),
-	lightTime_(0.0f),
-	laserTime_(0.0f),
-	laserInterval_(0.0f)
+	lightTime_(0.0f), laserTime_(0.0f),
+	laserInterval_(0.0f), laserDelay_(0.0f)
 {
 }
 
@@ -43,10 +42,14 @@ void Laser::RegisterObject(Context* context)
 void Laser::LoadFromXML(const XMLElement &xml)
 {
 	laserInterval_ = xml.GetFloat("interval");
+	laserDelay_ = xml.GetFloat("delay");
 }
 
 void Laser::DelayedStart()
 {
+	model_ = node_->GetComponent<StaticModel>();
+	model_->SetEnabled(false);
+
 	rigidBody_ = node_->GetComponent<RigidBody>();
 	rigidBody_->SetTrigger(true);
 
@@ -55,13 +58,16 @@ void Laser::DelayedStart()
 
 void Laser::Update(float timeStep)
 {
+	if (laserDelay_ > 0.0f) {
+		laserDelay_ -= timeStep;
+		return;
+	}
+
 	if(laserInterval_ > 0.0f) {
 		laserTime_ += timeStep;
 
-		StaticModel *laserModel = node_->GetComponent<StaticModel>();
-
 		if(laserTime_ > laserInterval_) {
-			laserModel->SetEnabled(!laserModel->IsEnabled());
+			model_->SetEnabled(!model_->IsEnabled());
 			laserTime_ = 0.0f;
 		}
 	}

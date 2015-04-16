@@ -6,7 +6,6 @@
   <object position="0 0.5 5" angles="0 0 0" scale="6.5" model ="Padlock" material="NeonGreen" interaction="Padlock" displaysize="200 50">Punchcard_1</object>
 
   <!--Signs-->
-  <object position="2 0.6 5" angles="0 0 -10" scale="1" model="PersonPlane" material="CPoster2"></object>
   <object position="0 1 5" angles="0 0 0" scale="1" model="PersonPlane" material="CPoster_Logo" nonsolid="true"></object>
 
   <!--Sofas-->

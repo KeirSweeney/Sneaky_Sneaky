@@ -43,16 +43,17 @@ void MrWrightTerminal::LoadFromXML(const XMLElement &xml)
         displayHeight_ = displaySize.y_;
     }
 
-    //const String content = xml.GetValue();
-    //if (!content.Empty()) {
-    //    content_ = content;
-    //}
 }
 
 void MrWrightTerminal::SetContent(String str)
 {
 	LOGERROR("SET TEXT");
 	content_ = str.CString();
+}
+
+String MrWrightTerminal::GetContent() 
+{
+	return content_;
 }
 
 void MrWrightTerminal::DelayedStart()

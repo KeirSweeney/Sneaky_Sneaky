@@ -4,6 +4,7 @@
 
 namespace Urho3D {
 	class RigidBody;
+	class StaticModel;
 }
 
 class Laser:public InteractableComponent
@@ -24,8 +25,10 @@ public:
 
 private:
 	Urho3D::RigidBody *rigidBody_;
+	Urho3D::StaticModel *model_;
 	bool lightPulse_;
 	float lightTime_;
 	float laserTime_;
 	float laserInterval_;
+	float laserDelay_;
 };
