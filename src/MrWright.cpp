@@ -80,6 +80,33 @@ void MrWright::DelayedStart(){}
 
 void MrWright::Update(float timeStep)
 {
+	Node *roomNode = node_->GetParent();
+	PODVector<Node *> terminalNodes;
+	roomNode->GetChildrenWithComponent<MrWrightTerminal>(terminalNodes, true);
+
+	for (int x = 0; x < terminalNodes.Size(); ++x) {
+		MrWrightTerminal *thisTerm = terminalNodes[x]->GetComponent<MrWrightTerminal>();
+		bool canInteract = thisTerm->CanPlayerInteract();
+		String myStr = thisTerm->GetContent();
+		
+
+		for (Vector<PODVector<Material *>>::Iterator i = sequences_.Begin(); i != sequences_.End(); ++i) {
+			PODVector<Material *> mats;
+			for (PODVector<Material *>::Iterator i = mats.Begin(); i != mats.End(); ++i) {
+				Material *mat = *i;
+				String thisStr = mat->GetName().CString();
+				if (canInteract && myStr == thisStr) {
+
+					//then they have pressed the correct glyph,
+					//this will work for any glyphs in the sequence, not just the one on the end
+
+				}
+
+			}
+		}		
+	}
+	
+
 	swapTimer_ += timeStep;
 	
 
@@ -89,10 +116,10 @@ void MrWright::Update(float timeStep)
 	
 	swapTimer_ = 0.0f;
 
-	Node *roomNode = node_->GetParent();
+	//Node *roomNode = node_->GetParent();
 
 	PODVector<Node *> posterNodes;
-	PODVector<Node *> terminalNodes;
+	//PODVector<Node *> terminalNodes;
 
 	roomNode->GetChildrenWithComponent<InteractablePoster>(posterNodes, true);
 	roomNode->GetChildrenWithComponent<MrWrightTerminal>(terminalNodes, true);
