@@ -1,5 +1,10 @@
 <room name="Refectory">
 
+  <!--LASEREMITTER-->
+  <object position ="0 0.4 5" angles="0 180 0" scale="10" model="LaserEmitter" material="Lamp"></object>
+  <object position ="0 0.4 -5" angles="0 0 0" scale="10" model="LaserEmitter" material="Lamp"></object>
+  <object position ="0 0.4 -5" angles="90 0 0" scale="0.06 10 0.06" model="Laser" material="Laser" interaction="Laser" interval="2"></object>
+
   <!--KEYCARD-->
   <object position="4.5 0 -4.5" scale="10" model="Punchcard_1" material="Pickup" interaction="Pickup"></object>
 

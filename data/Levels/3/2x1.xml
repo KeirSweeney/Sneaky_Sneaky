@@ -1,4 +1,8 @@
 <room name="Security">
+  <!-- CAMERA -->
+  <object position="0 3 -4.5" angles="0 0 0" scale="10" model="CameraBase" material="SecurityCamera"></object>
+  <object position="0 3 -4.5" angles="0 0 0" scale="10" model="Camera" material="SecurityCamera" interaction="SecurityCamera"></object>
+
   <!-- Wright's Junk Sign-->
   <object position="-5.0 0.3 -1.0" angles="0 -90 0" scale="0.5" model="PersonPlane" material="Wrights_Junk" nonsolid="true"></object>
 

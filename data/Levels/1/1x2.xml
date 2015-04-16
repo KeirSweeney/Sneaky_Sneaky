@@ -1,4 +1,8 @@
 <room>
+  <!-- CAMERA -->
+  <object position="-4.5 3 0" angles="0 90 0" scale="10" model="CameraBase" material="SecurityCamera"></object>
+  <object position="-4.5 3 0" angles="0 90 0" scale="10" model="Camera" material="SecurityCamera" interaction="SecurityCamera"></object>
+
   <!--POSTER-->
   <object position="-5 0.5 -1" angles="0 -90 0" scale="1" model="PersonPlane" material="Poster4"></object>
 

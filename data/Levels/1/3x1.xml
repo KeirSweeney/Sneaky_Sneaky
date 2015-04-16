@@ -1,5 +1,9 @@
 <room name="Human Resources">
 
+  <!-- CAMERA -->
+  <object position="0 3 4.5" angles="0 180 0" scale="10" model="CameraBase" material="SecurityCamera"></object>
+  <object position="0 3 4.5" angles="0 180 0" scale="10" model="Camera" material="SecurityCamera" interaction="SecurityCamera"></object>
+
   <!--POSTER-->
   <object position="-3 0.5 5" scale="1" model="PersonPlane" material="Poster3"></object>
 

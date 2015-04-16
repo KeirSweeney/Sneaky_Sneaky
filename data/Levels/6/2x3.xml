@@ -23,9 +23,9 @@
   <object position ="5 0.4 2" angles="0 -90 0" scale="10" model="LaserEmitter" material="Lamp"></object>
 
   <!--LASER-->
-  <object position ="-4.5 0.4 -5" angles="90 0 0" scale="0.06 10 0.06" model="Laser" material="Laser_Deadly" interaction="Laser" interval="2"></object>
-  <object position ="4.5 0.4 -5" angles="90 0 0" scale="0.06 10 0.06" model="Laser" material="Laser_Deadly" interaction="Laser" interval="2"></object>
-  <object position ="-5 0.4 2" angles="90 90 0" scale="0.06 10 0.06" model="Laser" material="Laser_Deadly" interaction="Laser" interval="2"></object>
+  <object position ="-4 0.4 -5" angles="90 0 0" scale="0.06 10 0.06" model="Laser" material="Laser_Deadly" interaction="Laser" interval="1" delay="1"></object>
+  <object position ="4 0.4 -5" angles="90 0 0" scale="0.06 10 0.06" model="Laser" material="Laser_Deadly" interaction="Laser" interval="2"></object>
+  <object position ="-5 0.4 2" angles="90 90 0" scale="0.06 10 0.06" model="Laser" material="Laser_Deadly" interaction="Laser" interval="1"></object>
 
   <!--Panneling-->
   <object position="-4 0 5" angles="0 0 0" scale="1" model="PersonPlane" material="Panneling" nonsolid="true"></object>

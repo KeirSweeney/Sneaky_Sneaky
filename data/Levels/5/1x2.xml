@@ -11,7 +11,7 @@
   <object position ="-5 0.4 4" angles="0 90 0" scale="10" model="LaserEmitter" material="Lamp"></object>
 
   <!--LASER-->
-  <object position ="-5 0.4 -3.7" angles="90 90 0" scale="0.06 10 0.06" model="Laser" material="Laser" interaction="Laser" interval="2"></object>
+  <object position ="-5 0.4 -3.7" angles="90 90 0" scale="0.06 10 0.06" model="Laser" material="Laser" interaction="Laser" interval="1" delay="1"></object>
 
   <object position ="-5 0.4 4" angles="90 90 0" scale="0.06 10 0.06" model="Laser" material="Laser" interaction="Laser" interval="1"></object>
 
