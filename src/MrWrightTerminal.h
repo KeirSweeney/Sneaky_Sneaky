@@ -21,13 +21,12 @@ public:
 
     void LoadFromXML(const Urho3D::XMLElement &xml);
 	void SetContent(Urho3D::String str);
+	Urho3D::String GetContent();
     
 public:
     void DelayedStart();
     void Update(float timeStep);
-
-private:
-    bool CanPlayerInteract();
+	bool CanPlayerInteract();
 
 private:
     int displayWidth_;
