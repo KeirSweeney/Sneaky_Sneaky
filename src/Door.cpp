@@ -10,6 +10,9 @@
 #include "RigidBody.h"
 #include "Person.h"
 #include "PhysicsEvents.h"
+#include "Sound.h"
+#include "SoundSource3D.h"
+#include "ResourceCache.h"
 
 using namespace Urho3D;
 
@@ -47,6 +50,15 @@ void Door::HandleNodeCollisionStart(StringHash eventType, VariantMap &eventData)
     bool travelingUpRight = (doorHorizontal ? roomOffset.x_ : roomOffset.z_) > 0.0f;
     //LOGERRORF("doorHorizontal: %d, travelingUpRight: %d", doorHorizontal, travelingUpRight);
 
+	//audio
+	ResourceCache *cache = GetSubsystem<ResourceCache>();
+	Sound *doorOpen = cache->GetResource<Sound>("Audio/DoorOpen.wav"); //will need to move this out of update.
+	Node *cameraNode = node_->CreateChild("Sound"); 
+	SoundSource *source = cameraNode->CreateComponent<SoundSource>();
+	source->SetGain(0.3f);
+	source->SetAutoRemove(true);
+	source->Play(doorOpen);
+
     PODVector<Vector3> path;
 
     Vector3 doorPosition = node_->GetParent()->GetPosition();
@@ -78,6 +90,15 @@ void Door::HandleNodeCollisionEnd(StringHash eventType, VariantMap &eventData)
     if (other != person) {
         return;
     }
+
+	//audio
+	ResourceCache *cache = GetSubsystem<ResourceCache>();
+	Sound *doorClose = cache->GetResource<Sound>("Audio/DoorClose.wav"); //will need to move this out of update.
+	Node *cameraNode = node_->CreateChild("Sound");
+	SoundSource *source = cameraNode->CreateComponent<SoundSource>();
+	source->SetGain(0.3f);
+	source->SetAutoRemove(true);
+	source->Play(doorClose);
 
     node_->SetPosition(Vector3::ZERO);
 }
