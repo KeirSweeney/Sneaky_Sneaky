@@ -38,7 +38,7 @@
   <object position="4.7 1 4.5" angles="0 225 0" scale="5" model="Lamp" material="Lamp"></object>
   <object position="4.5 1 -2.8" angles="0 180 0" scale="5" model="Lamp" material="Lamp"></object>
   <!--Terminals-->
-  <object position="-4.5 1 -3.5" angles="0 -90 0" scale="5" model="Terminal" material="Terminal" interaction="Terminal" displaysize="400 150">chris.f@wrightsltd.com
+  <object position="-4.5 1 -3.5" angles="0 -90 0" scale="5" model="Terminal" material="Terminal" interaction="Terminal" displaysize="400 200">chris.f@wrightsltd.com
 
 I'M DONE!
 
@@ -51,13 +51,13 @@ Robert D###</object>
   <object position="-4.5 1 3.8" angles="0 -75 0" scale="5" model="Terminal" material="Terminal" interaction="Terminal" displaysize="400 150">DIRK'S PRIVATE DIARY :
 I think Chris finally broke the camel's back.
 Bob just stromed out of the office and left his cubicle in a state.
-Damned if i'm cleaned his crap up!</object>
+Damned if i'm cleaning his crap up!</object>
   <object position="4.5 1 -3.5" angles="0 90 0" scale="5" model="Terminal" material="Terminal" interaction="Terminal" displaysize="400 150">EVELYN'S PRIVATE DIARY
 Did I just hear Bob make a break for it?
-Poor sod, Chris has been giving hi such a hard time lately. Think i'll keep my head down.</object>
-  <object position="4.5 1 3" angles="0 120 0" scale="5" model="Terminal" material="Terminal" interaction="Terminal" displaysize="500 200">A problem has been detected and windows has been shut down to prevent damage to your computer
+Poor sod, Chris has been giving him such a hard time lately. Think i'll keep my head down.</object>
+  <object position="4.5 1 3" angles="0 120 0" scale="5" model="Terminal" material="Terminal" interaction="Terminal" displaysize="500 200">A problem has been detected and Windows has been shut down to prevent damage to your computer
   
-A cup of coffee was recieved on a secondary processor with the allocated time interval.
+A cup of coffee was recieved on a secondary processor within the allocated time interval.
 
 If this is the first time you've managed to total a keyboard and possibly fry your motherboard too... restart your computer (and hope for the best) If you do it again, follow these steps:
 

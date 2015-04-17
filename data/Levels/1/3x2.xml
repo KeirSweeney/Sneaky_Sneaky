@@ -35,13 +35,13 @@
   <object position="0.2 0 -1.2" angles="0 180 0" scale="20" model="Table" material="FlatGrey"></object>
   <object position="1 1 -1.2" angles="0 -90 0" scale="5" model="Lamp" material="Lamp"></object>
   <object position="0 0 -0.8" angles="0 -10 0" scale="6.5" model ="Seat" material="Seat"></object>
-  <object position="0.2 1 -1.2" angles="0 180 0" scale="5" model="Terminal" material="Terminal" interaction="Terminal" displaysize="500 100">ERROR 404 - Incriminating evidence Not Found</object>
+  <object position="0.2 1 -1.2" angles="0 180 0" scale="5" model="Terminal" material="Terminal" interaction="Terminal" displaysize="500 100">ERROR 404 - Incriminating Evidence Not Found</object>
 
   <object position="-2.7 0 -1.2" angles="0 180 0" scale="20" model="Table" material="FlatGrey"></object>
   <object position="-3 0 -0.8" angles="0 10 0" scale="6.5" model ="Seat" material="Seat"></object>
   <object position="-3.1 1 -1.2" angles="0 180 0" scale="5" model="Terminal" material="Terminal" interaction="Terminal" displaysize="400 150">RAY PERSONAL LOG
-SHIT!
-Was that Bob?
+SH*T!
+Was that Bob rushing by just then?
 What the hell happened?
 He's been talking about quitting all week. The poor guy.
 I have to give him a cal...</object>

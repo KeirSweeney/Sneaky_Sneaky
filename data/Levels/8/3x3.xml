@@ -1,3 +1,36 @@
 <room floor="Black_DI" lights="false">
+  <!--CoinOps-->
+  <object position="0 0 4.3" angles="0 90 0" scale="17.5" model="CoinOp" material="Black_DI"></object>
+  <object position="-4.3 0 4.3" angles="0 45 0" scale="17.5" model="CoinOp" material="Black_DI"></object>
+  <object position="4.3 0 4.3" angles="0 135 0" scale="17.5" model="CoinOp" material="Black_DI"></object>
+
+  <!--Vending Machines-->
+  <object position="-4.5 0 -0" angles="0 -90 0" scale="15" model="VendingMachineBody" material="Obsidian"></object>
+  <object position="-4.5 0 -0" angles="0 -90 0" scale="15" model="VendingMachineFront" material="NeonYellow"></object>
+  <object position="-4.5 0 -2" angles="0 -90 0" scale="15" model="VendingMachineBody" material="Obsidian"></object>
+  <object position="-4.5 0 -2" angles="0 -90 0" scale="15" model="VendingMachineFront" material="NeonPink"></object>
+  <object position="-4.5 0 -4" angles="0 -90 0" scale="15" model="VendingMachineBody" material="Obsidian"></object>
+  <object position="-4.5 0 -4" angles="0 -90 0" scale="15" model="VendingMachineFront" material="NeonGreen"></object>
+
+  <object position="5 0.5 0" angles="0 90 0" scale="1" model="PersonPlane" material="CPoster4"></object>
+
+  <!--Sofas-->
+  <object position="3.5 0 -4.6" angles="0 0 0" scale="50" model="SofaLength" material="Obsidian"></object>
+  <object position="2 0 -5" angles="0 180 0" scale="50" model="SofaEnd" material="Obsidian"></object>
+  <object position="4.6 0 -3.5" angles="0 -90 0" scale="50" model="SofaLength" material="Obsidian"></object>
+  <object position="4.6 0 -0.5" angles="0 -90 0" scale="50" model="SofaLength" material="Obsidian"></object>
+  <object position="5 0 1" angles="0 -90 0" scale="50" model="SofaEnd" material="Obsidian"></object>
+  <!--Coffee Table-->
+  <object position="2.5 0 -2" angles="0 90 0" scale="25" model="CoffeeTableGlass" material="CoffeeTableGlass"></object>
+  <object position="2.5 0 -2" angles="0 90 0" scale="25" model="CoffeeTableLegs" material="NeonBlue"></object>
+  <object position="2.5 0 0.5" angles="0 90 0" scale="25" model="CoffeeTableGlass" material="CoffeeTableGlass"></object>
+  <object position="2.5 0 0.5" angles="0 90 0" scale="25" model="CoffeeTableLegs" material="NeonGreen"></object>
+
+  <!-- BIN -->
+  <object position="-3 0 -4.5" angles="0 0 0" scale="5" model="Bin" material="Obsidian"></object>
+
+  <!--COOLERS-->
+  <object position="-1.5 0 -4.5" angles="0 -90 0" scale="6" model="CoolerBase" material="Obsidian"></object>
+  <object position="-1.5 0 -4.5" angles="0 -90 0" scale="6" model="CoolerBottle" material="CoolerBottle"></object>
 
 </room>

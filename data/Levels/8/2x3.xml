@@ -1,3 +1,28 @@
 <room floor="Black_DI" lights="false">
+  <!--Sofas-->
+  <object position="-3.5 0 4.6" angles="0 180 0" scale="50" model="SofaLength" material="Obsidian"></object>
+  <object position="-2 0 5" angles="0 0 0" scale="50" model="SofaEnd" material="Obsidian"></object>
+  <object position="-4.6 0 3.5" angles="0 90 0" scale="50" model="SofaLength" material="Obsidian"></object>
+  <object position="-5 0 2" angles="0 90 0" scale="50" model="SofaEnd" material="Obsidian"></object>
+  <!--Coffee Table-->
+  <object position="-3 0 2.5" angles="0 90 0" scale="25" model="CoffeeTableGlass" material="CoffeeTableGlass"></object>
+  <object position="-3 0 2.5" angles="0 90 0" scale="25" model="CoffeeTableLegs" material="NeonPink"></object>
+
+  <!--Vending Machines-->
+  <object position="4.5 0 3" angles="0 90 0" scale="15" model="VendingMachineBody" material="Obsidian"></object>
+  <object position="4.5 0 3" angles="0 90 0" scale="15" model="VendingMachineFront" material="NeonBlue"></object>
+  <object position="4.5 0 1" angles="0 90 0" scale="15" model="VendingMachineBody" material="Obsidian"></object>
+  <object position="4.5 0 1" angles="0 90 0" scale="15" model="VendingMachineFront" material="NeonPink"></object>
+
+  <!--CublicleDividers-->
+  <object position="1.5 0 -2" angles="0 0 0" scale="12.5" model="CubicleDivider" material="Obsidian"></object>
+  <object position="0 0 -2" angles="0 0 0" scale="12.5" model="CubicleDivider" material="Obsidian"></object>
+  <object position="-1.5 0 -2" angles="0 0 0" scale="12.5" model="CubicleDivider" material="Obsidian"></object>
+
+
+  <guard>
+    <waypoint position="-4 0 -3.5"></waypoint>
+    <waypoint position="4 0 -3.5"></waypoint>
+  </guard>
 
 </room>
