@@ -21,6 +21,10 @@
 #include "Log.h"
 #include "Profiler.h"
 #include "StaticModel.h"
+#include "SoundSource3D.h"
+#include "Audio.h"
+#include "ResourceCache.h"
+#include "Sound.h"
 
 using namespace Urho3D;
 
@@ -57,6 +61,9 @@ void Padlock::LoadFromXML(const XMLElement &xml)
 
 void Padlock::DelayedStart()
 {
+	Node *sound = node_->CreateChild("SoundEffect");
+	source_ = sound->CreateComponent<SoundSource>();
+
 	UI *ui = GetSubsystem<UI>();
 
 	panel_ = ui->GetRoot()->CreateChild<UIElement>();
@@ -106,6 +113,14 @@ void Padlock::Update(float timeStep)
 	if (item.Null()) {
 		return;
 	}
+
+	
+	ResourceCache *cache = GetSubsystem<ResourceCache>();
+	Sound *unlock = cache->GetResource<Sound>("Audio/Unlock.ogg");
+	source_->SetAutoRemove(true);
+	source_->SetGain(0.3f);
+	source_->Play(unlock);
+	
 
 	panel_->SetVisible(false);
 	node_->SetEnabled(false);
