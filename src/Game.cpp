@@ -1,5 +1,6 @@
 #include "Game.h"
 
+#include "Audio.h"
 #include "Camera.h"
 #include "CollisionShape.h"
 #include "CoreEvents.h"
@@ -93,6 +94,9 @@ void Game::Start()
 {
 	// Seed the random number generator.
 	SetRandomSeed((unsigned int)time(NULL));
+
+	Audio *audioSystem = GetSubsystem<Audio>();
+	audioSystem->SetMasterGain(SOUND_MASTER, 0.0f);
 
 	// ResourceCache handles loading files from disk.
 	ResourceCache *cache = GetSubsystem<ResourceCache>();

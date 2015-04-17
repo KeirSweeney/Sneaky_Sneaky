@@ -46,8 +46,8 @@ void Thrower::Update(float timeStep)
 		return;
 	}
 
-	Inventory *inv = node_->GetComponent<Inventory>();
-	SharedPtr<Pickup> item = inv->GetThrowableItem();
+	Inventory *inventory = node_->GetComponent<Inventory>();
+	SharedPtr<Pickup> item = inventory->GetItemOfType("Throwable", true);
 
 	if (item.Null()) {
 		return;

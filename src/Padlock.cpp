@@ -51,6 +51,8 @@ void Padlock::LoadFromXML(const XMLElement &xml)
 	if (!content.Empty()) {
 		content_ = content;
 	}
+
+	type_ = xml.HasAttribute("type") ? xml.GetAttribute("type") : content_;
 }
 
 void Padlock::DelayedStart()
@@ -99,19 +101,14 @@ void Padlock::Update(float timeStep)
 	Node *personNode = GetScene()->GetChild("Person", true);
 	Inventory *inventory = personNode->GetComponent<Inventory>();
 
-	const Vector<SharedPtr<Pickup>> &items = inventory->GetItems();
+	SharedPtr<Pickup> item = inventory->GetItemOfType(type_, false);
 
-	for (Vector<SharedPtr<Pickup>>::ConstIterator i = items.Begin(); i != items.End(); ++i) {
-		Urho3D::SharedPtr<Pickup> item = *i;
-
-		if(item->GetPickupType() != content_) {
-			continue;
-		}
-
-		node_->SetEnabled(false);
-		panel_->SetVisible(false);
-		break;
+	if (item.Null()) {
+		return;
 	}
+
+	panel_->SetVisible(false);
+	node_->SetEnabled(false);
 }
 
 bool Padlock::CanPlayerInteract()

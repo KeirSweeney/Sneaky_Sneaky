@@ -27,8 +27,7 @@ public:
 public:
 	void AddItem(Pickup *item);
 	int GetItemCount();
-	Urho3D::SharedPtr<Pickup> GetThrowableItem();
-	const Urho3D::Vector<Urho3D::SharedPtr<Pickup>> &GetItems() const;
+	Urho3D::SharedPtr<Pickup> GetItemOfType(Urho3D::String type, bool remove);
 
 private:
 	bool dirty_;

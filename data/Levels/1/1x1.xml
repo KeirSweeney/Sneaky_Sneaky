@@ -10,7 +10,7 @@
   <object position="4.5 3 0" angles="0 -90 0" scale="10" model="Camera" material="SecurityCamera" interaction="SecurityCamera"></object>
 
   <!--PADLOCK-->
-  <object position="5 0.5 0" angles="0 90 0" scale="6.5" model ="Padlock" material="Lamp" interaction="Padlock" displaysize="200 50">Punchcard_1</object>
+  <object position="5 0.5 0" angles="0 90 0" scale="6.5" model="Padlock" material="Lamp" interaction="Padlock" displaysize="200 50">Punchcard_1</object>
 
   <!--KEYCARD-->
   <object position="-0.8 0 4.5" scale="10" model="Punchcard_1" material="Pickup" interaction="Pickup"></object>

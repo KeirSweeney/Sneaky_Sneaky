@@ -33,4 +33,5 @@ private:
 	int displayHeight_;
 	Urho3D::String content_;
 	Urho3D::UIElement *panel_;
+	Urho3D::String type_;
 };

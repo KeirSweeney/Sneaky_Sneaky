@@ -34,7 +34,8 @@ void Pickup::RegisterObject(Context* context)
 
 void Pickup::LoadFromXML(const XMLElement &xml)
 {
-	type_ = xml.GetAttribute("model");
+	type_ = xml.HasAttribute("type") ? xml.GetAttribute("type") : xml.GetAttribute("model");
+	name_ = xml.HasAttribute("name") ? xml.GetAttribute("name") : type_;
 }
 
 void Pickup::DelayedStart()
@@ -76,6 +77,11 @@ void Pickup::Update(float timeStep)
 String Pickup::GetPickupType()
 {
 	return type_;
+}
+
+String Pickup::GetDisplayName()
+{
+	return name_;
 }
 
 

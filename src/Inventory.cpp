@@ -24,110 +24,104 @@ using namespace Urho3D;
 const int Inventory::PADDING = 20;
 
 Inventory::Inventory(Context *context):
-    LogicComponent(context)
+	LogicComponent(context)
 {
 }
 
 void Inventory::RegisterObject(Context* context)
 {
-    context->RegisterFactory<Inventory>("Logic");
+	context->RegisterFactory<Inventory>("Logic");
 
-    COPY_BASE_ATTRIBUTES(LogicComponent);
+	COPY_BASE_ATTRIBUTES(LogicComponent);
 }
 
 void Inventory::DelayedStart()
 {
-    UI *ui = GetSubsystem<UI>();
+	UI *ui = GetSubsystem<UI>();
 
-    UIElement *panel = ui->GetRoot()->CreateChild<UIElement>();
-    panel->SetFixedSize(panel->GetParent()->GetSize() - IntVector2(PADDING * 2, PADDING * 2));
-    panel->SetAlignment(HA_CENTER, VA_CENTER);
-    panel->SetVisible(false);
+	UIElement *panel = ui->GetRoot()->CreateChild<UIElement>();
+	panel->SetFixedSize(panel->GetParent()->GetSize() - IntVector2(PADDING * 2, PADDING * 2));
+	panel->SetAlignment(HA_CENTER, VA_CENTER);
+	panel->SetVisible(false);
 
-    Sprite *background = panel->CreateChild<Sprite>();
-    background->SetFixedSize(panel->GetSize());
-    background->SetColor(Color::BLACK);
-    background->SetOpacity(0.6f);
+	Sprite *background = panel->CreateChild<Sprite>();
+	background->SetFixedSize(panel->GetSize());
+	background->SetColor(Color::BLACK);
+	background->SetOpacity(0.6f);
 
-    panel_ = panel->CreateChild<UIElement>();
-    panel_->SetFixedSize(panel->GetSize());
+	panel_ = panel->CreateChild<UIElement>();
+	panel_->SetFixedSize(panel->GetSize());
 }
 
 void Inventory::Update(float timeStep)
 {
-    Input *input = GetSubsystem<Input>();
+	Input *input = GetSubsystem<Input>();
 
-    if (!input->GetKeyDown(KEY_TAB)) {
-        panel_->GetParent()->SetVisible(false);
-        return;
-    }
+	if (!input->GetKeyDown(KEY_TAB)) {
+		panel_->GetParent()->SetVisible(false);
+		return;
+	}
 
-    // If we're marked as dirty, remove all the UI children
-    // and recreate them from the current inventory contents.
-    if (dirty_) {
-        panel_->RemoveAllChildren();
+	// If we're marked as dirty, remove all the UI children
+	// and recreate them from the current inventory contents.
+	if (dirty_) {
+		panel_->RemoveAllChildren();
 
-        int x = PADDING;
-        int y = PADDING;
-        for (Vector<SharedPtr<Pickup>>::ConstIterator i = items_.Begin(); i != items_.End(); ++i) {
-            UIElement *item = panel_->CreateChild<UIElement>();
-            item->SetFixedSize(200, 200);
-            item->SetPosition(x, y);
+		int x = PADDING;
+		int y = PADDING;
+		for (Vector<SharedPtr<Pickup>>::ConstIterator i = items_.Begin(); i != items_.End(); ++i) {
+			UIElement *item = panel_->CreateChild<UIElement>();
+			item->SetFixedSize(200, 200);
+			item->SetPosition(x, y);
 
-            Sprite *background = item->CreateChild<Sprite>();
-            background->SetFixedSize(item->GetSize());
-            background->SetColor(Color::WHITE);
-            background->SetOpacity(0.2f);
+			Sprite *background = item->CreateChild<Sprite>();
+			background->SetFixedSize(item->GetSize());
+			background->SetColor(Color::WHITE);
+			background->SetOpacity(0.2f);
 
-            Text *label = item->CreateChild<Text>();
-            label->SetFont("Fonts/Anonymous Pro.ttf");
-            label->SetColor(Color::WHITE);
-            label->SetText((*i)->GetPickupType());
-            label->SetAlignment(HA_CENTER, VA_CENTER);
+			Text *label = item->CreateChild<Text>();
+			label->SetFont("Fonts/Anonymous Pro.ttf");
+			label->SetColor(Color::WHITE);
+			label->SetText((*i)->GetDisplayName());
+			label->SetAlignment(HA_CENTER, VA_CENTER);
 
-            x += item->GetWidth() + PADDING;
-            if (x > panel_->GetWidth() - PADDING) {
-                x = 0;
-                y += item->GetHeight() + PADDING;
-            }
-        }
-    }
+			x += item->GetWidth() + PADDING;
+			if (x > panel_->GetWidth() - PADDING) {
+				x = 0;
+				y += item->GetHeight() + PADDING;
+			}
+		}
+	}
 
-    panel_->GetParent()->SetVisible(true);
+	panel_->GetParent()->SetVisible(true);
 }
 
 void Inventory::AddItem(Pickup *item)
 {
-    items_.Push(SharedPtr<Pickup>(item));
-    dirty_ = true;
+	items_.Push(SharedPtr<Pickup>(item));
+	dirty_ = true;
 }
 
 int Inventory::GetItemCount()
 {
-    return items_.Size();
+	return items_.Size();
 }
 
-SharedPtr<Pickup> Inventory::GetThrowableItem()
+SharedPtr<Pickup> Inventory::GetItemOfType(String type, bool remove)
 {
-    Urho3D::SharedPtr<Pickup> returnItem;
+	Urho3D::SharedPtr<Pickup> returnItem;
 
-    for (Vector<SharedPtr<Pickup>>::ConstIterator i = items_.Begin(); i != items_.End(); ++i) {
-        Urho3D::SharedPtr<Pickup> item = *i;
-        if(item->GetPickupType() == "Pickup")
-        {
-            returnItem = item;
-            break;
-        }
-    }
+	for (Vector<SharedPtr<Pickup>>::ConstIterator i = items_.Begin(); i != items_.End(); ++i) {
+		Urho3D::SharedPtr<Pickup> item = *i;
+		if(item->GetPickupType().Compare(type, false) == 0) {
+			returnItem = item;
+			break;
+		}
+	}
 
-    if(returnItem.NotNull())
-    {
-        items_.Remove(returnItem);
-    }
+	if(remove && returnItem.NotNull()) {
+		items_.Remove(returnItem);
+	}
 
-    return returnItem;
-}
-
-const Vector<SharedPtr<Pickup>> &Inventory::GetItems() const {
-    return items_;
+	return returnItem;
 }
