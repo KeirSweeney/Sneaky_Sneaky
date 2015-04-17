@@ -1,4 +1,10 @@
 <room name="Reception">
+
+
+  <!--Rock-->
+  <object position="4.5 0 -3.5" scale="2.5" model="Rock" material="Pickup" interaction="Pickup" type="Throwable" name="Rock"></object>
+
+
   <!--RECEPTION DESK-->
   <object position="0 0 -2.5" angles="0 0 0" scale="20" model="Table" material="FlatGrey"></object>
   <object position="0 0 -3.1" angles="0 195 0" scale="6.5" model ="Seat" material="Seat_2ndFloor"></object>

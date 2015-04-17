@@ -1,4 +1,6 @@
 <room name="Sector B">
+  <!--Brick-->
+  <object position="0 0 -2.5" scale="6" model="Brick" material="Pickup" interaction="Pickup" type="Throwable" name="Brick"></object>
 
   <!--Poster-->
   <object position="2.5 0.5 -5" angles="0 180 0" scale="1" model="PersonPlane" material="BPoster3"></object>

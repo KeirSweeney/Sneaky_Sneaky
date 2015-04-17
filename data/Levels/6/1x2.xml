@@ -1,4 +1,6 @@
 <room>
+  <object position="-2 0 -4.5" scale="6" model="Brick" material="Pickup" interaction="Pickup" type="Throwable" name="Brick"></object>
+  <object position="-2 0 4.5" scale="6" model="Brick" material="Pickup" interaction="Pickup" type="Throwable" name="Brick"></object>
 
   <!-- Desks-->
   <object position="-3.8 0 -3" angles="0 180 0" scale="20" model="Table" material="Mahogany"></object>

@@ -1,4 +1,6 @@
 <room name="Reception" floor="Black_DI" lights="false">
+  <!--Spanner-->
+  <object position="4.5 0 4.5" scale="7" model="Spanner" material="NeonPink" interaction="Pickup" type="Throwable" name="Spanner"></object>
 
   <!--PADLOCK-->
   <object position="0 0.5 5" angles="0 0 0" scale="6.5" model ="Padlock" material="NeonGreen" interaction="Padlock" type="Punchcard_2">Stairwell</object>

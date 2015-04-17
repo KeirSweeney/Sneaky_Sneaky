@@ -1,4 +1,6 @@
 <room name="Viewing Room">
+  <!--Rock-->
+  <object position="-4.5 0 -2.5" scale="2.5" model="Rock" material="Pickup" interaction="Pickup" type="Throwable" name="Rock"></object>
 
   <!--KEYCARD-->
   <object position="4.5 0 -4.0" scale="10" model="Punchcard" material="Pickup" interaction="Pickup" type="Punchcard_1" name="Security Dept Keycard"></object>

@@ -1,4 +1,7 @@
 <room name="Isolation">
+
+  <object position="-4.5 0 4.5" scale="6" model="Brick" material="Pickup" interaction="Pickup" type="Throwable" name="Brick"></object>
+
   <!--Sign-->
   <object position="0 1.1 5" angles="0 0 0" scale="1" model="PersonPlane" material="Isolation" nonsolid="true"></object>
 

@@ -1,5 +1,8 @@
 <room name="Manager Chester's Office">
 
+  <!--Rock-->
+  <object position="0 0 0" scale="2.5" model="Rock" material="Pickup" interaction="Pickup" type="Throwable" name="Rock"></object>
+
   <!--KEYCARD-->
   <object position="4 0 0" scale="10" model="Punchcard" material="Pickup" interaction="Pickup" type="Punchcard_2" name="Upper Floor Key"></object>
 

@@ -1,4 +1,8 @@
 <room>
+
+  <!--Rock-->
+  <object position="3 0 -3" scale="2.5" model="Rock" material="Pickup" interaction="Pickup" type="Throwable" name="Rock"></object>
+
   <!--POSTER-->
   <object position="-5 0.5 2" angles="0 -90 0" scale="1" model="PersonPlane" material="Poster3"></object>
 
