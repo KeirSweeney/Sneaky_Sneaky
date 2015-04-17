@@ -5,6 +5,7 @@
 namespace Urho3D {
 	class RigidBody;
 	class StaticModel;
+	class SoundSource;
 }
 
 class Laser:public InteractableComponent
@@ -22,6 +23,7 @@ public:
 
 public:
 	void HandleNodeCollision(Urho3D::StringHash eventType, Urho3D::VariantMap &eventData);
+	void Alarm();
 
 private:
 	Urho3D::RigidBody *rigidBody_;
@@ -31,4 +33,5 @@ private:
 	float laserTime_;
 	float laserInterval_;
 	float laserDelay_;
+	Urho3D::SoundSource *source_;
 };
