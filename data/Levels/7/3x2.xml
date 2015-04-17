@@ -1,4 +1,6 @@
 <room floor="Black_DI" lights="false">
+  <!--Spanner-->
+  <object position="4.5 0 -2.5" scale="7" model="Spanner" material="NeonPink" interaction="Pickup" type="Throwable" name="Spanner"></object>
   <!--POSTER-->
   <object position="5 0.5 2" angles="0 90 0" scale="1" model="PersonPlane" material="CPoster1"></object>
 

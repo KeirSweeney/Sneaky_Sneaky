@@ -1,5 +1,8 @@
 <room name ="Reception">
 
+  <!--Rock-->
+  <object position="-0 0 0" scale="2.5" model="Rock" material="Pickup" interaction="Pickup" type="Throwable" name="Rock"></object>
+
   <!-- BIN (woooo!) -->
   <object position="3.5 0 -1.5" angles="0 0 0" scale="5" model="Bin" material="CubicleDivider"></object>
 

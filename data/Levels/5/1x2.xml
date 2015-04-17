@@ -1,4 +1,6 @@
 <room name="Sector A">
+  <!--Brick-->
+  <object position="-2 0 4.5" scale="6" model="Brick" material="Pickup" interaction="Pickup" type="Throwable" name="Brick"></object>
 
   <!--PADLOCK-->
   <object position="0 0.5 5" angles="0 0 0" scale="6.5" model ="Padlock" material="Lamp" interaction="Padlock" type="Punchcard_2">CEO's Floor</object>

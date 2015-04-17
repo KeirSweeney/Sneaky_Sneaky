@@ -1,4 +1,9 @@
 <room name="Hard Corp Entrance">
+
+  <!--Bricks-->
+  <object position="3 0 3" scale="6" model="Brick" material="Pickup" interaction="Pickup" type="Throwable" name="Brick"></object>
+  <object position="-3 0 -3" scale="6" model="Brick" material="Pickup" interaction="Pickup" type="Throwable" name="Brick"></object>
+
   <!--LASEREMITTER-->
   <object position ="-4 0.4 5" angles="0 180 0" scale="10" model="LaserEmitter" material="Lamp"></object>
   <object position ="-4 0.4 -5" scale="10" model="LaserEmitter" material="Lamp"></object>

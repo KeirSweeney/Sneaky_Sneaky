@@ -1,5 +1,7 @@
 <room floor="Black_DI" lights="false">
-
+  <!--Spanner-->
+  <object position="4.5 0 0" scale="7" model="Spanner" material="NeonPink" interaction="Pickup" type="Throwable" name="Spanner"></object>
+  
   <object position="0 0.5 -5" angles="0 180 0" scale="1" model="PersonPlane" material="CPoster4"></object>
 
   <!--Cubical dividers -->

@@ -1,4 +1,8 @@
 <room name="Waiting Room">
+
+  <!--Rock-->
+  <object position="4.5 0 -3" scale="2.5" model="Rock" material="Pickup" interaction="Pickup" type="Throwable" name="Rock"></object>
+
   <!--PILLARS-->
   <object position="-4.7 0 1.5" angles="0 0 0" scale="39" model="Pillar" material="FlatGrey" nonsolid="true"></object>
   <object position="-4.7 0 -1.5" angles="0 0 0" scale="39" model="Pillar" material="FlatGrey" nonsolid="true"></object>

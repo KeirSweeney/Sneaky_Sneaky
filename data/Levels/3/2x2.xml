@@ -1,5 +1,8 @@
 <room name="Reception">
 
+  <!--Rock-->
+  <object position="-4.5 0 4.5" scale="2.5" model="Rock" material="Pickup" interaction="Pickup" type="Throwable" name="Rock"></object>
+
   <!-- CAMERA -->
   <object position="0 3 4.5" angles="0 180 0" scale="10" model="CameraBase" material="SecurityCamera"></object>
   <object position="0 3 4.5" angles="0 180 0" scale="10" model="Camera" material="SecurityCamera" interaction="SecurityCamera"></object>
