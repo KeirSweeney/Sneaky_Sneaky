@@ -52,6 +52,7 @@
 #include "SoundSource3D.h"
 #include "Sound.h"
 #include "InteractablePoster.h"
+#include "AudioZone.h"
 
 #include <ctime>
 #include <cstdio>
@@ -95,10 +96,10 @@ void Game::Start()
 	// Seed the random number generator.
 	SetRandomSeed((unsigned int)time(NULL));
 
-#if 0
 	Audio *audioSystem = GetSubsystem<Audio>();
-	audioSystem->SetMasterGain(SOUND_MASTER, 0.0f);
-#endif
+	//audioSystem->SetMasterGain(SOUND_MASTER, 0.0f);
+	audioSystem->SetMasterGain(SOUND_MUSIC, 0.2f);
+	audioSystem->SetMasterGain(SOUND_VOICE, 0.75f);
 
 	// ResourceCache handles loading files from disk.
 	ResourceCache *cache = GetSubsystem<ResourceCache>();
@@ -126,6 +127,7 @@ void Game::Start()
 	MrWright::RegisterObject(context_);
 	Padlock::RegisterObject(context_);
 	MrWrightTerminal::RegisterObject(context_);
+	AudioZone::RegisterObject(context_);
 
 	SharedPtr<Viewport> viewport(new Viewport(context_, scene_, NULL));
 
@@ -460,6 +462,38 @@ void Game::LoadLevel()
 
 					child = child.GetNext("guard");
 				}
+
+				child = roomXml->GetRoot().GetChild("audiozone");
+				while (child) {
+					Vector2 position = child.GetVector2("position");
+					float rotation = child.GetFloat("rotation");
+					Vector2 size = child.GetVector2("size");
+
+					Node *node = roomContentsNode->CreateChild("AudioZone");
+					node->SetPosition(Vector3(position.x_, 0.0f, position.y_));
+					node->SetRotation(Quaternion(0.0f, rotation, 0.0f));
+
+					RigidBody *rigidBody = node->CreateComponent<RigidBody>();
+					rigidBody->SetTrigger(true);
+
+					CollisionShape *collisionShape = node->CreateComponent<CollisionShape>();
+					collisionShape->SetBox(Vector3(size.x_, 3.0f, size.y_), Vector3(0.0f, 1.5f, 0.0f));
+
+					AudioZone *audioZone = node->CreateComponent<AudioZone>();
+
+					XMLElement audioChild = child.GetChild("audioclip");
+					while (audioChild) {
+						String file = audioChild.GetValue();
+						float delay = audioChild.GetFloat("delay");
+
+						Sound *sound = cache->GetResource<Sound>("Audio/" + file);
+						audioZone->EnqueueAudioClip(sound, delay);
+
+						audioChild = audioChild.GetNext("audioclip");
+					}
+
+					child = child.GetNext("audiozone");
+				}
 			}
 		}
 	}
@@ -597,7 +631,7 @@ void Game::LoadLevel()
 	mainTheme->SetLooped(true);
 
 	SoundSource *source = cameraNode->CreateComponent<SoundSource>();
-	source->SetGain(0.1f);
+	source->SetSoundType(SOUND_MUSIC);
 	source->Play(mainTheme);
 
 	Camera *camera = cameraNode->CreateComponent<Camera>();

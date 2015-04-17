@@ -37,4 +37,10 @@
   <object position="0 0 -4.5" angles="0 180 0" scale="6" model="CoolerBase" material="FlatGrey"></object>
   <object position="0 0 -4.5" angles="0 180 0" scale="6" model="CoolerBottle" material="CoolerBottle"></object>
 
+  <audiozone position="0 0" rotation="0" size="1 1">
+    <audioclip delay="1">VO/Voice/1_Hello.wav</audioclip>
+    <audioclip delay="0.5">VO/Voice/2_GoingToGetNowhere.wav</audioclip>
+    <audioclip delay="0.5">VO/Voice/3_OnlyHelp.wav</audioclip>
+    <audioclip delay="1">VO/Voice/4_RightNow.wav</audioclip>
+  </audiozone>
 </room>

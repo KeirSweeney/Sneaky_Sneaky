@@ -27,4 +27,8 @@ H.Chippingfort - C.E.O.</object>
   <object position="4.2 0 4.5" angles="0 90 0" scale="25" model="CabinetShut" material="CabinetShut"></object>
   <object position="4.8 0 4.5" angles="0 90 0" scale="25" model="CabinetTop" material="CabinetTop"></object>
 
+  <audiozone position="-4.5 0" rotation="0" size="1 2">
+    <audioclip delay="1">VO/Voice/5_LeaveTheRest.wav</audioclip>
+  </audiozone>
+
 </room>
