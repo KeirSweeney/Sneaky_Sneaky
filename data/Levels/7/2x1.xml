@@ -1,9 +1,9 @@
 <room name="Dark Inc Entrance" floor="Black_DI" lights="false">
   <!--KEYCARD-->
-  <object position="4.5 0 -4.0" scale="10" model="Punchcard_1" material="NeonPink" interaction="Pickup"></object>
+  <object position="4.5 0 -4.0" scale="10" model="Punchcard" material="NeonPink" interaction="Pickup" type="Punchcard_1" name="Glowing Passcard"></object>
 
   <!--PADLOCK-->
-  <object position="0 0.5 5" angles="0 0 0" scale="6.5" model ="Padlock" material="NeonGreen" interaction="Padlock" displaysize="200 50">Punchcard_1</object>
+  <object position="0 0.5 5" angles="0 0 0" scale="6.5" model ="Padlock" material="NeonGreen" interaction="Padlock" type="Punchcard_1">Dark Inc Entrance</object>
 
   <!--Signs-->
   <object position="0 1 5" angles="0 0 0" scale="1" model="PersonPlane" material="CPoster_Logo" nonsolid="true"></object>

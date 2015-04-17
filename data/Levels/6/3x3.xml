@@ -3,7 +3,7 @@
   <object position="0 0 0" scale="30" model="BrickStack" material="GoldStack"></object>
 
   <!--KEYCARD-->
-  <object position="-4.5 0 1" scale="10" model="Punchcard_2" material="Pickup" interaction="Pickup"></object>
+  <object position="-4.5 0 1" scale="10" model="Punchcard" material="Pickup" interaction="Pickup" type="Punchcard_2" name="Bertha's Office Keycard"></object>
 
   <!--LASEREMITTER-->
   <object position ="-3 0.4 5" angles="0 180 0" scale="10" model="LaserEmitter" material="Lamp"></object>

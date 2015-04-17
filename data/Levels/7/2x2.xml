@@ -1,7 +1,7 @@
 <room name="Reception" floor="Black_DI" lights="false">
 
   <!--PADLOCK-->
-  <object position="0 0.5 5" angles="0 0 0" scale="6.5" model ="Padlock" material="NeonGreen" interaction="Padlock" displaysize="200 50">Punchcard_2</object>
+  <object position="0 0.5 5" angles="0 0 0" scale="6.5" model ="Padlock" material="NeonGreen" interaction="Padlock" type="Punchcard_2">Stairwell</object>
 
   <!--Reception Sign-->
   <object position="2.5 2 2" angles="0 45 0" scale="1" model="PersonPlane" material="CPoster_Reception" nonsolid="true"></object>

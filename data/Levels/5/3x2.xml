@@ -1,7 +1,7 @@
 <room name="Sector C">
 
   <!--PADLOCK-->
-  <object position="0 0.5 -5" angles="0 180 0" scale="6.5" model ="Padlock" material="Lamp" interaction="Padlock" displaysize="200 50">Punchcard_1</object>
+  <object position="0 0.5 -5" angles="0 180 0" scale="6.5" model ="Padlock" material="Lamp" interaction="Padlock" type="Punchcard_1">Manager's Office</object>
 
   <!--Sector Sign-->
   <object position="5 1 0" angles="0 90 0" scale="1" model="PersonPlane" material="SectorC" nonsolid="true"></object>

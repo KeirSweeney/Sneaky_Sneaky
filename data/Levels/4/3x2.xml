@@ -3,7 +3,7 @@
   <object position="0 1.1 5" angles="0 0 0" scale="1" model="PersonPlane" material="Isolation" nonsolid="true"></object>
 
   <!--KEYCARD-->
-  <object position="4.5 0 -4" scale="10" model="Punchcard_2" material="Pickup" interaction="Pickup"></object>
+  <object position="4.5 0 -4" scale="10" model="Punchcard" material="Pickup" interaction="Pickup" type="Punchcard_2" name="Stairwell Keys"></object>
 
   <object position="-1 0 0" scale="5" model="bin" material="Seat_HC"></object>
 

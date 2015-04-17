@@ -3,17 +3,17 @@
 <room name="Wright's Ltd Foyer">
 
   <!--Rock-->
-  <object position="-4.5 0 0" scale="5" model="Rock" material="Pickup" interaction="Thrower"></object>
+  <object position="-4.5 0 0" scale="2.5" model="Rock" material="Pickup" interaction="Pickup" type="Throwable" name="Rock"></object>
 
   <!-- CAMERA -->
   <object position="4.5 3 0" angles="0 -90 0" scale="10" model="CameraBase" material="SecurityCamera"></object>
   <object position="4.5 3 0" angles="0 -90 0" scale="10" model="Camera" material="SecurityCamera" interaction="SecurityCamera"></object>
 
   <!--PADLOCK-->
-  <object position="5 0.5 0" angles="0 90 0" scale="6.5" model="Padlock" material="Lamp" interaction="Padlock" displaysize="200 50">Punchcard_1</object>
+  <object position="5 0.5 0" angles="0 90 0" scale="6.5" model="Padlock" material="Lamp" interaction="Padlock" type="Punchcard_1">Foyer Door Locked</object>
 
   <!--KEYCARD-->
-  <object position="-0.8 0 4.5" scale="10" model="Punchcard_1" material="Pickup" interaction="Pickup"></object>
+  <object position="-0.8 0 4.5" scale="10" model="Punchcard" material="Pickup" interaction="Pickup" type="Punchcard_1" name="Foyer Entry Card"></object>
 
   <!-- COFFEE TABLE -->
   <object position="2 0 2.7" angles="0 0 0" scale="25" model="CoffeeTableGlass" material="CoffeeTableGlass"></object>

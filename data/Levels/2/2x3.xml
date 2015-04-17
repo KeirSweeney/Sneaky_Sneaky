@@ -1,7 +1,7 @@
 <room name="Stairs to CEO's Office">
 
   <!--PADLOCK-->
-  <object position="5 0.5 0" angles="0 90 0" scale="6.5" model ="Padlock" material="Lamp" interaction="Padlock" displaysize="200 50">Punchcard_2</object>
+  <object position="5 0.5 0" angles="0 90 0" scale="6.5" model ="Padlock" material="Lamp" interaction="Padlock" type="Punchcard_2">CEO's Office Level</object>
 
   <!--SOFAS-->
   <object position="-4.6 0 -3.5" angles="0 90 0" scale="50" model="SofaLength" material="Sofa_2ndFloor"></object>
