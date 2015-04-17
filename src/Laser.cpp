@@ -22,6 +22,9 @@
 #include "CameraController.h"
 #include "PhysicsEvents.h"
 #include "Guard.h"
+#include "Sound.h"
+#include "SoundSource.h"
+
 
 using namespace Urho3D;
 
@@ -47,6 +50,8 @@ void Laser::LoadFromXML(const XMLElement &xml)
 
 void Laser::DelayedStart()
 {
+	source_ = node_->CreateComponent<SoundSource>();
+
 	model_ = node_->GetComponent<StaticModel>();
 	model_->SetEnabled(false);
 
@@ -73,6 +78,7 @@ void Laser::Update(float timeStep)
 	}
 
 	if(!lightPulse_) {
+		source_->Stop();
 		return;
 	}
 
@@ -118,6 +124,8 @@ void Laser::HandleNodeCollision(StringHash eventType, VariantMap &eventData)
 	}
 
 	lightPulse_ = true;
+	Alarm();
+
 
 	NavigationMesh *navMesh = GetScene()->GetComponent<NavigationMesh>();
 
@@ -139,3 +147,14 @@ void Laser::HandleNodeCollision(StringHash eventType, VariantMap &eventData)
 		guard->SetPath(path);
 	}
 }
+void Laser::Alarm()
+{
+	if (!source_->IsPlaying())
+	{
+		ResourceCache *cache = GetSubsystem<ResourceCache>();
+		Sound *alarm = cache->GetResource<Sound>("Audio/Alarm.ogg");
+		source_->SetGain(0.15f);
+		source_->Play(alarm);
+	}
+}
+
