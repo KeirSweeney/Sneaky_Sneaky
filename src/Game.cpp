@@ -50,6 +50,7 @@
 #include "MrWrightTerminal.h"
 #include "SoundSource3D.h"
 #include "Sound.h"
+#include "InteractablePoster.h"
 
 #include <ctime>
 #include <cstdio>

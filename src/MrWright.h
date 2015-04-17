@@ -1,13 +1,13 @@
 #pragma once
 
-#include "InteractablePoster.h"
+#include "InteractableComponent.h"
 
 namespace Urho3D {
 	class StaticModel;
 	class Material;
 }
 
-class MrWright : public InteractablePoster
+class MrWright : public InteractableComponent
 {
 	OBJECT(MrWright)
 

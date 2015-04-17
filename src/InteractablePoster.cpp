@@ -5,7 +5,7 @@
 using namespace Urho3D;
 
 InteractablePoster::InteractablePoster(Context *context) :
-    LogicComponent(context)
+	InteractableComponent(context)
 {
 }
 
@@ -13,7 +13,7 @@ void InteractablePoster::RegisterObject(Context* context)
 {
 	context->RegisterFactory<InteractablePoster>("Logic");
 
-    COPY_BASE_ATTRIBUTES(LogicComponent);
+	COPY_BASE_ATTRIBUTES(InteractableComponent);
 }
 
 

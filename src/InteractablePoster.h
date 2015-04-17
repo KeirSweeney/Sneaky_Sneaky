@@ -1,8 +1,8 @@
 #pragma once
 
-#include "LogicComponent.h"
+#include "InteractableComponent.h"
 
-class InteractablePoster : public Urho3D::LogicComponent
+class InteractablePoster : public InteractableComponent
 {
 	OBJECT(InteractablePoster)
 

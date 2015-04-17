@@ -21,12 +21,14 @@
 #include "Model.h"
 #include "Material.h"
 #include "Input.h"
+
+#include "InteractablePoster.h"
 #include "MrWrightTerminal.h"
 
 using namespace Urho3D;
 
 MrWright::MrWright(Context *context):
-	InteractablePoster(context)
+	InteractableComponent(context)
 {
 }
 
@@ -34,7 +36,7 @@ void MrWright::RegisterObject(Context* context)
 {
 	context->RegisterFactory<MrWright>("Logic");
 
-	COPY_BASE_ATTRIBUTES(InteractablePoster);
+	COPY_BASE_ATTRIBUTES(InteractableComponent);
 }
 
 void MrWright::Start()
@@ -83,7 +85,7 @@ void MrWright::Update(float timeStep)
 		MrWrightTerminal *thisTerm = terminalNodes[x]->GetComponent<MrWrightTerminal>();
 		bool canInteract = thisTerm->CanPlayerInteract();
 		String myStr = thisTerm->GetContent();
-		
+
 
 		for (Vector<PODVector<Material *>>::Iterator i = sequences_.Begin(); i != sequences_.End(); ++i) {
 			PODVector<Material *> mats;
@@ -98,9 +100,9 @@ void MrWright::Update(float timeStep)
 				}
 
 			}
-		}		
+		}
 	}
-	
+
 
 	swapTimer_ += timeStep;
 
