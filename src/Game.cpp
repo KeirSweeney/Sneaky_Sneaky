@@ -447,12 +447,13 @@ void Game::LoadLevel()
 
 					Light *guardLight = guardLightNode->CreateComponent<Light>();
 					guardLight->SetLightType(LIGHT_SPOT);
+					guardLight->SetRampTexture(cache->GetResource<Texture2D>("Textures/RampExtreme.png"));
 					guardLight->SetShapeTexture(cache->GetResource<Texture2D>("Textures/SpotHard.png"));
 					guardLight->SetBrightness(0.4f);
 					guardLight->SetColor(Color::WHITE);
 					guardLight->SetCastShadows(true);
-					guardLight->SetFov(60.0f);
-					guardLight->SetRange(5.0f);
+					guardLight->SetFov(Guard::VIEW_ANGLE);
+					guardLight->SetRange(Guard::VIEW_DISTANCE);
 
 					Guard *guard = guardNode->CreateComponent<Guard>();
 					guard->SetWaypoints(waypoints);

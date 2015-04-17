@@ -25,7 +25,7 @@ using namespace Urho3D;
 
 const float Guard::MOVE_SPEED = 1.0f;
 const float Guard::VIEW_DISTANCE = 5.0f;
-const float Guard::VIEW_ANGLE = 60.0f;
+const float Guard::VIEW_ANGLE = 75.0f;
 const float Guard::DETECT_MOVE_SPEED = 1.5f;
 
 Guard::Guard(Context *context):
