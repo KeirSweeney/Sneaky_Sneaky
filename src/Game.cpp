@@ -95,8 +95,10 @@ void Game::Start()
 	// Seed the random number generator.
 	SetRandomSeed((unsigned int)time(NULL));
 
+#if 0
 	Audio *audioSystem = GetSubsystem<Audio>();
 	audioSystem->SetMasterGain(SOUND_MASTER, 0.0f);
+#endif
 
 	// ResourceCache handles loading files from disk.
 	ResourceCache *cache = GetSubsystem<ResourceCache>();
