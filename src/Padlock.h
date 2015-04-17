@@ -35,5 +35,4 @@ private:
 	Urho3D::String content_;
 	Urho3D::UIElement *panel_;
 	Urho3D::String type_;
-	Urho3D::SoundSource *source_;
 };

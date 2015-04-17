@@ -61,9 +61,6 @@ void Padlock::LoadFromXML(const XMLElement &xml)
 
 void Padlock::DelayedStart()
 {
-	Node *sound = node_->CreateChild("SoundEffect");
-	source_ = sound->CreateComponent<SoundSource>();
-
 	UI *ui = GetSubsystem<UI>();
 
 	panel_ = ui->GetRoot()->CreateChild<UIElement>();
@@ -114,16 +111,19 @@ void Padlock::Update(float timeStep)
 		return;
 	}
 
-	
 	ResourceCache *cache = GetSubsystem<ResourceCache>();
-	Sound *unlock = cache->GetResource<Sound>("Audio/Unlock.ogg");
-	source_->SetAutoRemove(true);
-	source_->SetGain(0.3f);
-	source_->Play(unlock);
-	
+
+	Node *sound = GetScene()->CreateChild("SoundEffect");
+	sound->SetWorldPosition(node_->GetWorldPosition());
+
+	SoundSource *source = sound->CreateComponent<SoundSource>();
+	source->SetAutoRemove(true);
+	source->SetGain(0.3f);
+	source->Play(cache->GetResource<Sound>("Audio/Unlock.ogg"));
 
 	panel_->SetVisible(false);
-	node_->SetEnabled(false);
+
+	node_->Remove();
 }
 
 bool Padlock::CanPlayerInteract()
