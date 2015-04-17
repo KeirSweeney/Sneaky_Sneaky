@@ -41,8 +41,7 @@ void SecurityCamera::DelayedStart()
 
 void SecurityCamera::Update(float timeStep)
 {
-	Node *personNode = GetScene()->GetChild("Person", true);
-	yaw_ += (sweepingBack_ ? -1.0f : 1.0f) * 20.0f * timeStep;
+	yaw_ += (sweepingBack_ ? -1.0f : 1.0f) * 10.0f * timeStep;
 
 	if (Abs(yaw_) >= 45.0f) {
 		sweepingBack_ = !sweepingBack_;
@@ -52,6 +51,7 @@ void SecurityCamera::Update(float timeStep)
 	node_->Rotate(Quaternion(pitch_, Vector3::LEFT));
 	node_->Rotate(Quaternion(yaw_, Vector3::UP));
 
+	Node *personNode = GetScene()->GetChild("Person", true);
 	SearchForPlayer(personNode);
 }
 
