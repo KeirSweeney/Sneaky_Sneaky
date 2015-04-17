@@ -11,7 +11,7 @@
   <object position="-3.5 0 3" angles="0 0 0" scale="5" model="Bin" material="CubicleDivider"></object>
 
   <!--KEYCARD-->
-  <object position="3.5 0 2.5" scale="10" model="Punchcard_2" material="Pickup" interaction="Pickup"></object>
+  <object position="3.5 0 2.5" scale="10" model="Punchcard" material="Pickup" interaction="Pickup" type="Punchcard_2" name="Stairwell Keycard"></object>
 
   <!-- STANDARD ONE ROOM CUBICALS-->
   <object position="4 0 2" angles="0 0 0" scale="12.5" model="CubicleDivider" material="CubicleDivider"></object>

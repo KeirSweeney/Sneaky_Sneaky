@@ -1,7 +1,7 @@
 <room name="Manager Chester's Office">
 
   <!--KEYCARD-->
-  <object position="4 0 0" scale="10" model="Punchcard_2" material="Pickup" interaction="Pickup"></object>
+  <object position="4 0 0" scale="10" model="Punchcard" material="Pickup" interaction="Pickup" type="Punchcard_2" name="Upper Floor Key"></object>
 
   <!-- MANAGER'S DESK -->
   <object position="2.5 0 0" angles="0 -90 0" scale="20" model="Table" material="FlatGrey"></object>

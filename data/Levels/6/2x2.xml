@@ -1,7 +1,7 @@
 <room name="Bertha's Secretary">
 
   <!--PADLOCK-->
-  <object position="0 0.5 5" angles="0 0 0" scale="6.5" model ="Padlock" material="Lamp" interaction="Padlock" displaysize="200 50">Punchcard_2</object>
+  <object position="0 0.5 5" angles="0 0 0" scale="6.5" model ="Padlock" material="Lamp" interaction="Padlock" type="Punchcard_2">Bertha's Office</object>
 
   <!-- DESK -->
   <object position="-2.5 0 2.5" angles="0 135 0" scale="20" model="Table" material="Mahogany"></object>

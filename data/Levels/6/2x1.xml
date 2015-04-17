@@ -1,7 +1,7 @@
 <room name="Conference Room" floor="Mahogany_Light">
   
   <!--KEYCARD-->
-  <object position="4.5 0 -4.0" scale="10" model="Punchcard_1" material="Pickup" interaction="Pickup"></object>
+  <object position="4.5 0 -4.0" scale="10" model="Punchcard" material="Lamp_Gold" interaction="Pickup" type="Punchcard_1" name="Odd Golden Key"></object>
 
   <!-- SOFAS -->
   <object position="3.4 0 3" angles="0 180 0" scale="50" model="SofaLength" material="Seat_HC"></object>

@@ -1,7 +1,7 @@
 <room floor="Black_DI" lights="false">
 
   <!--KEYCARD-->
-  <object position="-4.5 0 2.0" scale="10" model="Punchcard_2" material="NeonPink" interaction="Pickup"></object>
+  <object position="-4.5 0 2.0" scale="10" model="Punchcard" material="NeonPink" interaction="Pickup" type="Punchcard_2" name="Take You Higher"></object>
 
   <object position="0 0.5 5" angles="0 0 0" scale="1" model="PersonPlane" material="CPoster2"></object>
 

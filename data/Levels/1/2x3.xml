@@ -1,6 +1,6 @@
 <room name="Refectory - Staff">
   <!--PADLOCK-->
-  <object position="5 0.5 0" angles="0 90 0" scale="6.5" model ="Padlock" material="Lamp" interaction="Padlock" displaysize="200 50">Punchcard_2</object>
+  <object position="5 0.5 0" angles="0 90 0" scale="6.5" model ="Padlock" material="Lamp" interaction="Padlock" type="Punchcard_2">Stairwell</object>
 
   <!-- VENDING MACHINE -->
   <object position="-4.5 0 4" angles="0 -90 0" scale="15" model="VendingMachineBody" material="VendingMachineBody"></object>

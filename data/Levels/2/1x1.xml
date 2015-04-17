@@ -3,7 +3,7 @@
   <object position="-5 0.5 2" angles="0 -90 0" scale="1" model="PersonPlane" material="Poster3"></object>
 
   <!--KEYCARD-->
-  <object position="2.3 0 5.5" scale="10" model="Punchcard_1" material="Pickup" interaction="Pickup"></object>
+  <object position="2.3 0 5.5" scale="10" model="Punchcard" material="Pickup" interaction="Pickup" type="Punchcard_1" name="Chester's Copied Key"></object>
 
   <object position="2.8 0 5" angles="0 0 0" scale="12.5" model="CubicleDivider" material="CubicleDivider_2ndFloor" nonsolid="true"></object>
   <object position="4.3 0 5" angles="0 0 0" scale="12.5" model="CubicleDivider" material="CubicleDivider_2ndFloor" nonsolid="true"></object>
