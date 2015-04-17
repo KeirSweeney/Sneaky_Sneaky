@@ -449,7 +449,8 @@ void Game::LoadLevel()
 					guardLight->SetBrightness(0.4f);
 					guardLight->SetColor(Color::WHITE);
 					guardLight->SetCastShadows(true);
-					guardLight->SetFov(90.0f);
+					guardLight->SetFov(60.0f);
+					guardLight->SetRange(5.0f);
 
 					Guard *guard = guardNode->CreateComponent<Guard>();
 					guard->SetWaypoints(waypoints);
