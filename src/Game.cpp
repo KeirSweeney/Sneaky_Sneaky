@@ -445,6 +445,7 @@ void Game::LoadLevel()
 
 					Light *guardLight = guardLightNode->CreateComponent<Light>();
 					guardLight->SetLightType(LIGHT_SPOT);
+					guardLight->SetShapeTexture(cache->GetResource<Texture2D>("Textures/SpotHard.png"));
 					guardLight->SetBrightness(0.4f);
 					guardLight->SetColor(Color::WHITE);
 					guardLight->SetCastShadows(true);

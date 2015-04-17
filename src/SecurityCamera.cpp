@@ -11,6 +11,8 @@
 #include "Light.h"
 #include "RigidBody.h"
 #include "NavigationMesh.h"
+#include "ResourceCache.h"
+#include "Texture2D.h"
 
 using namespace Urho3D;
 
@@ -29,10 +31,13 @@ void SecurityCamera::RegisterObject(Context* context)
 
 void SecurityCamera::DelayedStart()
 {
+	ResourceCache *cache = GetSubsystem<ResourceCache>();
+
 	startRotation_ = node_->GetWorldRotation();
 
 	light_ = node_->CreateComponent<Light>();
 	light_->SetLightType(LIGHT_SPOT);
+	light_->SetShapeTexture(cache->GetResource<Texture2D>("Textures/SpotHard.png"));
 	light_->SetBrightness(0.4f);
 	light_->SetColor(Color::WHITE);
 	light_->SetCastShadows(true);
