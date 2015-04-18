@@ -36,6 +36,14 @@
   <object position="4.5 0 0" angles="0 90 0" scale="20" model="Table" material="Obsidian"></object>
   <object position="4.5 1 0" angles="0 90 0" scale="5" model="Terminal" material="Terminal_DI" interaction="Terminal"></object>
 
-  
-  
+  <audiozone position="0 -4.5" rotation="0" size="2 1">
+    <!--INSERT CRYSTAL LINE 1 -->
+    <audioclip delay="0">VO/Wife/1_WhoThere.wav</audioclip>
+    <audioclip delay="0.5">VO/Black/30_ItWasYou.wav</audioclip>
+    <audioclip delay="0">VO/Wife/2_Aww.wav</audioclip>
+    <audioclip delay="0">VO/Black/31_TheFiles.wav</audioclip>
+    <audioclip delay="0">VO/Wife/3_LetsEntertain.wav</audioclip>
+  </audiozone>
+
+
 </room>
