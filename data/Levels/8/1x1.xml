@@ -1,4 +1,9 @@
 <room floor="Black_DI" lights="false">
+
+  <!--Spanner-->
+  <object position="0 0 -4" scale="7" model="Spanner" material="NeonPink" interaction="Pickup" type="Throwable" name="Spanner"></object>
+  <object position="0 0 3" scale="7" model="Spanner" material="NeonPink" interaction="Pickup" type="Throwable" name="Spanner"></object>
+
   <!-- STANDARD ONE ROOM CUBICALS-->
   <object position="2 0 4" angles="0 90 0" scale="12.5" model="CubicleDivider" material="Obsidian"></object>
   <object position="2 0 2.5" angles="0 90 0" scale="12.5" model="CubicleDivider" material="Obsidian"></object>
@@ -21,6 +26,10 @@
   <object position="5 0 2.5" angles="0 90 0" scale="12.5" model="CubicleDivider" material="Obsidian"></object>
   <object position="5 0 -4" angles="0 90 0" scale="12.5" model="CubicleDivider" material="Obsidian"></object>
   <object position="5 0 -2.5" angles="0 90 0" scale="12.5" model="CubicleDivider" material="Obsidian"></object>
+
+  <!--Posters-->
+  <object position="-5 0.5 0" angles="0 -90 0" scale="1" model="PersonPlane" material="CPoster_Zone2" nonsolid="true"></object>
+  <object position="0 0.5 -5" angles="0 180 0" scale="1" model="PersonPlane" material="CPoster4"></object>
 
   <!--Tables-->
   <object position="-3.5 0 -4.5" angles="0 180 0" scale="20" model="Table" material="Obsidian"></object>
@@ -45,9 +54,21 @@
   <object position="3.5 1 4.5" angles="0 0 0" scale="5" model="Terminal" material="Terminal_DI"></object>
 
   <!-- CABINETS -->
-  <object position="-1.5 0 4.5" angles="0 90 0" scale="25" model="CabinetShut" material="CabinetShut_DI"></object>
+  <object position="-1.5 0 4.5" angles="0 90 0" scale="25" model="CabinetTop" material="CabinetTop_DI"></object>
   <object position="1.5 0 4.5" angles="0 90 0" scale="25" model="CabinetShut" material="CabinetShut_DI"></object>
+  <object position="0.5 0 4.5" angles="0 90 0" scale="25" model="CabinetShut" material="CabinetShut_DI"></object>
+  <object position="-0.5 0 4.5" angles="0 90 0" scale="25" model="CabinetMiddle" material="CabinetMiddle_DI"></object>
   <object position="-1.5 0 -4.5" angles="0 -90 0" scale="25" model="CabinetShut" material="CabinetShut_DI"></object>
   <object position="1.5 0 -4.5" angles="0 -90 0" scale="25" model="CabinetShut" material="CabinetShut_DI"></object>
+
+  <guard>
+    <waypoint position="-4 0 0"></waypoint>
+    <waypoint position="10 0 0"></waypoint>
+  </guard>
+  <guard>
+    <waypoint position="0 0 3.5"></waypoint>
+    <waypoint position="0 0 -3.5"></waypoint>
+  </guard>
+
 </room>
 
