@@ -37,6 +37,11 @@
   <object position="0 0 -4.5" angles="0 180 0" scale="6" model="CoolerBase" material="FlatGrey"></object>
   <object position="0 0 -4.5" angles="0 180 0" scale="6" model="CoolerBottle" material="CoolerBottle"></object>
 
+  <!-- The texture from the material is not used, but the other params can be changed. One material can hapilly be used for all animated posters -->
+  <object position="-3.75 0.5 5" model="PersonPlane" material="PacMan" interaction="AnimatedPoster" speed="1" frames="3" path="pacman"></object>
+  <object position="-1.75 0.5 5" model="PersonPlane" material="AnimatedPoster" interaction="AnimatedPoster" speed="3" frames="3" path="pacman"></object>
+  <object position="1 0.5 5" model="PersonPlane" material="AnimatedPoster" interaction="AnimatedPoster" speed="2.5" frames="7" path="mrwright_grin"></object>
+
   <audiozone position="0 0" rotation="0" size="1 1">
     <audioclip delay="1">VO/Voice/1_Hello.wav</audioclip>
     <audioclip delay="0.5">VO/Voice/2_GoingToGetNowhere.wav</audioclip>

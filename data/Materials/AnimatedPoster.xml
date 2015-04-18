@@ -1,0 +1,4 @@
+<material>
+    <technique name="Techniques/DiffUnlitAlpha.xml" />
+    <depthbias constant="-0.00003" slopescaled="0" />
+</material>

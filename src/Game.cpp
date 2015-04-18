@@ -53,6 +53,7 @@
 #include "Sound.h"
 #include "InteractablePoster.h"
 #include "AudioZone.h"
+#include "AnimatedPoster.h"
 
 #include <ctime>
 #include <cstdio>
@@ -129,6 +130,7 @@ void Game::Start()
 	Padlock::RegisterObject(context_);
 	MrWrightTerminal::RegisterObject(context_);
 	AudioZone::RegisterObject(context_);
+	AnimatedPoster::RegisterObject(context_);
 
 	SharedPtr<Viewport> viewport(new Viewport(context_, scene_, NULL));
 
