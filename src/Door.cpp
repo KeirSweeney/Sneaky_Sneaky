@@ -55,7 +55,7 @@ void Door::HandleNodeCollisionStart(StringHash eventType, VariantMap &eventData)
 	Sound *doorOpen = cache->GetResource<Sound>("Audio/DoorOpen.wav"); //will need to move this out of update.
 	Node *doorNode = node_->CreateChild("Sound");
 	SoundSource *source = doorNode->CreateComponent<SoundSource>();
-	source->SetGain(0.3f);
+	source->SetSoundType(SOUND_EFFECT);
 	source->SetAutoRemove(true);
 	source->Play(doorOpen);
 
@@ -96,7 +96,7 @@ void Door::HandleNodeCollisionEnd(StringHash eventType, VariantMap &eventData)
 	Sound *doorClose = cache->GetResource<Sound>("Audio/DoorClose.wav"); //will need to move this out of update.
 	Node *doorNode = node_->CreateChild("Sound");
 	SoundSource *source = doorNode->CreateComponent<SoundSource>();
-	source->SetGain(0.3f);
+	source->SetSoundType(SOUND_EFFECT);
 	source->SetAutoRemove(true);
 	source->Play(doorClose);
 

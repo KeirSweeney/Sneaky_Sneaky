@@ -153,7 +153,8 @@ void Laser::Alarm()
 	{
 		ResourceCache *cache = GetSubsystem<ResourceCache>();
 		Sound *alarm = cache->GetResource<Sound>("Audio/Alarm.ogg");
-		source_->SetGain(0.15f);
+		source_->SetSoundType(SOUND_EFFECT);
+		source_->SetGain(0.5f);
 		source_->Play(alarm);
 	}
 }

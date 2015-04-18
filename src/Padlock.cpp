@@ -118,7 +118,7 @@ void Padlock::Update(float timeStep)
 
 	SoundSource *source = sound->CreateComponent<SoundSource>();
 	source->SetAutoRemove(true);
-	source->SetGain(0.3f);
+	source->SetSoundType(SOUND_EFFECT);
 	source->Play(cache->GetResource<Sound>("Audio/Unlock.ogg"));
 
 	panel_->SetVisible(false);

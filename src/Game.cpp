@@ -98,8 +98,9 @@ void Game::Start()
 
 	Audio *audioSystem = GetSubsystem<Audio>();
 	//audioSystem->SetMasterGain(SOUND_MASTER, 0.0f);
+	audioSystem->SetMasterGain(SOUND_EFFECT, 0.4f);
+	audioSystem->SetMasterGain(SOUND_VOICE, 0.6f);
 	audioSystem->SetMasterGain(SOUND_MUSIC, 0.2f);
-	audioSystem->SetMasterGain(SOUND_VOICE, 0.75f);
 
 	// ResourceCache handles loading files from disk.
 	ResourceCache *cache = GetSubsystem<ResourceCache>();
