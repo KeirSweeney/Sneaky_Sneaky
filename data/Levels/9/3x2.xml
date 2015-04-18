@@ -1,4 +1,10 @@
 <room floor="Black_DI" lights="false">
+
+  
   <object position="0 0 -2" angles="90 0 0" scale="2" model="PersonPlane" material="AnimatedPoster" interaction="AnimatedPoster" speed="1" frames="4" path="Arrow"></object>
+
+  <audiozone position="0 4.5" rotation="0" size="2 1">
+    <audioclip delay="0">VO/Voice/30_KnockKnock.wav</audioclip>
+  </audiozone>
 
 </room>

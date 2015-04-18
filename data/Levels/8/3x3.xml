@@ -1,4 +1,8 @@
 <room floor="Black_DI" lights="false">
+
+  <!--KEYCARD-->
+  <object position="-4.5 0 4.0" scale="10" model="Punchcard" material="NeonPink" interaction="Pickup" type="Punchcard_2" name="Higher and Higher"></object>
+
   <!--CoinOps-->
   <object position="0 0 4.3" angles="0 90 0" scale="17.5" model="CoinOp" material="Black_DI"></object>
   <object position="-3.5 0 4.3" angles="0 90 0" scale="17.5" model="CoinOp" material="Black_DI"></object>

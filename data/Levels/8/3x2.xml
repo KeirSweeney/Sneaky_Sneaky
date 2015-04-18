@@ -1,4 +1,8 @@
 <room floor="Black_DI" lights="false">
+
+  <!--PADLOCK-->
+  <object position="0 0.5 5" angles="0 0 0" scale="6.5" model ="Padlock" material="NeonGreen" interaction="Padlock" type="Punchcard_1">Games Room</object>
+
   <!-- STANDARD ONE ROOM CUBICALS-->
   <object position="2 0 4" angles="0 90 0" scale="12.5" model="CubicleDivider" material="Obsidian"></object>
   <object position="2 0 2.5" angles="0 90 0" scale="12.5" model="CubicleDivider" material="Obsidian"></object>
