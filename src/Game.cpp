@@ -463,6 +463,14 @@ void Game::LoadLevel()
 					Guard *guard = guardNode->CreateComponent<Guard>();
 					guard->SetWaypoints(waypoints);
 
+					Sound *footstepSound = cache->GetResource<Sound>("Audio/footsteps.wav");
+					footstepSound->SetLooped(true);
+
+					SoundSource3D *guardSoundSource = guardNode->CreateComponent<SoundSource3D>();
+					//guardSoundSource->SetSoundType(SOUND_EFFECT);
+					guardSoundSource->SetDistanceAttenuation(1.0f, 10.0f, 2.0f);
+					guardSoundSource->Play(footstepSound);
+
 					child = child.GetNext("guard");
 				}
 
