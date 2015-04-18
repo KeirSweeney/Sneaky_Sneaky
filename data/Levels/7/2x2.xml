@@ -10,7 +10,7 @@
   <object position="2.5 2 2" angles="0 225 0" scale="1" model="PersonPlane" material="CPoster_Reception" nonsolid="true"></object>
 
   <!-- DanceFloor -->
-  <object position="0 0 -4" angles="90 0 0" scale="4" model="PersonPlane" material="Dancefloor"></object>
+  <object position="0 0 -4" angles="90 0 0" scale="4" model="PersonPlane" material="AnimatedPoster" interaction="AnimatedPoster" speed="1" frames="4" path="dancefloor"></object>
 
   <!--Desk-->
   <object position="2.5 0 2" angles="0 225 0" scale="20" model="Table" material="Obsidian"></object>

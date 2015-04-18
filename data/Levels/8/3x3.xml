@@ -1,8 +1,12 @@
 <room floor="Black_DI" lights="false">
   <!--CoinOps-->
   <object position="0 0 4.3" angles="0 90 0" scale="17.5" model="CoinOp" material="Black_DI"></object>
-  <object position="-4.3 0 4.3" angles="0 45 0" scale="17.5" model="CoinOp" material="Black_DI"></object>
-  <object position="4.3 0 4.3" angles="0 135 0" scale="17.5" model="CoinOp" material="Black_DI"></object>
+  <object position="-3.5 0 4.3" angles="0 90 0" scale="17.5" model="CoinOp" material="Black_DI"></object>
+  <object position="3.5 0 4.3" angles="0 90 0" scale="17.5" model="CoinOp" material="Black_DI"></object>
+
+  <object position="3.5 1 3.85" angles="35 0 0" scale="0.4" model="PersonPlane" material="AnimatedPoster" interaction="AnimatedPoster" speed="1" frames="3" path="pacman"></object>
+  <object position="-3.5 1 3.85" angles="35 0 0" scale="0.4" model="PersonPlane" material="AnimatedPoster" interaction="AnimatedPoster" speed="1" frames="3" path="metalslug"></object>
+  <object position="0 1 3.85" angles="35 0 0" scale="0.35" model="PersonPlane" material="AnimatedPoster" interaction="AnimatedPoster" speed="1" frames="3" path="elite"></object>
 
   <!--Vending Machines-->
   <object position="-4.5 0 -0" angles="0 -90 0" scale="15" model="VendingMachineBody" material="Obsidian"></object>
@@ -32,5 +36,6 @@
   <!--COOLERS-->
   <object position="-1.5 0 -4.5" angles="0 -90 0" scale="6" model="CoolerBase" material="Obsidian"></object>
   <object position="-1.5 0 -4.5" angles="0 -90 0" scale="6" model="CoolerBottle" material="CoolerBottle"></object>
+
 
 </room>

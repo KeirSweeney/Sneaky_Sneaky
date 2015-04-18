@@ -52,4 +52,9 @@
   <object position="4 0 -5" angles="0 180 0" scale="1" model="PersonPlane" material="Panneling" nonsolid="true"></object>
   <object position="2 0 -5" angles="0 180 0" scale="1" model="PersonPlane" material="Panneling" nonsolid="true"></object>
 
+  <audiozone position="0 -4.5" rotation="0" size="2 1">
+    <audioclip delay="0">VO/Bertha/1_NoseyLittlePI.wav</audioclip>
+    <audioclip delay="0">VO/Black/25_Shiiii.wav</audioclip>
+  </audiozone>
+
 </room>

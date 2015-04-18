@@ -18,7 +18,9 @@
 
   <!-- View screen -->
   <object position="-4.8 0.2 0" angles ="0 90 0" scale ="27" model="GiantScreen" material="Obsidian"></object>
-
+  <!-- Screen Image -->
+  <object position="-4.6 -0.4 0" angles="0 -90 0" scale="2" model="PersonPlane" material="AnimatedPoster" interaction="AnimatedPoster" speed="0.2" frames="3" path="wl_conference"></object>
+  
   <!-- Vending Machines -->
   <object position="4.2 0 4.7" angles="0 0 0" scale="15" model="VendingMachineBody" material="VendingMachineBody"></object>
   <object position="4.2 0 4.7" angles="0 0 0" scale="15" model="VendingMachineFront" material="VendingMachineFrontBLUE"></object>

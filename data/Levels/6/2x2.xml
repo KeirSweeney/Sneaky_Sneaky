@@ -63,4 +63,12 @@
   <object position="4 0 -5" angles="0 180 0" scale="1" model="PersonPlane" material="Panneling" nonsolid="true"></object>
   <object position="2 0 -5" angles="0 180 0" scale="1" model="PersonPlane" material="Panneling" nonsolid="true"></object>
 
+  <audiozone position="0 0" rotation="0" size="1 1">
+    <audioclip delay="0">VO/Voice/24_ShesRightBehind.wav</audioclip>
+    <audioclip delay="0">VO/Black/22_SheNever.wav</audioclip>
+    <audioclip delay="0">VO/Voice/25_DespiteHerSize.wav</audioclip>
+    <audioclip delay="0">VO/Black/23_GoodToKnow.wav</audioclip>
+    <audioclip delay="0">VO/Voice/26_AndBlack.wav</audioclip>
+    <audioclip delay="0.5">VO/Voice/27_BerthaGotFiles.wav</audioclip>
+  </audiozone>
 </room>
