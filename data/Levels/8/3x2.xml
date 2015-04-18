@@ -63,4 +63,10 @@
   <object position="1.5 0 4.5" angles="0 90 0" scale="25" model="CabinetShut" material="CabinetShut_DI"></object>
   <object position="-1.5 0 -4.5" angles="0 -90 0" scale="25" model="CabinetShut" material="CabinetShut_DI"></object>
   <object position="1.5 0 -4.5" angles="0 -90 0" scale="25" model="CabinetShut" material="CabinetShut_DI"></object>
+
+  <guard>
+    <waypoint position="0 0 3"></waypoint>
+    <waypoint position="0 0 -3"></waypoint>
+  </guard>
+
 </room>

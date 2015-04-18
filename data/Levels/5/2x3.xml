@@ -2,6 +2,8 @@
 
   <!--PADLOCK-->
   <object position="-5 0.5 0" angles="0 -90 0" scale="6.5" model ="Padlock" material="Lamp" interaction="Padlock" type="Punchcard_2">CEO's Floor</object>
+  <!--Brick-->
+  <object position="-4 0 -1" scale="6" model="Brick" material="Pickup" interaction="Pickup" type="Throwable" name="Brick"></object>
 
   <!--Poster-->
   <object position="-4.95 0.5 -2.5" angles="0 -90 0" scale="1" model="PersonPlane" material="BPoster2"></object>

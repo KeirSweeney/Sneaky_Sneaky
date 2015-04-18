@@ -4,7 +4,7 @@
   <object position="4.5 3 0" angles="0 -90 0" scale="10" model="Camera" material="SecurityCamera" interaction="SecurityCamera"></object>
 
   <!--Rock-->
-  <object position="0 0 4.5" scale="2.5" model="Rock" material="Pickup" interaction="Pickup" type="Throwable" name="Rock"></object>
+  <object position="-1 0 4.5" scale="2.5" model="Rock" material="Pickup" interaction="Pickup" type="Throwable" name="Rock"></object>
 
   <!--POSTER-->
   <object position="0 0.5 5" angles="0 0 0" scale="1" model="PersonPlane" material="Poster2"></object>
