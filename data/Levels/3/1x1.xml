@@ -41,4 +41,20 @@
   <!-- Family Picture -->
   <object position="-1 0 1" angles="0 200 90" scale="20" model="PictureFrame" material="Dark_Oak" interaction="Terminal" displaysize="100 50">Wright Family Portrait</object>
 
+  <audiozone position="4.5 0" rotation="0" size="1 2">
+    <audioclip delay="2">VO/Voice/6_Maverick.wav</audioclip>
+    <audioclip delay="0">VO/Black/6_Black.wav</audioclip>
+    <audioclip delay="0">VO/Voice/7_Black.wav</audioclip>
+    <audioclip delay="0">VO/Black/7_Oh.wav</audioclip>
+    <audioclip delay="0">VO/Voice/8_AboutWright.wav</audioclip>
+    <audioclip delay="0">VO/Black/8_Elaborate.wav</audioclip>
+    <audioclip delay="1">VO/Voice/9_Well.wav</audioclip>
+    <audioclip delay="0">VO/Black/9_AlwaysAm.wav</audioclip>
+    <audioclip delay="1">VO/Voice/10_WatchOut.wav</audioclip>
+    <audioclip delay="0">VO/Black/10_GiveAway.wav</audioclip>
+    <audioclip delay="0">VO/Voice/11_NotQuite.wav</audioclip>
+    <audioclip delay="0">VO/Black/11_NotATest.wav</audioclip>
+    <audioclip delay="0.5">VO/Voice/12_GoodLuck.wav</audioclip>
+  </audiozone>
+
 </room>

@@ -29,6 +29,14 @@
   <object position="4.5 0 3.5" angles="0 90 0" scale="20" model="Table" material="Obsidian"></object>
   <object position="4.5 1 3.5" angles="0 90 0" scale="5" model="Terminal" material="Terminal" interaction="Terminal"></object>
   <object position="4.5 0 0" angles="0 90 0" scale="20" model="Table" material="Obsidian"></object>
-  <object position="4.5 1 0" angles="0 90 0" scale="5" model="Terminal" material="Terminal" interaction="Terminal"></object>  
+  <object position="4.5 1 0" angles="0 90 0" scale="5" model="Terminal" material="Terminal" interaction="Terminal"></object>
+
+
+  <audiozone position="0 -4.5" rotation="0" size="2 1">
+    <audioclip delay="0">VO/Henry/1_SoGoodOfYou.wav</audioclip>
+    <audioclip delay="0">VO/Wright/1_Attend.wav</audioclip>
+    <audioclip delay="0.5">VO/Black/12_WhatIsThat.wav</audioclip>
+    <audioclip delay="0">VO/Henry/2_MeetMrWright.wav</audioclip>
+  </audiozone>
 
 </room>

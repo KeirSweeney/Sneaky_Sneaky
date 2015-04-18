@@ -44,8 +44,11 @@
 
   <audiozone position="0 0" rotation="0" size="1 1">
     <audioclip delay="1">VO/Voice/1_Hello.wav</audioclip>
-    <audioclip delay="0.5">VO/Voice/2_GoingToGetNowhere.wav</audioclip>
-    <audioclip delay="0.5">VO/Voice/3_OnlyHelp.wav</audioclip>
+    <audioclip delay="0">VO/Black/1_HowDidYou.wav</audioclip>
+    <audioclip delay="0">VO/Voice/2_GoingToGetNowhere.wav</audioclip>
+    <audioclip delay="0">VO/Black/2_TrustYou.wav</audioclip>
+    <audioclip delay="0">VO/Black/3_OnlyHelp.wav</audioclip>
     <audioclip delay="1">VO/Voice/4_RightNow.wav</audioclip>
+    <audioclip delay="0">VO/Black/4_LuckyMe.wav</audioclip>
   </audiozone>
 </room>

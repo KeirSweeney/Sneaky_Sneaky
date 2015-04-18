@@ -26,4 +26,19 @@
   <object position="-5 0.5 -2.5" angles="-3 -90 0" scale="1" model="PersonPlane" material="BPoster1"></object>
   <object position="-2.7 0 -3.5" angles="90 -20 90" scale="1" model="PersonPlane" material="BPoster1"></object>
 
+  <audiozone position="0 0" rotation="0" size="1 1">
+    <audioclip delay="1">VO/Voice/17_WantToStop.wav</audioclip>
+    <audioclip delay="0">VO/Black/17_BeenBusy.wav</audioclip>
+    <audioclip delay="0">VO/Voice/18_ItGoesWithoutSaying.wav</audioclip>
+    <audioclip delay="0">VO/Black/18_ISeeThem.wav</audioclip>
+    <audioclip delay="0.5">VO/Voice/19_StepThrough.wav</audioclip>
+    <audioclip delay="0">VO/Black/19_NeverFound.wav</audioclip>
+    <audioclip delay="0">VO/Voice/20_BeFound.wav</audioclip>
+    <audioclip delay="0">VO/Black/20_ToldYou.wav</audioclip>
+    <audioclip delay="0">VO/Voice/21_Black.wav</audioclip>
+    <audioclip delay="0">VO/Voice/22_MyApologies.wav</audioclip>
+    <audioclip delay="0">VO/Black/21_Concerned.wav</audioclip>
+    <audioclip delay="0">VO/Voice/23_OhNo.wav</audioclip>
+  </audiozone>
+
 </room>
