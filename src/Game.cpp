@@ -620,6 +620,9 @@ void Game::LoadLevel()
 	personNode->CreateComponent<Inventory>();
 	personNode->CreateComponent<Thrower>();
 
+	SoundListener *personListener = personNode->CreateComponent<SoundListener>();
+	GetSubsystem<Audio>()->SetListener(personListener);
+
 	Node *cameraTargetNode = scene_->CreateChild();
 	cameraTargetNode->SetPosition(personPosition + Vector3(0.0f, 5.0f, -5.0f));
 	cameraTargetNode->CreateComponent<CameraController>();
@@ -627,8 +630,6 @@ void Game::LoadLevel()
 	Node *cameraNode = cameraTargetNode->CreateChild("Camera");
 	cameraNode->SetPosition(Vector3(0.0f, 9.0f, -7.5f));
 	cameraNode->SetRotation(Quaternion(47.5f, Vector3::RIGHT));
-	SoundListener *cameraListener = cameraNode->CreateComponent<SoundListener>();
-	GetSubsystem<Audio>()->SetListener(cameraListener);
 
 	Sound *mainTheme = cache->GetResource<Sound>("Audio/MainTheme.ogg");
 	mainTheme->SetLooped(true);
