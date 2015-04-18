@@ -16,11 +16,11 @@ public:
 	static void RegisterObject(Urho3D::Context *context);
 
 public:
-	void Start();
+	void DelayedStart();
 	void Update(float timeStep);
 
 public:
-	void LoadMaterials();
+	void HandleNodeCollision(Urho3D::StringHash eventType, Urho3D::VariantMap &eventData);
 
 private:
 	float swapTimer_;

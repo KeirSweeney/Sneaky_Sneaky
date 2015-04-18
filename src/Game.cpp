@@ -11,7 +11,6 @@
 #include "Inventory.h"
 #include "Laser.h"
 #include "MrWright.h"
-#include "MrWrightTerminal.h"
 #include "Padlock.h"
 #include "Person.h"
 #include "Pickup.h"
@@ -123,7 +122,6 @@ void Game::Start()
 	Inventory::RegisterObject(context_);
 	Laser::RegisterObject(context_);
 	MrWright::RegisterObject(context_);
-	MrWrightTerminal::RegisterObject(context_);
 	Padlock::RegisterObject(context_);
 	Person::RegisterObject(context_);
 	Pickup::RegisterObject(context_);

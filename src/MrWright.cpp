@@ -21,9 +21,10 @@
 #include "Model.h"
 #include "Material.h"
 #include "Input.h"
+#include "CollisionShape.h"
+#include "PhysicsEvents.h"
 
 #include "InteractablePoster.h"
-#include "MrWrightTerminal.h"
 
 using namespace Urho3D;
 
@@ -39,16 +40,8 @@ void MrWright::RegisterObject(Context* context)
 	COPY_BASE_ATTRIBUTES(InteractableComponent);
 }
 
-void MrWright::Start()
+void MrWright::DelayedStart()
 {
-	LoadMaterials();
-}
-
-void MrWright::LoadMaterials()
-{
-	int glyphCount = 3;
-	int sequenceCount = 3;
-
 	Node *roomNode = node_->GetParent();
 
 	PODVector<Node *> posterNodes;
@@ -56,9 +49,30 @@ void MrWright::LoadMaterials()
 
 	PODVector<Material *> glyphs;
 	for (PODVector<Node *>::ConstIterator i = posterNodes.Begin(); i != posterNodes.End(); ++i) {
-		StaticModel *poster = (*i)->GetComponent<StaticModel>();
+		Node *posterNode = *i;
+		StaticModel *poster = posterNode->GetComponent<StaticModel>();
 		glyphs.Push(poster->GetMaterial());
+
+		Vector3 position = posterNode->GetWorldPosition() - (posterNode->GetWorldDirection() * 1.5f);
+		position.y_ = 0.0f;
+
+		Node *interactionNode = roomNode->CreateChild();
+		interactionNode->SetWorldPosition(position);
+		interactionNode->SetWorldRotation(posterNode->GetWorldRotation());
+
+		RigidBody *rigidBody = interactionNode->CreateComponent<RigidBody>();
+		rigidBody->SetTrigger(true);
+
+		CollisionShape *collisionShape = interactionNode->CreateComponent<CollisionShape>();
+		collisionShape->SetBox(Vector3(1.0f, 3.0f, 0.5f), Vector3(0.0f, 1.5f, 0.0f));
+
+		interactionNode->SetVar("poster", posterNode);
+
+		SubscribeToEvent(interactionNode, E_NODECOLLISIONSTART, HANDLER(MrWright, HandleNodeCollision));
 	}
+
+	int glyphCount = 3;
+	int sequenceCount = 3;
 
 	for (int i = 0; i < sequenceCount; ++i) {
 		PODVector<Material *> glyphPool = glyphs;
@@ -77,59 +91,21 @@ void MrWright::LoadMaterials()
 
 void MrWright::Update(float timeStep)
 {
-	Node *roomNode = node_->GetParent();
-	PODVector<Node *> terminalNodes;
-	roomNode->GetChildrenWithComponent<MrWrightTerminal>(terminalNodes, true);
-
-	for (int x = 0; x < terminalNodes.Size(); ++x) {
-		MrWrightTerminal *thisTerm = terminalNodes[x]->GetComponent<MrWrightTerminal>();
-		bool canInteract = thisTerm->CanPlayerInteract();
-		String myStr = thisTerm->GetContent();
-
-
-		for (Vector<PODVector<Material *>>::Iterator i = sequences_.Begin(); i != sequences_.End(); ++i) {
-			PODVector<Material *> mats;
-			for (PODVector<Material *>::Iterator i = mats.Begin(); i != mats.End(); ++i) {
-				Material *mat = *i;
-				String thisStr = mat->GetName().CString();
-				if (canInteract && myStr == thisStr) {
-
-					//then they have pressed the correct glyph,
-					//this will work for any glyphs in the sequence, not just the one on the end
-
-				}
-
-			}
-		}
-	}
-
+	// Need to show the current sequence and update it in here.
+	// Probably will want to seperate out everything already in here to another function.
 
 	swapTimer_ += timeStep;
 
-
-	if (swapTimer_ < 5.0f) {
+	if (swapTimer_ < 10.0f) {
 		return;
 	}
 
 	swapTimer_ = 0.0f;
 
-	//Node *roomNode = node_->GetParent();
+	Node *roomNode = node_->GetParent();
 
 	PODVector<Node *> posterNodes;
-	//PODVector<Node *> terminalNodes;
-
 	roomNode->GetChildrenWithComponent<InteractablePoster>(posterNodes, true);
-	roomNode->GetChildrenWithComponent<MrWrightTerminal>(terminalNodes, true);
-
-	if (posterNodes.Empty()) {
-		LOGERROR("Poster nodes are empty");
-	}
-
-	if (terminalNodes.Empty()) {
-		LOGERROR("Terminal nodes are empty");
-	}
-
-	ResourceCache *cache = GetSubsystem<ResourceCache>();
 
 	int m = posterNodes.Size();
 	while (m > 0) {
@@ -142,46 +118,39 @@ void MrWright::Update(float timeStep)
 		a->SetMaterial(b->GetMaterial());
 		b->SetMaterial(t);
 	}
+}
 
-	int x = terminalNodes.Size();
-	LOGERRORF("terminal nodes size: %d", x);
-	x -= 1;
-	int n = posterNodes.Size();
-	LOGERRORF("poster nodes size %d", n);
+void MrWright::HandleNodeCollision(StringHash eventType, VariantMap &eventData)
+{
+	Node *other = (Node *)eventData[NodeCollisionStart::P_OTHERNODE].GetPtr();
 
-	while (x >= 0) {
-
-			for (PODVector<Node *>::ConstIterator i = posterNodes.Begin(); i != posterNodes.End(); ++i) {
-
-				Node *thisPosterNodes = *i;
-				Vector3 thisTerminalPos = terminalNodes[x]->GetWorldPosition();
-				Vector3 thisPosterPos = thisPosterNodes->GetWorldPosition();
-				Vector3 diff = thisPosterPos - thisTerminalPos;
-				float calc = Abs(diff.LengthSquared());
-
-				if (calc > 1.0f * 1.0f) {
-					LOGERROR("Not Closest terminal");
-				}
-				else {
-					StaticModel *c = thisPosterNodes->GetComponent<StaticModel>();
-					LOGERROR("Found terminal");
-					String str = c->GetMaterial()->GetName();
-
-					MrWrightTerminal *thisTerm = terminalNodes[x]->GetComponent<MrWrightTerminal>();
-					thisTerm->SetContent(str);
-					//this is the current material above the closest terminal?
-					LOGERRORF("MAterial NAme %s", str.CString()); // store a vector of 3 materials in an order, then if the terminals material matches the first one in the vector, remove that one from the vector
-					x--;
-					if (x < 0) {
-						goto LABEL;
-					}
-					//do what we need with it then break out
-				}
-				LOGERRORF("x: %d", x);
-			}
-
+	Node *person = GetScene()->GetChild("Person", true);
+	if (other != person) {
+		return;
 	}
 
-LABEL:;
+	Node *node = (Node *)GetEventSender();
+	Node *posterNode = (Node *)node->GetVar("poster").GetPtr();
 
+	StaticModel *poster = posterNode->GetComponent<StaticModel>();
+	Material *posterMaterial = poster->GetMaterial();
+
+	LOGERRORF("Poster: %s", posterMaterial->GetName().CString());
+
+	PODVector<Material *> &currentSequence = sequences_.Front();
+	Material *&currentMaterial = currentSequence.Front(); // TIL that a reference to a pointer is valid.
+
+	if (posterMaterial != currentMaterial) {
+		LOGERROR("No Match!");
+		return;
 	}
+
+	LOGERROR("Match!");
+	currentSequence.Erase(0);
+
+	if (currentSequence.Empty()) {
+		LOGERROR("Started Next Sequence!");
+
+		sequences_.Erase(0);
+	}
+}
