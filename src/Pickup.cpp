@@ -11,6 +11,10 @@
 #include "RigidBody.h"
 #include "Scene.h"
 #include "ValueAnimation.h"
+#include "SoundSource3D.h"
+#include "Audio.h"
+#include "Sound.h"
+#include "ResourceCache.h"
 
 using namespace Urho3D;
 
@@ -69,6 +73,16 @@ void Pickup::Update(float timeStep)
 	if (!colliders.Empty() && colliders[0]->GetNode() == person) {
 		Inventory *inventory = person->GetComponent<Inventory>();
 		inventory->AddItem(this);
+
+		ResourceCache *cache = GetSubsystem<ResourceCache>();
+
+		Node *sound = GetScene()->CreateChild("SoundEffect");
+		sound->SetWorldPosition(node_->GetWorldPosition());
+
+		SoundSource *source = sound->CreateComponent<SoundSource>();
+		source->SetAutoRemove(true);
+		source->SetSoundType(SOUND_EFFECT);
+		source->Play(cache->GetResource<Sound>("Audio/Pickup.wav"));
 
 		node_->SetEnabled(false);
 	}
