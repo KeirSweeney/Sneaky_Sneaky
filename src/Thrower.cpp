@@ -59,8 +59,7 @@ void Thrower::Update(float timeStep)
 	ResourceCache *cache = GetSubsystem<ResourceCache>();
 	Sound *throwSound = cache->GetResource<Sound>("Audio/HitHurt.wav"); //will need to move this out of update.
 
-	SoundSource *source = itemNode->CreateComponent<SoundSource>();
-	source->SetAutoRemove(true);
+	SoundSource3D *source = itemNode->CreateComponent<SoundSource3D>();
 	source->Play(throwSound);
 
 	RigidBody *itemRigidBody = itemNode->GetComponent<RigidBody>();
@@ -78,8 +77,6 @@ void Thrower::Update(float timeStep)
 	SelfDestroy *selfDestroy = itemNode->CreateComponent<SelfDestroy>();
 	selfDestroy->SetLifeTime(7.0f);
 
-	SoundSource *soundSource = itemNode->CreateComponent<SoundSource>();
-
 	Node *particleEmitterNode = itemNode->CreateChild();
 	particleEmitterNode->SetPosition(itemRigidBody->GetCenterOfMass());
 	particleEmitterNode->SetScale(Vector3(5.0f, 5.0f, 5.0f) / itemNode->GetScale());
@@ -91,7 +88,7 @@ void Thrower::Update(float timeStep)
 void Thrower::HandleNodeCollision(StringHash eventType, VariantMap &eventData)
 {
 	Node *itemNode = ((RigidBody *)eventData[NodeCollisionStart::P_BODY].GetPtr())->GetNode();
-	SoundSource *soundSource = itemNode->GetComponent<SoundSource>();
+	SoundSource3D *soundSource = itemNode->GetComponent<SoundSource3D>();
 
 	DistractGuard(itemNode);
 

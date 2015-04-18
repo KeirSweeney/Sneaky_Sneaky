@@ -59,7 +59,7 @@ void SelfDestroy::Update(float timeStep)
 		Sound *destroySound = cache->GetResource<Sound>("Audio/Explosion.wav"); //will need to move this out of update.
 		Node *soundNode = node_->GetScene()->CreateChild();
 		soundNode->SetWorldPosition(node_->GetWorldPosition());
-		SoundSource *source = soundNode->CreateComponent<SoundSource>();
+		SoundSource3D *source = soundNode->CreateComponent<SoundSource3D>();
 		source->SetAutoRemove(true);
 
 		source->Play(destroySound);
@@ -71,5 +71,3 @@ void SelfDestroy::SetLifeTime(float lifeTime)
 {
 	lifeTime_ = lifeTime;
 }
-
-
