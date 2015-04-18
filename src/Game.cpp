@@ -1,5 +1,25 @@
 #include "Game.h"
 
+#include "Analytics.h"
+#include "AnimatedPoster.h"
+#include "AudioZone.h"
+#include "CameraController.h"
+#include "Door.h"
+#include "Guard.h"
+#include "InteractableComponent.h"
+#include "InteractablePoster.h"
+#include "Inventory.h"
+#include "Laser.h"
+#include "MrWright.h"
+#include "MrWrightTerminal.h"
+#include "Padlock.h"
+#include "Person.h"
+#include "Pickup.h"
+#include "SecurityCamera.h"
+#include "Stairs.h"
+#include "Terminal.h"
+#include "Thrower.h"
+
 #include "Audio.h"
 #include "Camera.h"
 #include "CollisionShape.h"
@@ -7,53 +27,33 @@
 #include "DebugHud.h"
 #include "DebugRenderer.h"
 #include "Engine.h"
+#include "Font.h"
 #include "Input.h"
 #include "Light.h"
+#include "Log.h"
 #include "Material.h"
 #include "Model.h"
 #include "Navigable.h"
 #include "NavigationMesh.h"
 #include "Octree.h"
-#include "Person.h"
 #include "PhysicsWorld.h"
 #include "RenderPath.h"
 #include "Renderer.h"
 #include "ResourceCache.h"
 #include "RigidBody.h"
 #include "Scene.h"
+#include "Sound.h"
+#include "SoundListener.h"
+#include "SoundSource3D.h"
+#include "Sprite.h"
 #include "StaticModel.h"
+#include "StringUtils.h"
+#include "Text3D.h"
+#include "Texture2D.h"
+#include "UI.h"
 #include "Viewport.h"
 #include "XMLFile.h"
 #include "Zone.h"
-#include "Texture2D.h"
-#include "CameraController.h"
-#include "Text3D.h"
-#include "Font.h"
-#include "StringUtils.h"
-#include "Door.h"
-#include "Terminal.h"
-#include "Log.h"
-#include "Pickup.h"
-#include "Guard.h"
-#include "Inventory.h"
-#include "UI.h"
-#include "Sprite.h"
-#include "Stairs.h"
-#include "Analytics.h"
-#include "Audio.h"
-#include "SoundListener.h"
-#include "InteractableComponent.h"
-#include "Thrower.h"
-#include "SecurityCamera.h"
-#include "Laser.h"
-#include "MrWright.h"
-#include "Padlock.h"
-#include "MrWrightTerminal.h"
-#include "SoundSource3D.h"
-#include "Sound.h"
-#include "InteractablePoster.h"
-#include "AudioZone.h"
-#include "AnimatedPoster.h"
 
 #include <ctime>
 #include <cstdio>
@@ -113,24 +113,24 @@ void Game::Start()
 	scene_ = new Scene(context_);
 
 	// We need to register our custom component classes before they can be used.
-	InteractableComponent::RegisterObject(context_);
-	InteractablePoster::RegisterObject(context_);
+	AnimatedPoster::RegisterObject(context_);
+	AudioZone::RegisterObject(context_);
 	CameraController::RegisterObject(context_);
 	Door::RegisterObject(context_);
 	Guard::RegisterObject(context_);
+	InteractableComponent::RegisterObject(context_);
+	InteractablePoster::RegisterObject(context_);
 	Inventory::RegisterObject(context_);
-	Person::RegisterObject(context_);
-	Pickup::RegisterObject(context_);
-	Terminal::RegisterObject(context_);
-	Stairs::RegisterObject(context_);
-	Thrower::RegisterObject(context_);
-	SecurityCamera::RegisterObject(context_);
 	Laser::RegisterObject(context_);
 	MrWright::RegisterObject(context_);
-	Padlock::RegisterObject(context_);
 	MrWrightTerminal::RegisterObject(context_);
-	AudioZone::RegisterObject(context_);
-	AnimatedPoster::RegisterObject(context_);
+	Padlock::RegisterObject(context_);
+	Person::RegisterObject(context_);
+	Pickup::RegisterObject(context_);
+	SecurityCamera::RegisterObject(context_);
+	Stairs::RegisterObject(context_);
+	Terminal::RegisterObject(context_);
+	Thrower::RegisterObject(context_);
 
 	SharedPtr<Viewport> viewport(new Viewport(context_, scene_, NULL));
 

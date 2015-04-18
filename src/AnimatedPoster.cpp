@@ -1,12 +1,12 @@
 #include "AnimatedPoster.h"
 
 #include "Context.h"
-#include "Node.h"
-#include "Scene.h"
 #include "Material.h"
-#include "StaticModel.h"
+#include "Node.h"
 #include "ResourceCache.h"
+#include "StaticModel.h"
 #include "Texture2D.h"
+#include "XMLElement.h"
 
 using namespace Urho3D;
 

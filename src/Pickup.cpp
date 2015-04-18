@@ -1,16 +1,16 @@
 #include "Pickup.h"
 
-#include "Context.h"
-#include "Node.h"
-#include "Scene.h"
-#include "NavigationMesh.h"
-#include "Log.h"
-#include "DebugRenderer.h"
-#include "Profiler.h"
-#include "RigidBody.h"
-#include "Person.h"
-#include "ValueAnimation.h"
 #include "Inventory.h"
+#include "Person.h"
+
+#include "Context.h"
+#include "DebugRenderer.h"
+#include "Log.h"
+#include "NavigationMesh.h"
+#include "Node.h"
+#include "RigidBody.h"
+#include "Scene.h"
+#include "ValueAnimation.h"
 
 using namespace Urho3D;
 

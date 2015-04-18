@@ -1,23 +1,21 @@
 #include "SelfDestroy.h"
 
-#include "Pickup.h"
 #include "Inventory.h"
-
-#include "Context.h"
-#include "Node.h"
-#include "Scene.h"
-#include "Log.h"
-#include "DebugRenderer.h"
-#include "Profiler.h"
-#include "RigidBody.h"
 #include "Person.h"
-#include "Input.h"
-#include "StaticModel.h"
+#include "Pickup.h"
+
 #include "Audio.h"
-#include "SoundSource.h"
-#include "SoundSource3D.h"
-#include "Sound.h"
+#include "Context.h"
+#include "DebugRenderer.h"
+#include "Input.h"
+#include "Log.h"
+#include "Node.h"
 #include "ResourceCache.h"
+#include "RigidBody.h"
+#include "Scene.h"
+#include "Sound.h"
+#include "SoundSource3D.h"
+#include "StaticModel.h"
 
 using namespace Urho3D;
 

@@ -1,18 +1,19 @@
 #include "Door.h"
 
-#include "Context.h"
-#include "Node.h"
-#include "Scene.h"
-#include "NavigationMesh.h"
-#include "Log.h"
-#include "DebugRenderer.h"
-#include "Profiler.h"
-#include "RigidBody.h"
 #include "Person.h"
+
+#include "Context.h"
+#include "DebugRenderer.h"
+#include "Log.h"
+#include "NavigationMesh.h"
+#include "Node.h"
 #include "PhysicsEvents.h"
+#include "Profiler.h"
+#include "ResourceCache.h"
+#include "RigidBody.h"
+#include "Scene.h"
 #include "Sound.h"
 #include "SoundSource3D.h"
-#include "ResourceCache.h"
 
 using namespace Urho3D;
 

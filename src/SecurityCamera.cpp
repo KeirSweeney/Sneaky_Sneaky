@@ -1,17 +1,18 @@
 #include "SecurityCamera.h"
 
+#include "Guard.h"
+
 #include "Context.h"
-#include "Node.h"
-#include "Scene.h"
-#include "Log.h"
-#include "Octree.h"
 #include "DebugRenderer.h"
 #include "Frustum.h"
-#include "Guard.h"
 #include "Light.h"
-#include "RigidBody.h"
+#include "Log.h"
 #include "NavigationMesh.h"
+#include "Node.h"
+#include "Octree.h"
 #include "ResourceCache.h"
+#include "RigidBody.h"
+#include "Scene.h"
 #include "Texture2D.h"
 
 using namespace Urho3D;

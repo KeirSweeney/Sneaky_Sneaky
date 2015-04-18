@@ -1,23 +1,22 @@
 #include "Inventory.h"
 
 #include "Pickup.h"
-
-#include "Context.h"
-#include "Node.h"
-#include "Scene.h"
-#include "NavigationMesh.h"
-#include "Log.h"
-#include "DebugRenderer.h"
-#include "Profiler.h"
-#include "RigidBody.h"
 #include "Person.h"
-#include "UI.h"
+
 #include "Camera.h"
-#include "Sprite.h"
+#include "Context.h"
+#include "DebugRenderer.h"
 #include "Graphics.h"
-#include "UIElement.h"
-#include "Text.h"
 #include "Input.h"
+#include "Log.h"
+#include "NavigationMesh.h"
+#include "Node.h"
+#include "RigidBody.h"
+#include "Scene.h"
+#include "Sprite.h"
+#include "Text.h"
+#include "UI.h"
+#include "UIElement.h"
 
 using namespace Urho3D;
 
