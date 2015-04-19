@@ -15,6 +15,9 @@
   <!-- MR WRIGHT -->
   <object position="0 0.2 4.8" angles="0 180 0" scale="27" model="GiantScreen" material="Obsidian" interaction="MrWright"></object>
 
+  <!--Henry Chippingfort still-->
+  <object position="-3 0 3.5" angles="0 -20 0" scale="1" model="PersonPlane" material="Chippingfort"></object>
+
   <!-- Tables'n'Terminals-->
   <!-- LEFT SIDE -->
   <object position="-4.5 0 -3.5" angles="0 -90 0" scale="20" model="Table" material="Obsidian"></object>
