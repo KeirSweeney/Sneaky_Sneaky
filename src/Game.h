@@ -5,47 +5,50 @@
 #include "CrashHandler.h"
 
 namespace Urho3D {
-    class DebugHud;
-    class Scene;
-    class Camera;
-    class Node;
+	class DebugHud;
+	class Scene;
+	class Camera;
+	class Node;
 }
 
 class Game: public Urho3D::Application
 {
-    OBJECT(Game)
+	OBJECT(Game)
 
 public:
-    Game(Urho3D::Context *context);
+	Game(Urho3D::Context *context);
 
-    void Setup();
-    void Start();
-    void Stop();
+	void Setup();
+	void Start();
+	void Stop();
 
 public:
-    void LoadLevel();
-    void EndLevel(bool died);
+	void LoadLevel();
+	void EndLevel(bool died);
 
 private:
-    void HandleUpdate(Urho3D::StringHash eventType, Urho3D::VariantMap &eventData);
-    void HandlePostRenderUpdate(Urho3D::StringHash eventType, Urho3D::VariantMap &eventData);
+	void HandleUpdate(Urho3D::StringHash eventType, Urho3D::VariantMap &eventData);
+	void HandlePostRenderUpdate(Urho3D::StringHash eventType, Urho3D::VariantMap &eventData);
 
 private:
-    CrashHandler crashHandler_;
+	CrashHandler crashHandler_;
 
-    Urho3D::SharedPtr<Urho3D::DebugHud> debugHud_;
-    Urho3D::SharedPtr<Urho3D::Scene> scene_;
-    int currentLevel_;
-    float levelTime_;
-    enum GameState {
-        GS_MENU,
-        GS_PLAYING,
-        GS_DEAD,
-        GS_COMPLETED,
-    } gameState_;
+	Urho3D::SharedPtr<Urho3D::DebugHud> debugHud_;
+	Urho3D::SharedPtr<Urho3D::Scene> scene_;
+	int currentLevel_;
+	float levelTime_;
+	enum GameState {
+		GS_MENU,
+		GS_PLAYING,
+		GS_DEAD,
+		GS_COMPLETED,
+	} gameState_;
 
-    bool debugGeometry_;
-    bool debugPhysics_;
-    bool debugNavigation_;
-    bool debugDepthTest_;
+	bool unceUnceUnceWubWubWub_;
+	Urho3D::PODVector<int> cheatCode_;
+
+	bool debugGeometry_;
+	bool debugPhysics_;
+	bool debugNavigation_;
+	bool debugDepthTest_;
 };

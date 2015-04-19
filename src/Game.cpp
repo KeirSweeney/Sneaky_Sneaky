@@ -67,7 +67,7 @@ DEFINE_APPLICATION_MAIN(Game)
 
 Game::Game(Context *context):
 	Application(context), crashHandler_(context),
-	currentLevel_(0), levelTime_(0.0f), gameState_(GS_PLAYING),
+	currentLevel_(0), levelTime_(0.0f), gameState_(GS_PLAYING), unceUnceUnceWubWubWub_(false),
 	debugGeometry_(false), debugPhysics_(false), debugNavigation_(false), debugDepthTest_(true)
 {
 	// We need to call back from the components for level transitions,
@@ -75,6 +75,17 @@ Game::Game(Context *context):
 	context->RegisterSubsystem(this);
 
 	context->RegisterSubsystem(new Analytics(context));
+
+	cheatCode_.Push(KEY_A);
+	cheatCode_.Push(KEY_B);
+	cheatCode_.Push(KEY_RIGHT);
+	cheatCode_.Push(KEY_LEFT);
+	cheatCode_.Push(KEY_RIGHT);
+	cheatCode_.Push(KEY_LEFT);
+	cheatCode_.Push(KEY_DOWN);
+	cheatCode_.Push(KEY_DOWN);
+	cheatCode_.Push(KEY_UP);
+	cheatCode_.Push(KEY_UP);
 }
 
 void Game::Setup()
@@ -830,25 +841,32 @@ void Game::HandleUpdate(StringHash eventType, VariantMap &eventData)
 	renderPath->SetEnabled("BloomHDR", !debugRendering);
 #endif
 
-#if 0
-	static float colorTimer = 0.0f;
+	if (unceUnceUnceWubWubWub_) {
+		static float colorTimer = 0.0f;
 
-	if (colorTimer >= 0.2f) {
-		colorTimer = 0.0f;
+		if (colorTimer >= 0.2f) {
+			colorTimer = 0.0f;
 
-		PODVector<Node *> nodes;
-		scene_->GetChildrenWithComponent<Light>(nodes, true);
-		for (PODVector<Node *>::ConstIterator i = nodes.Begin(); i != nodes.End(); ++i) {
-			Color c;
-			c.FromHSV(Random(1.0f), 1.0f, 1.0f);
-			Light *l = (*i)->GetComponent<Light>();
-			l->SetColor(c);
-			l->SetCastShadows((Rand() % 2) == 0);
+			PODVector<Node *> nodes;
+			scene_->GetChildrenWithComponent<Light>(nodes, true);
+			for (PODVector<Node *>::ConstIterator i = nodes.Begin(); i != nodes.End(); ++i) {
+				Color c;
+				c.FromHSV(Random(1.0f), 1.0f, 1.0f);
+
+				Light *l = (*i)->GetComponent<Light>();
+				l->SetColor(c);
+				l->SetCastShadows((Rand() % 3) == 0);
+			}
+		}
+
+		colorTimer += timeStep;
+	} else if (input->GetKeyDown(cheatCode_.Back())) {
+		cheatCode_.Pop();
+
+		if (cheatCode_.Empty()) {
+			unceUnceUnceWubWubWub_ = true;
 		}
 	}
-
-	colorTimer += timeStep;
-#endif
 }
 
 void Game::HandlePostRenderUpdate(StringHash eventType, VariantMap &eventData)
