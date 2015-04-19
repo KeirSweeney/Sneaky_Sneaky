@@ -850,10 +850,15 @@ void Game::HandleUpdate(StringHash eventType, VariantMap &eventData)
 			PODVector<Node *> nodes;
 			scene_->GetChildrenWithComponent<Light>(nodes, true);
 			for (PODVector<Node *>::ConstIterator i = nodes.Begin(); i != nodes.End(); ++i) {
+				Light *l = (*i)->GetComponent<Light>();
+
+				if (l->GetLightType() != LIGHT_POINT) {
+					continue;
+				}
+
 				Color c;
 				c.FromHSV(Random(1.0f), 1.0f, 1.0f);
 
-				Light *l = (*i)->GetComponent<Light>();
 				l->SetColor(c);
 				l->SetCastShadows((Rand() % 3) == 0);
 			}
