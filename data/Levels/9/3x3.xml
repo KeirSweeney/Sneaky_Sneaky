@@ -1,4 +1,4 @@
-<room floor="Black_DI" lights="false">
+<room floor="Black_DI" lights="false" name="Crystal's Office">
 
   <!-- Upload Screen -->
   <object position="0 0.2 4.8" angles ="0 180 0" scale ="27" model="GiantScreen" material="Obsidian"></object>

@@ -1,7 +1,12 @@
-<room floor="Black_DI" lights="false">
+<room floor="Black_DI" lights="false" name="mooR A">
 
   <!--KEYCARD-->
   <object position="0 0 -2" scale="10" model="Punchcard" material="NeonPink" interaction="Pickup" type="Punchcard_1" name="Happy Key"></object>
+
+  <!--Spanner-->
+  <object position="-1.5 0 -2" scale="7" model="Spanner" material="NeonPink" interaction="Pickup" type="Throwable" name="Spanner"></object>
+  <object position="1.5 0 -2" scale="7" model="Spanner" material="NeonPink" interaction="Pickup" type="Throwable" name="Spanner"></object>
+
 
   <!--Poster-->
   <object position="0 -0.5 -5" angles="0 180 0" scale="2" model="PersonPlane" material="Instructions"></object>

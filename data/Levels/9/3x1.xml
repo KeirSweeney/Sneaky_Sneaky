@@ -1,7 +1,11 @@
-<room floor="Black_DI" lights="false">
+<room floor="Black_DI" lights="false" name="Crystal's Private Arcade">
 
   <!--KEYCARD-->
   <object position="0 0 0" scale="10" model="Punchcard" material="NeonPink" interaction="Pickup" type="Punchcard_2" name="The End?"></object>
+
+  <object position="0 0 -5" angles="0 180 0" scale="1.5" model="PersonPlane" material="pacman" interaction="AnimatedPoster" speed="2" frames="6" path="arcade"></object>
+
+  <object position="-5 0 0" angles="90 90 0" scale="5" model="PersonPlane" material="Arcade_carpet" nonsolid="true"></object>
 
   <!--CoinOps-->
   <object position="4.3 0 -1" angles="0 180 0" scale="17.5" model="CoinOp" material="Black_DI"></object>
