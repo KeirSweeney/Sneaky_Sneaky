@@ -120,7 +120,7 @@ void CameraController::Update(float timeStep)
 	position.z_ = room.y_ * 11.0f;
 
 	if (GetSubsystem<Game>()->IsDeveloper() && input->GetKeyDown(KEY_W)) {
-		//position += node_->GetDirection() * 5.5f;
+		position += node_->GetDirection() * 5.5f;
 		position.y_ += 2.0f;
 	}
 

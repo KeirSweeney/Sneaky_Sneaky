@@ -358,20 +358,20 @@ void Game::LoadLevel()
 				floorLightNode->SetPosition(Vector3(2.75f, floorLightHeight, 2.75f));
 			}
 
-#if 0
-			// Label the room with its number for development.
-			Node *roomLabelNode = floorNode->CreateChild();
-			roomLabelNode->SetPosition(Vector3(0.0f, 0.1f, 0.0f));
-			roomLabelNode->SetRotation(Quaternion(90.0f, Vector3::RIGHT));
-			roomLabelNode->SetScale(3.0f);
+			if (developerMode_) {
+				// Label the room with its number for development.
+				Node *roomLabelNode = floorNode->CreateChild();
+				roomLabelNode->SetPosition(Vector3(0.0f, 0.1f, 0.0f));
+				roomLabelNode->SetRotation(Quaternion(90.0f, Vector3::RIGHT));
+				roomLabelNode->SetScale(3.0f);
 
-			Text3D *roomLabel = roomLabelNode->CreateComponent<Text3D>();
-			roomLabel->SetText(ToString("%dx%d", x + 1, y + 1));
-			roomLabel->SetFont(cache->GetResource<Font>("Fonts/Anonymous Pro.sdf"));
-			roomLabel->SetColor(Color::WHITE);
-			roomLabel->SetAlignment(HA_CENTER, VA_CENTER);
-			roomLabel->SetFaceCameraMode(FC_ROTATE_Y);
-#endif
+				Text3D *roomLabel = roomLabelNode->CreateComponent<Text3D>();
+				roomLabel->SetText(ToString("%dx%d", x + 1, y + 1));
+				roomLabel->SetFont(cache->GetResource<Font>("Fonts/Anonymous Pro.sdf"));
+				roomLabel->SetColor(Color::WHITE);
+				roomLabel->SetAlignment(HA_CENTER, VA_CENTER);
+				roomLabel->SetFaceCameraMode(FC_ROTATE_Y);
+			}
 
 			if (roomXml) {
 				Node *roomContentsNode = floorNode->CreateChild();
