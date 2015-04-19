@@ -67,10 +67,13 @@ void CameraController::Update(float timeStep)
 {
 	Input *input = GetSubsystem<Input>();
 
-	if (input->GetKeyPress('Q'))
-		targetCameraYaw_ += 90.0f;
-	if (input->GetKeyPress('E'))
+	if (input->GetKeyPress('Q')) {
 		targetCameraYaw_ -= 90.0f;
+	}
+
+	if (input->GetKeyPress('E')) {
+		targetCameraYaw_ += 90.0f;
+	}
 
 	Vector3 position = GetScene()->GetChild("Person", true)->GetPosition();
 	IntVector2 room((int)round(position.x_ / 11.0f), (int)round(position.z_ / 11.0f));
@@ -115,7 +118,7 @@ void CameraController::Update(float timeStep)
 	position.z_ = room.y_ * 11.0f;
 
 	if (input->GetKeyDown(KEY_W)) {
-		position += node_->GetDirection() * 5.5f;
+		//position += node_->GetDirection() * 5.5f;
 		position.y_ += 2.0f;
 	}
 
