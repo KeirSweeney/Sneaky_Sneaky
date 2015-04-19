@@ -25,7 +25,8 @@ using namespace Urho3D;
 const float Person::MOVE_SPEED = 2.0f;
 
 Person::Person(Context *context):
-	LogicComponent(context)
+	LogicComponent(context),
+	health_(3)
 {
 }
 
@@ -150,6 +151,11 @@ void Person::SetPath(Urho3D::PODVector<Urho3D::Vector3> path)
 Vector3 Person::GetDirection() const
 {
 	return direction_;
+}
+
+void Person::TakeDamage()
+{
+	health_ -= 1;
 }
 
 
