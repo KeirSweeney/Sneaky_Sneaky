@@ -23,6 +23,10 @@ public:
 	void HandleNodeCollision(Urho3D::StringHash eventType, Urho3D::VariantMap &eventData);
 
 private:
+	void UpdateDisplayGlyphs();
+
+private:
 	float swapTimer_;
 	Urho3D::Vector<Urho3D::PODVector<Urho3D::Material *>> sequences_;
+	Urho3D::PODVector<Urho3D::Node *> displayGlyphs_;
 };
