@@ -347,7 +347,7 @@ void Game::LoadLevel()
 				floorLightNode->SetPosition(Vector3(2.75f, floorLightHeight, 2.75f));
 			}
 
-#if 1
+#if 0
 			// Label the room with its number for development.
 			Node *roomLabelNode = floorNode->CreateChild();
 			roomLabelNode->SetPosition(Vector3(0.0f, 0.1f, 0.0f));
