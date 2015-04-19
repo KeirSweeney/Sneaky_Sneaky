@@ -213,10 +213,10 @@ void Game::LoadLevel()
 
 	// The NavigationMesh is used for pathfinding.
 	NavigationMesh *navigationMesh = scene_->CreateComponent<NavigationMesh>();
-	navigationMesh->SetCellSize(0.2f);
-	navigationMesh->SetCellHeight(0.05f);
-	navigationMesh->SetAgentRadius(0.15f);
-	navigationMesh->SetAgentHeight(1.8f - navigationMesh->GetCellHeight());
+	navigationMesh->SetCellSize(0.05f);
+	navigationMesh->SetCellHeight(0.02f);
+	navigationMesh->SetAgentRadius(0.25f);
+	navigationMesh->SetAgentHeight(1.8f);
 	navigationMesh->SetAgentMaxClimb(0.0f);
 	navigationMesh->SetAgentMaxSlope(5.0f);
 
@@ -307,7 +307,6 @@ void Game::LoadLevel()
 			Node *floorNode = scene_->CreateChild(ToString("%dx%d", x + 1, y + 1));
 			floorNode->SetPosition(roomPosition);
 
-			// This is a giant hack.
 			if (!roomName.Empty()) {
 				floorNode->SetVar("label", roomName);
 			}
@@ -571,7 +570,6 @@ void Game::LoadLevel()
 				if (wallType == "Door") {
 					Node *doorNode = wallNode->CreateChild();
 
-					doorNode->CreateComponent<Navigable>();
 					doorNode->CreateComponent<RigidBody>();
 
 					StaticModel *doorModel = doorNode->CreateComponent<StaticModel>();

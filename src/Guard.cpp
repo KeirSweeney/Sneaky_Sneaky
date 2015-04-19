@@ -82,7 +82,11 @@ void Guard::Update(float timeStep)
 			wasFollowingPlayer_ = true;
 
 			NavigationMesh *navMesh = GetScene()->GetComponent<NavigationMesh>();
-			Vector3 target = navMesh->FindNearestPoint(soundPosition_);
+
+			Vector3 soundPositionFoor = soundPosition_;
+			soundPositionFoor.y_ = 0.0f;
+
+			Vector3 target = navMesh->FindNearestPoint(soundPositionFoor, Vector3(1.0f, 0.01f, 1.0f));
 			navMesh->FindPath(path_, node_->GetWorldPosition(), target);
 			path_.Erase(0);
 
@@ -137,8 +141,7 @@ void Guard::FollowPlayer(float timeStep, Node *player)
 
 	wasFollowingPlayer_ = true;
 
-	Vector3 target = navMesh->FindNearestPoint(playerPosition);
-	navMesh->FindPath(path_, guardPosition, target);
+	navMesh->FindPath(path_, guardPosition, playerPosition);
 	path_.Erase(0);
 
 	if (path_.Empty()) {

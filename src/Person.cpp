@@ -78,7 +78,7 @@ void Person::Update(float timeStep)
 
 		if (!result.Empty()) {
 			//LOGERRORF("result[0].position_: %s", result[0].position_.ToString().CString());
-			Vector3 target = navMesh->FindNearestPoint(result[0].position_);
+			Vector3 target = navMesh->FindNearestPoint(result[0].position_, Vector3(1.0f, 0.01f, 1.0f));
 			target.y_ = 0.0f;
 
 			if (input->GetMouseButtonPress(MOUSEB_LEFT)) {
