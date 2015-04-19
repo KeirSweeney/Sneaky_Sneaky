@@ -812,6 +812,15 @@ void Game::HandleUpdate(StringHash eventType, VariantMap &eventData)
 		*lol = 0xDEADBEEF;
 	}
 
+	if (input->GetKeyPress(KEY_U)) {
+		PODVector<Node *> nodes;
+		scene_->GetChildrenWithComponent<Padlock>(nodes, true);
+
+		for (PODVector<Node *>::ConstIterator i = nodes.Begin(); i != nodes.End(); ++i) {
+			(*i)->Remove();
+		}
+	}
+
 	Renderer *renderer = GetSubsystem<Renderer>();
 	RenderPath *renderPath = renderer->GetDefaultRenderPath();
 
