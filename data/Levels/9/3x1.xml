@@ -3,5 +3,19 @@
   <!--KEYCARD-->
   <object position="0 0 0" scale="10" model="Punchcard" material="NeonPink" interaction="Pickup" type="Punchcard_2" name="The End?"></object>
 
+  <!--CoinOps-->
+  <object position="4.3 0 -1" angles="0 180 0" scale="17.5" model="CoinOp" material="Black_DI"></object>
+  <object position="4.3 0 -3" angles="0 180 0" scale="17.5" model="CoinOp" material="Black_DI"></object>
+  <object position="4.3 0 3" angles="0 180 0" scale="17.5" model="CoinOp" material="Black_DI"></object>
+  <object position="4.3 0 1" angles="0 180 0" scale="17.5" model="CoinOp" material="Black_DI"></object>
+  <object position="-4.3 0 -1" angles="0 0 0" scale="17.5" model="CoinOp" material="Black_DI"></object>
+  <object position="-4.3 0 -3" angles="0 0 0" scale="17.5" model="CoinOp" material="Black_DI"></object>
+  <object position="-4.3 0 3" angles="0 0 0" scale="17.5" model="CoinOp" material="Black_DI"></object>
+  <object position="-4.3 0 1" angles="0 0 0" scale="17.5" model="CoinOp" material="Black_DI"></object>
+
+  <object position="3.85 1 -1" angles="35 90 0" scale="0.4" model="PersonPlane" material="AnimatedPoster" interaction="AnimatedPoster" speed="1" frames="3" path="pacman"></object>
+  <object position="3.85 1 -3" angles="35 90 0" scale="0.4" model="PersonPlane" material="AnimatedPoster" interaction="AnimatedPoster" speed="1" frames="3" path="metalslug"></object>
+  <object position="3.85 1 3" angles="35 90 0" scale="0.35" model="PersonPlane" material="AnimatedPoster" interaction="AnimatedPoster" speed="1" frames="3" path="elite"></object>
+  <object position="3.85 1 1" angles="35 90 0" scale="0.35" model="PersonPlane" material="AnimatedPoster" interaction="AnimatedPoster" speed="1" frames="3" path="defender"></object>
 
 </room>
