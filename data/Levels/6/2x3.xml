@@ -15,10 +15,10 @@
   <object position="-0.1 0 3.5" angles="0 0 0" scale="12.5" model ="ChairHC" material="Seat_HC"></object>
 
   <!--LASEREMITTER-->
-  <object position ="-4.5 0.4 5" angles="0 180 0" scale="10" model="LaserEmitter" material="Lamp"></object>
-  <object position ="-4.5 0.4 -5" angles="0 0 0" scale="10" model="LaserEmitter" material="Lamp"></object>
-  <object position ="4.5 0.4 5" angles="0 180 0" scale="10" model="LaserEmitter" material="Lamp"></object>
-  <object position ="4.5 0.4 -5" angles="0 0 0" scale="10" model="LaserEmitter" material="Lamp"></object>
+  <object position ="-4 0.4 5" angles="0 180 0" scale="10" model="LaserEmitter" material="Lamp"></object>
+  <object position ="-4 0.4 -5" angles="0 0 0" scale="10" model="LaserEmitter" material="Lamp"></object>
+  <object position ="4 0.4 5" angles="0 180 0" scale="10" model="LaserEmitter" material="Lamp"></object>
+  <object position ="4 0.4 -5" angles="0 0 0" scale="10" model="LaserEmitter" material="Lamp"></object>
   <object position ="-5 0.4 2" angles="0 90 0" scale="10" model="LaserEmitter" material="Lamp"></object>
   <object position ="5 0.4 2" angles="0 -90 0" scale="10" model="LaserEmitter" material="Lamp"></object>
 

@@ -16,6 +16,8 @@
 
   <!-- View screen -->
   <object position="0 0.2 -4.8" angles ="0 0 0" scale ="27" model="GiantScreen" material="Obsidian"></object>
+  <!-- Screen Image -->
+  <object position="0 -0.4 -4.6" angles="0 180 0" scale="2" model="PersonPlane" material="AnimatedPoster" interaction="AnimatedPoster" speed="0.2" frames="3" path="hc_conference"></object>
 
   <!-- Vending Machines -->
   <object position="4.7 0 4.2" angles="0 90 0" scale="15" model="VendingMachineBody" material="VendingMachineBody"></object>
@@ -24,7 +26,7 @@
   <object position="-4.7 0 4.2" angles="0 -90 0" scale="15" model="VendingMachineFront" material="Seat_HC"></object>
 
   <!-- BIN (woooo!) -->
-  <object position="2.5 0 -4.8" angles="0 0 0" scale="5" model="Bin" material="Mahogany"></object>
+  <object position="2.5 0 -4.5" angles="0 0 0" scale="5" model="Bin" material="Mahogany"></object>
 
   <!--Panneling-->
   <object position="-4 0 5" angles="0 0 0" scale="1" model="PersonPlane" material="Panneling" nonsolid="true"></object>
