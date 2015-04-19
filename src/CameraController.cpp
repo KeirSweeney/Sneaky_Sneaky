@@ -1,5 +1,7 @@
 #include "CameraController.h"
 
+#include "Game.h"
+
 #include "Camera.h"
 #include "Context.h"
 #include "DebugRenderer.h"
@@ -117,7 +119,7 @@ void CameraController::Update(float timeStep)
 	position.y_ = 0.0f;
 	position.z_ = room.y_ * 11.0f;
 
-	if (input->GetKeyDown(KEY_W)) {
+	if (GetSubsystem<Game>()->IsDeveloper() && input->GetKeyDown(KEY_W)) {
 		//position += node_->GetDirection() * 5.5f;
 		position.y_ += 2.0f;
 	}

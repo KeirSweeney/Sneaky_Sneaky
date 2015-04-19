@@ -26,6 +26,8 @@ public:
 	void LoadLevel();
 	void EndLevel(bool died);
 
+	bool IsDeveloper();
+
 private:
 	void HandleUpdate(Urho3D::StringHash eventType, Urho3D::VariantMap &eventData);
 	void HandlePostRenderUpdate(Urho3D::StringHash eventType, Urho3D::VariantMap &eventData);
@@ -47,6 +49,7 @@ private:
 	bool unceUnceUnceWubWubWub_;
 	Urho3D::PODVector<int> cheatCode_;
 
+	bool developerMode_;
 	bool debugGeometry_;
 	bool debugPhysics_;
 	bool debugNavigation_;

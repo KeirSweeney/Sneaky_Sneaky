@@ -68,7 +68,7 @@ DEFINE_APPLICATION_MAIN(Game)
 Game::Game(Context *context):
 	Application(context), crashHandler_(context),
 	currentLevel_(0), levelTime_(0.0f), gameState_(GS_PLAYING), unceUnceUnceWubWubWub_(false),
-	debugGeometry_(false), debugPhysics_(false), debugNavigation_(false), debugDepthTest_(true)
+	developerMode_(false), debugGeometry_(false), debugPhysics_(false), debugNavigation_(false), debugDepthTest_(true)
 {
 	// We need to call back from the components for level transitions,
 	// this stores our instance for access in the global store.
@@ -773,6 +773,11 @@ void Game::EndLevel(bool died)
 	gameState_ = died ? GS_DEAD : GS_COMPLETED;
 }
 
+bool Game::IsDeveloper()
+{
+	return developerMode_;
+}
+
 void Game::HandleUpdate(StringHash eventType, VariantMap &eventData)
 {
 	(void)eventType;
@@ -787,59 +792,61 @@ void Game::HandleUpdate(StringHash eventType, VariantMap &eventData)
 		LoadLevel();
 	}
 
-#if 1
-	if (input->GetKeyPress(KEY_0)) {
-		debugDepthTest_ = !debugDepthTest_;
-	}
-
-	if (input->GetKeyPress(KEY_1)) {
-		debugGeometry_ = !debugGeometry_;
-	}
-
-	if (input->GetKeyPress(KEY_2)) {
-		debugPhysics_ = !debugPhysics_;
-	}
-
-	if (input->GetKeyPress(KEY_3)) {
-		debugNavigation_ = !debugNavigation_;
-	}
-
-	if (input->GetKeyPress(KEY_D)) {
-		debugHud_->SetMode(debugHud_->GetMode() == DEBUGHUD_SHOW_NONE ? DEBUGHUD_SHOW_ALL : DEBUGHUD_SHOW_NONE);
-	}
-
-	if (gameState_ == GS_PLAYING && input->GetKeyPress(KEY_R)) {
-		GetSubsystem<ResourceCache>()->ReleaseAllResources(true);
-		LoadLevel();
-	}
-
-	if (gameState_ == GS_PLAYING && input->GetKeyPress(KEY_N)) {
-		EndLevel(false);
-	}
-
-	if (input->GetKeyPress(KEY_C)) {
-		// CRASH EVERYTHING!
-		volatile int *lol = NULL;
-		*lol = 0xDEADBEEF;
-	}
-
-	if (input->GetKeyPress(KEY_U)) {
-		PODVector<Node *> nodes;
-		scene_->GetChildrenWithComponent<Padlock>(nodes, true);
-
-		for (PODVector<Node *>::ConstIterator i = nodes.Begin(); i != nodes.End(); ++i) {
-			(*i)->Remove();
+	if (developerMode_) {
+		if (input->GetKeyPress(KEY_0)) {
+			debugDepthTest_ = !debugDepthTest_;
 		}
+
+		if (input->GetKeyPress(KEY_1)) {
+			debugGeometry_ = !debugGeometry_;
+		}
+
+		if (input->GetKeyPress(KEY_2)) {
+			debugPhysics_ = !debugPhysics_;
+		}
+
+		if (input->GetKeyPress(KEY_3)) {
+			debugNavigation_ = !debugNavigation_;
+		}
+
+		if (input->GetKeyPress(KEY_D)) {
+			debugHud_->SetMode(debugHud_->GetMode() == DEBUGHUD_SHOW_NONE ? DEBUGHUD_SHOW_ALL : DEBUGHUD_SHOW_NONE);
+		}
+
+		if (gameState_ == GS_PLAYING && input->GetKeyPress(KEY_R)) {
+			GetSubsystem<ResourceCache>()->ReleaseAllResources(true);
+			LoadLevel();
+		}
+
+		if (gameState_ == GS_PLAYING && input->GetKeyPress(KEY_N)) {
+			EndLevel(false);
+		}
+
+		if (input->GetKeyPress(KEY_C)) {
+			// CRASH EVERYTHING!
+			volatile int *lol = NULL;
+			*lol = 0xDEADBEEF;
+		}
+
+		if (input->GetKeyPress(KEY_U)) {
+			PODVector<Node *> nodes;
+			scene_->GetChildrenWithComponent<Padlock>(nodes, true);
+
+			for (PODVector<Node *>::ConstIterator i = nodes.Begin(); i != nodes.End(); ++i) {
+				(*i)->Remove();
+			}
+		}
+
+		Renderer *renderer = GetSubsystem<Renderer>();
+		RenderPath *renderPath = renderer->GetDefaultRenderPath();
+
+		// The post-processing effects don't play nicely with the debug rendering.
+		bool debugRendering = debugGeometry_ || debugPhysics_ || debugNavigation_;
+		renderPath->SetEnabled("FXAA3", !debugRendering);
+		renderPath->SetEnabled("BloomHDR", !debugRendering);
+	} else if (input->GetKeyPress('`')) {
+		developerMode_ = true;
 	}
-
-	Renderer *renderer = GetSubsystem<Renderer>();
-	RenderPath *renderPath = renderer->GetDefaultRenderPath();
-
-	// The post-processing effects don't play nicely with the debug rendering.
-	bool debugRendering = debugGeometry_ || debugPhysics_ || debugNavigation_;
-	renderPath->SetEnabled("FXAA3", !debugRendering);
-	renderPath->SetEnabled("BloomHDR", !debugRendering);
-#endif
 
 	if (unceUnceUnceWubWubWub_) {
 		static float colorTimer = 0.0f;
