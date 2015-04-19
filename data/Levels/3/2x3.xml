@@ -1,5 +1,18 @@
 <room  name="Henry Chippingfort's Office" floor="Dark_Oak_light">
 
+  <!-- THIS IS THE PASSSAGE TO BE PLAYED AFTER BOSS DEFEAT-->
+  <audiozone position="0 0" rotation="0" size="1 1">
+    <audioclip delay="1">VO/Voice/13_CheckPockets.wav</audioclip>
+    <audioclip delay="0">VO/Black/13_Petty.wav</audioclip>
+    <audioclip delay="0">VO/Voice/14_No.wav</audioclip>
+    <audioclip delay="0">VO/Black/14_Keys.wav</audioclip>
+    <audioclip delay="0">VO/Voice/15_CatFlap.wav</audioclip>
+    <audioclip delay="0">VO/Black/15_Why.wav</audioclip>
+    <audioclip delay="0">VO/Voice/16_KeepItSecure.wav</audioclip>
+    <audioclip delay="0">VO/Black/16_Sigh.wav</audioclip>
+  </audiozone>
+  <!--       MUST BE TAKEN OUT FOR FINAL BUILD            -->
+
   <!--GLYPH-->
   <object position="-5 1.4 3.5" angles="0 -90 0" scale="0.6" model="PersonPlane" material="Glyph/1" interaction="InteractablePoster"></object>
   <object position="-5 1.4 0" angles="0 -90 0" scale="0.6" model="PersonPlane" material="Glyph/2" interaction="InteractablePoster"></object>

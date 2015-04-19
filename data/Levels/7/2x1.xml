@@ -27,13 +27,5 @@
   <object position="3 0 2.5" angles="0 90 0" scale="25" model="CoffeeTableGlass" material="CoffeeTableGlass"></object>
   <object position="3 0 2.5" angles="0 90 0" scale="25" model="CoffeeTableLegs" material="NeonPink"></object>
 
-  <audiozone position="0 0" rotation="0" size="1 1">
-    <audioclip delay="0">VO/Black/26_BREATHE.wav</audioclip>
-    <audioclip delay="0">VO/Voice/28_YouActuallyBeatHer.wav</audioclip>
-    <audioclip delay="0">VO/Black/27_Faith.wav</audioclip>
-    <audioclip delay="2">VO/Black/28_YouInThere.wav</audioclip>
-    <audioclip delay="0">VO/Voice/29_IHaveWork.wav</audioclip>
-    <audioclip delay="0">VO/Black/29_Mav.wav</audioclip>
-  </audiozone>
 
 </room>
