@@ -37,6 +37,11 @@
   <object position="0 0 -4.5" angles="0 180 0" scale="6" model="CoolerBase" material="FlatGrey"></object>
   <object position="0 0 -4.5" angles="0 180 0" scale="6" model="CoolerBottle" material="CoolerBottle"></object>
 
+  <!-- TUTORIAL POSTERS -->
+  <object position="-3 0.1 5" scale="1.5" model="PersonPlane" material="Tutorial1"></object>
+  <object position="-2 0.1 -5" angles="0 180 0" scale="1.5" model="PersonPlane" material="Tutorial2"></object>
+  <object position="3 0 0" angles="90 90 0" scale="1.5" model="PersonPlane" material="Tutorial3"></object>
+
   <audiozone position="0 0" rotation="0" size="1 1">
     <audioclip delay="1">VO/Voice/1_Hello.wav</audioclip>
     <audioclip delay="0">VO/Black/1_HowDidYou.wav</audioclip>
