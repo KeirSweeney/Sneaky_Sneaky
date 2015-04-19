@@ -1,4 +1,4 @@
-<room floor="Black_DI" lights="false">
+<room floor="Black_DI" lights="false" name="Zone 1">
 
   <!--PADLOCK-->
   <object position="0 0.5 5" angles="0 0 0" scale="6.5" model ="Padlock" material="NeonGreen" interaction="Padlock" type="Punchcard_2">Stairwell</object>

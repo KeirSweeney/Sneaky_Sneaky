@@ -1,4 +1,4 @@
-<room floor="Black_DI" lights="false">
+<room floor="Black_DI" lights="false" name="Zone 2">
 
   <!--Spanner-->
   <object position="0 0 -4" scale="7" model="Spanner" material="NeonPink" interaction="Pickup" type="Throwable" name="Spanner"></object>

@@ -1,4 +1,31 @@
-<room floor="Black_DI" lights="false">
+<room floor="Black_DI" lights="false" name="A Room">
   <object position="0 0 -2" angles="90 0 0" scale="2" model="PersonPlane" material="AnimatedPoster" interaction="AnimatedPoster" speed="1" frames="4" path="Arrow"></object>
+
+  <!--COVER-->
+  <object position="0 0 -5" angles="0 180 0" scale="1.1" model="PersonPlane" material="Black_DI" nonsolid="true"></object>
+
+  <!-- CAMERA -->
+  <object position="0 3 4.5" angles="0 180 0" scale="10" model="CameraBase" material="SecurityCamera"></object>
+  <object position="0 3 4.5" angles="0 180 0" scale="10" model="Camera" material="SecurityCamera" interaction="SecurityCamera"></object>
+
+  <!--Taunt-->
+  <object position="0 0 -3.5" angles="90 180 0" scale="0.5" model="PersonPlane" material="AnimatedPoster" interaction="AnimatedPoster" speed="2" frames="10" path="taunt"></object>
+
+  <!--Desk-->
+  <object position="-2 0 0" angles="0 -90 0" scale="20" model="Table" material="Obsidian"></object>
+  <object position="-2 1 0" angles="0 -90 0" scale="5" model="Terminal" material="Terminal_HC"></object>
+  <object position="-1.5 0 0" angles="0 90 0" scale="6.5" model ="Seat" material="Seat_DI"></object>
+
+  <!--LASEREMITTER-->
+  <object position ="3 0.4 5" angles="0 180 0" scale="10" model="LaserEmitter" material="Lamp"></object>
+  <object position ="3 0.4 -5" angles="0 0 0" scale="10" model="LaserEmitter" material="Lamp"></object>
+
+  <!--LASER-->
+  <object position ="3 0.4 5" angles="90 180 0" scale="0.06 10 0.06" model="Laser" material="NeonPink" interaction="Laser" interval="2"></object>9
+
+  <guard>
+    <waypoint position="-4 0 4"></waypoint>
+    <waypoint position="-4 0 -4"></waypoint>
+  </guard>
 
 </room>

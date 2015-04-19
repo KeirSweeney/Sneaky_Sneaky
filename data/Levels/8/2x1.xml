@@ -1,4 +1,4 @@
-<room floor="Black_DI" lights="false">
+<room floor="Black_DI" lights="false" name="Zone 2">
  <!-- STANDARD ONE ROOM CUBICALS-->
   <object position="2 0 4" angles="0 90 0" scale="12.5" model="CubicleDivider" material="Obsidian"></object>
   <object position="2 0 2.5" angles="0 90 0" scale="12.5" model="CubicleDivider" material="Obsidian"></object>

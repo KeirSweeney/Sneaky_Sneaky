@@ -1,0 +1,3 @@
+<room floor="Black_DI" lights="false">
+<!-- Despite the being no 2x1 on this level.. we need to set it dark so light doesn't flood in :)-->
+</room>

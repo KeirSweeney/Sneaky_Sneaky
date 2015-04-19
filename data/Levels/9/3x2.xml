@@ -1,10 +1,34 @@
-<room floor="Black_DI" lights="false">
+<room floor="Black_DI" lights="false" name="The Shrouded Lounge">
 
-  
-  <object position="0 0 -2" angles="90 0 0" scale="2" model="PersonPlane" material="AnimatedPoster" interaction="AnimatedPoster" speed="1" frames="4" path="Arrow"></object>
+  <!--PADLOCK-->
+  <object position="0 0.5 -5" angles="0 180 0" scale="6.5" model ="Padlock" material="NeonGreen" interaction="Padlock" type="Punchcard_1">Happy Room</object>
+  <object position="0 0.5 5" angles="0 0 0" scale="6.5" model ="Padlock" material="NeonGreen" interaction="Padlock" type="Punchcard_2">Unhappy Room</object>
 
   <audiozone position="0 4.5" rotation="0" size="2 1">
     <audioclip delay="0">VO/Voice/30_KnockKnock.wav</audioclip>
   </audiozone>
+
+  <!--Sofas-->
+  <object position="3.5 0 -4.6" angles="0 0 0" scale="50" model="SofaLength" material="Obsidian"></object>
+  <object position="2 0 -5" angles="0 180 0" scale="50" model="SofaEnd" material="Obsidian"></object>
+  <object position="4.6 0 -3.5" angles="0 -90 0" scale="50" model="SofaLength" material="Obsidian"></object>
+  <object position="5 0 -2" angles="0 -90 0" scale="50" model="SofaEnd" material="Obsidian"></object>
+
+  <object position="3.5 0 4.6" angles="0 180 0" scale="50" model="SofaLength" material="Obsidian"></object>
+  <object position="2 0 5" angles="0 180 0" scale="50" model="SofaEnd" material="Obsidian"></object>
+  <object position="4.6 0 3.5" angles="0 -90 0" scale="50" model="SofaLength" material="Obsidian"></object>
+  <object position="5 0 2" angles="0 90 0" scale="50" model="SofaEnd" material="Obsidian"></object>
+
+  <!--Coffee Table-->
+  <object position="2.5 0 -2" angles="0 90 0" scale="25" model="CoffeeTableGlass" material="CoffeeTableGlass"></object>
+  <object position="2.5 0 -2" angles="0 90 0" scale="25" model="CoffeeTableLegs" material="NeonPink"></object>
+  <object position="2.5 0 2" angles="0 90 0" scale="25" model="CoffeeTableGlass" material="CoffeeTableGlass"></object>
+  <object position="2.5 0 2" angles="0 90 0" scale="25" model="CoffeeTableLegs" material="NeonYellow"></object>
+
+  <!--Vending Machines-->
+  <object position="-4.5 0 2.5" angles="0 -90 0" scale="15" model="VendingMachineBody" material="Obsidian"></object>
+  <object position="-4.5 0 2.5" angles="0 -90 0" scale="15" model="VendingMachineFront" material="NeonBlue"></object>
+  <object position="-4.5 0 -2.5" angles="0 -90 0" scale="15" model="VendingMachineBody" material="Obsidian"></object>
+  <object position="-4.5 0 -2.5" angles="0 -90 0" scale="15" model="VendingMachineFront" material="NeonGreen"></object>
 
 </room>
