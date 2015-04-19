@@ -39,7 +39,11 @@
   <object position="-4.5 0 -0.5" angles="0 0 0" scale="25" model="CabinetMiddle" material="CabinetMiddle"></object>
 
   <!-- Family Picture -->
-  <object position="-1 0 1" angles="0 200 90" scale="20" model="PictureFrame" material="Dark_Oak" interaction="Terminal" displaysize="100 50">Wright Family Portrait</object>
+  <object position="-1 0 1" angles="0 200 90" scale="20" model="PictureFrame" material="Dark_Oak" nonsolid="true"></object>
+  <object position="-1 0 1" angles="90 200 90" scale="1" model="PersonPlane" material="Wright_Painting" nonsolid="true"></object>
+  <object position="-1 0 0.5" angles="90 200 90" scale="2" model="PersonPlane" material="Wright_Painting_Glass" nonsolid="true"></object>
+
+
 
   <audiozone position="4.5 0" rotation="0" size="1 2">
     <audioclip delay="2">VO/Voice/6_Maverick.wav</audioclip>

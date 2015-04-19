@@ -26,8 +26,11 @@
   <object position="-3.3 0.5 4.8" angles="0 -90 0" scale="20" model="PictureFrame" material="Dark_Oak"></object>
   <object position="-4.8 0.5 -3.3" angles="0 180 0" scale="20" model="PictureFrame" material="Dark_Oak"></object>
   <object position="4.8 0.5 -3.3" angles="0 0 0" scale="20" model="PictureFrame" material="Dark_Oak"></object>
-  <object position="3.3 0.5 -4.8" angles="0 90 0" scale="20" model="PictureFrame" material="Dark_Oak"></object>
-  <object position="-3.3 0.5 -4.8" angles="0 90 0" scale="20" model="PictureFrame" material="Dark_Oak"></object>
+
+  <object position="-5 0.6 -3.3" angles="0 -90 0" scale="0.8" model="PersonPlane" material="Paint1" nonsolid="true"></object>
+  <object position="5 0.6 -3.3" angles="0 90 0" scale="0.8" model="PersonPlane" material="Paint2" nonsolid="true"></object>
+  <object position="-3.3 0.6 5" angles="0 0 0" scale="0.8" model="PersonPlane" material="Paint3" nonsolid="true"></object>
+  <object position="3.3 0.6 5" angles="0 0 0" scale="0.8" model="PersonPlane" material="Paint4" nonsolid="true"></object>
 
   <!-- DESK ... OR TABLE ^_~ -->
   <object position="-2.5 0 2.5" angles="0 135 0" scale="20" model="Table" material="Dark_Oak"></object>
