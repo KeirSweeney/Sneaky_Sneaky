@@ -6,12 +6,12 @@
   <object position="4.5 0 -4.0" scale="10" model="Punchcard" material="Pickup" interaction="Pickup" type="Punchcard_1" name="Security Dept Keycard"></object>
 
   <!-- SOFAS -->
-  <object position="3 0 3.4" angles="0 -90 0" scale="50" model="SofaLength" material="Sofa_3rdFloor"></object>
-  <object position="3 0 -3.4" angles="0 -90 0" scale="50" model="SofaLength" material="Sofa_3rdFloor"></object>
-  <object position="1 0 3.4" angles="0 -90 0" scale="50" model="SofaLength" material="Sofa_3rdFloor"></object>
-  <object position="1 0 -3.4" angles="0 -90 0" scale="50" model="SofaLength" material="Sofa_3rdFloor"></object>
-  <object position="-1 0 3.4" angles="0 -90 0" scale="50" model="SofaLength" material="Sofa_3rdFloor"></object>
-  <object position="-1 0 -3.4" angles="0 -90 0" scale="50" model="SofaLength" material="Sofa_3rdFloor"></object>
+  <object position="2.5 0 3.4" angles="0 -90 0" scale="50" model="SofaLength" material="Sofa_3rdFloor"></object>
+  <object position="2.5 0 -3.4" angles="0 -90 0" scale="50" model="SofaLength" material="Sofa_3rdFloor"></object>
+  <object position="0.5 0 3.4" angles="0 -90 0" scale="50" model="SofaLength" material="Sofa_3rdFloor"></object>
+  <object position="0.5 0 -3.4" angles="0 -90 0" scale="50" model="SofaLength" material="Sofa_3rdFloor"></object>
+  <object position="-1.5 0 3.4" angles="0 -90 0" scale="50" model="SofaLength" material="Sofa_3rdFloor"></object>
+  <object position="-1.5 0 -3.4" angles="0 -90 0" scale="50" model="SofaLength" material="Sofa_3rdFloor"></object>
 
   <!-- Lectern -->
   <object position="-2.5 0 0" angles ="0 180 0" scale ="12.5" model="Lectern" material="Dark_Oak"></object>
@@ -36,8 +36,8 @@
 
   <!--POSTER-->
   <object position="-3 0.5 5" scale="1" model="PersonPlane" material="Poster1"></object>
-  <object position="2.25 0.5 5" scale="1" model="PersonPlane" material="Poster3"></object>
+  <object position="1.8 0.5 5" scale="1" model="PersonPlane" material="Poster3"></object>
   <object position="-3 0.5 -5" angles="0 180 0" scale="1" model="PersonPlane" material="Poster4"></object>
-  <object position="2.25 0.5 -5" angles="0 180 0" scale="1" model="PersonPlane" material="Poster2"></object>
+  <object position="1.8 0.5 -5" angles="0 180 0" scale="1" model="PersonPlane" material="Poster2"></object>
 
 </room>
