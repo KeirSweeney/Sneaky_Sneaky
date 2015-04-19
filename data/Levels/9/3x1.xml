@@ -1,4 +1,7 @@
 <room floor="Black_DI" lights="false">
 
+  <!--KEYCARD-->
+  <object position="0 0 0" scale="10" model="Punchcard" material="NeonPink" interaction="Pickup" type="Punchcard_2" name="The End?"></object>
+
 
 </room>

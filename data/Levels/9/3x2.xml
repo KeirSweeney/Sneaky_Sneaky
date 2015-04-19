@@ -1,10 +1,13 @@
 <room floor="Black_DI" lights="false">
 
-  
-  <object position="0 0 -2" angles="90 0 0" scale="2" model="PersonPlane" material="AnimatedPoster" interaction="AnimatedPoster" speed="1" frames="4" path="Arrow"></object>
+  <!--PADLOCK-->
+  <object position="0 0.5 -5" angles="0 180 0" scale="6.5" model ="Padlock" material="NeonGreen" interaction="Padlock" type="Punchcard_1">Happy Room</object>
+  <!--PADLOCK NEEDS MOVING INTO PLACE-->
+  <object position="2.5 0.5 5" angles="0 0 0" scale="6.5" model ="Padlock" material="NeonGreen" interaction="Padlock" type="Punchcard_2">Unhappy Room</object>
 
   <audiozone position="0 4.5" rotation="0" size="2 1">
     <audioclip delay="0">VO/Voice/30_KnockKnock.wav</audioclip>
   </audiozone>
+
 
 </room>

@@ -1,3 +1,11 @@
 <room floor="Black_DI" lights="false">
 
+  <!--KEYCARD-->
+  <object position="0 0 -2" scale="10" model="Punchcard" material="NeonPink" interaction="Pickup" type="Punchcard_1" name="Happy Key"></object>
+
+  <!--Poster-->
+  <object position="0 -0.5 -5" angles="0 180 0" scale="2" model="PersonPlane" material="Instructions"></object>
+
+  <object position="0 0 2" angles="90 180 0" scale="2" model="PersonPlane" material="Happy" nonsolid="true"></object>
+
 </room>
