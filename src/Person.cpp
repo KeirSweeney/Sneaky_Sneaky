@@ -63,7 +63,7 @@ void Person::Update(float timeStep)
 	CameraController *cameraController = camera->GetNode()->GetParent()->GetComponent<CameraController>();
 	node_->SetWorldRotation(Quaternion(cameraController->GetYawAngle(), Vector3::UP));
 
-	if ((input->GetMouseButtonDown(MOUSEB_LEFT) || input->GetMouseButtonPress(MOUSEB_LEFT)) && !ui->GetElementAt(ui->GetCursorPosition(), false)) {
+	if ((input->GetMouseButtonDown(MOUSEB_LEFT) || input->GetMouseButtonPress(MOUSEB_LEFT))) {
 		Graphics *graphics = GetSubsystem<Graphics>();
 
 		IntVector2 mousePosition = input->GetMousePosition();
@@ -72,7 +72,7 @@ void Person::Update(float timeStep)
 		Octree *octree = GetScene()->GetComponent<Octree>();
 
 		PODVector<RayQueryResult> result;
-		RayOctreeQuery query(result, mouseRay, RAY_TRIANGLE, M_INFINITY, DRAWABLE_GEOMETRY);
+		RayOctreeQuery query(result, mouseRay, RAY_TRIANGLE, M_INFINITY, DRAWABLE_GEOMETRY, 0x01);
 		octree->RaycastSingle(query);
 
 		if (!result.Empty()) {

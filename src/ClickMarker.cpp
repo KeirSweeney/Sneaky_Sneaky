@@ -30,6 +30,7 @@ void ClickMarker::Start()
 	StaticModel *markerModel = node_->CreateComponent<StaticModel>();
 	markerModel->SetModel(cache->GetResource<Model>("Models/Marker.mdl"));
 	markerModel->SetMaterial(material_);
+	markerModel->SetViewMask(0x02);
 
 	node_->SetScale(0.1f);
 }

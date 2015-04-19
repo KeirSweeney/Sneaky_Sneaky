@@ -322,6 +322,7 @@ void Game::LoadLevel()
 			StaticModel *floorModel = floorNode->CreateComponent<StaticModel>();
 			floorModel->SetModel(cache->GetResource<Model>("Models/Floor.mdl"));
 			floorModel->SetMaterial(roomFloorMaterial);
+			floorModel->SetViewMask(0x01);
 
 			if (roomLights) {
 				// Create 4 evenly spaced lights for each room.
@@ -385,6 +386,7 @@ void Game::LoadLevel()
 					model->SetModel(cache->GetResource<Model>("Models/" + child.GetAttribute("model") + ".mdl"));
 					model->SetMaterial(cache->GetResource<Material>("Materials/" + child.GetAttribute("material") + ".xml"));
 					model->SetCastShadows(true);
+					model->SetViewMask(0x02);
 
 					// If the object is interactable or collideable it needs a rigid body.
 					if (child.HasAttribute("interaction") || !child.GetBool("nonsolid")) {
@@ -435,6 +437,7 @@ void Game::LoadLevel()
 					guardModel->SetModel(cache->GetResource<Model>("Models/PersonFlat.mdl"));
 					guardModel->SetMaterial(cache->GetResource<Material>("Materials/Person.xml"));
 					guardModel->SetCastShadows(true);
+					guardModel->SetViewMask(0x02);
 
 					RigidBody *guardRigidBody = guardNode->CreateComponent<RigidBody>();
 					guardRigidBody->SetMass(100.0f);
@@ -557,6 +560,7 @@ void Game::LoadLevel()
 			wallModel->SetModel(cache->GetResource<Model>("Models/Wall" + wallType + ".mdl"));
 			wallModel->SetMaterial(levelWallMaterial);
 			wallModel->SetCastShadows(true);
+			wallModel->SetViewMask(0x01);
 
 			CollisionShape *wallCollisionShape = wallNode->CreateComponent<CollisionShape>();
 			if (wallType == "") {
@@ -574,6 +578,7 @@ void Game::LoadLevel()
 					doorModel->SetModel(cache->GetResource<Model>("Models/Door.mdl"));
 					doorModel->SetMaterial(levelDoorMaterial);
 					doorModel->SetCastShadows(true);
+					doorModel->SetViewMask(0x02);
 
 					CollisionShape *doorCollisionShape = doorNode->CreateComponent<CollisionShape>();
 					doorCollisionShape->SetBox(Vector3(1.5f, 2.0f, 1.0f), Vector3(0.0f, 1.0f, 0.0f));
@@ -604,6 +609,7 @@ void Game::LoadLevel()
 	personModel->SetModel(cache->GetResource<Model>("Models/PersonFlat.mdl"));
 	personModel->SetMaterial(cache->GetResource<Material>("Materials/MaverickFront.xml"));
 	personModel->SetCastShadows(true);
+	personModel->SetViewMask(0x02);
 
 	Node *personShadowNode = personNode->CreateChild("ShadowCaster");
 	personShadowNode->SetRotation(Quaternion(90.0f, Vector3::UP));
@@ -613,6 +619,7 @@ void Game::LoadLevel()
 	personShadowModel->SetMaterial(cache->GetResource<Material>("Materials/MaverickLeftShadow.xml"));
 	personShadowModel->SetCastShadows(true);
 	personShadowModel->SetShadowMask(0x01);
+	personShadowModel->SetViewMask(0x02);
 
 	RigidBody *personRigidBody = personNode->CreateComponent<RigidBody>();
 	personRigidBody->SetMass(100.0f);
@@ -646,6 +653,7 @@ void Game::LoadLevel()
 
 	Camera *camera = cameraNode->CreateComponent<Camera>();
 	camera->SetFarClip(zone->GetFogEnd());
+	//camera->SetViewMask(0x01);
 
 	Node *cameraLightNode = cameraNode->CreateChild();
 	cameraLightNode->SetPosition(Vector3(0.0f, -0.5f, 0.0f));

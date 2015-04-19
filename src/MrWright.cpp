@@ -182,6 +182,7 @@ void MrWright::UpdateDisplayGlyphs()
 
 			StaticModel *glyph = displayGlyph->CreateComponent<StaticModel>();
 			glyph->SetModel(cache->GetResource<Model>("Models/PersonPlane.mdl"));
+			glyph->SetViewMask(0x02);
 
 			displayGlyphs_.Push(displayGlyph);
 		} else {
