@@ -79,10 +79,13 @@ void Inventory::Update(float timeStep)
 			background->SetOpacity(0.2f);
 
 			Text *label = item->CreateChild<Text>();
+			label->SetFixedSize(item->GetSize() - IntVector2(PADDING, PADDING));
 			label->SetFont("Fonts/Anonymous Pro.ttf");
 			label->SetColor(Color::WHITE);
 			label->SetText((*i)->GetDisplayName());
 			label->SetAlignment(HA_CENTER, VA_CENTER);
+			label->SetTextAlignment(HA_CENTER);
+			label->SetWordwrap(true);
 
 			x += item->GetWidth() + PADDING;
 			if (x > panel_->GetWidth() - PADDING) {
