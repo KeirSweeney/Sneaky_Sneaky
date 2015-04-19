@@ -389,7 +389,9 @@ void Game::LoadLevel()
 
 					// If the object is interactable or collideable it needs a rigid body.
 					if (child.HasAttribute("interaction") || !child.GetBool("nonsolid")) {
-						childNode->CreateComponent<RigidBody>();
+						RigidBody *rigidBody = childNode->CreateComponent<RigidBody>();
+						rigidBody->SetRestitution(0.5f);
+
 						CollisionShape *collisionShape = childNode->CreateComponent<CollisionShape>();
 						collisionShape->SetBox(model->GetBoundingBox().Size(), model->GetBoundingBox().Center());
 					}
@@ -545,7 +547,9 @@ void Game::LoadLevel()
 			wallNode->SetPosition(position);
 
 			wallNode->CreateComponent<Navigable>()->SetRecursive(false);
-			wallNode->CreateComponent<RigidBody>();
+
+			RigidBody *wallRigidBody = wallNode->CreateComponent<RigidBody>();
+			wallRigidBody->SetRestitution(0.5f);
 
 			// Select which model to load based on the pixel color.
 			String wallType("");

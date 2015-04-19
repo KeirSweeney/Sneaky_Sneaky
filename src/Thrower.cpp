@@ -65,12 +65,12 @@ void Thrower::Update(float timeStep)
 	Person *person = node_->GetComponent<Person>();
 	Vector3 personDirection = person->GetDirection();
 
-	itemNode->SetWorldPosition(node_->GetWorldPosition()+(personDirection * 0.5f) + Vector3(0.0f, 1.6f, 0.0f));
+	itemNode->SetWorldPosition(node_->GetWorldPosition() + (personDirection * 0.5f) + Vector3(0.0f, 1.75f, 0.0f));
 	item->SetEnabled(false);
 	itemRigidBody->SetTrigger(false);
 	itemRigidBody->SetMass(1.0f);
 	itemRigidBody->SetRestitution(1.0f);
-	itemRigidBody->SetLinearVelocity((personDirection * 4.0f) + Vector3(0.0f, 1.6f, 0.0f));
+	itemRigidBody->SetLinearVelocity((personDirection * 5.0f) + Vector3(0.0f, 1.75f, 0.0f));
 	itemNode->SubscribeToEvent(itemNode, E_NODECOLLISIONSTART, HANDLER(Thrower, HandleNodeCollision));
 
 	SelfDestroy *selfDestroy = itemNode->CreateComponent<SelfDestroy>();
