@@ -71,7 +71,7 @@ void MrWright::DelayedStart()
 		SubscribeToEvent(interactionNode, E_NODECOLLISIONSTART, HANDLER(MrWright, HandleNodeCollision));
 	}
 
-	int glyphCount = 3;
+	int glyphCount = 2;
 	int sequenceCount = 3;
 
 	for (int i = 0; i < sequenceCount; ++i) {
@@ -85,15 +85,15 @@ void MrWright::DelayedStart()
 		}
 
 		sequences_.Push(sequence);
-		glyphCount++;
+
+		glyphCount += 2;
 	}
+
+	UpdateDisplayGlyphs();
 }
 
 void MrWright::Update(float timeStep)
 {
-	// Need to show the current sequence and update it in here.
-	// Probably will want to seperate out everything already in here to another function.
-
 	swapTimer_ += timeStep;
 
 	if (swapTimer_ < 10.0f) {
@@ -146,11 +146,66 @@ void MrWright::HandleNodeCollision(StringHash eventType, VariantMap &eventData)
 	}
 
 	LOGERROR("Match!");
+
+	int index = displayGlyphs_.Size() - currentSequence.Size();
+	displayGlyphs_[index]->GetComponent<StaticModel>()->GetMaterial()->SetShaderParameter("MatDiffColor", Color::GREEN);
+
+	index++;
+	if (index < displayGlyphs_.Size()) {
+		displayGlyphs_[index]->GetComponent<StaticModel>()->GetMaterial()->SetShaderParameter("MatDiffColor", Color::WHITE);
+	}
+
 	currentSequence.Erase(0);
 
 	if (currentSequence.Empty()) {
 		LOGERROR("Started Next Sequence!");
-
 		sequences_.Erase(0);
+		UpdateDisplayGlyphs();
+	}
+}
+
+void MrWright::UpdateDisplayGlyphs()
+{
+	ResourceCache *cache = GetSubsystem<ResourceCache>();
+
+	PODVector<Material *> &currentSequence = sequences_.Front();
+
+	bool updateGlyphs = (displayGlyphs_.Size() != currentSequence.Size());
+
+	while (displayGlyphs_.Size() != currentSequence.Size()) {
+		if (displayGlyphs_.Size() < currentSequence.Size()) {
+			Node *roomNode = node_->GetParent();
+
+			Node *displayGlyph = roomNode->CreateChild();
+			displayGlyph->SetWorldDirection(-node_->GetWorldDirection());
+			displayGlyph->SetWorldScale(0.3f);
+
+			StaticModel *glyph = displayGlyph->CreateComponent<StaticModel>();
+			glyph->SetModel(cache->GetResource<Model>("Models/PersonPlane.mdl"));
+
+			displayGlyphs_.Push(displayGlyph);
+		} else {
+			displayGlyphs_.Back()->Remove();
+			displayGlyphs_.Pop();
+		}
+	}
+
+	if (updateGlyphs) {
+		for (int i = 0; i < displayGlyphs_.Size(); ++i) {
+			Node *displayGlyph = displayGlyphs_[i];
+
+			Vector3 position = node_->GetWorldPosition();
+			position += Vector3((((displayGlyphs_.Size() - 1) * 0.6f) / -2.0f) + (i * 0.6f), 0.6f, 0.0f);
+			position -= displayGlyph->GetWorldDirection() * 0.2f;
+
+			displayGlyph->SetWorldPosition(position);
+
+			StaticModel *glyph = displayGlyph->GetComponent<StaticModel>();
+			glyph->SetMaterial(currentSequence[i]->Clone());
+
+			if (i > 0) {
+				glyph->GetMaterial()->SetShaderParameter("MatDiffColor", Color::GRAY);
+			}
+		}
 	}
 }

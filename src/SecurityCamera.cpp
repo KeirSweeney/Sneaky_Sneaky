@@ -54,8 +54,8 @@ void SecurityCamera::Update(float timeStep)
 	}
 
 	node_->SetWorldRotation(startRotation_);
-	node_->Rotate(Quaternion(pitch_, Vector3::LEFT));
 	node_->Rotate(Quaternion(yaw_, Vector3::UP));
+	node_->Rotate(Quaternion(pitch_, Vector3::LEFT));
 
 	Node *personNode = GetScene()->GetChild("Person", true);
 	SearchForPlayer(personNode);
