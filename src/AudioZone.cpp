@@ -61,6 +61,12 @@ void AudioZone::EnqueueAudioClip(Sound *sound, float delay)
 
 void AudioZone::HandleNodeCollisionStart(StringHash eventType, VariantMap &eventData)
 {
+	Node *other = (Node *)eventData[NodeCollisionStart::P_OTHERNODE].GetPtr();
+	Node *person = GetScene()->GetChild("Person", true);
+	if (other != person) {
+		return;
+	}
+
 	UnsubscribeFromEvent(node_, E_NODECOLLISIONSTART);
 
 	source_ = node_->CreateComponent<SoundSource>();
