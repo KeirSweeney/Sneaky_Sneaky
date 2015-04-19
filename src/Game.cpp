@@ -18,6 +18,7 @@
 #include "Stairs.h"
 #include "Terminal.h"
 #include "Thrower.h"
+#include "Wife.h"
 
 #include "Audio.h"
 #include "Camera.h"
@@ -140,6 +141,7 @@ void Game::Start()
 	Stairs::RegisterObject(context_);
 	Terminal::RegisterObject(context_);
 	Thrower::RegisterObject(context_);
+	Wife::RegisterObject(context_);
 
 	SharedPtr<Viewport> viewport(new Viewport(context_, scene_, NULL));
 
