@@ -26,6 +26,7 @@
 #include "Terminal.h"
 #include "Sound.h"
 #include "AudioManager.h"
+#include "Game.h"
 
 #include "InteractablePoster.h"
 
@@ -148,6 +149,10 @@ void Wife::Update(float timeStep)
 
 		playerHealth_ = playerHealth->CreateChild<UIElement>();
 		playerHealth_->SetFixedSize(playerHealth->GetSize());
+	}
+
+	if (person->GetHealth() <= 0) {
+		GetSubsystem<Game>()->EndLevel(true);
 	}
 	
 
