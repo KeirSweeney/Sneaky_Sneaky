@@ -200,7 +200,7 @@ void MrWright::UpdateDisplayGlyphs()
 			Node *roomNode = node_->GetParent();
 
 			Node *displayGlyph = roomNode->CreateChild();
-			displayGlyph->SetWorldDirection(-node_->GetWorldDirection());
+			displayGlyph->SetWorldDirection(Vector3::DOWN);
 			displayGlyph->SetWorldScale(0.3f);
 
 			StaticModel *glyph = displayGlyph->CreateComponent<StaticModel>();
@@ -219,9 +219,7 @@ void MrWright::UpdateDisplayGlyphs()
 			Node *displayGlyph = displayGlyphs_[i];
 
 			Vector3 position = node_->GetWorldPosition();
-			position += Vector3((((displayGlyphs_.Size() - 1) * 0.6f) / -2.0f) + (i * 0.6f), 0.6f, 0.0f);
-			position -= displayGlyph->GetWorldDirection() * 0.2f;
-
+			position += Vector3((((displayGlyphs_.Size() - 1) * 0.6f) / -2.0f) + (i * 0.6f), 0.0f, -1.0f);
 			displayGlyph->SetWorldPosition(position);
 
 			StaticModel *glyph = displayGlyph->GetComponent<StaticModel>();

@@ -866,14 +866,14 @@ void Game::HandleUpdate(StringHash eventType, VariantMap &eventData)
 			float timer;
 			float rate;
 		} animated[] = {
-			{ cache->GetResource<Material>("Materials/MaverickForwardAnimated.xml"), "Textures/maverick/forward/", 1, INT32_MAX, 0.0f, 10.0f },
-			{ cache->GetResource<Material>("Materials/MaverickBackAnimated.xml"),    "Textures/maverick/back/",    1, INT32_MAX, 0.0f, 10.0f },
-			{ cache->GetResource<Material>("Materials/MaverickLeftAnimated.xml"),    "Textures/maverick/left/",    1, INT32_MAX, 0.0f, 10.0f },
-			{ cache->GetResource<Material>("Materials/MaverickRightAnimated.xml"),   "Textures/maverick/right/",   1, INT32_MAX, 0.0f, 10.0f },
-			{ cache->GetResource<Material>("Materials/GuardForwardAnimated.xml"),    "Textures/guard/forward/",    1, INT32_MAX, 0.0f, 10.0f },
-			{ cache->GetResource<Material>("Materials/GuardBackAnimated.xml"),       "Textures/guard/back/",       1, INT32_MAX, 0.0f, 10.0f },
-			{ cache->GetResource<Material>("Materials/GuardLeftAnimated.xml"),       "Textures/guard/left/",       1, INT32_MAX, 0.0f, 10.0f },
-			{ cache->GetResource<Material>("Materials/GuardRightAnimated.xml"),      "Textures/guard/right/",      1, INT32_MAX, 0.0f, 10.0f },
+			{ cache->GetResource<Material>("Materials/MaverickForwardAnimated.xml"), "Textures/maverick/forward/", 1, M_MAX_INT, 0.0f, 10.0f },
+			{ cache->GetResource<Material>("Materials/MaverickBackAnimated.xml"),    "Textures/maverick/back/",    1, M_MAX_INT, 0.0f, 10.0f },
+			{ cache->GetResource<Material>("Materials/MaverickLeftAnimated.xml"),    "Textures/maverick/left/",    1, M_MAX_INT, 0.0f, 10.0f },
+			{ cache->GetResource<Material>("Materials/MaverickRightAnimated.xml"),   "Textures/maverick/right/",   1, M_MAX_INT, 0.0f, 10.0f },
+			{ cache->GetResource<Material>("Materials/GuardForwardAnimated.xml"),    "Textures/guard/forward/",    1, M_MAX_INT, 0.0f, 10.0f },
+			{ cache->GetResource<Material>("Materials/GuardBackAnimated.xml"),       "Textures/guard/back/",       1, M_MAX_INT, 0.0f, 10.0f },
+			{ cache->GetResource<Material>("Materials/GuardLeftAnimated.xml"),       "Textures/guard/left/",       1, M_MAX_INT, 0.0f, 10.0f },
+			{ cache->GetResource<Material>("Materials/GuardRightAnimated.xml"),      "Textures/guard/right/",      1, M_MAX_INT, 0.0f, 10.0f },
 		};
 
 		for (int i = 0; i < 8; ++i) {
