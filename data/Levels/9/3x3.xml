@@ -20,11 +20,11 @@
   <object position ="5 0.4 -2" angles="0 -90 0" scale="10" model="LaserEmitter" material="Lamp"></object>
 
   <!--LASER-->
-  <object position ="-2.5 0.4 -5" angles="90 0 0" scale="0.06 10 0.06" model="Laser" material="NeonPink"  interaction="Laser" interval="2"></object>
-  <object position ="2.5 0.4 -5" angles="90 0 0" scale="0.06 10 0.06" model="Laser" material="NeonBlue"  interaction="Laser"  interval="2" delay="2"></object>
+  <object position ="-2.5 0.4 -5" angles="90 0 0" scale="0.06 10 0.06" model="Laser" material="NeonPink"  interaction="BossLaser" interval="2"></object>
+  <object position ="2.5 0.4 -5" angles="90 0 0" scale="0.06 10 0.06" model="Laser" material="NeonBlue"  interaction="BossLaser"  interval="2" delay="2"></object>
 
-  <object position ="-5 0.4 2" angles="90 90 0" scale="0.06 10 0.06" model="Laser" material="NeonGreen"  interaction="Laser"  interval="1"></object>
-  <object position ="-5 0.4 -2" angles="90 90 0" scale="0.06 10 0.06" model="Laser" material="NeonGreen"  interaction="Laser"  interval="1"></object>
+  <object position ="-5 0.4 2" angles="90 90 0" scale="0.06 10 0.06" model="Laser" material="NeonGreen"  interaction="BossLaser"  interval="1"></object>
+  <object position ="-5 0.4 -2" angles="90 90 0" scale="0.06 10 0.06" model="Laser" material="NeonGreen"  interaction="BossLaser"  interval="1"></object>
 
   <!-- Tables'n'Terminals-->
   <!-- LEFT SIDE -->
