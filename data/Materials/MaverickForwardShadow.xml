@@ -2,4 +2,5 @@
 <material>
 	<technique name="Techniques/DiffAlphaMaskShadow.xml" />
 	<texture unit="diffuse" name="Textures/maverick/forward.png" />
+	<shadowcull value="none" />
 </material>

@@ -110,7 +110,7 @@ void Guard::Update(float timeStep)
 	Vector3 velocity = rigidBody_->GetLinearVelocity();
 	guardMoving = velocity.LengthSquared() > 0.0f;
 
-	Quaternion rotation = Quaternion(Vector3::FORWARD, velocity);
+	Quaternion rotation = Quaternion(node_->GetWorldDirection(), velocity);
 	float angle = rotation.YawAngle();
 
 	StaticModel *model = node_->GetComponent<StaticModel>();
@@ -130,7 +130,7 @@ void Guard::Update(float timeStep)
 
 	Node *lightNode = node_->GetChild("SearchLight");
 
-	Quaternion lightRotation = rotation;
+	Quaternion lightRotation = Quaternion(Vector3::FORWARD, velocity);
 	lightRotation = (lightRotation * Quaternion(30.0f, Vector3::RIGHT)).Normalized();
 	lightRotation = lightNode->GetWorldRotation().Slerp(lightRotation, 5.0f * timeStep);
 
