@@ -49,6 +49,12 @@ void BossBertha::DelayedStart()
 	rightMaterial_ = cache->GetResource<Material>("Materials/BerthaRight.xml");
 
 	rigidBody_ = node_->GetComponent<RigidBody>();
+
+
+
+	rigidBody_->SetMass(100.0f);
+	rigidBody_->SetFriction(0.0f);
+	rigidBody_->SetAngularFactor(Vector3::ZERO);
 }
 
 
@@ -73,15 +79,19 @@ void BossBertha::Update(float timeStep)
 	CameraController *cameraController = camera->GetNode()->GetParent()->GetComponent<CameraController>();
 	node_->SetWorldRotation(Quaternion(cameraController->GetYawAngle(), Vector3::UP));
 
-	Vector3 velocity = rigidBody_->GetLinearVelocity();
 	bool BerthaCharging = rigidBody_->GetLinearVelocity().LengthSquared() > 0.0f;
+
+	Vector3 velocity = rigidBody_->GetLinearVelocity();
+	BerthaCharging = velocity.LengthSquared() > 0.0f;
 
 	bool playerDetected = DetectPlayer(personNode);
 
 	if (playerDetected){
 		hasSeenPlayer_ = true;
-		ChargeToPlayer(timeStep, personNode);
+		//ChargeToPlayer(timeStep, personNode);
 	}
+
+	ChargeToPlayer(timeStep, personNode);
 
 	Vector3 position = node_->GetWorldPosition();
 	IntVector2 room((int)round(position.x_ / 11.0f), (int)round(position.z_ / 11.0f));
@@ -131,8 +141,6 @@ bool BossBertha::DetectPlayer(Node *player)
 
 void BossBertha::ChargeToPlayer(float timeStep, Node *player)
 {
-	NavigationMesh *navMesh = GetScene()->GetComponent<NavigationMesh>();
-
 
 	Vector3 berthaPosition = node_->GetWorldPosition();
 	Vector3 playerPosition = player->GetWorldPosition();
@@ -141,6 +149,7 @@ void BossBertha::ChargeToPlayer(float timeStep, Node *player)
 
 	difference.Normalize();
 	rigidBody_->SetLinearVelocity(difference * 2.4f);
+	LOGERRORF("Linear Velocity: %s", rigidBody_->GetLinearVelocity().ToString().CString());
 }
 
 
