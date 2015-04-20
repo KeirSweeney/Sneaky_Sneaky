@@ -859,21 +859,21 @@ void Game::HandleUpdate(StringHash eventType, VariantMap &eventData)
 		levelTime_ += timeStep;
 
 		static struct {
-			Material *material;
+			String material;
 			String path;
 			int frame;
 			int count;
 			float timer;
 			float rate;
 		} animated[] = {
-			{ cache->GetResource<Material>("Materials/MaverickForwardAnimated.xml"), "Textures/maverick/forward/", 1, M_MAX_INT, 0.0f, 10.0f },
-			{ cache->GetResource<Material>("Materials/MaverickBackAnimated.xml"),    "Textures/maverick/back/",    1, M_MAX_INT, 0.0f, 10.0f },
-			{ cache->GetResource<Material>("Materials/MaverickLeftAnimated.xml"),    "Textures/maverick/left/",    1, M_MAX_INT, 0.0f, 10.0f },
-			{ cache->GetResource<Material>("Materials/MaverickRightAnimated.xml"),   "Textures/maverick/right/",   1, M_MAX_INT, 0.0f, 10.0f },
-			{ cache->GetResource<Material>("Materials/GuardForwardAnimated.xml"),    "Textures/guard/forward/",    1, M_MAX_INT, 0.0f, 10.0f },
-			{ cache->GetResource<Material>("Materials/GuardBackAnimated.xml"),       "Textures/guard/back/",       1, M_MAX_INT, 0.0f, 10.0f },
-			{ cache->GetResource<Material>("Materials/GuardLeftAnimated.xml"),       "Textures/guard/left/",       1, M_MAX_INT, 0.0f, 10.0f },
-			{ cache->GetResource<Material>("Materials/GuardRightAnimated.xml"),      "Textures/guard/right/",      1, M_MAX_INT, 0.0f, 10.0f },
+			{ "Materials/MaverickForwardAnimated.xml", "Textures/maverick/forward/", 1, M_MAX_INT, 0.0f, 10.0f },
+			{ "Materials/MaverickBackAnimated.xml",    "Textures/maverick/back/",    1, M_MAX_INT, 0.0f, 10.0f },
+			{ "Materials/MaverickLeftAnimated.xml",    "Textures/maverick/left/",    1, M_MAX_INT, 0.0f, 10.0f },
+			{ "Materials/MaverickRightAnimated.xml",   "Textures/maverick/right/",   1, M_MAX_INT, 0.0f, 10.0f },
+			{ "Materials/GuardForwardAnimated.xml",    "Textures/guard/forward/",    1, M_MAX_INT, 0.0f, 10.0f },
+			{ "Materials/GuardBackAnimated.xml",       "Textures/guard/back/",       1, M_MAX_INT, 0.0f, 10.0f },
+			{ "Materials/GuardLeftAnimated.xml",       "Textures/guard/left/",       1, M_MAX_INT, 0.0f, 10.0f },
+			{ "Materials/GuardRightAnimated.xml",      "Textures/guard/right/",      1, M_MAX_INT, 0.0f, 10.0f },
 		};
 
 		for (int i = 0; i < 8; ++i) {
@@ -898,7 +898,7 @@ void Game::HandleUpdate(StringHash eventType, VariantMap &eventData)
 				texture = cache->GetResource<Texture2D>(animated[i].path + "1.png");
 			}
 
-			Material *material = animated[i].material;
+			Material *material = cache->GetResource<Material>(animated[i].material);
 			material->SetTexture(TU_DIFFUSE, texture);
 		}
 	} else if (gameState_ == GS_CREDITS) {
