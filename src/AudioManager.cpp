@@ -1,5 +1,7 @@
 #include "AudioManager.h"
 
+#include "Game.h"
+
 #include "Context.h"
 #include "Node.h"
 #include "PhysicsEvents.h"
@@ -50,9 +52,13 @@ void AudioManager::HandleSceneUpdate(StringHash eventType, VariantMap &eventData
 		return;
 	}
 
-	source_->Play(next.sound);
-
 	queue_.Pop();
+
+	if (next.sound) {
+		source_->Play(next.sound);
+	} else {
+		GetSubsystem<Game>()->EndLevel(false);
+	}
 }
 
 void AudioManager::Play(Urho3D::PODVector<AudioQueueEntry> sounds, bool queue)

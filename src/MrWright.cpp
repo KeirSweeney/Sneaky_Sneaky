@@ -1,5 +1,8 @@
 #include "MrWright.h"
 
+#include "AudioManager.h"
+#include "InteractablePoster.h"
+
 #include "Context.h"
 #include "Node.h"
 #include "Scene.h"
@@ -17,14 +20,13 @@
 #include "Text.h"
 #include "Renderer.h"
 #include "StaticModel.h"
+#include "Sound.h"
 #include "ResourceCache.h"
 #include "Model.h"
 #include "Material.h"
 #include "Input.h"
 #include "CollisionShape.h"
 #include "PhysicsEvents.h"
-
-#include "InteractablePoster.h"
 
 using namespace Urho3D;
 
@@ -165,6 +167,23 @@ void MrWright::HandleNodeCollision(StringHash eventType, VariantMap &eventData)
 		LOGERROR("Started Next Sequence!");
 		sequences_.Erase(0);
 		UpdateDisplayGlyphs();
+	}
+
+	if (sequences_.Empty()) {
+		ResourceCache *cache = GetSubsystem<ResourceCache>();
+
+		Urho3D::PODVector<AudioQueueEntry> queue;
+		queue.Push({(Sound *)NULL, 0.0f});
+		queue.Push({cache->GetResource<Sound>("Audio/VO/Black/16_Sigh.wav"), 0.0f});
+		queue.Push({cache->GetResource<Sound>("Audio/VO/Voice/16_KeepItSecure.wav"), 0.0f});
+		queue.Push({cache->GetResource<Sound>("Audio/VO/Black/15_Why.wav"), 0.0f});
+		queue.Push({cache->GetResource<Sound>("Audio/VO/Voice/15_CatFlap.wav"), 0.0f});
+		queue.Push({cache->GetResource<Sound>("Audio/VO/Black/14_Keys.wav"), 0.0f});
+		queue.Push({cache->GetResource<Sound>("Audio/VO/Voice/14_No.wav"), 0.0f});
+		queue.Push({cache->GetResource<Sound>("Audio/VO/Black/13_Petty.wav"), 0.0f});
+		queue.Push({cache->GetResource<Sound>("Audio/VO/Voice/13_CheckPockets.wav"), 0.0f});
+
+		GetScene()->GetComponent<AudioManager>()->Play(queue);
 	}
 }
 
