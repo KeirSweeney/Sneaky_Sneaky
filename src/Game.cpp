@@ -689,7 +689,7 @@ void Game::LoadLevel()
 	personLight->SetColor(Color::WHITE);
 	personLight->SetCastShadows(true);
 	personLight->SetFov(Guard::VIEW_ANGLE);
-	personLight->SetRange(Guard::VIEW_DISTANCE * 2.0f);
+	personLight->SetRange(Guard::VIEW_DISTANCE);
 	personLight->SetSpecularIntensity(10.0f);
 
 	SoundListener *personListener = personNode->CreateComponent<SoundListener>();
