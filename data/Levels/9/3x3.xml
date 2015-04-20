@@ -7,7 +7,7 @@
   <!--       MUST BE TAKEN OUT FOR FINAL BUILD            -->
 
   <!-- Upload Screen -->
-  <object position="0 0.2 4.8" angles ="0 180 0" scale ="27" model="GiantScreen" material="Obsidian"></object>
+  <object position="0 0.2 4.8" angles ="0 180 0" scale ="27" model="GiantScreen" material="Obsidian" interaction="Wife"></object>
 
   <!--LASEREMITTER-->
   <object position ="-2.5 0.4 5" angles="0 180 0" scale="10" model="LaserEmitter" material="Lamp"></object>
