@@ -19,6 +19,7 @@
 #include "Scene.h"
 #include "StaticModel.h"
 #include "UI.h"
+#include "Wife.h"
 
 using namespace Urho3D;
 
@@ -26,7 +27,8 @@ const float Person::MOVE_SPEED = 2.0f;
 
 Person::Person(Context *context):
 	LogicComponent(context),
-	health_(3)
+	health_(200),
+	takingDamage_(false)
 {
 }
 
@@ -56,6 +58,8 @@ void Person::DelayedStart()
 
 void Person::Update(float timeStep)
 {
+	takingDamage_ = false;
+
 	UI *ui = GetSubsystem<UI>();
 	Input *input = GetSubsystem<Input>();
 	NavigationMesh *navMesh = GetScene()->GetComponent<NavigationMesh>();
@@ -179,6 +183,21 @@ Vector3 Person::GetDirection() const
 void Person::TakeDamage()
 {
 	health_ -= 1;
+	takingDamage_ = true;
+}
+
+int Person::GetHealth()
+{
+	return health_;
+}
+
+bool Person::isDirty()
+{
+	if (!takingDamage_) {
+		return false;
+	}
+
+	return true;
 }
 
 

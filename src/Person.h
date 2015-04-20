@@ -25,6 +25,9 @@ public:
 	void SetPath(Urho3D::PODVector<Urho3D::Vector3> path);
 	Urho3D::Vector3 GetDirection() const;
 	void TakeDamage();
+	int GetHealth();
+	bool isDirty();
+	bool takingDamage_;
 
 private:
 	Urho3D::PODVector<Urho3D::Vector3> path_;
