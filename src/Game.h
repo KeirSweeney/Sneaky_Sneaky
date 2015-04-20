@@ -40,10 +40,12 @@ private:
 	int currentLevel_;
 	float levelTime_;
 	enum GameState {
-		GS_MENU,
+		GS_INTRO,
 		GS_PLAYING,
 		GS_DEAD,
-		GS_COMPLETED,
+		GS_STAIRS,
+		GS_CREDITS,
+		GS_FINISHED,
 	} gameState_;
 
 	bool unceUnceUnceWubWubWub_;

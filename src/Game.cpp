@@ -69,7 +69,7 @@ DEFINE_APPLICATION_MAIN(Game)
 
 Game::Game(Context *context):
 	Application(context), crashHandler_(context),
-	currentLevel_(0), levelTime_(0.0f), gameState_(GS_MENU), unceUnceUnceWubWubWub_(false),
+	currentLevel_(0), levelTime_(0.0f), gameState_(GS_INTRO), unceUnceUnceWubWubWub_(false),
 	developerMode_(false), debugGeometry_(false), debugPhysics_(false), debugNavigation_(false), debugDepthTest_(true)
 {
 	// We need to call back from the components for level transitions,
@@ -208,30 +208,35 @@ void Game::LoadLevel()
 	ResourceCache *cache = GetSubsystem<ResourceCache>();
 
 	// If the player has completed the level (rather than dying), advance to the next.
-	if (gameState_ == GS_COMPLETED) {
+	if (gameState_ == GS_STAIRS) {
 		currentLevel_++;
 	}
 	gameState_ = GS_PLAYING;
-
-	// The floor layout is defined using a pixel image.
-	// If we can't load the next level, try and go back to the first level.
-	Image *levelImage = cache->GetResource<Image>(ToString("Levels/%d.png", currentLevel_ + 1));
-	if (!levelImage) {
-		if (currentLevel_ != 0) {
-			currentLevel_ = 0;
-			LoadLevel();
-		}
-
-		return;
-	}
 
 	// Reset the score counter.
 	levelTime_ = 0.0f;
 
 	// Remove all UI and scene elements,
 	// they will be recreated for the level by the rest of this function.
-	ui->GetRoot()->RemoveAllChildren();
+	ui->Clear();
 	scene_->Clear();
+
+	// The floor layout is defined using a pixel image.
+	Image *levelImage = cache->GetResource<Image>(ToString("Levels/%d.png", currentLevel_ + 1));
+	if (!levelImage) {
+		// If there is no next level, roll credits.
+		currentLevel_ = 0;
+		gameState_ = GS_CREDITS;
+
+		Graphics *graphics = GetSubsystem<Graphics>();
+
+		Sprite *sprite = ui->GetRoot()->CreateChild<Sprite>();
+		sprite->SetFixedSize(IntVector2(1024, 576) * graphics->GetPixelRatio());
+		sprite->SetHotSpot(sprite->GetSize() / 2);
+		sprite->SetAlignment(HA_CENTER, VA_CENTER);
+
+		return;
+	}
 
 	// Required components for 3D rendering.
 	scene_->CreateComponent<Octree>();
@@ -785,7 +790,7 @@ void Game::EndLevel(bool died)
 
 	label->SetText(buffer);
 
-	gameState_ = died ? GS_DEAD : GS_COMPLETED;
+	gameState_ = died ? GS_DEAD : GS_STAIRS;
 }
 
 bool Game::IsDeveloper()
@@ -801,7 +806,7 @@ void Game::HandleUpdate(StringHash eventType, VariantMap &eventData)
 
 	float timeStep = eventData[Update::P_TIMESTEP].GetFloat();
 
-	if (gameState_ == GS_MENU) {
+	if (gameState_ == GS_INTRO) {
 		static int frame = 1;
 		static float frameTimer = 0.0f;
 		static const float frameRate = 1.0f / 23.98f;
@@ -819,14 +824,51 @@ void Game::HandleUpdate(StringHash eventType, VariantMap &eventData)
 				Sprite *sprite = (Sprite *)ui->GetRoot()->GetChild(0);
 				sprite->SetTexture(frameTexture);
 			} else {
+				frame = 0;
+				frameTimer = 0.0f;
+
 				LoadLevel();
+			}
+		}
+	} else if (gameState_ == GS_PLAYING) {
+		levelTime_ += timeStep;
+	} else if (gameState_ == GS_CREDITS) {
+		static int frame = 1;
+		static float frameTimer = 0.0f;
+		static const float frameRate = 1.0f / 23.98f;
+
+		frameTimer += timeStep;
+
+		if (frameTimer >= frameRate) {
+			frameTimer -= frameRate;
+
+			ResourceCache *cache = GetSubsystem<ResourceCache>();
+			SharedPtr<Texture2D> frameTexture = cache->GetTempResource<Texture2D>("Textures/credits/" + String(frame++) + ".jpeg");
+
+			UI *ui = GetSubsystem<UI>();
+
+			if (frameTexture.NotNull()) {
+				Sprite *sprite = (Sprite *)ui->GetRoot()->GetChild(0);
+				sprite->SetTexture(frameTexture);
+			} else {
+				gameState_ = GS_FINISHED;
+
+				frame = 0;
+				frameTimer = 0.0f;
+
+				ui->Clear();
+
+				Text *text = ui->GetRoot()->CreateChild<Text>();
+				text->SetFont("Fonts/Anonymous Pro.ttf");
+				text->SetColor(Color::WHITE);
+				text->SetAlignment(HA_CENTER, VA_CENTER);
+				text->SetTextAlignment(HA_CENTER);
+				text->SetText("Can you do better next time?\n\n[space]");
 			}
 		}
 	}
 
-	if (gameState_ == GS_PLAYING) {
-		levelTime_ += timeStep;
-	} else if (input->GetKeyPress(KEY_SPACE)) {
+	if (gameState_ != GS_PLAYING && input->GetKeyPress(KEY_SPACE)) {
 		LoadLevel();
 	}
 
