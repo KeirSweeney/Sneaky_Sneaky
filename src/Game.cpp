@@ -3,6 +3,7 @@
 #include "Analytics.h"
 #include "AnimatedPoster.h"
 #include "AudioZone.h"
+#include "BossLaser.h"
 #include "CameraController.h"
 #include "Door.h"
 #include "Guard.h"
@@ -138,6 +139,7 @@ void Game::Start()
 	AnimatedPoster::RegisterObject(context_);
 	AudioManager::RegisterObject(context_);
 	AudioZone::RegisterObject(context_);
+	BossLaser::RegisterObject(context_);
 	CameraController::RegisterObject(context_);
 	Door::RegisterObject(context_);
 	Guard::RegisterObject(context_);
