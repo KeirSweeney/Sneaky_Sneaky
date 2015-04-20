@@ -128,10 +128,6 @@ void Guard::Update(float timeStep)
 		return;
 	}
 
-	Vector3 position = node_->GetWorldPosition();
-	IntVector2 room((int)round(position.x_ / 11.0f), (int)round(position.z_ / 11.0f));
-	bool roomDark = GetScene()->GetChild(ToString("%dx%d", room.x_ + 1, room.y_ + 1))->GetVar("dark").GetBool();
-
 	Node *lightNode = node_->GetChild("SearchLight");
 
 	Quaternion lightRotation = rotation;
