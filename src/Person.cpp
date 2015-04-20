@@ -59,37 +59,74 @@ void Person::Update(float timeStep)
 
 	Vector3 position = node_->GetWorldPosition();
 
+	IntVector2 room((int)round(position.x_ / 11.0f), (int)round(position.z_ / 11.0f));
+	bool roomDark = GetScene()->GetChild(ToString("%dx%d", room.x_ + 1, room.y_ + 1))->GetVar("dark").GetBool();
+
+	Node *searchLight = node_->GetChild("SearchLight");
+	searchLight->SetEnabled(roomDark);
+
+	Quaternion lightRotation(Vector3::FORWARD, direction_);
+	lightRotation = (lightRotation * Quaternion(30.0f, Vector3::RIGHT)).Normalized();
+	lightRotation = searchLight->GetWorldRotation().Slerp(lightRotation, 5.0f * timeStep);
+
+	searchLight->SetWorldRotation(lightRotation);
+
 	Renderer *renderer = GetSubsystem<Renderer>();
 	Camera *camera = renderer->GetViewport(0)->GetCamera();
 	CameraController *cameraController = camera->GetNode()->GetParent()->GetComponent<CameraController>();
 	node_->SetWorldRotation(Quaternion(cameraController->GetYawAngle(), Vector3::UP));
 
+	Graphics *graphics = GetSubsystem<Graphics>();
+
+	IntVector2 mousePosition = input->GetMousePosition();
+	Ray mouseRay = camera->GetScreenRay(mousePosition.x_ / (float)graphics->GetWidth(), mousePosition.y_ / (float)graphics->GetHeight());
+
+	Octree *octree = GetScene()->GetComponent<Octree>();
+
+	PODVector<RayQueryResult> result;
+	RayOctreeQuery query(result, mouseRay, RAY_TRIANGLE, M_INFINITY, DRAWABLE_GEOMETRY, 0x01);
+	octree->RaycastSingle(query);
+
+	Vector3 target = position;
+	if (!result.Empty()) {
+		//LOGERRORF("result[0].position_: %s", result[0].position_.ToString().CString());
+		target = result[0].position_;
+		target.y_ = 0.0f;
+	}
+
 	if ((input->GetMouseButtonDown(MOUSEB_LEFT) || input->GetMouseButtonPress(MOUSEB_LEFT))) {
-		Graphics *graphics = GetSubsystem<Graphics>();
+		Vector3 meshTarget = navMesh->FindNearestPoint(target, Vector3(1.0f, 0.01f, 1.0f));
 
-		IntVector2 mousePosition = input->GetMousePosition();
-		Ray mouseRay = camera->GetScreenRay(mousePosition.x_ / (float)graphics->GetWidth(), mousePosition.y_ / (float)graphics->GetHeight());
-
-		Octree *octree = GetScene()->GetComponent<Octree>();
-
-		PODVector<RayQueryResult> result;
-		RayOctreeQuery query(result, mouseRay, RAY_TRIANGLE, M_INFINITY, DRAWABLE_GEOMETRY, 0x01);
-		octree->RaycastSingle(query);
-
-		if (!result.Empty()) {
-			//LOGERRORF("result[0].position_: %s", result[0].position_.ToString().CString());
-			Vector3 target = navMesh->FindNearestPoint(result[0].position_, Vector3(1.0f, 0.01f, 1.0f));
-			target.y_ = 0.0f;
-
-			if (input->GetMouseButtonPress(MOUSEB_LEFT)) {
-				Node *markerNode = GetScene()->CreateChild();
-				markerNode->SetPosition(target);
-				markerNode->CreateComponent<ClickMarker>();
-			}
-
-			navMesh->FindPath(path_, position, target);
-			path_.Erase(0);
+		if (input->GetMouseButtonPress(MOUSEB_LEFT)) {
+			Node *markerNode = GetScene()->CreateChild();
+			markerNode->SetPosition(meshTarget);
+			markerNode->CreateComponent<ClickMarker>();
 		}
+
+		navMesh->FindPath(path_, position, meshTarget);
+		path_.Erase(0);
+	}
+
+	direction_ = (path_.Empty() ? target : path_.Front()) - position;
+	direction_.y_ = 0.0f;
+	direction_.Normalize();
+
+	float angle = Quaternion(node_->GetDirection(), direction_).YawAngle();
+
+	StaticModel *model = node_->GetComponent<StaticModel>();
+	StaticModel *shadowModel = node_->GetChild("ShadowCaster")->GetComponent<StaticModel>();
+	if (angle < -120.0f || angle > 120.0f) {
+		model->SetMaterial(frontMaterial_);
+		shadowModel->SetMaterial(leftShadowMaterial_);
+	} else if (angle < -60.0f) {
+		model->SetMaterial(leftMaterial_);
+		shadowModel->SetMaterial(frontShadowMaterial_);
+	} else if (angle > 60.0f) {
+		model->SetMaterial(rightMaterial_);
+		shadowModel->SetMaterial(frontShadowMaterial_);
+	} else {
+		model->SetMaterial(backMaterial_);
+		shadowModel->SetMaterial(leftShadowMaterial_);
 	}
 
 	if (path_.Empty()) {
@@ -120,26 +157,8 @@ void Person::Update(float timeStep)
 	}
 
 	offset.Normalize();
-	float angle = Quaternion(node_->GetDirection(), offset).YawAngle();
-
-	StaticModel *model = node_->GetComponent<StaticModel>();
-	StaticModel *shadowModel = node_->GetChild("ShadowCaster")->GetComponent<StaticModel>();
-	if (angle < -120.0f || angle > 120.0f) {
-		model->SetMaterial(frontMaterial_);
-		shadowModel->SetMaterial(leftShadowMaterial_);
-	} else if (angle < -60.0f) {
-		model->SetMaterial(leftMaterial_);
-		shadowModel->SetMaterial(frontShadowMaterial_);
-	} else if (angle > 60.0f) {
-		model->SetMaterial(rightMaterial_);
-		shadowModel->SetMaterial(frontShadowMaterial_);
-	} else {
-		model->SetMaterial(backMaterial_);
-		shadowModel->SetMaterial(leftShadowMaterial_);
-	}
 
 	rigidBody->SetLinearVelocity(offset * MOVE_SPEED);
-	direction_ = offset;
 }
 
 void Person::SetPath(Urho3D::PODVector<Urho3D::Vector3> path)

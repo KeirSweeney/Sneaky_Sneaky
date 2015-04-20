@@ -40,11 +40,16 @@ private:
 	int currentLevel_;
 	float levelTime_;
 	enum GameState {
-		GS_MENU,
+		GS_INTRO,
 		GS_PLAYING,
 		GS_DEAD,
-		GS_COMPLETED,
+		GS_STAIRS,
+		GS_CREDITS,
+		GS_FINISHED,
 	} gameState_;
+
+	float totalTime_;
+	int totalScore_;
 
 	bool unceUnceUnceWubWubWub_;
 	Urho3D::PODVector<int> cheatCode_;

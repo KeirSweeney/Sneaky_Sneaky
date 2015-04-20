@@ -30,30 +30,6 @@ void AudioZone::OnNodeSet(Node *node)
 	SubscribeToEvent(node, E_NODECOLLISIONSTART, HANDLER(AudioZone, HandleNodeCollisionStart));
 }
 
-void AudioZone::HandleSceneUpdate(StringHash eventType, VariantMap &eventData)
-{
-	if (source_->IsPlaying()) {
-		return;
-	}
-
-	if (queue_.Empty()) {
-		node_->Remove();
-		return;
-	}
-
-	AudioQueueEntry &next = queue_.Back();
-
-	if (next.delay > 0.0f) {
-		next.delay -= eventData[SceneUpdate::P_TIMESTEP].GetFloat();
-		return;
-	}
-
-	source_->SetSoundType(SOUND_VOICE);
-	source_->Play(next.sound);
-
-	queue_.Pop();
-}
-
 void AudioZone::EnqueueAudioClip(Sound *sound, float delay)
 {
 	queue_.Insert(0, {sound, delay});
@@ -67,9 +43,7 @@ void AudioZone::HandleNodeCollisionStart(StringHash eventType, VariantMap &event
 		return;
 	}
 
-	UnsubscribeFromEvent(node_, E_NODECOLLISIONSTART);
+	GetScene()->GetComponent<AudioManager>()->Play(queue_);
 
-	source_ = node_->CreateComponent<SoundSource>();
-
-	SubscribeToEvent(GetScene(), E_SCENEUPDATE, HANDLER(AudioZone, HandleSceneUpdate));
+	node_->Remove();
 }

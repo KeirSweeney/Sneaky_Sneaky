@@ -18,6 +18,7 @@
 #include "Stairs.h"
 #include "Terminal.h"
 #include "Thrower.h"
+#include "Wife.h"
 
 #include "Audio.h"
 #include "Camera.h"
@@ -53,6 +54,7 @@
 #include "Viewport.h"
 #include "XMLFile.h"
 #include "Zone.h"
+#include "Graphics.h"
 
 #include <ctime>
 #include <cstdio>
@@ -67,7 +69,7 @@ DEFINE_APPLICATION_MAIN(Game)
 
 Game::Game(Context *context):
 	Application(context), crashHandler_(context),
-	currentLevel_(0), levelTime_(0.0f), gameState_(GS_PLAYING), unceUnceUnceWubWubWub_(false),
+	currentLevel_(0), levelTime_(0.0f), gameState_(GS_INTRO), totalTime_(0.0f), totalScore_(0), unceUnceUnceWubWubWub_(false),
 	developerMode_(false), debugGeometry_(false), debugPhysics_(false), debugNavigation_(false), debugDepthTest_(true)
 {
 	// We need to call back from the components for level transitions,
@@ -122,8 +124,19 @@ void Game::Start()
 
 	scene_ = new Scene(context_);
 
+	Sound *music = cache->GetResource<Sound>("Audio/MainTheme.ogg");
+	music->SetLooped(true);
+
+	// Create the node outside of the scene so that it does not get destroyed.
+	Node *musicNode = new Node(context_);
+
+	SoundSource *musicSource = musicNode->CreateComponent<SoundSource>();
+	musicSource->SetSoundType(SOUND_MUSIC);
+	musicSource->Play(music);
+
 	// We need to register our custom component classes before they can be used.
 	AnimatedPoster::RegisterObject(context_);
+	AudioManager::RegisterObject(context_);
 	AudioZone::RegisterObject(context_);
 	CameraController::RegisterObject(context_);
 	Door::RegisterObject(context_);
@@ -140,6 +153,7 @@ void Game::Start()
 	Stairs::RegisterObject(context_);
 	Terminal::RegisterObject(context_);
 	Thrower::RegisterObject(context_);
+	Wife::RegisterObject(context_);
 
 	SharedPtr<Viewport> viewport(new Viewport(context_, scene_, NULL));
 
@@ -167,7 +181,16 @@ void Game::Start()
 	input->SetMouseVisible(true);
 	input->SetMouseMode(MM_ABSOLUTE);
 
-	LoadLevel();
+	UI *ui = GetSubsystem<UI>();
+	Graphics *graphics = GetSubsystem<Graphics>();
+
+	Sprite *sprite = ui->GetRoot()->CreateChild<Sprite>();
+	sprite->SetFixedSize(IntVector2(1024, 576) * graphics->GetPixelRatio());
+	sprite->SetHotSpot(sprite->GetSize() / 2);
+	sprite->SetAlignment(HA_CENTER, VA_CENTER);
+
+	SoundSource *introSource = scene_->CreateComponent<SoundSource>();
+	introSource->Play(cache->GetTempResource<Sound>("Audio/Intro.ogg"));
 
 	SubscribeToEvent(E_UPDATE, HANDLER(Game, HandleUpdate));
 	SubscribeToEvent(E_POSTRENDERUPDATE, HANDLER(Game, HandlePostRenderUpdate));
@@ -186,34 +209,41 @@ void Game::LoadLevel()
 	ResourceCache *cache = GetSubsystem<ResourceCache>();
 
 	// If the player has completed the level (rather than dying), advance to the next.
-	if (gameState_ == GS_COMPLETED) {
+	if (gameState_ == GS_STAIRS) {
 		currentLevel_++;
 	}
 	gameState_ = GS_PLAYING;
-
-	// The floor layout is defined using a pixel image.
-	// If we can't load the next level, try and go back to the first level.
-	Image *levelImage = cache->GetResource<Image>(ToString("Levels/%d.png", currentLevel_ + 1));
-	if (!levelImage) {
-		if (currentLevel_ != 0) {
-			currentLevel_ = 0;
-			LoadLevel();
-		}
-
-		return;
-	}
 
 	// Reset the score counter.
 	levelTime_ = 0.0f;
 
 	// Remove all UI and scene elements,
 	// they will be recreated for the level by the rest of this function.
-	ui->GetRoot()->RemoveAllChildren();
+	ui->Clear();
 	scene_->Clear();
+
+	// The floor layout is defined using a pixel image.
+	Image *levelImage = cache->GetResource<Image>(ToString("Levels/%d.png", currentLevel_ + 1));
+	if (!levelImage) {
+		// If there is no next level, roll credits.
+		currentLevel_ = 0;
+		gameState_ = GS_CREDITS;
+
+		Graphics *graphics = GetSubsystem<Graphics>();
+
+		Sprite *sprite = ui->GetRoot()->CreateChild<Sprite>();
+		sprite->SetFixedSize(IntVector2(1024, 576) * graphics->GetPixelRatio());
+		sprite->SetHotSpot(sprite->GetSize() / 2);
+		sprite->SetAlignment(HA_CENTER, VA_CENTER);
+
+		return;
+	}
 
 	// Required components for 3D rendering.
 	scene_->CreateComponent<Octree>();
 	scene_->CreateComponent<DebugRenderer>();
+
+	scene_->CreateComponent<AudioManager>();
 
 	// The Zone component handles ambient lighting and fog.
 	Zone *zone = scene_->CreateComponent<Zone>();
@@ -281,8 +311,8 @@ void Game::LoadLevel()
 			// Get the color of the image pixel. The y coordinate needs to be flipped.
 			Color color = levelImage->GetPixel(1 + (x * 2), (imageHeight - 1) - (1 + (y * 2)));
 
-			// If it's transparent, pass on it.
-			if (color.a_ < 0.5f) {
+			// If it's transparent or black, pass on it.
+			if (color.a_ < 0.5f || color == Color::BLACK) {
 				continue;
 			}
 
@@ -357,6 +387,8 @@ void Game::LoadLevel()
 				floorLightNode = floorLightNode->Clone();
 				floorLightNode->SetPosition(Vector3(2.75f, floorLightHeight, 2.75f));
 			}
+
+			floorNode->SetVar("dark", !roomLights);
 
 			if (developerMode_) {
 				// Label the room with its number for development.
@@ -467,11 +499,12 @@ void Game::LoadLevel()
 					guardLight->SetLightType(LIGHT_SPOT);
 					guardLight->SetRampTexture(cache->GetResource<Texture2D>("Textures/RampExtreme.png"));
 					guardLight->SetShapeTexture(cache->GetResource<Texture2D>("Textures/SpotHard.png"));
-					guardLight->SetBrightness(0.4f);
+					guardLight->SetBrightness(0.2f);
 					guardLight->SetColor(Color::WHITE);
 					guardLight->SetCastShadows(true);
 					guardLight->SetFov(Guard::VIEW_ANGLE);
 					guardLight->SetRange(Guard::VIEW_DISTANCE);
+					guardLight->SetSpecularIntensity(10.0f);
 
 					Guard *guard = guardNode->CreateComponent<Guard>();
 					guard->SetWaypoints(waypoints);
@@ -646,6 +679,22 @@ void Game::LoadLevel()
 	personNode->CreateComponent<Inventory>();
 	personNode->CreateComponent<Thrower>();
 
+	Node *personLightNode = personNode->CreateChild("SearchLight");
+	personLightNode->SetEnabled(false);
+	personLightNode->SetPosition(Vector3(0.0f, 0.75f, 0.0f));
+	personLightNode->SetRotation(Quaternion(30.0f, Vector3::RIGHT));
+
+	Light *personLight = personLightNode->CreateComponent<Light>();
+	personLight->SetLightType(LIGHT_SPOT);
+	personLight->SetRampTexture(cache->GetResource<Texture2D>("Textures/RampExtreme.png"));
+	personLight->SetShapeTexture(cache->GetResource<Texture2D>("Textures/SpotHard.png"));
+	personLight->SetBrightness(0.2f);
+	personLight->SetColor(Color::WHITE);
+	personLight->SetCastShadows(true);
+	personLight->SetFov(Guard::VIEW_ANGLE);
+	personLight->SetRange(Guard::VIEW_DISTANCE);
+	personLight->SetSpecularIntensity(10.0f);
+
 	SoundListener *personListener = personNode->CreateComponent<SoundListener>();
 	GetSubsystem<Audio>()->SetListener(personListener);
 
@@ -656,13 +705,6 @@ void Game::LoadLevel()
 	Node *cameraNode = cameraTargetNode->CreateChild("Camera");
 	cameraNode->SetPosition(Vector3(0.0f, 9.0f, -7.5f));
 	cameraNode->SetRotation(Quaternion(47.5f, Vector3::RIGHT));
-
-	Sound *mainTheme = cache->GetResource<Sound>("Audio/MainTheme.ogg");
-	mainTheme->SetLooped(true);
-
-	SoundSource *source = cameraNode->CreateComponent<SoundSource>();
-	source->SetSoundType(SOUND_MUSIC);
-	source->Play(mainTheme);
 
 	Camera *camera = cameraNode->CreateComponent<Camera>();
 	camera->SetFarClip(zone->GetFogEnd());
@@ -752,6 +794,9 @@ void Game::EndLevel(bool died)
 
 		int score = (int)(((300.0f - levelTime_) + (guardCount * -100.0f) + (pickupCount * 50.0f)) * 5.0f);
 
+		totalTime_ += levelTime_;
+		totalScore_ += score;
+
 		GetSubsystem<Analytics>()->SendLevelCompletedEvent(currentLevel_, levelTime_, guardCount, pickupCount, score);
 
 		snprintf(buffer, sizeof(buffer),
@@ -770,7 +815,7 @@ void Game::EndLevel(bool died)
 
 	label->SetText(buffer);
 
-	gameState_ = died ? GS_DEAD : GS_COMPLETED;
+	gameState_ = died ? GS_DEAD : GS_STAIRS;
 }
 
 bool Game::IsDeveloper()
@@ -786,9 +831,85 @@ void Game::HandleUpdate(StringHash eventType, VariantMap &eventData)
 
 	float timeStep = eventData[Update::P_TIMESTEP].GetFloat();
 
-	if (gameState_ == GS_PLAYING) {
+	if (gameState_ == GS_INTRO) {
+		static int frame = 1;
+		static float frameTimer = 0.0f;
+		static const float frameRate = 1.0f / 23.98f;
+
+		frameTimer += timeStep;
+
+		if (frameTimer >= frameRate) {
+			frameTimer -= frameRate;
+
+			ResourceCache *cache = GetSubsystem<ResourceCache>();
+			SharedPtr<Texture2D> frameTexture = cache->GetTempResource<Texture2D>("Textures/intro/" + String(frame++) + ".jpeg");
+
+			if (frameTexture.NotNull()) {
+				UI *ui = GetSubsystem<UI>();
+				Sprite *sprite = (Sprite *)ui->GetRoot()->GetChild(0);
+				sprite->SetTexture(frameTexture);
+			} else {
+				frame = 0;
+				frameTimer = 0.0f;
+
+				LoadLevel();
+			}
+		}
+	} else if (gameState_ == GS_PLAYING) {
 		levelTime_ += timeStep;
-	} else if (input->GetKeyPress(KEY_SPACE)) {
+	} else if (gameState_ == GS_CREDITS) {
+		static int frame = 1;
+		static float frameTimer = 0.0f;
+		static const float frameRate = 1.0f / 23.98f;
+
+		frameTimer += timeStep;
+
+		if (frameTimer >= frameRate) {
+			frameTimer -= frameRate;
+
+			ResourceCache *cache = GetSubsystem<ResourceCache>();
+			SharedPtr<Texture2D> frameTexture = cache->GetTempResource<Texture2D>("Textures/credits/" + String(frame++) + ".jpeg");
+
+			UI *ui = GetSubsystem<UI>();
+
+			if (frameTexture.NotNull()) {
+				Sprite *sprite = (Sprite *)ui->GetRoot()->GetChild(0);
+				sprite->SetTexture(frameTexture);
+			} else {
+				gameState_ = GS_FINISHED;
+
+				frame = 0;
+				frameTimer = 0.0f;
+
+				ui->Clear();
+
+				Text *text = ui->GetRoot()->CreateChild<Text>();
+				text->SetFont("Fonts/Anonymous Pro.ttf");
+				text->SetColor(Color::WHITE);
+				text->SetAlignment(HA_CENTER, VA_CENTER);
+
+				int m = (int)(totalTime_ / 60.0f);
+				int s = (int)totalTime_ - (m * 60);
+				int ms = (int)(totalTime_ * 100.0f) - (s * 100);
+
+				char buffer[512];
+				snprintf(buffer, sizeof(buffer),
+						 " Completion Time: %02d:%02d.%03d\n"
+						 "     Total Score: %d\n"
+						 "\n"
+						 "\n"
+						 "\n"
+						 "Can you do better next time?\n"
+						 "\n"
+						 "           [space]",
+						 m, s, ms, totalScore_);
+
+				text->SetText(buffer);
+			}
+		}
+	}
+
+	if (gameState_ != GS_PLAYING && input->GetKeyPress(KEY_SPACE)) {
 		LoadLevel();
 	}
 

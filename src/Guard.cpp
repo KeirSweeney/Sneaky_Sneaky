@@ -26,7 +26,7 @@ using namespace Urho3D;
 const float Guard::MOVE_SPEED = 1.0f;
 const float Guard::VIEW_DISTANCE = 5.0f;
 const float Guard::VIEW_ANGLE = 75.0f;
-const float Guard::DETECT_MOVE_SPEED = 1.5f;
+const float Guard::DETECT_MOVE_SPEED = 1.2f;
 
 Guard::Guard(Context *context):
 	LogicComponent(context),
@@ -109,11 +109,19 @@ void Guard::Update(float timeStep)
 		return;
 	}
 
+	Vector3 position = node_->GetWorldPosition();
+	IntVector2 room((int)round(position.x_ / 11.0f), (int)round(position.z_ / 11.0f));
+	bool roomDark = GetScene()->GetChild(ToString("%dx%d", room.x_ + 1, room.y_ + 1))->GetVar("dark").GetBool();
+
 	Quaternion rotation = Quaternion(Vector3::FORWARD, velocity);
 
 	Node *lightNode = node_->GetChild("SearchLight");
-	lightNode->SetWorldRotation(rotation);
-	lightNode->Rotate(Quaternion(30.0f, Vector3::RIGHT));
+
+	Quaternion lightRotation = rotation;
+	lightRotation = (lightRotation * Quaternion(30.0f, Vector3::RIGHT)).Normalized();
+	lightRotation = lightNode->GetWorldRotation().Slerp(lightRotation, 5.0f * timeStep);
+
+	lightNode->SetWorldRotation(lightRotation);
 
 	Light *light = lightNode->GetComponent<Light>();
 	light->SetColor(guardMoving ? (playerDetected ? Color::RED : Color::WHITE) : Color::BLACK);

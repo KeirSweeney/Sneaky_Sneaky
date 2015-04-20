@@ -39,10 +39,11 @@ void SecurityCamera::DelayedStart()
 	light_ = node_->CreateComponent<Light>();
 	light_->SetLightType(LIGHT_SPOT);
 	light_->SetShapeTexture(cache->GetResource<Texture2D>("Textures/SpotHard.png"));
-	light_->SetBrightness(0.4f);
+	light_->SetBrightness(0.2f);
 	light_->SetColor(Color::WHITE);
 	light_->SetCastShadows(true);
 	light_->SetFov(30.0f);
+	light_->SetSpecularIntensity(10.0f);
 }
 
 void SecurityCamera::Update(float timeStep)
