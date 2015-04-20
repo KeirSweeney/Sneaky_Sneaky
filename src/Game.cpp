@@ -122,6 +122,16 @@ void Game::Start()
 
 	scene_ = new Scene(context_);
 
+	Sound *music = cache->GetResource<Sound>("Audio/MainTheme.ogg");
+	music->SetLooped(true);
+
+	// Create the node outside of the scene so that it does not get destroyed.
+	Node *musicNode = new Node(context_);
+
+	SoundSource *musicSource = musicNode->CreateComponent<SoundSource>();
+	musicSource->SetSoundType(SOUND_MUSIC);
+	musicSource->Play(music);
+
 	// We need to register our custom component classes before they can be used.
 	AnimatedPoster::RegisterObject(context_);
 	AudioZone::RegisterObject(context_);
@@ -656,13 +666,6 @@ void Game::LoadLevel()
 	Node *cameraNode = cameraTargetNode->CreateChild("Camera");
 	cameraNode->SetPosition(Vector3(0.0f, 9.0f, -7.5f));
 	cameraNode->SetRotation(Quaternion(47.5f, Vector3::RIGHT));
-
-	Sound *mainTheme = cache->GetResource<Sound>("Audio/MainTheme.ogg");
-	mainTheme->SetLooped(true);
-
-	SoundSource *source = cameraNode->CreateComponent<SoundSource>();
-	source->SetSoundType(SOUND_MUSIC);
-	source->Play(mainTheme);
 
 	Camera *camera = cameraNode->CreateComponent<Camera>();
 	camera->SetFarClip(zone->GetFogEnd());
