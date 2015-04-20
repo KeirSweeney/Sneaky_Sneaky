@@ -24,6 +24,8 @@
 #include "CollisionShape.h"
 #include "PhysicsEvents.h"
 #include "Terminal.h"
+#include "Sound.h"
+#include "AudioManager.h"
 
 #include "InteractablePoster.h"
 
@@ -183,6 +185,12 @@ void Wife::HandleNodeCollision(StringHash eventType, VariantMap &eventData)
 	sequence_.Erase(0);
 
 	if (sequence_.Empty()) {
-		LOGERROR("Completed");
+		ResourceCache *cache = GetSubsystem<ResourceCache>();
+
+		Urho3D::PODVector<AudioQueueEntry> queue;
+		queue.Push({ (Sound *)NULL, 0.0f });
+		queue.Push({ cache->GetResource<Sound>("Audio/VO/Black/32_IClearedMyName.wav"), 0.0f });
+
+		GetScene()->GetComponent<AudioManager>()->Play(queue);
 	}
 }

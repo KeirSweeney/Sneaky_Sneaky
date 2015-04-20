@@ -1,13 +1,10 @@
 <room floor="Black_DI" lights="false" name="Crystal's Office">
 
-  <!-- THIS IS THE PASSSAGE TO BE PLAYED AFTER BOSS DEFEAT-->
-  <audiozone position="0 0" rotation="0" size="1 1">
-    <audioclip delay="0">VO/Black/32_IClearedMyName.wav</audioclip>
-  </audiozone>
-  <!--       MUST BE TAKEN OUT FOR FINAL BUILD            -->
-
   <!-- Upload Screen -->
   <object position="0 0.2 4.8" angles ="0 180 0" scale ="27" model="GiantScreen" material="Obsidian" interaction="Wife"></object>
+
+    <!--Wife still-->
+  <object position="-3 0 4.5" angles="0 -20 0" scale="1" model="PersonPlane" material="Chippingfort"></object>
 
   <!--LASEREMITTER-->
   <object position ="-2.5 0.4 5" angles="0 180 0" scale="10" model="LaserEmitter" material="Lamp"></object>
