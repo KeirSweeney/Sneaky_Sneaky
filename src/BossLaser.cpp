@@ -65,6 +65,11 @@ void BossLaser::DelayedStart()
 void BossLaser::Update(float timeStep)
 {
 
+	if (laserDelay_ > 0.0f) {
+		laserDelay_ -= timeStep;
+		return;
+	}
+
 	if (laserInterval_ > 0.0f) {
 		laserTime_ += timeStep;
 
