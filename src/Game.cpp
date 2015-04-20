@@ -188,6 +188,9 @@ void Game::Start()
 	sprite->SetHotSpot(sprite->GetSize() / 2);
 	sprite->SetAlignment(HA_CENTER, VA_CENTER);
 
+	SoundSource *introSource = scene_->CreateComponent<SoundSource>();
+	introSource->Play(cache->GetTempResource<Sound>("Audio/Intro.ogg"));
+
 	SubscribeToEvent(E_UPDATE, HANDLER(Game, HandleUpdate));
 	SubscribeToEvent(E_POSTRENDERUPDATE, HANDLER(Game, HandlePostRenderUpdate));
 
