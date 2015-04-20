@@ -20,6 +20,7 @@
 #include "Terminal.h"
 #include "Thrower.h"
 #include "Wife.h"
+#include "BossBertha.h"
 
 #include "Audio.h"
 #include "Camera.h"
@@ -148,6 +149,7 @@ void Game::Start()
 	Inventory::RegisterObject(context_);
 	Laser::RegisterObject(context_);
 	MrWright::RegisterObject(context_);
+	BossBertha::RegisterObject(context_);
 	Padlock::RegisterObject(context_);
 	Person::RegisterObject(context_);
 	Pickup::RegisterObject(context_);
