@@ -14,12 +14,12 @@ set(CMAKE_INSTALL_RPATH ".")
 set(CMAKE_BUILD_WITH_INSTALL_RPATH TRUE)
 
 if(UNIX)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 endif()
 
 if(MSVC)
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /Gm- /MP")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /Gm- /MP")
+	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /Gm- /MP")
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /Gm- /MP")
 endif()
 
 aux_source_directory(src SRC_LIST)
@@ -29,15 +29,15 @@ add_custom_target(DumpSymbols SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/DumpSymbols.cm
 set_source_files_properties(${CMAKE_CURRENT_SOURCE_DIR}/DumpSymbols.cmake PROPERTIES HEADER_FILE_ONLY TRUE)
 
 externalproject_add(Urho3D
-    SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/Urho3D/Source
-    CMAKE_ARGS -DURHO3D_64BIT=1 -DURHO3D_ANGELSCRIPT=0 -DURHO3D_NETWORK=1 -DURHO3D_URHO2D=0 -DURHO3D_TOOLS=1 -DURHO3D_MINIDUMPS=0 -DURHO3D_FILEWATCHER=0 -DURHO3D_OPENGL=1 -DURHO3D_LIB_TYPE=STATIC -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DCMAKE_CONFIGURATION_TYPES=${CMAKE_CONFIGURATION_TYPES}
-    BUILD_IN_SOURCE 0
-    INSTALL_COMMAND ""
-    TEST_COMMAND ""
+	SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/Urho3D/Source
+	CMAKE_ARGS -DURHO3D_64BIT=1 -DURHO3D_ANGELSCRIPT=0 -DURHO3D_NETWORK=1 -DURHO3D_URHO2D=0 -DURHO3D_TOOLS=1 -DURHO3D_MINIDUMPS=0 -DURHO3D_FILEWATCHER=0 -DURHO3D_OPENGL=1 -DURHO3D_LIB_TYPE=STATIC -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DCMAKE_CONFIGURATION_TYPES=${CMAKE_CONFIGURATION_TYPES}
+	BUILD_IN_SOURCE 0
+	INSTALL_COMMAND ""
+	TEST_COMMAND ""
 )
 
 # Yet another hack.
-add_definitions(-DURHO3D_STATIC_DEFINE -DURHO3D_PROFILING -DURHO3D_LOGGING)
+add_definitions(-DURHO3D_STATIC_DEFINE -DURHO3D_PROFILING -DURHO3D_LOGGING -DURHO3D_OPENGL)
 
 add_definitions(-DCMAKE_SYSTEM_NAME="${CMAKE_SYSTEM_NAME}" -DCMAKE_GENERATOR="${CMAKE_GENERATOR}" -DCMAKE_CXX_COMPILER_ID="${CMAKE_CXX_COMPILER_ID}")
 
@@ -46,9 +46,9 @@ include_directories(${BINARY_DIR}/Engine)
 
 file(GLOB children ${CMAKE_CURRENT_SOURCE_DIR}/Urho3D/Source/Engine/*)
 foreach(child ${children})
-    if(IS_DIRECTORY ${child})
-        include_directories(${child})
-    endif()
+	if(IS_DIRECTORY ${child})
+		include_directories(${child})
+	endif()
 endforeach()
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/Urho3D/Source/ThirdParty/SDL/include)
@@ -58,63 +58,63 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/Urho3D/Source/ThirdParty/kNet/in
 add_dependencies(${PROJECT_NAME} Urho3D)
 
 if(TRUE)
-    add_definitions(-DGOOGLE_BREAKPAD)
-    add_subdirectory(Breakpad)
-    include_directories(${CMAKE_CURRENT_SOURCE_DIR}/Breakpad)
-    add_dependencies(${PROJECT_NAME} Breakpad)
-    target_link_libraries(${PROJECT_NAME} Breakpad)
+	add_definitions(-DGOOGLE_BREAKPAD)
+	add_subdirectory(Breakpad)
+	include_directories(${CMAKE_CURRENT_SOURCE_DIR}/Breakpad)
+	add_dependencies(${PROJECT_NAME} Breakpad)
+	target_link_libraries(${PROJECT_NAME} Breakpad)
 endif()
 
 add_custom_command(
-    TARGET ${PROJECT_NAME} POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -DDUMP_SYMS=$<TARGET_FILE:dump_syms> -DBINARY_PATH=$<TARGET_FILE:${PROJECT_NAME}> -P ${CMAKE_CURRENT_SOURCE_DIR}/DumpSymbols.cmake
+	TARGET ${PROJECT_NAME} POST_BUILD
+	COMMAND ${CMAKE_COMMAND} -DDUMP_SYMS=$<TARGET_FILE:dump_syms> -DBINARY_PATH=$<TARGET_FILE:${PROJECT_NAME}> -P ${CMAKE_CURRENT_SOURCE_DIR}/DumpSymbols.cmake
 )
 
 if(UNIX)
-    target_link_libraries(${PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/Urho3D/Lib/${CMAKE_STATIC_LIBRARY_PREFIX}Urho3D${CMAKE_STATIC_LIBRARY_SUFFIX})
-    add_custom_command(
-        TARGET ${PROJECT_NAME} POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E create_symlink
-        ${CMAKE_SOURCE_DIR}/data $<TARGET_FILE_DIR:${PROJECT_NAME}>/data
-        COMMAND ${CMAKE_COMMAND} -E create_symlink
-        ${CMAKE_CURRENT_SOURCE_DIR}/Urho3D/Bin/AssetImporter${CMAKE_EXECUTABLE_SUFFIX} $<TARGET_FILE_DIR:${PROJECT_NAME}>/AssetImporter${CMAKE_EXECUTABLE_SUFFIX}
-    )
+	target_link_libraries(${PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/Urho3D/Lib/${CMAKE_STATIC_LIBRARY_PREFIX}Urho3D${CMAKE_STATIC_LIBRARY_SUFFIX})
+	add_custom_command(
+		TARGET ${PROJECT_NAME} POST_BUILD
+		COMMAND ${CMAKE_COMMAND} -E create_symlink
+		${CMAKE_SOURCE_DIR}/data $<TARGET_FILE_DIR:${PROJECT_NAME}>/data
+		COMMAND ${CMAKE_COMMAND} -E create_symlink
+		${CMAKE_CURRENT_SOURCE_DIR}/Urho3D/Bin/AssetImporter${CMAKE_EXECUTABLE_SUFFIX} $<TARGET_FILE_DIR:${PROJECT_NAME}>/AssetImporter${CMAKE_EXECUTABLE_SUFFIX}
+	)
 else()
-    target_link_libraries(${PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/Urho3D/Lib/${CMAKE_STATIC_LIBRARY_PREFIX}Urho3D$<$<CONFIG:Debug>:_d>.lib)
-    add_custom_command(
-        TARGET ${PROJECT_NAME} POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E make_directory
-        $<TARGET_FILE_DIR:${PROJECT_NAME}>/data
-        COMMAND ${CMAKE_COMMAND} -E copy_directory
-        ${CMAKE_SOURCE_DIR}/data $<TARGET_FILE_DIR:${PROJECT_NAME}>/data
-        COMMAND ${CMAKE_COMMAND} -E copy
-        ${CMAKE_CURRENT_SOURCE_DIR}/Urho3D/Bin/AssetImporter${CMAKE_EXECUTABLE_SUFFIX} $<TARGET_FILE_DIR:${PROJECT_NAME}>/AssetImporter${CMAKE_EXECUTABLE_SUFFIX}
-    )
+	target_link_libraries(${PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/Urho3D/Lib/${CMAKE_STATIC_LIBRARY_PREFIX}Urho3D$<$<CONFIG:Debug>:_d>.lib)
+	add_custom_command(
+		TARGET ${PROJECT_NAME} POST_BUILD
+		COMMAND ${CMAKE_COMMAND} -E make_directory
+		$<TARGET_FILE_DIR:${PROJECT_NAME}>/data
+		COMMAND ${CMAKE_COMMAND} -E copy_directory
+		${CMAKE_SOURCE_DIR}/data $<TARGET_FILE_DIR:${PROJECT_NAME}>/data
+		COMMAND ${CMAKE_COMMAND} -E copy
+		${CMAKE_CURRENT_SOURCE_DIR}/Urho3D/Bin/AssetImporter${CMAKE_EXECUTABLE_SUFFIX} $<TARGET_FILE_DIR:${PROJECT_NAME}>/AssetImporter${CMAKE_EXECUTABLE_SUFFIX}
+	)
 endif()
 
 if(APPLE)
-    find_library(AUDIOUNIT_FRAMEWORK AudioUnit)
-    find_library(CARBON_FRAMEWORK Carbon)
-    find_library(COCOA_FRAMEWORK Cocoa)
-    find_library(COREAUDIO_FRAMEWORK CoreAudio)
-    find_library(FORCEFEEDBACK_FRAMEWORK ForceFeedback)
-    find_library(IOKIT_FRAMEWORK IOKit)
-    find_library(OPENGL_FRAMEWORK OpenGL)
+	find_library(AUDIOUNIT_FRAMEWORK AudioUnit)
+	find_library(CARBON_FRAMEWORK Carbon)
+	find_library(COCOA_FRAMEWORK Cocoa)
+	find_library(COREAUDIO_FRAMEWORK CoreAudio)
+	find_library(FORCEFEEDBACK_FRAMEWORK ForceFeedback)
+	find_library(IOKIT_FRAMEWORK IOKit)
+	find_library(OPENGL_FRAMEWORK OpenGL)
 
-    target_link_libraries(${PROJECT_NAME}
-        ${AUDIOUNIT_FRAMEWORK}
-        ${CARBON_FRAMEWORK}
-        ${COCOA_FRAMEWORK}
-        ${COREAUDIO_FRAMEWORK}
-        ${FORCEFEEDBACK_FRAMEWORK}
-        ${IOKIT_FRAMEWORK}
-        ${OPENGL_FRAMEWORK}
-    )
+	target_link_libraries(${PROJECT_NAME}
+		${AUDIOUNIT_FRAMEWORK}
+		${CARBON_FRAMEWORK}
+		${COCOA_FRAMEWORK}
+		${COREAUDIO_FRAMEWORK}
+		${FORCEFEEDBACK_FRAMEWORK}
+		${IOKIT_FRAMEWORK}
+		${OPENGL_FRAMEWORK}
+	)
 elseif(WIN32)
-    target_link_libraries(${PROJECT_NAME}
-        "Winmm.lib"
-        "Opengl32.lib"
-        "Version.lib"
-        "Imm32.lib"
-    )
+	target_link_libraries(${PROJECT_NAME}
+		"Winmm.lib"
+		"Opengl32.lib"
+		"Version.lib"
+		"Imm32.lib"
+	)
 endif()
