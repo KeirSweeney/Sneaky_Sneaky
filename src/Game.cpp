@@ -385,6 +385,8 @@ void Game::LoadLevel()
 				floorLightNode->SetPosition(Vector3(2.75f, floorLightHeight, 2.75f));
 			}
 
+			floorNode->SetVar("dark", !roomLights);
+
 			if (developerMode_) {
 				// Label the room with its number for development.
 				Node *roomLabelNode = floorNode->CreateChild();
@@ -494,11 +496,12 @@ void Game::LoadLevel()
 					guardLight->SetLightType(LIGHT_SPOT);
 					guardLight->SetRampTexture(cache->GetResource<Texture2D>("Textures/RampExtreme.png"));
 					guardLight->SetShapeTexture(cache->GetResource<Texture2D>("Textures/SpotHard.png"));
-					guardLight->SetBrightness(0.4f);
+					guardLight->SetBrightness(0.2f);
 					guardLight->SetColor(Color::WHITE);
 					guardLight->SetCastShadows(true);
 					guardLight->SetFov(Guard::VIEW_ANGLE);
 					guardLight->SetRange(Guard::VIEW_DISTANCE);
+					guardLight->SetSpecularIntensity(10.0f);
 
 					Guard *guard = guardNode->CreateComponent<Guard>();
 					guard->SetWaypoints(waypoints);
@@ -672,6 +675,22 @@ void Game::LoadLevel()
 	personNode->CreateComponent<Person>();
 	personNode->CreateComponent<Inventory>();
 	personNode->CreateComponent<Thrower>();
+
+	Node *personLightNode = personNode->CreateChild("SearchLight");
+	personLightNode->SetEnabled(false);
+	personLightNode->SetPosition(Vector3(0.0f, 0.75f, 0.0f));
+	personLightNode->SetRotation(Quaternion(30.0f, Vector3::RIGHT));
+
+	Light *personLight = personLightNode->CreateComponent<Light>();
+	personLight->SetLightType(LIGHT_SPOT);
+	personLight->SetRampTexture(cache->GetResource<Texture2D>("Textures/RampExtreme.png"));
+	personLight->SetShapeTexture(cache->GetResource<Texture2D>("Textures/SpotHard.png"));
+	personLight->SetBrightness(0.2f);
+	personLight->SetColor(Color::WHITE);
+	personLight->SetCastShadows(true);
+	personLight->SetFov(Guard::VIEW_ANGLE);
+	personLight->SetRange(Guard::VIEW_DISTANCE * 2.0f);
+	personLight->SetSpecularIntensity(10.0f);
 
 	SoundListener *personListener = personNode->CreateComponent<SoundListener>();
 	GetSubsystem<Audio>()->SetListener(personListener);
