@@ -136,6 +136,7 @@ void Game::Start()
 
 	// We need to register our custom component classes before they can be used.
 	AnimatedPoster::RegisterObject(context_);
+	AudioManager::RegisterObject(context_);
 	AudioZone::RegisterObject(context_);
 	CameraController::RegisterObject(context_);
 	Door::RegisterObject(context_);
@@ -241,6 +242,8 @@ void Game::LoadLevel()
 	// Required components for 3D rendering.
 	scene_->CreateComponent<Octree>();
 	scene_->CreateComponent<DebugRenderer>();
+
+	scene_->CreateComponent<AudioManager>();
 
 	// The Zone component handles ambient lighting and fog.
 	Zone *zone = scene_->CreateComponent<Zone>();

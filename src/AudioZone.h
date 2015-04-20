@@ -1,16 +1,8 @@
 #pragma once
 
+#include "AudioManager.h"
+
 #include "Component.h"
-
-namespace Urho3D {
-	class Sound;
-	class SoundSource;
-}
-
-struct AudioQueueEntry {
-	Urho3D::Sound *sound;
-	float delay;
-};
 
 class AudioZone: public Urho3D::Component
 {
@@ -25,12 +17,10 @@ public:
 
 public:
 	void HandleNodeCollisionStart(Urho3D::StringHash eventType, Urho3D::VariantMap &eventData);
-	void HandleSceneUpdate(Urho3D::StringHash eventType, Urho3D::VariantMap &eventData);
 
 public:
 	void EnqueueAudioClip(Urho3D::Sound *sound, float delay = 0.0f);
 
 private:
-	Urho3D::SoundSource *source_;
 	Urho3D::PODVector<AudioQueueEntry> queue_;
 };
