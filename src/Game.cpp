@@ -291,8 +291,8 @@ void Game::LoadLevel()
 			// Get the color of the image pixel. The y coordinate needs to be flipped.
 			Color color = levelImage->GetPixel(1 + (x * 2), (imageHeight - 1) - (1 + (y * 2)));
 
-			// If it's transparent, pass on it.
-			if (color.a_ < 0.5f) {
+			// If it's transparent or black, pass on it.
+			if (color.a_ < 0.5f || color == Color::BLACK) {
 				continue;
 			}
 
