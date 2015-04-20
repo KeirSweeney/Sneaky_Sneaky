@@ -53,6 +53,7 @@
 #include "Viewport.h"
 #include "XMLFile.h"
 #include "Zone.h"
+#include "Graphics.h"
 
 #include <ctime>
 #include <cstdio>
@@ -67,7 +68,7 @@ DEFINE_APPLICATION_MAIN(Game)
 
 Game::Game(Context *context):
 	Application(context), crashHandler_(context),
-	currentLevel_(0), levelTime_(0.0f), gameState_(GS_PLAYING), unceUnceUnceWubWubWub_(false),
+	currentLevel_(0), levelTime_(0.0f), gameState_(GS_MENU), unceUnceUnceWubWubWub_(false),
 	developerMode_(false), debugGeometry_(false), debugPhysics_(false), debugNavigation_(false), debugDepthTest_(true)
 {
 	// We need to call back from the components for level transitions,
@@ -177,7 +178,13 @@ void Game::Start()
 	input->SetMouseVisible(true);
 	input->SetMouseMode(MM_ABSOLUTE);
 
-	LoadLevel();
+	UI *ui = GetSubsystem<UI>();
+	Graphics *graphics = GetSubsystem<Graphics>();
+
+	Sprite *sprite = ui->GetRoot()->CreateChild<Sprite>();
+	sprite->SetFixedSize(IntVector2(1024, 576) * graphics->GetPixelRatio());
+	sprite->SetHotSpot(sprite->GetSize() / 2);
+	sprite->SetAlignment(HA_CENTER, VA_CENTER);
 
 	SubscribeToEvent(E_UPDATE, HANDLER(Game, HandleUpdate));
 	SubscribeToEvent(E_POSTRENDERUPDATE, HANDLER(Game, HandlePostRenderUpdate));
@@ -788,6 +795,29 @@ void Game::HandleUpdate(StringHash eventType, VariantMap &eventData)
 	Input *input = GetSubsystem<Input>();
 
 	float timeStep = eventData[Update::P_TIMESTEP].GetFloat();
+
+	if (gameState_ == GS_MENU) {
+		static int frame = 1;
+		static float frameTimer = 0.0f;
+		static const float frameRate = 1.0f / 23.98f;
+
+		frameTimer += timeStep;
+
+		if (frameTimer >= frameRate) {
+			frameTimer -= frameRate;
+
+			ResourceCache *cache = GetSubsystem<ResourceCache>();
+			SharedPtr<Texture2D> frameTexture = cache->GetTempResource<Texture2D>("Textures/intro/" + String(frame++) + ".jpeg");
+
+			if (frameTexture.NotNull()) {
+				UI *ui = GetSubsystem<UI>();
+				Sprite *sprite = (Sprite *)ui->GetRoot()->GetChild(0);
+				sprite->SetTexture(frameTexture);
+			} else {
+				LoadLevel();
+			}
+		}
+	}
 
 	if (gameState_ == GS_PLAYING) {
 		levelTime_ += timeStep;
