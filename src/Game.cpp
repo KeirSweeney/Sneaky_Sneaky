@@ -825,6 +825,7 @@ void Game::HandleUpdate(StringHash eventType, VariantMap &eventData)
 {
 	(void)eventType;
 
+	ResourceCache *cache = GetSubsystem<ResourceCache>();
 	Input *input = GetSubsystem<Input>();
 
 	float timeStep = eventData[Update::P_TIMESTEP].GetFloat();
@@ -839,7 +840,6 @@ void Game::HandleUpdate(StringHash eventType, VariantMap &eventData)
 		if (frameTimer >= frameRate) {
 			frameTimer -= frameRate;
 
-			ResourceCache *cache = GetSubsystem<ResourceCache>();
 			SharedPtr<Texture2D> frameTexture = cache->GetTempResource<Texture2D>("Textures/intro/" + String(frame++) + ".jpeg");
 
 			if (frameTexture.NotNull()) {
@@ -855,6 +855,50 @@ void Game::HandleUpdate(StringHash eventType, VariantMap &eventData)
 		}
 	} else if (gameState_ == GS_PLAYING) {
 		levelTime_ += timeStep;
+
+		static struct {
+			Material *material;
+			String path;
+			int frame;
+			int count;
+			float timer;
+			float rate;
+		} animated[] = {
+			{ cache->GetResource<Material>("Materials/MaverickForwardAnimated.xml"), "Textures/maverick/forward/", 1, INT32_MAX, 0.0f, 10.0f },
+			{ cache->GetResource<Material>("Materials/MaverickBackAnimated.xml"),    "Textures/maverick/back/",    1, INT32_MAX, 0.0f, 10.0f },
+			{ cache->GetResource<Material>("Materials/MaverickLeftAnimated.xml"),    "Textures/maverick/left/",    1, INT32_MAX, 0.0f, 10.0f },
+			{ cache->GetResource<Material>("Materials/MaverickRightAnimated.xml"),   "Textures/maverick/right/",   1, INT32_MAX, 0.0f, 10.0f },
+			{ cache->GetResource<Material>("Materials/GuardForwardAnimated.xml"),    "Textures/guard/forward/",    1, INT32_MAX, 0.0f, 10.0f },
+			{ cache->GetResource<Material>("Materials/GuardBackAnimated.xml"),       "Textures/guard/back/",       1, INT32_MAX, 0.0f, 10.0f },
+			{ cache->GetResource<Material>("Materials/GuardLeftAnimated.xml"),       "Textures/guard/left/",       1, INT32_MAX, 0.0f, 10.0f },
+			{ cache->GetResource<Material>("Materials/GuardRightAnimated.xml"),      "Textures/guard/right/",      1, INT32_MAX, 0.0f, 10.0f },
+		};
+
+		for (int i = 0; i < 8; ++i) {
+			float frameRate = 1.0f / animated[i].rate;
+
+			animated[i].timer += timeStep;
+
+			if (animated[i].timer < frameRate) {
+				continue;
+			}
+
+			animated[i].timer -= frameRate;
+
+			animated[i].frame++;
+
+			Texture2D *texture = (animated[i].frame >= animated[i].count) ? NULL : cache->GetResource<Texture2D>(animated[i].path + String(animated[i].frame) + ".png");
+
+			if (!texture) {
+				animated[i].count = animated[i].frame;
+				animated[i].frame = 1;
+
+				texture = cache->GetResource<Texture2D>(animated[i].path + "1.png");
+			}
+
+			Material *material = animated[i].material;
+			material->SetTexture(TU_DIFFUSE, texture);
+		}
 	} else if (gameState_ == GS_CREDITS) {
 		static int frame = 1;
 		static float frameTimer = 0.0f;
@@ -865,7 +909,6 @@ void Game::HandleUpdate(StringHash eventType, VariantMap &eventData)
 		if (frameTimer >= frameRate) {
 			frameTimer -= frameRate;
 
-			ResourceCache *cache = GetSubsystem<ResourceCache>();
 			SharedPtr<Texture2D> frameTexture = cache->GetTempResource<Texture2D>("Textures/credits/" + String(frame++) + ".jpeg");
 
 			UI *ui = GetSubsystem<UI>();

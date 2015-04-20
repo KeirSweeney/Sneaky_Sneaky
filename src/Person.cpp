@@ -43,9 +43,13 @@ void Person::DelayedStart()
 {
 	ResourceCache *cache = GetSubsystem<ResourceCache>();
 	frontMaterial_ = cache->GetResource<Material>("Materials/MaverickForward.xml");
+	frontMaterialAnimated_ = cache->GetResource<Material>("Materials/MaverickForwardAnimated.xml");
 	backMaterial_ = cache->GetResource<Material>("Materials/MaverickBack.xml");
+	backMaterialAnimated_ = cache->GetResource<Material>("Materials/MaverickBackAnimated.xml");
 	leftMaterial_ = cache->GetResource<Material>("Materials/MaverickLeft.xml");
+	leftMaterialAnimated_ = cache->GetResource<Material>("Materials/MaverickLeftAnimated.xml");
 	rightMaterial_ = cache->GetResource<Material>("Materials/MaverickRight.xml");
+	rightMaterialAnimated_ = cache->GetResource<Material>("Materials/MaverickRightAnimated.xml");
 	frontShadowMaterial_ = cache->GetResource<Material>("Materials/MaverickForwardShadow.xml");
 	leftShadowMaterial_ = cache->GetResource<Material>("Materials/MaverickLeftShadow.xml");
 }
@@ -116,16 +120,16 @@ void Person::Update(float timeStep)
 	StaticModel *model = node_->GetComponent<StaticModel>();
 	StaticModel *shadowModel = node_->GetChild("ShadowCaster")->GetComponent<StaticModel>();
 	if (angle < -120.0f || angle > 120.0f) {
-		model->SetMaterial(frontMaterial_);
+		model->SetMaterial(path_.Empty() ? frontMaterial_ : frontMaterialAnimated_);
 		shadowModel->SetMaterial(leftShadowMaterial_);
 	} else if (angle < -60.0f) {
-		model->SetMaterial(leftMaterial_);
+		model->SetMaterial(path_.Empty() ? leftMaterial_ : leftMaterialAnimated_);
 		shadowModel->SetMaterial(frontShadowMaterial_);
 	} else if (angle > 60.0f) {
-		model->SetMaterial(rightMaterial_);
+		model->SetMaterial(path_.Empty() ? rightMaterial_ : rightMaterialAnimated_);
 		shadowModel->SetMaterial(frontShadowMaterial_);
 	} else {
-		model->SetMaterial(backMaterial_);
+		model->SetMaterial(path_.Empty() ? backMaterial_ : backMaterialAnimated_);
 		shadowModel->SetMaterial(leftShadowMaterial_);
 	}
 

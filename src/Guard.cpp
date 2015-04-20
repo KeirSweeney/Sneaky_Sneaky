@@ -46,9 +46,13 @@ void Guard::DelayedStart()
 {
 	ResourceCache *cache = GetSubsystem<ResourceCache>();
 	frontMaterial_ = cache->GetResource<Material>("Materials/GuardForward.xml");
+	frontMaterialAnimated_ = cache->GetResource<Material>("Materials/GuardForwardAnimated.xml");
 	backMaterial_ = cache->GetResource<Material>("Materials/GuardBack.xml");
+	backMaterialAnimated_ = cache->GetResource<Material>("Materials/GuardBackAnimated.xml");
 	leftMaterial_ = cache->GetResource<Material>("Materials/GuardLeft.xml");
+	leftMaterialAnimated_ = cache->GetResource<Material>("Materials/GuardLeftAnimated.xml");
 	rightMaterial_ = cache->GetResource<Material>("Materials/GuardRight.xml");
+	rightMaterialAnimated_ = cache->GetResource<Material>("Materials/GuardRightAnimated.xml");
 
 	rigidBody_ = node_->GetComponent<RigidBody>();
 }
@@ -105,6 +109,21 @@ void Guard::Update(float timeStep)
 
 	Vector3 velocity = rigidBody_->GetLinearVelocity();
 	guardMoving = velocity.LengthSquared() > 0.0f;
+
+	Quaternion rotation = Quaternion(Vector3::FORWARD, velocity);
+	float angle = rotation.YawAngle();
+
+	StaticModel *model = node_->GetComponent<StaticModel>();
+	if (angle < -120.0f || angle > 120.0f) {
+		model->SetMaterial(guardMoving ? frontMaterialAnimated_ : frontMaterial_);
+	} else if (angle < -60.0f) {
+		model->SetMaterial(guardMoving ? leftMaterialAnimated_ : leftMaterial_);
+	} else if (angle > 60.0f) {
+		model->SetMaterial(guardMoving ? rightMaterialAnimated_ : rightMaterial_);
+	} else {
+		model->SetMaterial(guardMoving ? backMaterialAnimated_ : backMaterial_);
+	}
+
 	if (!guardMoving) {
 		return;
 	}
@@ -112,8 +131,6 @@ void Guard::Update(float timeStep)
 	Vector3 position = node_->GetWorldPosition();
 	IntVector2 room((int)round(position.x_ / 11.0f), (int)round(position.z_ / 11.0f));
 	bool roomDark = GetScene()->GetChild(ToString("%dx%d", room.x_ + 1, room.y_ + 1))->GetVar("dark").GetBool();
-
-	Quaternion rotation = Quaternion(Vector3::FORWARD, velocity);
 
 	Node *lightNode = node_->GetChild("SearchLight");
 
@@ -125,19 +142,6 @@ void Guard::Update(float timeStep)
 
 	Light *light = lightNode->GetComponent<Light>();
 	light->SetColor(guardMoving ? (playerDetected ? Color::RED : Color::WHITE) : Color::BLACK);
-
-	float angle = rotation.YawAngle();
-
-	StaticModel *model = node_->GetComponent<StaticModel>();
-	if (angle < -120.0f || angle > 120.0f) {
-		model->SetMaterial(frontMaterial_);
-	} else if (angle < -60.0f) {
-		model->SetMaterial(leftMaterial_);
-	} else if (angle > 60.0f) {
-		model->SetMaterial(rightMaterial_);
-	} else {
-		model->SetMaterial(backMaterial_);
-	}
 }
 
 void Guard::FollowPlayer(float timeStep, Node *player)

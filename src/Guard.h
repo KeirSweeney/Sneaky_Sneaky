@@ -43,9 +43,13 @@ private:
 	bool hasSeenPlayer_;
 	bool wasFollowingPlayer_;
 	Urho3D::Material *frontMaterial_;
+	Urho3D::Material *frontMaterialAnimated_;
 	Urho3D::Material *backMaterial_;
+	Urho3D::Material *backMaterialAnimated_;
 	Urho3D::Material *leftMaterial_;
+	Urho3D::Material *leftMaterialAnimated_;
 	Urho3D::Material *rightMaterial_;
+	Urho3D::Material *rightMaterialAnimated_;
 
 	bool willHearSound_;
 	Urho3D::Vector3 soundPosition_;
