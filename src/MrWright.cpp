@@ -122,6 +122,10 @@ void MrWright::Update(float timeStep)
 
 void MrWright::HandleNodeCollision(StringHash eventType, VariantMap &eventData)
 {
+	if (sequences_.Empty()) {
+		return;
+	}
+
 	Node *other = (Node *)eventData[NodeCollisionStart::P_OTHERNODE].GetPtr();
 
 	Node *person = GetScene()->GetChild("Person", true);
