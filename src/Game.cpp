@@ -69,7 +69,7 @@ DEFINE_APPLICATION_MAIN(Game)
 
 Game::Game(Context *context):
 	Application(context), crashHandler_(context),
-	currentLevel_(0), levelTime_(0.0f), gameState_(GS_INTRO), unceUnceUnceWubWubWub_(false),
+	currentLevel_(0), levelTime_(0.0f), gameState_(GS_INTRO), totalTime_(0.0f), totalScore_(0), unceUnceUnceWubWubWub_(false),
 	developerMode_(false), debugGeometry_(false), debugPhysics_(false), debugNavigation_(false), debugDepthTest_(true)
 {
 	// We need to call back from the components for level transitions,
@@ -791,6 +791,9 @@ void Game::EndLevel(bool died)
 
 		int score = (int)(((300.0f - levelTime_) + (guardCount * -100.0f) + (pickupCount * 50.0f)) * 5.0f);
 
+		totalTime_ += levelTime_;
+		totalScore_ += score;
+
 		GetSubsystem<Analytics>()->SendLevelCompletedEvent(currentLevel_, levelTime_, guardCount, pickupCount, score);
 
 		snprintf(buffer, sizeof(buffer),
@@ -881,8 +884,24 @@ void Game::HandleUpdate(StringHash eventType, VariantMap &eventData)
 				text->SetFont("Fonts/Anonymous Pro.ttf");
 				text->SetColor(Color::WHITE);
 				text->SetAlignment(HA_CENTER, VA_CENTER);
-				text->SetTextAlignment(HA_CENTER);
-				text->SetText("Can you do better next time?\n\n[space]");
+
+				int m = (int)(totalTime_ / 60.0f);
+				int s = (int)totalTime_ - (m * 60);
+				int ms = (int)(totalTime_ * 100.0f) - (s * 100);
+
+				char buffer[512];
+				snprintf(buffer, sizeof(buffer),
+						 " Completion Time: %02d:%02d.%03d\n"
+						 "     Total Score: %d\n"
+						 "\n"
+						 "\n"
+						 "\n"
+						 "Can you do better next time?\n"
+						 "\n"
+						 "           [space]",
+						 m, s, ms, totalScore_);
+
+				text->SetText(buffer);
 			}
 		}
 	}

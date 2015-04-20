@@ -48,6 +48,9 @@ private:
 		GS_FINISHED,
 	} gameState_;
 
+	float totalTime_;
+	int totalScore_;
+
 	bool unceUnceUnceWubWubWub_;
 	Urho3D::PODVector<int> cheatCode_;
 
