@@ -45,10 +45,10 @@ void Guard::RegisterObject(Context* context)
 void Guard::DelayedStart()
 {
 	ResourceCache *cache = GetSubsystem<ResourceCache>();
-	frontMaterial_ = cache->GetResource<Material>("Materials/MaverickFront.xml");
-	backMaterial_ = cache->GetResource<Material>("Materials/MaverickBack.xml");
-	leftMaterial_ = cache->GetResource<Material>("Materials/MaverickLeft.xml");
-	rightMaterial_ = cache->GetResource<Material>("Materials/MaverickRight.xml");
+	frontMaterial_ = cache->GetResource<Material>("Materials/GuardForward.xml");
+	backMaterial_ = cache->GetResource<Material>("Materials/GuardBack.xml");
+	leftMaterial_ = cache->GetResource<Material>("Materials/GuardLeft.xml");
+	rightMaterial_ = cache->GetResource<Material>("Materials/GuardRight.xml");
 
 	rigidBody_ = node_->GetComponent<RigidBody>();
 }

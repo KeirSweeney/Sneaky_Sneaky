@@ -42,11 +42,11 @@ void Person::RegisterObject(Context* context)
 void Person::DelayedStart()
 {
 	ResourceCache *cache = GetSubsystem<ResourceCache>();
-	frontMaterial_ = cache->GetResource<Material>("Materials/MaverickFront.xml");
+	frontMaterial_ = cache->GetResource<Material>("Materials/MaverickForward.xml");
 	backMaterial_ = cache->GetResource<Material>("Materials/MaverickBack.xml");
 	leftMaterial_ = cache->GetResource<Material>("Materials/MaverickLeft.xml");
 	rightMaterial_ = cache->GetResource<Material>("Materials/MaverickRight.xml");
-	frontShadowMaterial_ = cache->GetResource<Material>("Materials/MaverickFrontShadow.xml");
+	frontShadowMaterial_ = cache->GetResource<Material>("Materials/MaverickForwardShadow.xml");
 	leftShadowMaterial_ = cache->GetResource<Material>("Materials/MaverickLeftShadow.xml");
 }
 

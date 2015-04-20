@@ -475,11 +475,10 @@ void Game::LoadLevel()
 
 					Node *guardNode = roomContentsNode->CreateChild("Guard");
 					guardNode->SetWorldPosition(waypoints[0]);
-					guardNode->Scale(Vector3(0.6f, 1.8f, 1.0f));
 
 					StaticModel *guardModel = guardNode->CreateComponent<StaticModel>();
-					guardModel->SetModel(cache->GetResource<Model>("Models/PersonFlat.mdl"));
-					guardModel->SetMaterial(cache->GetResource<Material>("Materials/Person.xml"));
+					guardModel->SetModel(cache->GetResource<Model>("Models/PersonPlane.mdl"));
+					guardModel->SetMaterial(cache->GetResource<Material>("Materials/GuardForward.xml"));
 					guardModel->SetCastShadows(true);
 					guardModel->SetViewMask(0x02);
 
@@ -489,10 +488,10 @@ void Game::LoadLevel()
 					guardRigidBody->SetAngularFactor(Vector3::ZERO);
 
 					CollisionShape *guardCollisionShape = guardNode->CreateComponent<CollisionShape>();
-					guardCollisionShape->SetCylinder(1.0f, 1.0f, Vector3(0.0f, 0.5f, 0.0f));
+					guardCollisionShape->SetCylinder(0.5f, 1.8f, Vector3(0.0f, 1.8f / 2.0f, 0.0f));
 
 					Node *guardLightNode = guardNode->CreateChild("SearchLight");
-					guardLightNode->SetPosition(Vector3(0.0f, 0.75f, 0.0f));
+					guardLightNode->SetPosition(Vector3(0.0f, 1.3f, 0.0f));
 					guardLightNode->SetRotation(Quaternion(30.0f, Vector3::RIGHT));
 
 					Light *guardLight = guardLightNode->CreateComponent<Light>();
@@ -649,11 +648,10 @@ void Game::LoadLevel()
 
 	Node *personNode = scene_->CreateChild("Person");
 	personNode->SetPosition(personPosition);
-	personNode->Scale(Vector3(0.6f, 1.8f, 1.0f));
 
 	StaticModel *personModel = personNode->CreateComponent<StaticModel>();
-	personModel->SetModel(cache->GetResource<Model>("Models/PersonFlat.mdl"));
-	personModel->SetMaterial(cache->GetResource<Material>("Materials/MaverickFront.xml"));
+	personModel->SetModel(cache->GetResource<Model>("Models/PersonPlane.mdl"));
+	personModel->SetMaterial(cache->GetResource<Material>("Materials/MaverickForward.xml"));
 	personModel->SetCastShadows(true);
 	personModel->SetViewMask(0x02);
 
@@ -661,7 +659,7 @@ void Game::LoadLevel()
 	personShadowNode->SetRotation(Quaternion(90.0f, Vector3::UP));
 
 	StaticModel *personShadowModel = personShadowNode->CreateComponent<StaticModel>();
-	personShadowModel->SetModel(cache->GetResource<Model>("Models/PersonFlat.mdl"));
+	personShadowModel->SetModel(cache->GetResource<Model>("Models/PersonPlane.mdl"));
 	personShadowModel->SetMaterial(cache->GetResource<Material>("Materials/MaverickLeftShadow.xml"));
 	personShadowModel->SetCastShadows(true);
 	personShadowModel->SetShadowMask(0x01);
@@ -673,7 +671,7 @@ void Game::LoadLevel()
 	personRigidBody->SetAngularFactor(Vector3::ZERO);
 
 	CollisionShape *personCollisionShape = personNode->CreateComponent<CollisionShape>();
-	personCollisionShape->SetCylinder(1.0f, 1.0f, Vector3(0.0f, 0.5f, 0.0f));
+	personCollisionShape->SetCylinder(0.5f, 1.8f, Vector3(0.0f, 1.8f / 2.0f, 0.0f));
 
 	personNode->CreateComponent<Person>();
 	personNode->CreateComponent<Inventory>();
@@ -681,7 +679,7 @@ void Game::LoadLevel()
 
 	Node *personLightNode = personNode->CreateChild("SearchLight");
 	personLightNode->SetEnabled(false);
-	personLightNode->SetPosition(Vector3(0.0f, 0.75f, 0.0f));
+	personLightNode->SetPosition(Vector3(0.0f, 1.3f, 0.0f));
 	personLightNode->SetRotation(Quaternion(30.0f, Vector3::RIGHT));
 
 	Light *personLight = personLightNode->CreateComponent<Light>();
