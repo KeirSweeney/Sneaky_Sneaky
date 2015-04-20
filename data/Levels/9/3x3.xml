@@ -4,7 +4,7 @@
   <object position="0 0.2 4.8" angles ="0 180 0" scale ="27" model="GiantScreen" material="Obsidian" interaction="Wife"></object>
 
     <!--Wife still-->
-  <object position="-3 0 4.5" angles="0 -20 0" scale="1" model="PersonPlane" material="Chippingfort"></object>
+  <object position="-3 0 4.5" angles="0 -20 0" scale="1" model="PersonPlane" material="Wife"></object>
 
   <!--LASEREMITTER-->
   <object position ="-2.5 0.4 5" angles="0 180 0" scale="10" model="LaserEmitter" material="Lamp"></object>
