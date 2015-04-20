@@ -79,6 +79,12 @@ void BossLaser::Update(float timeStep)
 
 void BossLaser::HandleNodeCollision(StringHash eventType, VariantMap &eventData)
 {
+	StaticModel *laserModel = node_->GetComponent<StaticModel>();
+
+	if (!laserModel->IsEnabled()) {
+		return;
+	}
+
 	Node *personNode = GetScene()->GetChild("Person", true);
 	Person *person = personNode->GetComponent<Person>();
 	Node *other = (Node *)eventData[NodeCollision::P_OTHERNODE].GetPtr();
@@ -89,7 +95,7 @@ void BossLaser::HandleNodeCollision(StringHash eventType, VariantMap &eventData)
 
 	lightPulse_ = true;
 
-	//Deduct player hp
+	//Deduct player hp, do once
 	person->TakeDamage();
 
 }
