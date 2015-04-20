@@ -23,7 +23,6 @@ public:
 	void HandleNodeCollision(Urho3D::StringHash eventType, Urho3D::VariantMap &eventData);
 
 private:
-	Urho3D::PODVector<int> sequence_;
-	Urho3D::PODVector<Urho3D::Node *> terminals_;
+	Urho3D::PODVector<Urho3D::Node *> sequence_;
 	float time_;
 };

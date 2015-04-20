@@ -46,22 +46,21 @@ void Wife::DelayedStart()
 	LOGERROR("WIFE CLASS!");
 	Node *roomNode = node_->GetParent();
 
-	PODVector<Node *> terminalNodes;
-	roomNode->GetChildrenWithComponent<Terminal>(terminalNodes, true);
+	PODVector<Node *> terminals;
+	roomNode->GetChildrenWithComponent<Terminal>(terminals, true);
 
-	//PODVector<Node *> terminals;
-	for (int i = 0; i < terminalNodes.Size(); ++i) {
-		//Node *terminalNode = terminalNodes[i];
-		terminals_.Push(terminalNodes[i]);
-		//StaticModel *terminal = terminalNode->GetComponent<StaticModel>();
-		//terminals.Push(terminalNode);
+	for (PODVector<Node *>::ConstIterator i = terminals.Begin(); i != terminals.End(); ++i) {
+		Node *terminalNode = *i;
 
-		Vector3 position = terminalNodes[i]->GetWorldPosition() - (terminalNodes[i]->GetWorldDirection() * 1.5f);
+		terminalNode->RemoveComponent<Terminal>();
+
+		Vector3 position = terminalNode->GetWorldPosition() - (terminalNode->GetWorldDirection() * 0.75f);
 		position.y_ = 0.0f;
 
 		Node *interactionNode = roomNode->CreateChild();
 		interactionNode->SetWorldPosition(position);
-		interactionNode->SetWorldRotation(terminalNodes[i]->GetWorldRotation());
+		interactionNode->SetWorldRotation(terminalNode->GetWorldRotation());
+		interactionNode->SetVar("terminal", terminalNode);
 
 		RigidBody *rigidBody = interactionNode->CreateComponent<RigidBody>();
 		rigidBody->SetTrigger(true);
@@ -69,26 +68,16 @@ void Wife::DelayedStart()
 		CollisionShape *collisionShape = interactionNode->CreateComponent<CollisionShape>();
 		collisionShape->SetBox(Vector3(1.0f, 3.0f, 0.5f), Vector3(0.0f, 1.5f, 0.0f));
 
-		interactionNode->SetVar("index", i);
-
 		SubscribeToEvent(interactionNode, E_NODECOLLISIONSTART, HANDLER(Wife, HandleNodeCollision));
-
-		terminalNodes[i]->RemoveComponent<Terminal>();
 	}
 
-	int terminalCount = 6;
+	sequence_ = terminals;
 
-	PODVector<Node *> terminalPool = terminals_;
-	PODVector<int> sequence;
-
-	for (int j = 0; j < terminalCount; ++j) {
-		int k = Random((int)terminalPool.Size());
-		sequence_.Push(terminalPool[k]->GetVar("index").GetInt());
-		terminalPool.Erase(k);
+	int m = sequence_.Size();
+	while (m > 0) {
+		int n = Random(0, m--);
+		Swap(sequence_[m], sequence_[n]);
 	}
-
-	//sequences_.Push(sequence);
-
 }
 
 void Wife::Update(float timeStep)
@@ -101,6 +90,10 @@ void Wife::Update(float timeStep)
 
 void Wife::HandleNodeCollision(StringHash eventType, VariantMap &eventData)
 {
+	if (sequence_.Empty()) {
+		return;
+	}
+
 	Node *other = (Node *)eventData[NodeCollisionStart::P_OTHERNODE].GetPtr();
 
 	Node *person = GetScene()->GetChild("Person", true);
@@ -109,20 +102,18 @@ void Wife::HandleNodeCollision(StringHash eventType, VariantMap &eventData)
 	}
 
 	Node *node = (Node *)GetEventSender();
+	Node *terminal = (Node *)node->GetVar("terminal").GetPtr();
 
-	int terminalID = (int)node->GetVar("index").GetInt();
+	LOGERRORF("Node: %d, Terminal: %d, Next: %d", node->GetID(), terminal->GetID(), sequence_.Front()->GetID());
 
-	int currentSequence = sequence_.Front();
-
-
-	if (currentSequence != terminalID) {
+	if (terminal != sequence_.Front()) {
 		LOGERROR("No Match!");
 		return;
 	}
 
 	LOGERROR("Match!");
 
-	StaticModel *terminalModel = terminals_[currentSequence]->GetComponent<StaticModel>();
+	StaticModel *terminalModel = terminal->GetComponent<StaticModel>();
 	terminalModel->SetMaterial(terminalModel->GetMaterial()->Clone());
 	terminalModel->GetMaterial()->SetShaderParameter("MatDiffColor", Color(5.0f, 20.0f, 5.0f));
 
