@@ -62,7 +62,7 @@ void BossBertha::DelayedStart()
 
 	rigidBody_ = node_->GetComponent<RigidBody>();
 	rigidBody_->SetMass(100.0f);
-	rigidBody_->SetFriction(0.0f);
+	rigidBody_->SetFriction(0.1f);
 	rigidBody_->SetAngularFactor(Vector3::ZERO);
 
 	CollisionShape *collisionShape = node_->GetComponent<CollisionShape>();
@@ -128,24 +128,13 @@ void BossBertha::Update(float timeStep)
 	Vector3 difference = personPosition - position;
 	Quaternion rotation = Quaternion(node_->GetWorldDirection(), difference);
 
-	bool isCharging = rigidBody_->GetLinearVelocity().LengthSquared() > 0.1f;
+	bool isCharging = rigidBody_->GetLinearVelocity().LengthSquared() > 1.0f;
 
 	if (isCharging) {
-		// Have her follow the player just a tiny bit.
-		target_ = target_.Lerp(personPosition, 1.0f * timeStep);
-
-		Vector3 offset = target_ - position;
-
-		rigidBody_->SetLinearVelocity(offset.Normalized() * CHARGE_SPEED);
-
-		if (offset.LengthSquared() < (CHARGE_SPEED * CHARGE_SPEED * timeStep * timeStep)) {
-			rigidBody_->SetLinearVelocity(Vector3::ZERO);
-
-			// Some kind of skid sound?
-		}
-
 		return;
 	}
+
+	rigidBody_->SetLinearVelocity(Vector3::ZERO);
 
 	if (Abs(rotation.YawAngle()) >= 90.0f) {
 		model_->SetMaterial(frontMaterial_);
