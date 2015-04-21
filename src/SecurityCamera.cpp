@@ -87,9 +87,6 @@ bool SecurityCamera::SearchForPlayer(Node* player)
 
 	Ray ray(cameraPosition + (cameraDirection * 0.5f), difference + Vector3(0.0f, 0.01f, 0.0f));
 
-	DebugRenderer *debug = GetScene()->GetComponent<DebugRenderer>();
-	debug->AddLine(ray.origin_, ray.origin_ + (ray.direction_ * 10.0f), Color::CYAN, false);
-
 	PhysicsWorld *physicsWorld = GetScene()->GetComponent<PhysicsWorld>();
 
 	PhysicsRaycastResult result;
