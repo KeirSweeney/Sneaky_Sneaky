@@ -14,6 +14,7 @@
 #include "RigidBody.h"
 #include "Scene.h"
 #include "Texture2D.h"
+#include "PhysicsWorld.h"
 
 using namespace Urho3D;
 
@@ -84,21 +85,20 @@ bool SecurityCamera::SearchForPlayer(Node* player)
 		return false;
 	}
 
-#if 0
-	// Don't do a raycast for now, it is currently self-intersecting with the camera body.
+	Ray ray(cameraPosition + (cameraDirection * 0.5f), difference + Vector3(0.0f, 0.01f, 0.0f));
 
-	Ray ray(cameraPosition + Vector3(0.0f, 4.6f, 0.0f), difference);
-	PODVector<RayQueryResult> result;
-	RayOctreeQuery query(result, ray, RAY_TRIANGLE, DRAWABLE_GEOMETRY);
+	DebugRenderer *debug = GetScene()->GetComponent<DebugRenderer>();
+	debug->AddLine(ray.origin_, ray.origin_ + (ray.direction_ * 10.0f), Color::CYAN, false);
 
-	Octree *octree = GetScene()->GetComponent<Octree>();
-	octree->RaycastSingle(query);
+	PhysicsWorld *physicsWorld = GetScene()->GetComponent<PhysicsWorld>();
 
-	if (!result.Empty() && result[0].node_ != player && result[0].node_->GetParent() != player) {
+	PhysicsRaycastResult result;
+	physicsWorld->RaycastSingle(result, ray, 10.0f);
+
+	if (result.body_ && result.body_->GetNode() != player) {
 		light_->SetColor(Color::WHITE);
 		return false;
 	}
-#endif
 
 	light_->SetColor(Color::RED);
 	AlertGuards();

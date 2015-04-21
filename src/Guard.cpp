@@ -21,6 +21,7 @@
 #include "StaticModel.h"
 #include "UI.h"
 #include "PhysicsEvents.h"
+#include "PhysicsWorld.h"
 
 using namespace Urho3D;
 
@@ -262,15 +263,12 @@ bool Guard::DetectPlayer(Node *player)
 	//this creates a raycast from an increased y value near to his eyes in the forward direction of
 	//where he is looking to the difference of positions from the guard to the player.
 
-	PODVector<RayQueryResult> result; //stores all of the objects the ray collides with into a vector.
-	RayOctreeQuery query(result, ray, RAY_TRIANGLE, length, DRAWABLE_GEOMETRY);
-	//the query here checks the result vector at the ray cast from the guards at length.
-	// And checks all of the triangles of the objects and only hits drawble geometry.
+	PhysicsWorld *physicsWorld = GetScene()->GetComponent<PhysicsWorld>();
 
-	Octree *octree = GetScene()->GetComponent<Octree>();
-	octree->RaycastSingle(query);//we apply our Ray query here.
+	PhysicsRaycastResult result;
+	physicsWorld->RaycastSingle(result, ray, VIEW_DISTANCE);
 
-	if (!result.Empty() && result[0].node_ != player && result[0].node_->GetParent() != player) {
+	if (result.body_ && result.body_->GetNode() != player) {
 	   //debug->AddLine(ray.origin_, ray.origin_ + (ray.direction_ * length), Color::RED);
 	   return false; //If the ray hits anything except the player it returns false and exits the loop.
 	}
