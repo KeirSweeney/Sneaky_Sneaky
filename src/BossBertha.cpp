@@ -2,6 +2,7 @@
 
 #include "CameraController.h"
 #include "Game.h"
+#include "Person.h"
 
 #include "Camera.h"
 #include "Context.h"
@@ -80,6 +81,9 @@ void BossBertha::Update(float timeStep)
 
 	if (room != personRoom) {
 		return;
+	} else {
+		Person *person = personNode->GetComponent<Person>();
+		person->ShowHealth();
 	}
 
 	Vector3 difference = personPosition - position;

@@ -52,30 +52,6 @@ void Wife::DelayedStart()
 	Node *personNode = GetScene()->GetChild("Person", true);
 	Person *person = personNode->GetComponent<Person>();
 
-	int x = PADDING;
-	int y = PADDING;
-	UIElement *playerHealth = ui->GetRoot()->CreateChild<UIElement>();
-	playerHealth->SetFixedSize(playerHealth->GetParent()->GetSize() - IntVector2(PADDING * 40, PADDING * 35));
-	playerHealth->SetAlignment(HA_LEFT, VA_TOP);
-	playerHealth->SetVisible(true);
-
-	Sprite *background = playerHealth->CreateChild<Sprite>();
-	background->SetFixedSize(playerHealth->GetSize());
-	background->SetColor(Color::BLACK);
-	background->SetOpacity(0.7f);
-
-	Text *label = playerHealth->CreateChild<Text>();
-	label->SetFixedSize(playerHealth->GetSize() - IntVector2(PADDING, PADDING));
-	label->SetFont("Fonts/Anonymous Pro.ttf");
-	label->SetColor(Color::WHITE);
-	label->SetText("Player Health: " + (String)person->GetHealth());
-	label->SetAlignment(HA_CENTER, VA_CENTER);
-	label->SetTextAlignment(HA_CENTER);
-	label->SetWordwrap(true);
-
-	playerHealth_ = playerHealth->CreateChild<UIElement>();
-	playerHealth_->SetFixedSize(playerHealth->GetSize());
-
 	LOGERROR("WIFE CLASS!");
 	Node *roomNode = node_->GetParent();
 
@@ -115,6 +91,21 @@ void Wife::DelayedStart()
 
 void Wife::Update(float timeStep)
 {
+	Vector3 position = node_->GetWorldPosition();
+
+	Node *personNode = GetScene()->GetChild("Person", true);
+	Vector3 personPosition = personNode->GetWorldPosition();
+
+	IntVector2 room = IntVector2((int)round(position.x_ / 11.0f), (int)round(position.z_ / 11.0f));
+	IntVector2 personRoom = IntVector2((int)round(personPosition.x_ / 11.0f), (int)round(personPosition.z_ / 11.0f));
+
+	if (room != personRoom) {
+		return;
+	} else {
+		Person *person = personNode->GetComponent<Person>();
+		person->ShowHealth();
+	}
+
 	if (sequence_.Empty()) {
 		// The ending audio is played on the credits, which we want to happen immediately.
 		GetSubsystem<Game>()->EndLevel(false, true);
@@ -123,44 +114,6 @@ void Wife::Update(float timeStep)
 	}
 
 	time_ += timeStep;
-
-	Node *roomNode = node_->GetParent();
-	Node *personNode = GetScene()->GetChild("Person", true);
-	Person *person = personNode->GetComponent<Person>();
-
-	if (person->isDirty()) {
-		playerHealth_->RemoveAllChildren();
-		UI *ui = GetSubsystem<UI>();
-		//set dirty in somewher which will enable the setvisible to true
-
-		int x = PADDING;
-		int y = PADDING;
-		UIElement *playerHealth = ui->GetRoot()->CreateChild<UIElement>();
-		playerHealth->SetFixedSize(playerHealth->GetParent()->GetSize() - IntVector2(PADDING * 40, PADDING * 35));
-		playerHealth->SetAlignment(HA_LEFT, VA_TOP);
-		playerHealth->SetVisible(true);
-
-		Sprite *background = playerHealth->CreateChild<Sprite>();
-		background->SetFixedSize(playerHealth->GetSize());
-		background->SetColor(Color::BLACK);
-		background->SetOpacity(0.7f);
-
-		Text *label = playerHealth->CreateChild<Text>();
-		label->SetFixedSize(playerHealth->GetSize() - IntVector2(PADDING, PADDING));
-		label->SetFont("Fonts/Anonymous Pro.ttf");
-		label->SetColor(Color::WHITE);
-		label->SetText("Player Health: " + (String)person->GetHealth());
-		label->SetAlignment(HA_CENTER, VA_CENTER);
-		label->SetTextAlignment(HA_CENTER);
-		label->SetWordwrap(true);
-
-		playerHealth_ = playerHealth->CreateChild<UIElement>();
-		playerHealth_->SetFixedSize(playerHealth->GetSize());
-	}
-
-	if (person->GetHealth() <= 0) {
-		GetSubsystem<Game>()->EndLevel(true, false);
-	}
 }
 
 void Wife::HandleNodeCollision(StringHash eventType, VariantMap &eventData)

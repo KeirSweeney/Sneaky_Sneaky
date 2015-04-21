@@ -4,6 +4,8 @@
 
 namespace Urho3D {
 	class Material;
+	class UIElement;
+	class Text;
 }
 
 class Person: public Urho3D::LogicComponent
@@ -24,10 +26,9 @@ public:
 public:
 	void SetPath(Urho3D::PODVector<Urho3D::Vector3> path);
 	Urho3D::Vector3 GetDirection() const;
-	void TakeDamage();
-	int GetHealth();
-	bool isDirty();
-	bool takingDamage_;
+	void ShowHealth();
+	void TakeDamage(float damage);
+	bool IsDead();
 
 private:
 	Urho3D::PODVector<Urho3D::Vector3> path_;
@@ -42,5 +43,8 @@ private:
 	Urho3D::Material *frontShadowMaterial_;
 	Urho3D::Material *leftShadowMaterial_;
 	Urho3D::Vector3 direction_;
-	int health_;
+	Urho3D::UIElement *healthBar_;
+	Urho3D::Text *healthText_;
+	float health_;
+	bool showHealth_;
 };

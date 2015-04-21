@@ -101,6 +101,5 @@ void BossLaser::HandleNodeCollision(StringHash eventType, VariantMap &eventData)
 	lightPulse_ = true;
 
 	//Deduct player hp, do once
-	person->TakeDamage();
-
+	person->TakeDamage(0.005f);
 }

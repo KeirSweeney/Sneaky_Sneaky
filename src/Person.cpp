@@ -20,6 +20,9 @@
 #include "StaticModel.h"
 #include "UI.h"
 #include "Wife.h"
+#include "Sprite.h"
+#include "Text.h"
+#include "Game.h"
 
 using namespace Urho3D;
 
@@ -27,8 +30,10 @@ const float Person::MOVE_SPEED = 2.0f;
 
 Person::Person(Context *context):
 	LogicComponent(context),
-	health_(200),
-	takingDamage_(false)
+	health_(1.0),
+	showHealth_(false),
+	healthBar_(NULL),
+	healthText_(NULL)
 {
 }
 
@@ -58,9 +63,33 @@ void Person::DelayedStart()
 
 void Person::Update(float timeStep)
 {
-	takingDamage_ = false;
-
 	UI *ui = GetSubsystem<UI>();
+
+	if (showHealth_ && !healthBar_) {
+		healthBar_ = ui->GetRoot()->CreateChild<UIElement>();
+		healthBar_->SetFixedSize(healthBar_->GetParent()->GetWidth(), 50);
+		healthBar_->SetVerticalAlignment(VA_TOP);
+		healthBar_->SetVisible(true);
+
+		Sprite *background = healthBar_->CreateChild<Sprite>();
+		background->SetFixedSize(healthBar_->GetSize());
+		background->SetColor(Color::RED);
+		background->SetOpacity(0.75f);
+
+		healthText_ = healthBar_->CreateChild<Text>();
+		healthText_->SetFont("Fonts/Anonymous Pro.ttf");
+		healthText_->SetColor(Color::WHITE);
+		healthText_->SetText("Player Health: UNKNOWN");
+		healthText_->SetAlignment(HA_CENTER, VA_CENTER);
+		healthText_->SetTextAlignment(HA_CENTER);
+	} else if (healthBar_ && !showHealth_) {
+		healthBar_->Remove();
+	}
+
+	if (healthBar_) {
+		healthText_->SetText("Player Health: " + String(round(health_ * 100.0f)) + "%");
+	}
+
 	Input *input = GetSubsystem<Input>();
 	NavigationMesh *navMesh = GetScene()->GetComponent<NavigationMesh>();
 	RigidBody *rigidBody = node_->GetComponent<RigidBody>();
@@ -180,24 +209,23 @@ Vector3 Person::GetDirection() const
 	return direction_;
 }
 
-void Person::TakeDamage()
+void Person::ShowHealth()
 {
-	health_ -= 1;
-	takingDamage_ = true;
+	showHealth_ = true;
 }
 
-int Person::GetHealth()
+void Person::TakeDamage(float damage)
 {
-	return health_;
-}
+	health_ -= damage;
 
-bool Person::isDirty()
-{
-	if (!takingDamage_) {
-		return false;
+	if (health_ <= 0.0f) {
+		health_ = 0.0f;
+
+		GetSubsystem<Game>()->EndLevel(true, false);
 	}
-
-	return true;
 }
 
-
+bool Person::IsDead()
+{
+	return health_ <= 0.0f;
+}
