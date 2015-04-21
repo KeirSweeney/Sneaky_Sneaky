@@ -24,6 +24,7 @@ public:
 public:
 	void DelayedStart();
 	void Update(float timeStep);
+	void HandleNodeCollisionStart(Urho3D::StringHash eventType, Urho3D::VariantMap &eventData);
 
 private:
 	bool DetectPlayer(Urho3D::Node *player);

@@ -20,6 +20,7 @@
 #include "Scene.h"
 #include "StaticModel.h"
 #include "UI.h"
+#include "PhysicsEvents.h"
 
 using namespace Urho3D;
 
@@ -55,23 +56,13 @@ void Guard::DelayedStart()
 	rightMaterialAnimated_ = cache->GetResource<Material>("Materials/GuardRightAnimated.xml");
 
 	rigidBody_ = node_->GetComponent<RigidBody>();
+
+	SubscribeToEvent(node_, E_NODECOLLISIONSTART, HANDLER(Guard, HandleNodeCollisionStart));
 }
 
 void Guard::Update(float timeStep)
 {
 	Node *personNode = GetScene()->GetChild("Person", true);
-
-	PODVector<RigidBody *> colliders;
-	rigidBody_->GetCollidingBodies(colliders);
-
-	for (PODVector<RigidBody *>::ConstIterator i = colliders.Begin(); i != colliders.End(); ++i) {
-		if ((*i)->GetNode() != personNode) {
-			continue;
-		}
-
-		GetSubsystem<Game>()->EndLevel(true);
-		return;
-	}
 
 	Renderer *renderer = GetSubsystem<Renderer>();
 	Camera *camera = renderer->GetViewport(0)->GetCamera();
@@ -138,6 +129,18 @@ void Guard::Update(float timeStep)
 
 	Light *light = lightNode->GetComponent<Light>();
 	light->SetColor(guardMoving ? (playerDetected ? Color::RED : Color::WHITE) : Color::BLACK);
+}
+
+void Guard::HandleNodeCollisionStart(StringHash eventType, VariantMap &eventData)
+{
+	Node *other = (Node *)eventData[NodeCollisionStart::P_OTHERNODE].GetPtr();
+	Node *personNode = GetScene()->GetChild("Person", true);
+
+	if (other != personNode) {
+		return;
+	}
+
+	GetSubsystem<Game>()->EndLevel(true);
 }
 
 void Guard::FollowPlayer(float timeStep, Node *player)
