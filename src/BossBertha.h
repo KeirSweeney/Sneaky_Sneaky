@@ -3,8 +3,8 @@
 #include "InteractableComponent.h"
 
 namespace Urho3D {
-	class RigidBody;
 	class StaticModel;
+	class RigidBody;
 	class Material;
 }
 
@@ -14,9 +14,7 @@ class BossBertha : public InteractableComponent
 
 public:
 	static const float CHARGE_SPEED;
-	static const float VIEW_DISTANCE;
-	static const float VIEW_ANGLE;
-
+	static const float CHARGE_INTERVAL;
 
 public:
 	BossBertha(Urho3D::Context *context);
@@ -26,19 +24,16 @@ public:
 	void DelayedStart();
 	void Update(float timeStep);
 
-private:
-	bool DetectPlayer(Urho3D::Node *player);
-	void ChargeToPlayer(float timeStep, Urho3D::Node *player);
-
 public:
-	void HandleNodeCollision(Urho3D::StringHash eventType, Urho3D::VariantMap &eventData);
-	bool HasSeenPlayer();
+	void HandleNodeCollisionStart(Urho3D::StringHash eventType, Urho3D::VariantMap &eventData);
 
 private:
+	Urho3D::StaticModel *model_;
 	Urho3D::RigidBody *rigidBody_;
-	bool hasSeenPlayer_;
 	Urho3D::Material *frontMaterial_;
 	Urho3D::Material *backMaterial_;
 	Urho3D::Material *leftMaterial_;
 	Urho3D::Material *rightMaterial_;
+	Urho3D::Vector3 target_;
+	float chargeTimer_;
 };

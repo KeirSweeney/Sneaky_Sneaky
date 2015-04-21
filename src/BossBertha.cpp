@@ -20,16 +20,17 @@
 #include "Scene.h"
 #include "StaticModel.h"
 #include "UI.h"
+#include "PhysicsEvents.h"
+#include "CollisionShape.h"
 
 using namespace Urho3D;
 
-const float BossBertha::CHARGE_SPEED = 10.0f;
-const float BossBertha::VIEW_DISTANCE = 10.0f;
-const float BossBertha::VIEW_ANGLE = 360.0f;
+const float BossBertha::CHARGE_SPEED = 4.0f;
+const float BossBertha::CHARGE_INTERVAL = 5.0f;
 
 BossBertha::BossBertha(Context *context) :
-InteractableComponent(context),
-hasSeenPlayer_(false)
+	InteractableComponent(context),
+	chargeTimer_(0.0f)
 {
 }
 
@@ -48,110 +49,89 @@ void BossBertha::DelayedStart()
 	leftMaterial_ = cache->GetResource<Material>("Materials/BerthaLeft.xml");
 	rightMaterial_ = cache->GetResource<Material>("Materials/BerthaRight.xml");
 
+	model_ = node_->GetComponent<StaticModel>();
+
 	rigidBody_ = node_->GetComponent<RigidBody>();
-
-
-
 	rigidBody_->SetMass(100.0f);
 	rigidBody_->SetFriction(0.0f);
 	rigidBody_->SetAngularFactor(Vector3::ZERO);
+
+	CollisionShape *collisionShape = node_->GetComponent<CollisionShape>();
+	collisionShape->SetCylinder(0.5f, 1.8f, Vector3(0.0f, 1.8f / 2.0f, 0.0f));
+
+	SubscribeToEvent(node_, E_NODECOLLISIONSTART, HANDLER(BossBertha, HandleNodeCollisionStart));
 }
 
 
 void BossBertha::Update(float timeStep)
 {
-
-	Node *personNode = GetScene()->GetChild("Person", true);
-	PODVector<RigidBody *> colliders;
-	rigidBody_->GetCollidingBodies(colliders);
-
-	for (PODVector<RigidBody *>::ConstIterator i = colliders.Begin(); i != colliders.End(); ++i) {
-		if ((*i)->GetNode() != personNode) {
-			continue;
-		}
-
-		GetSubsystem<Game>()->EndLevel(true);
-		return;
-	}
-
 	Renderer *renderer = GetSubsystem<Renderer>();
 	Camera *camera = renderer->GetViewport(0)->GetCamera();
 	CameraController *cameraController = camera->GetNode()->GetParent()->GetComponent<CameraController>();
 	node_->SetWorldRotation(Quaternion(cameraController->GetYawAngle(), Vector3::UP));
 
-	bool BerthaCharging = rigidBody_->GetLinearVelocity().LengthSquared() > 0.0f;
-
-	Vector3 velocity = rigidBody_->GetLinearVelocity();
-	BerthaCharging = velocity.LengthSquared() > 0.0f;
-
-	bool playerDetected = DetectPlayer(personNode);
-
-	if (playerDetected){
-		hasSeenPlayer_ = true;
-		//ChargeToPlayer(timeStep, personNode);
-	}
-
-	ChargeToPlayer(timeStep, personNode);
-
 	Vector3 position = node_->GetWorldPosition();
-	IntVector2 room((int)round(position.x_ / 11.0f), (int)round(position.z_ / 11.0f));
-	bool roomDark = GetScene()->GetChild(ToString("%dx%d", room.x_ + 1, room.y_ + 1))->GetVar("dark").GetBool();
 
-	Quaternion rotation = Quaternion(Vector3::FORWARD, velocity);
+	Node *personNode = GetScene()->GetChild("Person", true);
+	Vector3 personPosition = personNode->GetWorldPosition();
 
-	StaticModel *model = node_->GetComponent<StaticModel>();
-	float angle = rotation.YawAngle();
+	Vector3 difference = personPosition - position;
+	Quaternion rotation = Quaternion(node_->GetWorldDirection(), difference);
 
-	if (angle < -120.0f || angle > 120.0f) {
-		model->SetMaterial(frontMaterial_);
-	}
-	else if (angle < -60.0f) {
-		model->SetMaterial(leftMaterial_);
-	}
-	else if (angle > 60.0f) {
-		model->SetMaterial(rightMaterial_);
-	}
-	else {
-		model->SetMaterial(backMaterial_);
-	}
-	
+	bool isCharging = rigidBody_->GetLinearVelocity().LengthSquared() > 0.1f;
 
+	if (isCharging) {
+		// Have her follow the player just a tiny bit.
+		target_ = target_.Lerp(personPosition, 1.0f * timeStep);
+
+		Vector3 offset = target_ - position;
+
+		rigidBody_->SetLinearVelocity(offset.Normalized() * CHARGE_SPEED);
+
+		if (offset.LengthSquared() < (CHARGE_SPEED * CHARGE_SPEED * timeStep * timeStep)) {
+			rigidBody_->SetLinearVelocity(Vector3::ZERO);
+
+			// Some kind of skid sound?
+		}
+
+		return;
+	}
+
+	if (Abs(rotation.YawAngle()) >= 90.0f) {
+		model_->SetMaterial(frontMaterial_);
+	} else {
+		model_->SetMaterial(backMaterial_);
+	}
+
+	chargeTimer_ += timeStep;
+
+	if (chargeTimer_ < CHARGE_INTERVAL) {
+		return;
+	}
+
+	chargeTimer_ = 0.0f;
+
+	// Play charge sound here?
+
+	if (rotation.YawAngle() < 0.0f) {
+		model_->SetMaterial(leftMaterial_);
+	} else {
+		model_->SetMaterial(rightMaterial_);
+	}
+
+	target_ = personPosition;
+
+	rigidBody_->SetLinearVelocity(difference.Normalized() * CHARGE_SPEED);
 }
 
-void BossBertha::HandleNodeCollision(StringHash eventType, VariantMap &eventData)
+void BossBertha::HandleNodeCollisionStart(StringHash eventType, VariantMap &eventData)
 {
+	Node *other = (Node *)eventData[NodeCollisionStart::P_OTHERNODE].GetPtr();
+	Node *personNode = GetScene()->GetChild("Person", true);
+
+	if (other != personNode) {
+		return;
+	}
+
+	GetSubsystem<Game>()->EndLevel(true);
 }
-
-
-bool BossBertha::DetectPlayer(Node *player)
-{
-	Vector3 cameraPosition = node_->GetWorldPosition();
-	Vector3 cameraDirection = node_->GetWorldDirection();
-	Vector3 playerPosition = player->GetWorldPosition();
-
-	Vector3 difference = (playerPosition - cameraPosition);
-	difference.Normalize();
-
-	if (cameraDirection.DotProduct(difference) < Cos(360.0f))
-		return false;
-
-
-	return true;
-}
-
-void BossBertha::ChargeToPlayer(float timeStep, Node *player)
-{
-
-	Vector3 berthaPosition = node_->GetWorldPosition();
-	Vector3 playerPosition = player->GetWorldPosition();
-
-	Vector3 difference = playerPosition - berthaPosition;
-
-	difference.Normalize();
-	rigidBody_->SetLinearVelocity(difference * 2.4f);
-	LOGERRORF("Linear Velocity: %s", rigidBody_->GetLinearVelocity().ToString().CString());
-}
-
-
-
-
