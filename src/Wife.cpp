@@ -27,6 +27,7 @@
 #include "Sound.h"
 #include "AudioManager.h"
 #include "Game.h"
+#include "SoundSource.h"
 
 #include "InteractablePoster.h"
 
@@ -132,14 +133,21 @@ void Wife::HandleNodeCollision(StringHash eventType, VariantMap &eventData)
 	Node *node = (Node *)GetEventSender();
 	Node *terminal = (Node *)node->GetVar("terminal").GetPtr();
 
-	LOGERRORF("Node: %d, Terminal: %d, Next: %d", node->GetID(), terminal->GetID(), sequence_.Front()->GetID());
-
 	if (terminal != sequence_.Front()) {
 		LOGERROR("No Match!");
+
+		SoundSource *source = terminal->CreateComponent<SoundSource>();
+		source->SetAutoRemove(true);
+		source->Play(GetSubsystem<ResourceCache>()->GetResource<Sound>("Audio/Windows Hardware Fail.wav"));
+
 		return;
 	}
 
 	LOGERROR("Match!");
+
+	SoundSource *source = terminal->CreateComponent<SoundSource>();
+	source->SetAutoRemove(true);
+	source->Play(GetSubsystem<ResourceCache>()->GetResource<Sound>("Audio/Windows Hardware Insert.wav"));
 
 	StaticModel *terminalModel = terminal->GetComponent<StaticModel>();
 	terminalModel->SetMaterial(terminalModel->GetMaterial()->Clone());
