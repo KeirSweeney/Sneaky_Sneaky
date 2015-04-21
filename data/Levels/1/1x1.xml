@@ -2,6 +2,9 @@
 <!--<room floor="Dark_Oak" lights="true"> -->
 <room name="Wright's Ltd Foyer">
 
+  <!--POSTER-->
+  <object position="5 0.9 1.9" angles="0 90 0" scale="1" model="PersonPlane" material="WL_Logo" nonsolid="true"></object>
+
   <!--Rock-->
   <object position="-1 0 4.5" scale="2.5" model="Rock" material="Pickup" interaction="Pickup" type="Throwable" name="Rock"></object>
 
