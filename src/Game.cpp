@@ -870,12 +870,12 @@ void Game::HandleUpdate(StringHash eventType, VariantMap &eventData)
 		} animated[] = {
 			{ "Materials/MaverickForwardAnimated.xml", "Textures/maverick/forward/", 1, M_MAX_INT, 0.0f, 10.0f },
 			{ "Materials/MaverickBackAnimated.xml",    "Textures/maverick/back/",    1, M_MAX_INT, 0.0f, 10.0f },
-			{ "Materials/MaverickLeftAnimated.xml",    "Textures/maverick/left/",    1, M_MAX_INT, 0.0f, 10.0f },
-			{ "Materials/MaverickRightAnimated.xml",   "Textures/maverick/right/",   1, M_MAX_INT, 0.0f, 10.0f },
+			{ "Materials/MaverickLeftAnimated.xml",    "Textures/maverick/left/",    1, M_MAX_INT, 0.0f, 9.0f },
+			{ "Materials/MaverickRightAnimated.xml",   "Textures/maverick/right/",   1, M_MAX_INT, 0.0f, 9.0f },
 			{ "Materials/GuardForwardAnimated.xml",    "Textures/guard/forward/",    1, M_MAX_INT, 0.0f, 10.0f },
 			{ "Materials/GuardBackAnimated.xml",       "Textures/guard/back/",       1, M_MAX_INT, 0.0f, 10.0f },
-			{ "Materials/GuardLeftAnimated.xml",       "Textures/guard/left/",       1, M_MAX_INT, 0.0f, 10.0f },
-			{ "Materials/GuardRightAnimated.xml",      "Textures/guard/right/",      1, M_MAX_INT, 0.0f, 10.0f },
+			{ "Materials/GuardLeftAnimated.xml",       "Textures/guard/left/",       1, M_MAX_INT, 0.0f, 9.0f },
+			{ "Materials/GuardRightAnimated.xml",      "Textures/guard/right/",      1, M_MAX_INT, 0.0f, 9.0f },
 		};
 
 		for (int i = 0; i < 8; ++i) {
