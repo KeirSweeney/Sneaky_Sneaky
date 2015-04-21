@@ -141,7 +141,7 @@ void Guard::HandleNodeCollisionStart(StringHash eventType, VariantMap &eventData
 		return;
 	}
 
-	GetSubsystem<Game>()->EndLevel(true);
+	GetSubsystem<Game>()->EndLevel(true, false);
 }
 
 void Guard::FollowPlayer(float timeStep, Node *player)

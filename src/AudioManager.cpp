@@ -57,7 +57,7 @@ void AudioManager::HandleSceneUpdate(StringHash eventType, VariantMap &eventData
 	if (next.sound) {
 		source_->Play(next.sound);
 	} else {
-		GetSubsystem<Game>()->EndLevel(false);
+		GetSubsystem<Game>()->EndLevel(false, false);
 	}
 }
 

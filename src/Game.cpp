@@ -240,6 +240,9 @@ void Game::LoadLevel()
 		sprite->SetHotSpot(sprite->GetSize() / 2);
 		sprite->SetAlignment(HA_CENTER, VA_CENTER);
 
+		SoundSource *outroSource = scene_->CreateComponent<SoundSource>();
+		outroSource->Play(cache->GetTempResource<Sound>("Audio/Credits.wav"));
+
 		return;
 	}
 
@@ -730,8 +733,33 @@ void Game::LoadLevel()
 	renderer->GetViewport(0)->SetCamera(camera);
 }
 
-void Game::EndLevel(bool died)
+void Game::EndLevel(bool died, bool suppressScore)
 {
+	PODVector<Node *> guards;
+	scene_->GetChildrenWithComponent<Guard>(guards, true);
+
+	int guardCount = 0;
+	for (PODVector<Node *>::ConstIterator i = guards.Begin(); i != guards.End(); ++i) {
+		if ((*i)->GetComponent<Guard>()->HasSeenPlayer()) {
+			guardCount++;
+		}
+	}
+
+	Node *person = scene_->GetChild("Person", true);
+	int pickupCount = person->GetComponent<Inventory>()->GetItemCount();
+
+	int score = (int)(((300.0f - levelTime_) + (guardCount * -100.0f) + (pickupCount * 50.0f)) * 5.0f);
+
+	totalTime_ += levelTime_;
+	totalScore_ += score;
+
+	if (suppressScore) {
+		gameState_ = GS_STAIRS;
+		LoadLevel();
+
+		return;
+	}
+
 	PODVector<Node *> nodes;
 	scene_->GetChildrenWithComponent<StaticModel>(nodes, true);
 
@@ -768,19 +796,6 @@ void Game::EndLevel(bool died)
 	label->SetColor(Color::WHITE);
 	label->SetAlignment(HA_CENTER, VA_CENTER);
 
-	PODVector<Node *> guards;
-	scene_->GetChildrenWithComponent<Guard>(guards, true);
-
-	int guardCount = 0;
-	for (PODVector<Node *>::ConstIterator i = guards.Begin(); i != guards.End(); ++i) {
-		if ((*i)->GetComponent<Guard>()->HasSeenPlayer()) {
-			guardCount++;
-		}
-	}
-
-	Node *person = scene_->GetChild("Person", true);
-	int pickupCount = person->GetComponent<Inventory>()->GetItemCount();
-
 	char buffer[512];
 	if (died) {
 		GetSubsystem<Analytics>()->SendLevelFailedEvent(currentLevel_, levelTime_, guardCount, pickupCount, person->GetWorldPosition());
@@ -793,11 +808,6 @@ void Game::EndLevel(bool died)
 		int m = (int)(levelTime_ / 60.0f);
 		int s = (int)levelTime_ - (m * 60);
 		int ms = (int)(levelTime_ * 100.0f) - (s * 100);
-
-		int score = (int)(((300.0f - levelTime_) + (guardCount * -100.0f) + (pickupCount * 50.0f)) * 5.0f);
-
-		totalTime_ += levelTime_;
-		totalScore_ += score;
 
 		GetSubsystem<Analytics>()->SendLevelCompletedEvent(currentLevel_, levelTime_, guardCount, pickupCount, score);
 
@@ -985,7 +995,7 @@ void Game::HandleUpdate(StringHash eventType, VariantMap &eventData)
 		}
 
 		if (gameState_ == GS_PLAYING && input->GetKeyPress(KEY_N)) {
-			EndLevel(false);
+			EndLevel(false, false);
 		}
 
 		if (input->GetKeyPress(KEY_C)) {

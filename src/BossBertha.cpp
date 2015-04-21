@@ -140,5 +140,5 @@ void BossBertha::HandleNodeCollisionStart(StringHash eventType, VariantMap &even
 		return;
 	}
 
-	GetSubsystem<Game>()->EndLevel(true);
+	GetSubsystem<Game>()->EndLevel(true, false);
 }

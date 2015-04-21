@@ -62,5 +62,5 @@ void Stairs::Update(float timeStep)
 		return;
 	}
 
-	GetSubsystem<Game>()->EndLevel(false);
+	GetSubsystem<Game>()->EndLevel(false, false);
 }

@@ -24,7 +24,7 @@ public:
 
 public:
 	void LoadLevel();
-	void EndLevel(bool died);
+	void EndLevel(bool died, bool suppressScore);
 
 	bool IsDeveloper();
 

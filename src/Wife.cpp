@@ -115,6 +115,13 @@ void Wife::DelayedStart()
 
 void Wife::Update(float timeStep)
 {
+	if (sequence_.Empty()) {
+		// The ending audio is played on the credits, which we want to happen immediately.
+		GetSubsystem<Game>()->EndLevel(false, true);
+
+		return;
+	}
+
 	time_ += timeStep;
 
 	Node *roomNode = node_->GetParent();
@@ -152,10 +159,8 @@ void Wife::Update(float timeStep)
 	}
 
 	if (person->GetHealth() <= 0) {
-		GetSubsystem<Game>()->EndLevel(true);
+		GetSubsystem<Game>()->EndLevel(true, false);
 	}
-	
-
 }
 
 void Wife::HandleNodeCollision(StringHash eventType, VariantMap &eventData)
@@ -188,14 +193,4 @@ void Wife::HandleNodeCollision(StringHash eventType, VariantMap &eventData)
 	terminalModel->GetMaterial()->SetShaderParameter("MatDiffColor", Color(5.0f, 20.0f, 5.0f));
 
 	sequence_.Erase(0);
-
-	if (sequence_.Empty()) {
-		ResourceCache *cache = GetSubsystem<ResourceCache>();
-
-		Urho3D::PODVector<AudioQueueEntry> queue;
-		queue.Push({ (Sound *)NULL, 0.0f });
-		queue.Push({ cache->GetResource<Sound>("Audio/VO/Black/32_IClearedMyName.wav"), 0.0f });
-
-		GetScene()->GetComponent<AudioManager>()->Play(queue);
-	}
 }
