@@ -74,6 +74,10 @@ void BossBertha::DelayedStart()
 
 void BossBertha::Update(float timeStep)
 {
+	if (health_ <= 0.0f) {
+		return;
+	}
+
 	UI *ui = GetSubsystem<UI>();
 
 	Renderer *renderer = GetSubsystem<Renderer>();
@@ -93,9 +97,9 @@ void BossBertha::Update(float timeStep)
 
 	if (inRoom && !healthBar_) {
 		healthBar_ = ui->GetRoot()->CreateChild<UIElement>();
-		healthBar_->SetFixedSize(healthBar_->GetParent()->GetWidth(), 50);
+		healthBar_->SetFixedSize(healthBar_->GetParent()->GetWidth(), 25);
 		healthBar_->SetVerticalAlignment(VA_TOP);
-		healthBar_->SetPosition(IntVector2(0, 50));
+		healthBar_->SetPosition(IntVector2(0, 25));
 		healthBar_->SetVisible(true);
 
 		Sprite *background = healthBar_->CreateChild<Sprite>();
@@ -177,6 +181,10 @@ void BossBertha::HandleNodeCollisionStart(StringHash eventType, VariantMap &even
 
 void BossBertha::TakeDamage(float damage)
 {
+	if (health_ <= 0.0f) {
+		return;
+	}
+
 	health_ -= damage;
 
 	if (health_ <= 0.0f) {
@@ -186,12 +194,12 @@ void BossBertha::TakeDamage(float damage)
 
 		Urho3D::PODVector<AudioQueueEntry> queue;
 		queue.Push({ (Sound *)NULL, 0.0f });
-		queue.Push({ cache->GetResource<Sound>("Audio/VO/Black/26_BREATHE.wav"), 0.0f });
-		queue.Push({ cache->GetResource<Sound>("Audio/VO/Voice/28_YouActuallyBeatHer.wav"), 0.0f });
-		queue.Push({ cache->GetResource<Sound>("Audio/VO/Black/27_Faith.wav"), 0.0f });
-		queue.Push({ cache->GetResource<Sound>("Audio/VO/Black/28_YouInThere.wav"), 0.0f });
-		queue.Push({ cache->GetResource<Sound>("Audio/VO/Voice/29_IHaveWork.wav"), 0.0f });
 		queue.Push({ cache->GetResource<Sound>("Audio/VO/Black/29_Mav.wav"), 0.0f });
+		queue.Push({ cache->GetResource<Sound>("Audio/VO/Voice/29_IHaveWork.wav"), 0.0f });
+		queue.Push({ cache->GetResource<Sound>("Audio/VO/Black/28_YouInThere.wav"), 0.0f });
+		queue.Push({ cache->GetResource<Sound>("Audio/VO/Black/27_Faith.wav"), 0.0f });
+		queue.Push({ cache->GetResource<Sound>("Audio/VO/Voice/28_YouActuallyBeatHer.wav"), 0.0f });
+		queue.Push({ cache->GetResource<Sound>("Audio/VO/Black/26_BREATHE.wav"), 0.0f });
 
 		GetScene()->GetComponent<AudioManager>()->Play(queue);
 	}

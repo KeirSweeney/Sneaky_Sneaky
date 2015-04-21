@@ -67,7 +67,7 @@ void Person::Update(float timeStep)
 
 	if (showHealth_ && !healthBar_) {
 		healthBar_ = ui->GetRoot()->CreateChild<UIElement>();
-		healthBar_->SetFixedSize(healthBar_->GetParent()->GetWidth(), 50);
+		healthBar_->SetFixedSize(healthBar_->GetParent()->GetWidth(), 25);
 		healthBar_->SetVerticalAlignment(VA_TOP);
 		healthBar_->SetVisible(true);
 
@@ -217,6 +217,10 @@ void Person::ShowHealth()
 
 void Person::TakeDamage(float damage)
 {
+	if (health_ <= 0.0f) {
+		return;
+	}
+
 	health_ -= damage;
 
 	if (health_ <= 0.0f) {
