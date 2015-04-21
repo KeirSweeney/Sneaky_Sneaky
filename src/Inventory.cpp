@@ -70,7 +70,7 @@ void Inventory::Update(float timeStep)
 		int y = PADDING;
 		for (Vector<SharedPtr<Pickup>>::ConstIterator i = items_.Begin(); i != items_.End(); ++i) {
 			UIElement *item = panel_->CreateChild<UIElement>();
-			item->SetFixedSize(200, 200);
+			item->SetFixedSize(100, 100);
 			item->SetPosition(x, y);
 
 			Sprite *background = item->CreateChild<Sprite>();
