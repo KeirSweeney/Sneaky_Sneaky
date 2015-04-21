@@ -6,6 +6,7 @@ namespace Urho3D {
 	class StaticModel;
 	class RigidBody;
 	class Material;
+	class UIElement;
 }
 
 class BossBertha : public InteractableComponent
@@ -23,6 +24,10 @@ public:
 public:
 	void DelayedStart();
 	void Update(float timeStep);
+	void TakeDamage();
+	int GetHealth();
+	bool isDirty();
+	bool takingDamage_;
 
 public:
 	void HandleNodeCollisionStart(Urho3D::StringHash eventType, Urho3D::VariantMap &eventData);
@@ -36,4 +41,7 @@ private:
 	Urho3D::Material *rightMaterial_;
 	Urho3D::Vector3 target_;
 	float chargeTimer_;
+	int health_;
+	static const int PADDING;
+	Urho3D::UIElement *berthaHealth_;
 };

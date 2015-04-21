@@ -184,6 +184,7 @@ void Person::TakeDamage()
 {
 	health_ -= 1;
 	takingDamage_ = true;
+	
 }
 
 int Person::GetHealth()

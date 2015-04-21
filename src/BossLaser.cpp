@@ -24,6 +24,7 @@
 #include "StaticModel.h"
 #include "UI.h"
 #include "Person.h"
+#include "BossBertha.h"
 
 
 using namespace Urho3D;
@@ -91,16 +92,17 @@ void BossLaser::HandleNodeCollision(StringHash eventType, VariantMap &eventData)
 	}
 
 	Node *personNode = GetScene()->GetChild("Person", true);
-	Person *person = personNode->GetComponent<Person>();
 	Node *other = (Node *)eventData[NodeCollision::P_OTHERNODE].GetPtr();
 
-	if (other != personNode) {
-		return;
+	if (other == personNode) {
+		Person *person = personNode->GetComponent<Person>();
+		person->TakeDamage();
+	}
+	else if (other->HasComponent<BossBertha>()) {
+		BossBertha *bertha = other->GetComponent<BossBertha>();
+		bertha->TakeDamage();
+		LOGERROR("Bertha Collision");
 	}
 
 	lightPulse_ = true;
-
-	//Deduct player hp, do once
-	person->TakeDamage();
-
 }
