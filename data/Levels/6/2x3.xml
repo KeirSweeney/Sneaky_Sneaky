@@ -10,6 +10,8 @@
     <audioclip delay="0">VO/Black/29_Mav.wav</audioclip>
   </audiozone>
   <!--       MUST BE TAKEN OUT FOR FINAL BUILD            -->
+  
+  <object position="-1 0 3.5" angles="0 -180 0" scale="1" model="PersonPlane" material="Bertha" interaction="BossBertha"></object>
 
   <object position="0 0.5 4.95" angles="0 0 0" scale="1" model="PersonPlane" material="HCPortrait3"></object>
   <object position="0 0.25 4.9" angles="0 -90 0" scale="25" model="PictureFrame" material="Dark_Oak"></object>
@@ -34,9 +36,9 @@
   <object position ="5 0.4 2" angles="0 -90 0" scale="10" model="LaserEmitter" material="Lamp"></object>
 
   <!--LASER-->
-  <object position ="-4 0.4 -5" angles="90 0 0" scale="0.06 10 0.06" model="Laser" material="Laser_Deadly" interaction="Laser" interval="1" delay="1"></object>
-  <object position ="4 0.4 -5" angles="90 0 0" scale="0.06 10 0.06" model="Laser" material="Laser_Deadly" interaction="Laser" interval="2"></object>
-  <object position ="-5 0.4 2" angles="90 90 0" scale="0.06 10 0.06" model="Laser" material="Laser_Deadly" interaction="Laser" interval="1"></object>
+  <object position ="-4 0.4 -5" angles="90 0 0" scale="0.06 10 0.06" model="Laser" material="Laser_Deadly" interaction="BossLaser" interval="1" delay="1"></object>
+  <object position ="4 0.4 -5" angles="90 0 0" scale="0.06 10 0.06" model="Laser" material="Laser_Deadly" interaction="BossLaser" interval="2"></object>
+  <object position ="-5 0.4 2" angles="90 90 0" scale="0.06 10 0.06" model="Laser" material="Laser_Deadly" interaction="BossLaser" interval="1"></object>
 
   <!--Panneling-->
   <object position="-4 0 5" angles="0 0 0" scale="1" model="PersonPlane" material="Panneling" nonsolid="true"></object>

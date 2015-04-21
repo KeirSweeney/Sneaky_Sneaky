@@ -51,10 +51,4 @@
     <audioclip delay="1">VO/Voice/4_RightNow.wav</audioclip>
     <audioclip delay="0">VO/Black/4_LuckyMe.wav</audioclip>
   </audiozone>
-
-  <object position="-1 0 3.5" angles="0 -180 0" scale="1" model="PersonPlane" material="Bertha" interaction="BossBertha"></object>
-
-
-
-
 </room>
