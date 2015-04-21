@@ -96,9 +96,13 @@ void Laser::Update(float timeStep)
 	for (PODVector<Node *>::ConstIterator i =nodes.Begin(); i != nodes.End(); ++i) {
 		Light *light = (*i)->GetComponent<Light>();
 
+		if (light->GetLightType() != LIGHT_POINT) {
+			continue;
+		}
+
 		if(lightPulse_) {
 			light->SetColor(Color::RED);
-			light->SetBrightness(Abs(Sin(lightTime_*360.0f)) * 0.4f);
+			light->SetBrightness(Abs(Sin(lightTime_ * 360.0f)) * 0.4f);
 		} else {
 			light->SetColor(Color::WHITE);
 			light->SetBrightness(0.2f);
