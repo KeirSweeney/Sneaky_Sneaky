@@ -8,6 +8,36 @@ Resources
 * Lino Board: http://linoit.com/groups/Game%20Creation%5BTeam%20name%5D
 * Urho3D Documentation: http://urho3d.github.io/documentation/HEAD/
 
+Controls
+--------
+
+* `Left Click` Move
+* `Q` Rotate Left
+* `E` Rotate Right
+* `T` Throw Object
+* `↹ Tab` Show Inventory
+* `[space]` Skip Intro / Advance Level
+
+Your Friendly Guide to Developer Mode
+-------------------------------------
+
+Tap `` ` `` (the key to the left of 1) to enable developer mode.  
+This allows you to access debug rendering as well as various cheats.
+
+### Keys
+* `1` Primary Debug Rendering
+* `2` Physics Debug Rendering
+* `3` Navigation Debug Rendering
+* `0` Toggle Depth Testing for Debug Rendering
+* `W` Peek Over Room Walls
+* `R` Reload the Current Level
+* `U` Unlock all Doors in the Current Level
+* `D` Toggle Profiler.
+* `C` Force a Crash.
+* `N` Advance to the Next Level.
+
+`↑` `↑` `↓` `↓` `←` `→` `←` `→` `B` `A`
+
 Commit Guidelines
 -----------------
 * **DO NOT PUSH COMMITS TO THIS REPOSITORY**
