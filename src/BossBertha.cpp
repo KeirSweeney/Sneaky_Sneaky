@@ -75,6 +75,13 @@ void BossBertha::Update(float timeStep)
 	Node *personNode = GetScene()->GetChild("Person", true);
 	Vector3 personPosition = personNode->GetWorldPosition();
 
+	IntVector2 room = IntVector2((int)round(position.x_ / 11.0f), (int)round(position.z_ / 11.0f));
+	IntVector2 personRoom = IntVector2((int)round(personPosition.x_ / 11.0f), (int)round(personPosition.z_ / 11.0f));
+
+	if (room != personRoom) {
+		return;
+	}
+
 	Vector3 difference = personPosition - position;
 	Quaternion rotation = Quaternion(node_->GetWorldDirection(), difference);
 
