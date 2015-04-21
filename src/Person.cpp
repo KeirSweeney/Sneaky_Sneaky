@@ -84,6 +84,7 @@ void Person::Update(float timeStep)
 		healthText_->SetTextAlignment(HA_CENTER);
 	} else if (healthBar_ && !showHealth_) {
 		healthBar_->Remove();
+		healthBar_ = NULL;
 	}
 
 	if (healthBar_) {
@@ -223,9 +224,4 @@ void Person::TakeDamage(float damage)
 
 		GetSubsystem<Game>()->EndLevel(true, false);
 	}
-}
-
-bool Person::IsDead()
-{
-	return health_ <= 0.0f;
 }

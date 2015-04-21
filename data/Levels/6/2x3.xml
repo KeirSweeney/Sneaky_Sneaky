@@ -1,17 +1,5 @@
 <room name="Bertha's Office" floor="Mahogany_Light">
-
-  <!-- THIS IS THE PASSSAGE TO BE PLAYED AFTER BOSS DEFEAT-->
-  <audiozone position="0 0" rotation="0" size="1 1">
-    <audioclip delay="0">VO/Black/26_BREATHE.wav</audioclip>
-    <audioclip delay="0">VO/Voice/28_YouActuallyBeatHer.wav</audioclip>
-    <audioclip delay="0">VO/Black/27_Faith.wav</audioclip>
-    <audioclip delay="2">VO/Black/28_YouInThere.wav</audioclip>
-    <audioclip delay="0">VO/Voice/29_IHaveWork.wav</audioclip>
-    <audioclip delay="0">VO/Black/29_Mav.wav</audioclip>
-  </audiozone>
-  <!--       MUST BE TAKEN OUT FOR FINAL BUILD            -->
-  
-  <object position="-1 0 3.5" angles="0 -180 0" scale="1" model="PersonPlane" material="Bertha" interaction="BossBertha"></object>
+  <object position="0 0 0" scale="1" model="PersonPlane" material="Bertha" interaction="BossBertha"></object>
 
   <object position="0 0.5 4.95" angles="0 0 0" scale="1" model="PersonPlane" material="HCPortrait3"></object>
   <object position="0 0.25 4.9" angles="0 -90 0" scale="25" model="PictureFrame" material="Dark_Oak"></object>

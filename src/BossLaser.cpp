@@ -24,6 +24,7 @@
 #include "StaticModel.h"
 #include "UI.h"
 #include "Person.h"
+#include "BossBertha.h"
 
 
 using namespace Urho3D;
@@ -31,7 +32,6 @@ using namespace Urho3D;
 
 BossLaser::BossLaser(Context *context):
 	InteractableComponent(context),
-	lightPulse_(false),
 	lightTime_(0.0f), laserTime_(0.0f),
 	laserInterval_(0.0f), laserDelay_(0.0f)
 {}
@@ -64,7 +64,6 @@ void BossLaser::DelayedStart()
 
 void BossLaser::Update(float timeStep)
 {
-
 	if (laserDelay_ > 0.0f) {
 		laserDelay_ -= timeStep;
 		return;
@@ -81,7 +80,6 @@ void BossLaser::Update(float timeStep)
 
 }
 
-
 void BossLaser::HandleNodeCollision(StringHash eventType, VariantMap &eventData)
 {
 	StaticModel *laserModel = node_->GetComponent<StaticModel>();
@@ -91,15 +89,14 @@ void BossLaser::HandleNodeCollision(StringHash eventType, VariantMap &eventData)
 	}
 
 	Node *personNode = GetScene()->GetChild("Person", true);
-	Person *person = personNode->GetComponent<Person>();
 	Node *other = (Node *)eventData[NodeCollision::P_OTHERNODE].GetPtr();
 
-	if (other != personNode) {
-		return;
+	if (other == personNode) {
+		Person *person = personNode->GetComponent<Person>();
+		person->TakeDamage(0.005f);
+	} else if (other->HasComponent<BossBertha>()) {
+		BossBertha *bertha = other->GetComponent<BossBertha>();
+		bertha->TakeDamage(0.005f);
+		LOGERROR("Bertha Collision");
 	}
-
-	lightPulse_ = true;
-
-	//Deduct player hp, do once
-	person->TakeDamage(0.005f);
 }

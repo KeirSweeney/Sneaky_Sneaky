@@ -28,7 +28,6 @@ public:
 	Urho3D::Vector3 GetDirection() const;
 	void ShowHealth();
 	void TakeDamage(float damage);
-	bool IsDead();
 
 private:
 	Urho3D::PODVector<Urho3D::Vector3> path_;
