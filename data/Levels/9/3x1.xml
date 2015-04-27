@@ -17,14 +17,14 @@
   <object position="-4.3 0 3" angles="0 0 0" scale="17.5" model="CoinOp" material="Black_DI"></object>
   <object position="-4.3 0 1" angles="0 0 0" scale="17.5" model="CoinOp" material="Black_DI"></object>
 
-  <object position="3.85 1 -1" angles="35 90 0" scale="0.4" model="PersonPlane" material="AnimatedPoster" interaction="AnimatedPoster" speed="1" frames="3" path="pacman"></object>
-  <object position="3.85 1 -3" angles="35 90 0" scale="0.4" model="PersonPlane" material="AnimatedPoster" interaction="AnimatedPoster" speed="1" frames="3" path="metalslug"></object>
-  <object position="3.85 1 3" angles="35 90 0" scale="0.35" model="PersonPlane" material="AnimatedPoster" interaction="AnimatedPoster" speed="1" frames="3" path="elite"></object>
-  <object position="3.85 1 1" angles="35 90 0" scale="0.35" model="PersonPlane" material="AnimatedPoster" interaction="AnimatedPoster" speed="1" frames="3" path="defender"></object>
+  <object position="3.85 1 -1" angles="35 90 0" scale="0.4" model="PersonPlane" material="AnimatedPoster" interaction="AnimatedPoster" speed="1" frames="3" path="arcade4"></object>
+  <object position="3.85 1 -3" angles="35 90 0" scale="0.4" model="PersonPlane" material="AnimatedPoster" interaction="AnimatedPoster" speed="1" frames="3" path="arcade3"></object>
+  <object position="3.85 1 3" angles="35 90 0" scale="0.35" model="PersonPlane" material="AnimatedPoster" interaction="AnimatedPoster" speed="1" frames="3" path="arcade2"></object>
+  <object position="3.85 1 1" angles="35 90 0" scale="0.35" model="PersonPlane" material="AnimatedPoster" interaction="AnimatedPoster" speed="1" frames="3" path="arcade1"></object>
 
-  <object position="-3.85 1 -1" angles="35 -90 0" scale="0.4" model="PersonPlane" material="AnimatedPoster" interaction="AnimatedPoster" speed="1" frames="2" path="digdug"></object>
-  <object position="-3.85 1 -3" angles="35 -90 0" scale="0.4" model="PersonPlane" material="AnimatedPoster" interaction="AnimatedPoster" speed="1" frames="2" path="asteroids"></object>
-  <object position="-3.85 1 1" angles="35 -90 0" scale="0.4" model="PersonPlane" material="AnimatedPoster" interaction="AnimatedPoster" speed="1" frames="3" path="outrun"></object>
-  <object position="-3.85 1 3" angles="35 -90 0" scale="0.4" model="PersonPlane" material="AnimatedPoster" interaction="AnimatedPoster" speed="1" frames="3" path="gauntlet"></object>
+  <object position="-3.85 1 -1" angles="35 -90 0" scale="0.4" model="PersonPlane" material="AnimatedPoster" interaction="AnimatedPoster" speed="1" frames="3" path="arcade2"></object>
+  <object position="-3.85 1 -3" angles="35 -90 0" scale="0.4" model="PersonPlane" material="AnimatedPoster" interaction="AnimatedPoster" speed="1" frames="3" path="arcade4"></object>
+  <object position="-3.85 1 1" angles="35 -90 0" scale="0.4" model="PersonPlane" material="AnimatedPoster" interaction="AnimatedPoster" speed="1" frames="3" path="arcade3"></object>
+  <object position="-3.85 1 3" angles="35 -90 0" scale="0.4" model="PersonPlane" material="AnimatedPoster" interaction="AnimatedPoster" speed="1" frames="3" path="arcade1"></object>
 
 </room>
