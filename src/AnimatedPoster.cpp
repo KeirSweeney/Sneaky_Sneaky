@@ -37,17 +37,30 @@ void AnimatedPoster::LoadFromXML(const XMLElement &xml)
 void AnimatedPoster::DelayedStart()
 {
 	StaticModel *model = node_->GetComponent<StaticModel>();
-	material_ = model->GetMaterial()->Clone();
+
+	Material *baseMaterial = model->GetMaterial();
+	if (!baseMaterial) {
+		LOGERROR("Bad material on animated poster.");
+		return;
+	}
+
+	material_ = baseMaterial->Clone();
 
 	// Bug in Urho3D that is easier to patch here than fork the engine again.
 	material_->SetDepthBias(model->GetMaterial()->GetDepthBias());
-	// Remove the previous line if Material::Clone() is fixed to copy depth bias params.
+	//TODO: Remove the previous line if Material::Clone() is fixed to copy depth bias params.
 
 	model->SetMaterial(material_);
 }
 
 void AnimatedPoster::Update(float timeStep)
 {
+	if (material_.Null()) {
+		// Can't remove in delayed start due to use-after-free.
+		Remove();
+		return;
+	}
+
 	timer_ -= timeStep;
 
 	if (timer_ > 0.0f) {
