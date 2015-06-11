@@ -191,6 +191,15 @@ void MrWright::HandleNodeCollision(StringHash eventType, VariantMap &eventData)
 
 void MrWright::UpdateDisplayGlyphs()
 {
+	if (sequences_.Empty()) {
+		while (!displayGlyphs_.Empty()) {
+			displayGlyphs_.Back()->Remove();
+			displayGlyphs_.Pop();
+		}
+
+		return;
+	}
+
 	ResourceCache *cache = GetSubsystem<ResourceCache>();
 
 	PODVector<Material *> &currentSequence = sequences_.Front();
