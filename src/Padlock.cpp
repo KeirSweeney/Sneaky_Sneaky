@@ -32,7 +32,7 @@ const float Padlock::DISTANCE = 1.0f;
 
 Padlock::Padlock(Context *context):
 	InteractableComponent(context),
-	displayWidth_(200), displayHeight_(100), content_("Lemons.")
+	displayWidth_(200), displayHeight_(100), panel_(NULL), content_("Lemons.")
 {
 }
 
@@ -79,6 +79,13 @@ void Padlock::DelayedStart()
 	label->SetWordwrap(true);
 	label->SetText(content_);
 	label->SetAlignment(HA_CENTER, VA_CENTER);
+}
+
+void Padlock::Stop()
+{
+	if (panel_) {
+		panel_->Remove();
+	}
 }
 
 void Padlock::Update(float timeStep)

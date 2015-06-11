@@ -24,6 +24,7 @@ public:
 
 public:
 	void DelayedStart();
+	void Stop();
 	void Update(float timeStep);
 
 private:
