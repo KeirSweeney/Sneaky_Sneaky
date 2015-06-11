@@ -55,9 +55,10 @@ void Terminal::LoadFromXML(const XMLElement &xml)
 void Terminal::DelayedStart()
 {
 	UI *ui = GetSubsystem<UI>();
+	float pixelRatio = GetSubsystem<Graphics>()->GetPixelRatio();
 
 	panel_ = ui->GetRoot()->CreateChild<UIElement>();
-	panel_->SetFixedSize(displayWidth_, displayHeight_);
+	panel_->SetFixedSize(displayWidth_ * pixelRatio, displayHeight_ * pixelRatio);
 	panel_->SetVisible(false);
 
 	Sprite *background = panel_->CreateChild<Sprite>();
@@ -66,7 +67,7 @@ void Terminal::DelayedStart()
 	background->SetOpacity(0.6f);
 
 	Text *label = panel_->CreateChild<Text>();
-	label->SetFixedSize(panel_->GetSize() - IntVector2(20, 20));
+	label->SetFixedSize(panel_->GetSize() - (IntVector2(20, 20) * pixelRatio));
 	label->SetFont("Fonts/Anonymous Pro.ttf");
 	label->SetColor(Color::WHITE);
 	label->SetWordwrap(true);

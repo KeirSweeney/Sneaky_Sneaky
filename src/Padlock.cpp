@@ -62,9 +62,10 @@ void Padlock::LoadFromXML(const XMLElement &xml)
 void Padlock::DelayedStart()
 {
 	UI *ui = GetSubsystem<UI>();
+	float pixelRatio = GetSubsystem<Graphics>()->GetPixelRatio();
 
 	panel_ = ui->GetRoot()->CreateChild<UIElement>();
-	panel_->SetFixedSize(displayWidth_, displayHeight_);
+	panel_->SetFixedSize(displayWidth_ * pixelRatio, displayHeight_ * pixelRatio);
 	panel_->SetVisible(false);
 
 	Sprite *background = panel_->CreateChild<Sprite>();
@@ -73,11 +74,12 @@ void Padlock::DelayedStart()
 	background->SetOpacity(0.6f);
 
 	Text *label = panel_->CreateChild<Text>();
-	label->SetFixedSize(panel_->GetSize() - IntVector2(20, 20));
+	label->SetFixedSize(panel_->GetSize() - (IntVector2(20, 20) * pixelRatio));
 	label->SetFont("Fonts/Anonymous Pro.ttf");
 	label->SetColor(Color::WHITE);
 	label->SetWordwrap(true);
 	label->SetText(content_);
+	label->SetTextAlignment(HA_CENTER);
 	label->SetAlignment(HA_CENTER, VA_CENTER);
 }
 

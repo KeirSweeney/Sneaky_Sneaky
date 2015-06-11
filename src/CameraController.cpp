@@ -42,11 +42,12 @@ void CameraController::DelayedStart()
 	const Variant &roomName = GetScene()->GetChild(ToString("%dx%d", cameraRoom_.x_ + 1, cameraRoom_.y_ + 1))->GetVar("label");
 
 	UI *ui = GetSubsystem<UI>();
+	float pixelRatio = GetSubsystem<Graphics>()->GetPixelRatio();
 
 	showPanel_ = !roomName.IsEmpty();
 
 	panel_ = ui->GetRoot()->CreateChild<UIElement>();
-	panel_->SetFixedSize(panel_->GetParent()->GetWidth(), 50);
+	panel_->SetFixedSize(panel_->GetParent()->GetWidth(), 50 * pixelRatio);
 	panel_->SetVerticalAlignment(VA_BOTTOM);
 	panel_->SetPosition(0, (int)panelYPosition_);
 
@@ -56,7 +57,7 @@ void CameraController::DelayedStart()
 	background->SetOpacity(0.6f);
 
 	label_ = panel_->CreateChild<Text>();
-	label_->SetFixedSize(panel_->GetSize() - IntVector2(20, 20));
+	label_->SetFixedSize(panel_->GetSize() - (IntVector2(20, 20) * pixelRatio));
 	label_->SetFont("Fonts/Anonymous Pro.ttf", 24);
 	label_->SetColor(Color::WHITE);
 	label_->SetTextAlignment(HA_CENTER);
@@ -109,7 +110,8 @@ void CameraController::Update(float timeStep)
 		panelYPosition_ += timeStep * 50.0f;
 	}
 
-	panel_->SetPosition(0, (int)panelYPosition_);
+	float pixelRatio = GetSubsystem<Graphics>()->GetPixelRatio();
+	panel_->SetPosition(0, (int)(panelYPosition_ * pixelRatio));
 
 	cameraRoom_ = room;
 
