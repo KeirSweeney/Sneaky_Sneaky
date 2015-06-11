@@ -97,11 +97,17 @@ Game::Game(Context *context):
 void Game::Setup()
 {
 	engineParameters_["WindowTitle"] = "The Traitor";
-	engineParameters_["FullScreen"] = false;
-	engineParameters_["Multisample"] = 8;
 	engineParameters_["VSync"] = true;
 	engineParameters_["TextureFilterMode"] = FILTER_ANISOTROPIC;
 	engineParameters_["TextureAnisotropy"] = 16;
+
+#ifdef DESKTOP_GRAPHICS
+	engineParameters_["FullScreen"] = false;
+	engineParameters_["Multisample"] = 8;
+#else
+	engineParameters_["FullScreen"] = true;
+	engineParameters_["Multisample"] = 4;
+#endif
 
 	// Override these because the defaults are horrible for cross-platform compat.
 	engineParameters_["ResourcePaths"] = "data";
@@ -163,21 +169,24 @@ void Game::Start()
 
 	SharedPtr<Viewport> viewport(new Viewport(context_, scene_, NULL));
 
-#if 1
+	Renderer *renderer = GetSubsystem<Renderer>();
+	renderer->SetViewport(0, viewport);
+
+#ifdef DESKTOP_GRAPHICS
 	RenderPath *renderPath = viewport->GetRenderPath();
 
-	renderPath->Append(cache->GetResource<XMLFile>("PostProcess/FXAA3.xml"));
+	//renderPath->Append(cache->GetResource<XMLFile>("PostProcess/FXAA3.xml"));
 
 	renderPath->Append(cache->GetResource<XMLFile>("PostProcess/BloomHDR.xml"));
 	renderPath->SetShaderParameter("BloomHDRMix", Vector2(1.0f, 1.0f));
-#endif
-
-	Renderer *renderer = GetSubsystem<Renderer>();
-	renderer->SetViewport(0, viewport);
 
 	// Increase shadow quality to max.
 	renderer->SetShadowMapSize(2048);
 	renderer->SetShadowQuality(QUALITY_MAX);
+#else
+	renderer->SetMobileShadowBiasAdd(0.002f);
+	renderer->SetMobileShadowBiasMul(2.0f);
+#endif
 
 	// We need HDR rendering due to the simple materials and number of lights.
 	// Without this, there are numerous lighting artifacts.
