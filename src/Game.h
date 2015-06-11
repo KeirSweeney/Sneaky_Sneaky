@@ -37,6 +37,8 @@ private:
 
 	Urho3D::SharedPtr<Urho3D::DebugHud> debugHud_;
 	Urho3D::SharedPtr<Urho3D::Scene> scene_;
+	unsigned joystickIndex_;
+	
 	int currentLevel_;
 	float levelTime_;
 	enum GameState {

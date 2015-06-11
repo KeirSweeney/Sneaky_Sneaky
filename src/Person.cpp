@@ -116,40 +116,42 @@ void Person::Update(float timeStep)
 	CameraController *cameraController = camera->GetNode()->GetParent()->GetComponent<CameraController>();
 	node_->SetWorldRotation(Quaternion(cameraController->GetYawAngle(), Vector3::UP));
 
-	Graphics *graphics = GetSubsystem<Graphics>();
+	if (input->IsMouseVisible() || (input->GetNumTouches() > 0 && !input->GetTouch(0)->GetTouchedElement())) {
+		Graphics *graphics = GetSubsystem<Graphics>();
 
-	IntVector2 mousePosition = input->GetMousePosition();
-	Ray mouseRay = camera->GetScreenRay(mousePosition.x_ / (float)graphics->GetWidth(), mousePosition.y_ / (float)graphics->GetHeight());
+		IntVector2 mousePosition = input->IsMouseVisible() ? input->GetMousePosition() : input->GetTouch(0)->position_;
+		Ray mouseRay = camera->GetScreenRay(mousePosition.x_ / (float)graphics->GetWidth(), mousePosition.y_ / (float)graphics->GetHeight());
 
-	Octree *octree = GetScene()->GetComponent<Octree>();
+		Octree *octree = GetScene()->GetComponent<Octree>();
 
-	PODVector<RayQueryResult> result;
-	RayOctreeQuery query(result, mouseRay, RAY_TRIANGLE, M_INFINITY, DRAWABLE_GEOMETRY, 0x01);
-	octree->RaycastSingle(query);
+		PODVector<RayQueryResult> result;
+		RayOctreeQuery query(result, mouseRay, RAY_TRIANGLE, M_INFINITY, DRAWABLE_GEOMETRY, 0x01);
+		octree->RaycastSingle(query);
 
-	Vector3 target = position;
-	if (!result.Empty()) {
-		//LOGERRORF("result[0].position_: %s", result[0].position_.ToString().CString());
-		target = result[0].position_;
-		target.y_ = 0.0f;
-	}
-
-	if ((input->GetMouseButtonDown(MOUSEB_LEFT) || input->GetMouseButtonPress(MOUSEB_LEFT))) {
-		Vector3 meshTarget = navMesh->FindNearestPoint(target, Vector3(1.0f, 0.01f, 1.0f));
-
-		if (input->GetMouseButtonPress(MOUSEB_LEFT)) {
-			Node *markerNode = GetScene()->CreateChild();
-			markerNode->SetPosition(meshTarget);
-			markerNode->CreateComponent<ClickMarker>();
+		Vector3 target = position;
+		if (!result.Empty()) {
+			//LOGERRORF("result[0].position_: %s", result[0].position_.ToString().CString());
+			target = result[0].position_;
+			target.y_ = 0.0f;
 		}
 
-		navMesh->FindPath(path_, position, meshTarget);
-		path_.Erase(0);
-	}
+		if (!input->IsMouseVisible() || input->GetMouseButtonDown(MOUSEB_LEFT) || input->GetMouseButtonPress(MOUSEB_LEFT)) {
+			Vector3 meshTarget = navMesh->FindNearestPoint(target, Vector3(1.0f, 0.01f, 1.0f));
 
-	direction_ = (path_.Empty() ? target : path_.Front()) - position;
-	direction_.y_ = 0.0f;
-	direction_.Normalize();
+			if (input->GetMouseButtonPress(MOUSEB_LEFT)) {
+				Node *markerNode = GetScene()->CreateChild();
+				markerNode->SetPosition(meshTarget);
+				markerNode->CreateComponent<ClickMarker>();
+			}
+
+			navMesh->FindPath(path_, position, meshTarget);
+			path_.Erase(0);
+		}
+
+		direction_ = (path_.Empty() ? target : path_.Front()) - position;
+		direction_.y_ = 0.0f;
+		direction_.Normalize();
+	}
 
 	float angle = Quaternion(node_->GetDirection(), direction_).YawAngle();
 

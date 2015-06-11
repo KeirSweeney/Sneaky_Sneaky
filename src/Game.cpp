@@ -72,7 +72,7 @@ using namespace Urho3D;
 DEFINE_APPLICATION_MAIN(Game)
 
 Game::Game(Context *context):
-	Application(context), crashHandler_(context),
+	Application(context), crashHandler_(context), joystickIndex_(0),
 	currentLevel_(0), levelTime_(0.0f), gameState_(GS_INTRO), totalTime_(0.0f), totalScore_(0), unceUnceUnceWubWubWub_(false),
 	developerMode_(false), debugGeometry_(false), debugPhysics_(false), debugNavigation_(false), debugDepthTest_(true)
 {
@@ -128,8 +128,10 @@ void Game::Start()
 	// ResourceCache handles loading files from disk.
 	ResourceCache *cache = GetSubsystem<ResourceCache>();
 
+	XMLFile *defaultStyle = cache->GetResource<XMLFile>("UI/DefaultStyle.xml");
+
 	debugHud_ = engine_->CreateDebugHud();
-	debugHud_->SetDefaultStyle(cache->GetResource<XMLFile>("UI/DefaultStyle.xml"));
+	debugHud_->SetDefaultStyle(defaultStyle);
 	debugHud_->SetUseRendererStats(true);
 
 	scene_ = new Scene(context_);
@@ -193,8 +195,16 @@ void Game::Start()
 	renderer->SetHDRRendering(true);
 
 	Input *input = GetSubsystem<Input>();
+
+#ifdef DESKTOP_GRAPHICS
 	input->SetMouseVisible(true);
 	input->SetMouseMode(MM_ABSOLUTE);
+#else
+	XMLFile *layout = cache->GetResource<XMLFile>("UI/ScreenJoystick.xml");
+
+	joystickIndex_ = input->AddScreenJoystick(layout, defaultStyle);
+	//input->SetScreenJoystickVisible(joystickIndex_, true);
+#endif
 
 	UI *ui = GetSubsystem<UI>();
 	int displayWidth = ui->GetRoot()->GetWidth();
@@ -221,6 +231,7 @@ void Game::Stop()
 void Game::LoadLevel()
 {
 	UI *ui = GetSubsystem<UI>();
+	Input *input = GetSubsystem<Input>();
 	ResourceCache *cache = GetSubsystem<ResourceCache>();
 
 	// If the player has completed the level (rather than dying), advance to the next.
@@ -232,10 +243,22 @@ void Game::LoadLevel()
 	// Reset the score counter.
 	levelTime_ = 0.0f;
 
+	if (joystickIndex_ > 0) {
+		input->RemoveScreenJoystick(joystickIndex_);
+	}
+
 	// Remove all UI and scene elements,
 	// they will be recreated for the level by the rest of this function.
 	ui->Clear();
 	scene_->Clear();
+
+	if (joystickIndex_ > 0) {
+		XMLFile *layout = cache->GetResource<XMLFile>("UI/ScreenJoystick.xml");
+		XMLFile *defaultStyle = cache->GetResource<XMLFile>("UI/DefaultStyle.xml");
+
+		joystickIndex_ = input->AddScreenJoystick(layout, defaultStyle);
+		input->SetScreenJoystickVisible(joystickIndex_, true);
+	}
 
 	// The floor layout is defined using a pixel image.
 	Image *levelImage = cache->GetResource<Image>(ToString("Levels/%d.png", currentLevel_ + 1));
@@ -864,7 +887,7 @@ void Game::HandleUpdate(StringHash eventType, VariantMap &eventData)
 
 		if (frameTimer >= frameRate) {
 			while (frameTimer >= frameRate) {
-			frameTimer -= frameRate;
+				frameTimer -= frameRate;
 				frame++;
 			}
 
@@ -938,7 +961,7 @@ void Game::HandleUpdate(StringHash eventType, VariantMap &eventData)
 
 		if (frameTimer >= frameRate) {
 			while (frameTimer >= frameRate) {
-			frameTimer -= frameRate;
+				frameTimer -= frameRate;
 				frame++;
 			}
 
