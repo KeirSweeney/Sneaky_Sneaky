@@ -50,10 +50,6 @@ void Wife::RegisterObject(Context* context)
 
 void Wife::DelayedStart()
 {
-	UI *ui = GetSubsystem<UI>();
-	Node *personNode = GetScene()->GetChild("Person", true);
-	Person *person = personNode->GetComponent<Person>();
-
 	LOGERROR("WIFE CLASS!");
 	Node *roomNode = node_->GetParent();
 
