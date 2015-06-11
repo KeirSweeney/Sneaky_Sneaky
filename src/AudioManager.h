@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Component.h"
+#include "Urho3D/Scene/Component.h"
 
 namespace Urho3D {
 	class Sound;

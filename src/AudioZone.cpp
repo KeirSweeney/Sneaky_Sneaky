@@ -1,11 +1,13 @@
+#include "Urho3D/Urho3D.h"
+
 #include "AudioZone.h"
 
-#include "Context.h"
-#include "Node.h"
-#include "PhysicsEvents.h"
-#include "Scene.h"
-#include "SceneEvents.h"
-#include "SoundSource.h"
+#include "Urho3D/Audio/SoundSource.h"
+#include "Urho3D/Core/Context.h"
+#include "Urho3D/Physics/PhysicsEvents.h"
+#include "Urho3D/Scene/Node.h"
+#include "Urho3D/Scene/Scene.h"
+#include "Urho3D/Scene/SceneEvents.h"
 
 using namespace Urho3D;
 

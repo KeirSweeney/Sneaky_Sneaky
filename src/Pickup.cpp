@@ -1,20 +1,22 @@
+#include "Urho3D/Urho3D.h"
+
 #include "Pickup.h"
 
 #include "Inventory.h"
 #include "Person.h"
 
-#include "Context.h"
-#include "DebugRenderer.h"
-#include "Log.h"
-#include "NavigationMesh.h"
-#include "Node.h"
-#include "RigidBody.h"
-#include "Scene.h"
-#include "ValueAnimation.h"
-#include "SoundSource3D.h"
-#include "Audio.h"
-#include "Sound.h"
-#include "ResourceCache.h"
+#include "Urho3D/Audio/Audio.h"
+#include "Urho3D/Audio/Sound.h"
+#include "Urho3D/Audio/SoundSource3D.h"
+#include "Urho3D/Core/Context.h"
+#include "Urho3D/Graphics/DebugRenderer.h"
+#include "Urho3D/IO/Log.h"
+#include "Urho3D/Navigation/NavigationMesh.h"
+#include "Urho3D/Physics/RigidBody.h"
+#include "Urho3D/Resource/ResourceCache.h"
+#include "Urho3D/Scene/Node.h"
+#include "Urho3D/Scene/Scene.h"
+#include "Urho3D/Scene/ValueAnimation.h"
 
 using namespace Urho3D;
 

@@ -1,20 +1,22 @@
+#include "Urho3D/Urho3D.h"
+
 #include "SecurityCamera.h"
 
 #include "Guard.h"
 
-#include "Context.h"
-#include "DebugRenderer.h"
-#include "Frustum.h"
-#include "Light.h"
-#include "Log.h"
-#include "NavigationMesh.h"
-#include "Node.h"
-#include "Octree.h"
-#include "ResourceCache.h"
-#include "RigidBody.h"
-#include "Scene.h"
-#include "Texture2D.h"
-#include "PhysicsWorld.h"
+#include "Urho3D/Core/Context.h"
+#include "Urho3D/Graphics/DebugRenderer.h"
+#include "Urho3D/Graphics/Light.h"
+#include "Urho3D/Graphics/Octree.h"
+#include "Urho3D/Graphics/Texture2D.h"
+#include "Urho3D/IO/Log.h"
+#include "Urho3D/Math/Frustum.h"
+#include "Urho3D/Navigation/NavigationMesh.h"
+#include "Urho3D/Physics/PhysicsWorld.h"
+#include "Urho3D/Physics/RigidBody.h"
+#include "Urho3D/Resource/ResourceCache.h"
+#include "Urho3D/Scene/Node.h"
+#include "Urho3D/Scene/Scene.h"
 
 using namespace Urho3D;
 

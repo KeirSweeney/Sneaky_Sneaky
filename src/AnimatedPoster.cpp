@@ -1,12 +1,15 @@
+#include "Urho3D/Urho3D.h"
+
 #include "AnimatedPoster.h"
 
-#include "Context.h"
-#include "Material.h"
-#include "Node.h"
-#include "ResourceCache.h"
-#include "StaticModel.h"
-#include "Texture2D.h"
-#include "XMLElement.h"
+#include "Urho3D/Core/Context.h"
+#include "Urho3D/Graphics/Material.h"
+#include "Urho3D/Graphics/StaticModel.h"
+#include "Urho3D/Graphics/Texture2D.h"
+#include "Urho3D/IO/Log.h"
+#include "Urho3D/Resource/ResourceCache.h"
+#include "Urho3D/Resource/XMLElement.h"
+#include "Urho3D/Scene/Node.h"
 
 using namespace Urho3D;
 

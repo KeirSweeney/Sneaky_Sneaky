@@ -1,6 +1,6 @@
 #pragma once
 
-#include "LogicComponent.h"
+#include "Urho3D/Scene/LogicComponent.h"
 
 class InteractableComponent: public Urho3D::LogicComponent
 {

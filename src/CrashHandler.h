@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Object.h"
+#include "Urho3D/Core/Object.h"
 
 namespace google_breakpad {
     class ExceptionHandler;

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "LogicComponent.h"
+#include "Urho3D/Scene/LogicComponent.h"
 
 namespace Urho3D {
 	class RigidBody;

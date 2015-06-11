@@ -1,21 +1,23 @@
+#include "Urho3D/Urho3D.h"
+
 #include "SelfDestroy.h"
 
 #include "Inventory.h"
 #include "Person.h"
 #include "Pickup.h"
 
-#include "Audio.h"
-#include "Context.h"
-#include "DebugRenderer.h"
-#include "Input.h"
-#include "Log.h"
-#include "Node.h"
-#include "ResourceCache.h"
-#include "RigidBody.h"
-#include "Scene.h"
-#include "Sound.h"
-#include "SoundSource3D.h"
-#include "StaticModel.h"
+#include "Urho3D/Audio/Audio.h"
+#include "Urho3D/Audio/Sound.h"
+#include "Urho3D/Audio/SoundSource3D.h"
+#include "Urho3D/Core/Context.h"
+#include "Urho3D/Graphics/DebugRenderer.h"
+#include "Urho3D/Graphics/StaticModel.h"
+#include "Urho3D/IO/Log.h"
+#include "Urho3D/Input/Input.h"
+#include "Urho3D/Physics/RigidBody.h"
+#include "Urho3D/Resource/ResourceCache.h"
+#include "Urho3D/Scene/Node.h"
+#include "Urho3D/Scene/Scene.h"
 
 using namespace Urho3D;
 

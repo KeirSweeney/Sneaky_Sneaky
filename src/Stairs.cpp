@@ -1,14 +1,16 @@
+#include "Urho3D/Urho3D.h"
+
 #include "Stairs.h"
 
 #include "Game.h"
 
-#include "Context.h"
-#include "DebugRenderer.h"
-#include "Light.h"
-#include "Log.h"
-#include "Navigable.h"
-#include "Node.h"
-#include "Scene.h"
+#include "Urho3D/Core/Context.h"
+#include "Urho3D/Graphics/DebugRenderer.h"
+#include "Urho3D/Graphics/Light.h"
+#include "Urho3D/IO/Log.h"
+#include "Urho3D/Navigation/Navigable.h"
+#include "Urho3D/Scene/Node.h"
+#include "Urho3D/Scene/Scene.h"
 
 using namespace Urho3D;
 

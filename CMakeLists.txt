@@ -29,7 +29,7 @@ add_custom_target(DumpSymbols SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/DumpSymbols.cm
 set_source_files_properties(${CMAKE_CURRENT_SOURCE_DIR}/DumpSymbols.cmake PROPERTIES HEADER_FILE_ONLY TRUE)
 
 externalproject_add(Urho3D
-	SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/Urho3D/Source
+	SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/Urho3D
 	CMAKE_ARGS -DURHO3D_64BIT=1 -DURHO3D_ANGELSCRIPT=0 -DURHO3D_NETWORK=1 -DURHO3D_URHO2D=0 -DURHO3D_TOOLS=1 -DURHO3D_MINIDUMPS=0 -DURHO3D_FILEWATCHER=0 -DURHO3D_OPENGL=1 -DURHO3D_LIB_TYPE=STATIC -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DCMAKE_CONFIGURATION_TYPES=${CMAKE_CONFIGURATION_TYPES}
 	BUILD_IN_SOURCE 0
 	INSTALL_COMMAND ""
@@ -42,18 +42,43 @@ add_definitions(-DURHO3D_STATIC_DEFINE -DURHO3D_PROFILING -DURHO3D_LOGGING -DURH
 add_definitions(-DCMAKE_SYSTEM_NAME="${CMAKE_SYSTEM_NAME}" -DCMAKE_GENERATOR="${CMAKE_GENERATOR}" -DCMAKE_CXX_COMPILER_ID="${CMAKE_CXX_COMPILER_ID}")
 
 externalproject_get_property(Urho3D BINARY_DIR)
-include_directories(${BINARY_DIR}/Engine)
+set(URHO3D_BUILD_DIR ${BINARY_DIR})
 
-file(GLOB children ${CMAKE_CURRENT_SOURCE_DIR}/Urho3D/Source/Engine/*)
-foreach(child ${children})
-	if(IS_DIRECTORY ${child})
-		include_directories(${child})
-	endif()
-endforeach()
+include_directories(${URHO3D_BUILD_DIR}/include)
+include_directories(${URHO3D_BUILD_DIR}/include/Urho3D/ThirdParty)
 
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/Urho3D/Source/ThirdParty/SDL/include)
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/Urho3D/Source/ThirdParty/Bullet/src)
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/Urho3D/Source/ThirdParty/kNet/include)
+if(UNIX)
+	set(URHO3D_STATIC_LIB ${URHO3D_BUILD_DIR}/lib/${CMAKE_STATIC_LIBRARY_PREFIX}Urho3D${CMAKE_STATIC_LIBRARY_SUFFIX})
+
+	find_library(AUDIOUNIT_FRAMEWORK AudioUnit)
+	find_library(CARBON_FRAMEWORK Carbon)
+	find_library(COCOA_FRAMEWORK Cocoa)
+	find_library(COREAUDIO_FRAMEWORK CoreAudio)
+	find_library(FORCEFEEDBACK_FRAMEWORK ForceFeedback)
+	find_library(IOKIT_FRAMEWORK IOKit)
+	find_library(OPENGL_FRAMEWORK OpenGL)
+
+	set(URHO3D_REQUIRED_LIBS
+		${AUDIOUNIT_FRAMEWORK}
+		${CARBON_FRAMEWORK}
+		${COCOA_FRAMEWORK}
+		${COREAUDIO_FRAMEWORK}
+		${FORCEFEEDBACK_FRAMEWORK}
+		${IOKIT_FRAMEWORK}
+		${OPENGL_FRAMEWORK}
+	)
+else()
+	set(URHO3D_STATIC_LIB ${URHO3D_BUILD_DIR}/lib/${CMAKE_STATIC_LIBRARY_PREFIX}Urho3D$<$<CONFIG:Debug>:_d>.lib)
+
+	set(URHO3D_REQUIRED_LIBS
+		"Winmm.lib"
+		"Opengl32.lib"
+		"Version.lib"
+		"Imm32.lib"
+	)
+endif()
+
+target_link_libraries(${PROJECT_NAME} ${URHO3D_STATIC_LIB} ${URHO3D_REQUIRED_LIBS})
 
 add_dependencies(${PROJECT_NAME} Urho3D)
 
@@ -71,16 +96,14 @@ add_custom_command(
 )
 
 if(UNIX)
-	target_link_libraries(${PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/Urho3D/Lib/${CMAKE_STATIC_LIBRARY_PREFIX}Urho3D${CMAKE_STATIC_LIBRARY_SUFFIX})
 	add_custom_command(
 		TARGET ${PROJECT_NAME} POST_BUILD
 		COMMAND ${CMAKE_COMMAND} -E create_symlink
 		${CMAKE_SOURCE_DIR}/data $<TARGET_FILE_DIR:${PROJECT_NAME}>/data
 		COMMAND ${CMAKE_COMMAND} -E create_symlink
-		${CMAKE_CURRENT_SOURCE_DIR}/Urho3D/Bin/AssetImporter${CMAKE_EXECUTABLE_SUFFIX} $<TARGET_FILE_DIR:${PROJECT_NAME}>/AssetImporter${CMAKE_EXECUTABLE_SUFFIX}
+		${URHO3D_BUILD_DIR}/bin/tool/AssetImporter${CMAKE_EXECUTABLE_SUFFIX} $<TARGET_FILE_DIR:${PROJECT_NAME}>/AssetImporter${CMAKE_EXECUTABLE_SUFFIX}
 	)
 else()
-	target_link_libraries(${PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/Urho3D/Lib/${CMAKE_STATIC_LIBRARY_PREFIX}Urho3D$<$<CONFIG:Debug>:_d>.lib)
 	add_custom_command(
 		TARGET ${PROJECT_NAME} POST_BUILD
 		COMMAND ${CMAKE_COMMAND} -E make_directory
@@ -88,33 +111,6 @@ else()
 		COMMAND ${CMAKE_COMMAND} -E copy_directory
 		${CMAKE_SOURCE_DIR}/data $<TARGET_FILE_DIR:${PROJECT_NAME}>/data
 		COMMAND ${CMAKE_COMMAND} -E copy
-		${CMAKE_CURRENT_SOURCE_DIR}/Urho3D/Bin/AssetImporter${CMAKE_EXECUTABLE_SUFFIX} $<TARGET_FILE_DIR:${PROJECT_NAME}>/AssetImporter${CMAKE_EXECUTABLE_SUFFIX}
-	)
-endif()
-
-if(APPLE)
-	find_library(AUDIOUNIT_FRAMEWORK AudioUnit)
-	find_library(CARBON_FRAMEWORK Carbon)
-	find_library(COCOA_FRAMEWORK Cocoa)
-	find_library(COREAUDIO_FRAMEWORK CoreAudio)
-	find_library(FORCEFEEDBACK_FRAMEWORK ForceFeedback)
-	find_library(IOKIT_FRAMEWORK IOKit)
-	find_library(OPENGL_FRAMEWORK OpenGL)
-
-	target_link_libraries(${PROJECT_NAME}
-		${AUDIOUNIT_FRAMEWORK}
-		${CARBON_FRAMEWORK}
-		${COCOA_FRAMEWORK}
-		${COREAUDIO_FRAMEWORK}
-		${FORCEFEEDBACK_FRAMEWORK}
-		${IOKIT_FRAMEWORK}
-		${OPENGL_FRAMEWORK}
-	)
-elseif(WIN32)
-	target_link_libraries(${PROJECT_NAME}
-		"Winmm.lib"
-		"Opengl32.lib"
-		"Version.lib"
-		"Imm32.lib"
+		${URHO3D_BUILD_DIR}/bin/tool/AssetImporter${CMAKE_EXECUTABLE_SUFFIX} $<TARGET_FILE_DIR:${PROJECT_NAME}>/AssetImporter${CMAKE_EXECUTABLE_SUFFIX}
 	)
 endif()

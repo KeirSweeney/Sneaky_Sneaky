@@ -1,3 +1,5 @@
+#include "Urho3D/Urho3D.h"
+
 #include "Thrower.h"
 
 #include "Guard.h"
@@ -6,21 +8,21 @@
 #include "Pickup.h"
 #include "SelfDestroy.h"
 
-#include "Audio.h"
-#include "Context.h"
-#include "DebugRenderer.h"
-#include "Input.h"
-#include "Log.h"
-#include "Node.h"
-#include "ParticleEffect.h"
-#include "ParticleEmitter.h"
-#include "PhysicsEvents.h"
-#include "Profiler.h"
-#include "ResourceCache.h"
-#include "RigidBody.h"
-#include "Scene.h"
-#include "Sound.h"
-#include "SoundSource3D.h"
+#include "Urho3D/Audio/Audio.h"
+#include "Urho3D/Audio/Sound.h"
+#include "Urho3D/Audio/SoundSource3D.h"
+#include "Urho3D/Core/Context.h"
+#include "Urho3D/Core/Profiler.h"
+#include "Urho3D/Graphics/DebugRenderer.h"
+#include "Urho3D/Graphics/ParticleEffect.h"
+#include "Urho3D/Graphics/ParticleEmitter.h"
+#include "Urho3D/IO/Log.h"
+#include "Urho3D/Input/Input.h"
+#include "Urho3D/Physics/PhysicsEvents.h"
+#include "Urho3D/Physics/RigidBody.h"
+#include "Urho3D/Resource/ResourceCache.h"
+#include "Urho3D/Scene/Node.h"
+#include "Urho3D/Scene/Scene.h"
 
 using namespace Urho3D;
 

@@ -1,3 +1,5 @@
+#include "Urho3D/Urho3D.h"
+
 #include "CrashHandler.h"
 
 #include "Analytics.h"
@@ -50,7 +52,7 @@ bool BreakpadMinidumpCallback(const wchar_t *dump_path, const wchar_t *minidump_
 #endif //__APPLE__
 #endif //GOOGLE_BREAKPAD
 
-CrashHandler::CrashHandler(Context *context):
+CrashHandler::CrashHandler(Urho3D::Context *context):
     Object(context), exceptionHandler_(NULL)
 {
 #ifdef GOOGLE_BREAKPAD

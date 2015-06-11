@@ -2,7 +2,7 @@
 
 #include "AudioManager.h"
 
-#include "Component.h"
+#include "Urho3D/Scene/Component.h"
 
 class AudioZone: public Urho3D::Component
 {

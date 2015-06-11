@@ -69,7 +69,7 @@ vec3 ColorCorrection(vec3 color, sampler3D lut)
     float lutSize = 16.0;
     float scale = (lutSize - 1.0) / lutSize;
     float offset = 1.0 / (2.0 * lutSize);
-    return texture3D(lut, clamp(color, 0.0, 1.0) * scale + offset).rgb;
+    return vec3(0); //texture3D(lut, clamp(color, 0.0, 1.0) * scale + offset).rgb;
 }
 
 const float Gamma = 2.2;

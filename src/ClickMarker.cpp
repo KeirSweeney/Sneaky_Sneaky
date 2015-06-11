@@ -1,12 +1,14 @@
+#include "Urho3D/Urho3D.h"
+
 #include "ClickMarker.h"
 
-#include "Context.h"
-#include "Material.h"
-#include "Model.h"
-#include "Node.h"
-#include "ResourceCache.h"
-#include "Scene.h"
-#include "StaticModel.h"
+#include "Urho3D/Core/Context.h"
+#include "Urho3D/Graphics/Material.h"
+#include "Urho3D/Graphics/Model.h"
+#include "Urho3D/Graphics/StaticModel.h"
+#include "Urho3D/Resource/ResourceCache.h"
+#include "Urho3D/Scene/Node.h"
+#include "Urho3D/Scene/Scene.h"
 
 using namespace Urho3D;
 

@@ -1,6 +1,8 @@
+#include "Urho3D/Urho3D.h"
+
 #include "InteractableComponent.h"
 
-#include "Context.h"
+#include "Urho3D/Core/Context.h"
 
 using namespace Urho3D;
 

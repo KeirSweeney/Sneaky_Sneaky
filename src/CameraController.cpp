@@ -1,20 +1,22 @@
+#include "Urho3D/Urho3D.h"
+
 #include "CameraController.h"
 
 #include "Game.h"
 
-#include "Camera.h"
-#include "Context.h"
-#include "DebugRenderer.h"
-#include "Graphics.h"
-#include "Input.h"
-#include "Node.h"
-#include "Octree.h"
-#include "Scene.h"
-#include "Sprite.h"
-#include "StringUtils.h"
-#include "Text.h"
-#include "UI.h"
-#include "UIElement.h"
+#include "Urho3D/Core/Context.h"
+#include "Urho3D/Core/StringUtils.h"
+#include "Urho3D/Graphics/Camera.h"
+#include "Urho3D/Graphics/DebugRenderer.h"
+#include "Urho3D/Graphics/Graphics.h"
+#include "Urho3D/Graphics/Octree.h"
+#include "Urho3D/Input/Input.h"
+#include "Urho3D/Scene/Node.h"
+#include "Urho3D/Scene/Scene.h"
+#include "Urho3D/UI/Sprite.h"
+#include "Urho3D/UI/Text.h"
+#include "Urho3D/UI/UI.h"
+#include "Urho3D/UI/UIElement.h"
 
 using namespace Urho3D;
 
