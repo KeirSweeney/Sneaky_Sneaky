@@ -188,10 +188,10 @@ void Game::Start()
 	input->SetMouseMode(MM_ABSOLUTE);
 
 	UI *ui = GetSubsystem<UI>();
-	Graphics *graphics = GetSubsystem<Graphics>();
+	int displayWidth = ui->GetRoot()->GetWidth();
 
-	Sprite *sprite = ui->GetRoot()->CreateChild<Sprite>();
-	sprite->SetFixedSize(IntVector2(1024, 576) * graphics->GetPixelRatio());
+	Sprite *sprite = ui->GetRoot()->CreateChild<Sprite>("Movie");
+	sprite->SetFixedSize(IntVector2(displayWidth, displayWidth));
 	sprite->SetHotSpot(sprite->GetSize() / 2);
 	sprite->SetAlignment(HA_CENTER, VA_CENTER);
 
@@ -235,10 +235,10 @@ void Game::LoadLevel()
 		currentLevel_ = 0;
 		gameState_ = GS_CREDITS;
 
-		Graphics *graphics = GetSubsystem<Graphics>();
+		int displayWidth = ui->GetRoot()->GetWidth();
 
-		Sprite *sprite = ui->GetRoot()->CreateChild<Sprite>();
-		sprite->SetFixedSize(IntVector2(1024, 576) * graphics->GetPixelRatio());
+		Sprite *sprite = ui->GetRoot()->CreateChild<Sprite>("Movie");
+		sprite->SetFixedSize(IntVector2(displayWidth, displayWidth));
 		sprite->SetHotSpot(sprite->GetSize() / 2);
 		sprite->SetAlignment(HA_CENTER, VA_CENTER);
 
@@ -847,20 +847,25 @@ void Game::HandleUpdate(StringHash eventType, VariantMap &eventData)
 	float timeStep = eventData[Update::P_TIMESTEP].GetFloat();
 
 	if (gameState_ == GS_INTRO) {
-		static int frame = 1;
+		static int frame = 0;
 		static float frameTimer = 0.0f;
 		static const float frameRate = 1.0f / 23.98f;
 
 		frameTimer += timeStep;
 
 		if (frameTimer >= frameRate) {
+			while (frameTimer >= frameRate) {
 			frameTimer -= frameRate;
+				frame++;
+			}
 
-			SharedPtr<Texture2D> frameTexture = cache->GetTempResource<Texture2D>("Textures/intro/" + String(frame++) + ".jpeg");
+			SharedPtr<Texture2D> frameTexture = cache->GetTempResource<Texture2D>("Textures/intro/" + String(frame) + ".jpeg");
 
 			if (frameTexture.NotNull()) {
+				frameTexture->SetNumLevels(1);
+
 				UI *ui = GetSubsystem<UI>();
-				Sprite *sprite = (Sprite *)ui->GetRoot()->GetChild(0);
+				Sprite *sprite = (Sprite *)ui->GetRoot()->GetChild(String("Movie"));
 				sprite->SetTexture(frameTexture);
 			} else {
 				frame = 0;
@@ -916,21 +921,24 @@ void Game::HandleUpdate(StringHash eventType, VariantMap &eventData)
 			material->SetTexture(TU_DIFFUSE, texture);
 		}
 	} else if (gameState_ == GS_CREDITS) {
-		static int frame = 1;
+		static int frame = 0;
 		static float frameTimer = 0.0f;
 		static const float frameRate = 1.0f / 23.98f;
 
 		frameTimer += timeStep;
 
 		if (frameTimer >= frameRate) {
+			while (frameTimer >= frameRate) {
 			frameTimer -= frameRate;
+				frame++;
+			}
 
-			SharedPtr<Texture2D> frameTexture = cache->GetTempResource<Texture2D>("Textures/credits/" + String(frame++) + ".jpeg");
+			SharedPtr<Texture2D> frameTexture = cache->GetTempResource<Texture2D>("Textures/credits/" + String(frame) + ".jpeg");
 
 			UI *ui = GetSubsystem<UI>();
 
 			if (frameTexture.NotNull()) {
-				Sprite *sprite = (Sprite *)ui->GetRoot()->GetChild(0);
+				Sprite *sprite = (Sprite *)ui->GetRoot()->GetChild(String("Movie"));
 				sprite->SetTexture(frameTexture);
 			} else {
 				gameState_ = GS_FINISHED;
