@@ -33,8 +33,7 @@ using namespace Urho3D;
 
 BossLaser::BossLaser(Context *context):
 	InteractableComponent(context),
-	lightTime_(0.0f), laserTime_(0.0f),
-	laserInterval_(0.0f), laserDelay_(0.0f)
+	laserTime_(0.0f), laserInterval_(0.0f), laserDelay_(0.0f)
 {}
 
 void BossLaser::RegisterObject(Context *context)

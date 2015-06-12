@@ -39,7 +39,7 @@ private:
 	Urho3D::Material *rightMaterial_;
 	Urho3D::Vector3 target_;
 	float chargeTimer_;
+	float health_;
 	Urho3D::UIElement *healthBar_;
 	Urho3D::Text *healthText_;
-	float health_;
 };

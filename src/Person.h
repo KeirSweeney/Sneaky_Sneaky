@@ -42,8 +42,8 @@ private:
 	Urho3D::Material *frontShadowMaterial_;
 	Urho3D::Material *leftShadowMaterial_;
 	Urho3D::Vector3 direction_;
-	Urho3D::UIElement *healthBar_;
-	Urho3D::Text *healthText_;
 	float health_;
 	bool showHealth_;
+	Urho3D::UIElement *healthBar_;
+	Urho3D::Text *healthText_;
 };

@@ -30,5 +30,4 @@ public:
 private:
 	Urho3D::PODVector<Urho3D::Node *> sequence_;
 	float time_;
-	Urho3D::UIElement *playerHealth_;
 };
