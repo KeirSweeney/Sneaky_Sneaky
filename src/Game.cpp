@@ -877,6 +877,22 @@ void Game::HandleUpdate(StringHash eventType, VariantMap &eventData)
 	Input *input = GetSubsystem<Input>();
 
 	float timeStep = eventData[Update::P_TIMESTEP].GetFloat();
+	
+	if (input->GetNumJoysticks() > 0) {
+		JoystickState *state = input->GetJoystickByIndex(0);
+		
+		for (int i = 0; i < state->GetNumAxes(); ++i) {
+			debugHud_->SetAppStats("Axis " + String(i), state->GetAxisPosition(i));
+		}
+		
+		for (int i = 0; i < state->GetNumButtons(); ++i) {
+			debugHud_->SetAppStats("Button " + String(i), state->GetButtonDown(i));
+		}
+		
+		for (int i = 0; i < state->GetNumHats(); ++i) {
+			debugHud_->SetAppStats("Hat " + String(i), state->GetHatPosition(i));
+		}
+	}
 
 	if (gameState_ == GS_INTRO) {
 		static int frame = 0;
@@ -1005,8 +1021,18 @@ void Game::HandleUpdate(StringHash eventType, VariantMap &eventData)
 			}
 		}
 	}
+	
+	bool spacePressed = false;
+	
+	if (input->GetNumJoysticks() > 0) {
+		JoystickState *state = input->GetJoystickByIndex(0);
+		
+		spacePressed = state->GetButtonPress(0);
+	}
+	
+	spacePressed = spacePressed || input->GetKeyPress(KEY_SPACE);
 
-	if (gameState_ != GS_PLAYING && input->GetKeyPress(KEY_SPACE)) {
+	if (gameState_ != GS_PLAYING && spacePressed) {
 		LoadLevel();
 	}
 

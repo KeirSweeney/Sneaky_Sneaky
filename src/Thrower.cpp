@@ -42,8 +42,18 @@ void Thrower::RegisterObject(Context* context)
 void Thrower::Update(float timeStep)
 {
 	Input *input = GetSubsystem<Input>();
+	
+	bool throwPressed = false;
+	
+	if (input->GetNumJoysticks() > 0) {
+		JoystickState *state = input->GetJoystickByIndex(0);
+		
+		throwPressed = state->GetButtonPress(1);
+	}
+	
+	throwPressed = throwPressed || input->GetKeyPress(KEY_T);
 
-	if(!input->GetKeyPress(KEY_T)) {
+	if(!throwPressed) {
 		return;
 	}
 

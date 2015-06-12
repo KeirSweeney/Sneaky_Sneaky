@@ -134,8 +134,26 @@ void Person::Update(float timeStep)
 			target = result[0].position_;
 			target.y_ = 0.0f;
 		}
+		
+		bool hasJoyMove = false;
+		if (input->GetNumJoysticks() > 0) {
+			JoystickState *state = input->GetJoystickByIndex(0);
+			
+			float x = state->GetAxisPosition(0);
+			float y = state->GetAxisPosition(1);
+			
+			Vector3 offset(-x, 0.0f, -y);
+			float length = offset.Length();
+			
+			offset = (Quaternion(offset, node_->GetDirection()) * Vector3::FORWARD) * Min(length, 1.0f);
+			
+			if (length > 0.25f) {
+				hasJoyMove = true;
+				target = position + offset;
+			}
+		}
 
-		if (!input->IsMouseVisible() || input->GetMouseButtonDown(MOUSEB_LEFT) || input->GetMouseButtonPress(MOUSEB_LEFT)) {
+		if (hasJoyMove || !input->IsMouseVisible() || input->GetMouseButtonDown(MOUSEB_LEFT) || input->GetMouseButtonPress(MOUSEB_LEFT)) {
 			Vector3 meshTarget = navMesh->FindNearestPoint(target, Vector3(1.0f, 0.01f, 1.0f));
 
 			if (input->GetMouseButtonPress(MOUSEB_LEFT)) {
@@ -170,6 +188,26 @@ void Person::Update(float timeStep)
 		model->SetMaterial(path_.Empty() ? backMaterial_ : backMaterialAnimated_);
 		shadowModel->SetMaterial(leftShadowMaterial_);
 	}
+	
+#if 0
+	DebugRenderer *debug = node_->GetScene()->GetComponent<DebugRenderer>();
+	
+	if (input->GetNumJoysticks() > 0) {
+		JoystickState *state = input->GetJoystickByIndex(0);
+		
+		float x = state->GetAxisPosition(0);
+		float y = state->GetAxisPosition(1);
+		
+		Vector3 offset(-x, 0.0f, -y);
+		float length = offset.Length();
+		
+		offset = (Quaternion(offset, node_->GetDirection()) * Vector3::FORWARD) * Min(length, 1.0f);
+		
+		if (length > 0.1f) {
+			debug->AddLine(position + Vector3(0.0f, 0.1f, 0.0f), position + Vector3(0.0f, 0.1f, 0.0f) + offset, Color(255, 0, 0));
+		}
+	}
+#endif
 
 	if (path_.Empty()) {
 		rigidBody->SetLinearVelocity(Vector3::ZERO);

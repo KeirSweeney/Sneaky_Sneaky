@@ -25,7 +25,6 @@ public:
 public:
 	void HandleNodeCollision(Urho3D::StringHash eventType, Urho3D::VariantMap &eventData);
 
-
 private:
 	Urho3D::RigidBody *rigidBody_;
 	Urho3D::StaticModel *model_;

@@ -71,12 +71,25 @@ void CameraController::DelayedStart()
 void CameraController::Update(float timeStep)
 {
 	Input *input = GetSubsystem<Input>();
+	
+	bool rotateLeft = false;
+	bool rotateRight = false;
+	
+	if (input->GetNumJoysticks() > 0) {
+		JoystickState *state = input->GetJoystickByIndex(0);
+		
+		rotateLeft = state->GetButtonPress(9);
+		rotateRight = state->GetButtonPress(10);
+	}
+	
+	rotateLeft = rotateLeft || input->GetKeyPress('Q');
+	rotateRight = rotateRight || input->GetKeyPress('E');
 
-	if (input->GetKeyPress('Q')) {
+	if (rotateLeft) {
 		targetCameraYaw_ -= 90.0f;
 	}
 
-	if (input->GetKeyPress('E')) {
+	if (rotateRight) {
 		targetCameraYaw_ += 90.0f;
 	}
 
