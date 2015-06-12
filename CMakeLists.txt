@@ -22,7 +22,7 @@ if(MSVC)
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /Gm- /MP")
 endif()
 
-aux_source_directory(src SRC_LIST)
+file(GLOB SRC_LIST "src/*.cpp" "src/*.h")
 add_executable(${PROJECT_NAME} WIN32 ${SRC_LIST})
 
 add_custom_target(DumpSymbols SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/DumpSymbols.cmake)
