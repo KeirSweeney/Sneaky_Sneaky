@@ -58,7 +58,17 @@ void Inventory::Update(float timeStep)
 {
 	Input *input = GetSubsystem<Input>();
 
-	if (!input->GetKeyDown(KEY_TAB)) {
+	bool tabDown = false;
+
+	if (input->GetNumJoysticks() > 0) {
+		JoystickState *state = input->GetJoystickByIndex(0);
+
+		tabDown = state->GetButtonDown(3);
+	}
+
+	tabDown = tabDown || input->GetKeyDown(KEY_TAB);
+
+	if (!tabDown) {
 		panel_->GetParent()->SetVisible(false);
 		return;
 	}

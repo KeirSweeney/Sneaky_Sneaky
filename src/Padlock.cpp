@@ -87,6 +87,7 @@ void Padlock::Stop()
 {
 	if (panel_) {
 		panel_->Remove();
+		panel_ = NULL;
 	}
 }
 
