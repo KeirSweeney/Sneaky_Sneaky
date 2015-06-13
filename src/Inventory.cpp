@@ -39,9 +39,10 @@ void Inventory::RegisterObject(Context* context)
 void Inventory::DelayedStart()
 {
 	UI *ui = GetSubsystem<UI>();
+	float pixelRatio = GetSubsystem<Graphics>()->GetPixelRatio();
 
 	UIElement *panel = ui->GetRoot()->CreateChild<UIElement>();
-	panel->SetFixedSize(panel->GetParent()->GetSize() - IntVector2(PADDING * 2, PADDING * 2));
+	panel->SetFixedSize(panel->GetParent()->GetSize() - (IntVector2(PADDING * 2, PADDING * 2) * pixelRatio));
 	panel->SetAlignment(HA_CENTER, VA_CENTER);
 	panel->SetVisible(false);
 
@@ -77,12 +78,15 @@ void Inventory::Update(float timeStep)
 	// and recreate them from the current inventory contents.
 	if (dirty_) {
 		panel_->RemoveAllChildren();
+		
+		float pixelRatio = GetSubsystem<Graphics>()->GetPixelRatio();
 
-		int x = PADDING;
-		int y = PADDING;
+		int x = PADDING * pixelRatio;
+		int y = PADDING * pixelRatio;
+		int w = (panel_->GetWidth() - (PADDING * 6 * pixelRatio)) / 5;
 		for (Vector<SharedPtr<Pickup>>::ConstIterator i = items_.Begin(); i != items_.End(); ++i) {
 			UIElement *item = panel_->CreateChild<UIElement>();
-			item->SetFixedSize(200, 200);
+			item->SetFixedSize(w, w);
 			item->SetPosition(x, y);
 
 			Sprite *background = item->CreateChild<Sprite>();
@@ -91,7 +95,7 @@ void Inventory::Update(float timeStep)
 			background->SetOpacity(0.2f);
 
 			Text *label = item->CreateChild<Text>();
-			label->SetFixedSize(item->GetSize() - IntVector2(PADDING, PADDING));
+			label->SetFixedSize(item->GetSize() - (IntVector2(PADDING, PADDING) * pixelRatio));
 			label->SetFont("Fonts/Anonymous Pro.ttf");
 			label->SetColor(Color::WHITE);
 			label->SetText((*i)->GetDisplayName());
@@ -99,10 +103,10 @@ void Inventory::Update(float timeStep)
 			label->SetTextAlignment(HA_CENTER);
 			label->SetWordwrap(true);
 
-			x += item->GetWidth() + PADDING;
-			if (x > panel_->GetWidth() - PADDING) {
-				x = 0;
-				y += item->GetHeight() + PADDING;
+			x += w + (PADDING * pixelRatio);
+			if (x >= panel_->GetWidth() - (PADDING * pixelRatio)) {
+				x = PADDING * pixelRatio;
+				y += w + (PADDING * pixelRatio);
 			}
 		}
 	}
