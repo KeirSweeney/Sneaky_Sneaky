@@ -65,7 +65,7 @@ void Padlock::DelayedStart()
 	float pixelRatio = GetSubsystem<Graphics>()->GetPixelRatio();
 
 	panel_ = ui->GetRoot()->CreateChild<UIElement>();
-	panel_->SetFixedSize(displayWidth_ * pixelRatio, displayHeight_ * pixelRatio);
+	panel_->SetFixedSize((int)(displayWidth_ * pixelRatio), (int)(displayHeight_ * pixelRatio));
 	panel_->SetVisible(false);
 
 	Sprite *background = panel_->CreateChild<Sprite>();
