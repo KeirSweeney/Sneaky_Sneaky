@@ -136,11 +136,10 @@ void Person::Update(float timeStep)
 		}
 		
 		bool hasJoyMove = false;
-		if (input->GetNumJoysticks() > 0) {
-			JoystickState *state = input->GetJoystickByIndex(0);
-			
-			float x = state->GetAxisPosition(0);
-			float y = state->GetAxisPosition(1);
+		JoystickState *joystickState = input->GetJoystick(GetSubsystem<Game>()->GetCurrentJoystick());
+		if (joystickState) {
+			float x = joystickState->GetAxisPosition(0);
+			float y = joystickState->GetAxisPosition(1);
 			
 			Vector3 offset(-x, 0.0f, -y);
 			float length = offset.Length();
@@ -192,11 +191,10 @@ void Person::Update(float timeStep)
 #if 0
 	DebugRenderer *debug = node_->GetScene()->GetComponent<DebugRenderer>();
 	
-	if (input->GetNumJoysticks() > 0) {
-		JoystickState *state = input->GetJoystickByIndex(0);
-		
-		float x = state->GetAxisPosition(0);
-		float y = state->GetAxisPosition(1);
+	JoystickState *joystickState = input->GetJoystick(GetSubsystem<Game>()->GetCurrentJoystick());
+	if (joystickState) {
+		float x = joystickState->GetAxisPosition(0);
+		float y = joystickState->GetAxisPosition(1);
 		
 		Vector3 offset(-x, 0.0f, -y);
 		float length = offset.Length();

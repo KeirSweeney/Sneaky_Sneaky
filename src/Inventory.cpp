@@ -2,6 +2,7 @@
 
 #include "Inventory.h"
 
+#include "Game.h"
 #include "Person.h"
 #include "Pickup.h"
 
@@ -61,10 +62,9 @@ void Inventory::Update(float timeStep)
 
 	bool tabDown = false;
 
-	if (input->GetNumJoysticks() > 0) {
-		JoystickState *state = input->GetJoystickByIndex(0);
-
-		tabDown = state->GetButtonDown(3);
+	JoystickState *joystickState = input->GetJoystick(GetSubsystem<Game>()->GetCurrentJoystick());
+	if (joystickState) {
+		tabDown = joystickState->GetButtonDown(3);
 	}
 
 	tabDown = tabDown || input->GetKeyDown(KEY_TAB);

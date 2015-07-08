@@ -75,11 +75,10 @@ void CameraController::Update(float timeStep)
 	bool rotateLeft = false;
 	bool rotateRight = false;
 	
-	if (input->GetNumJoysticks() > 0) {
-		JoystickState *state = input->GetJoystickByIndex(0);
-		
-		rotateLeft = state->GetButtonPress(9);
-		rotateRight = state->GetButtonPress(10);
+	JoystickState *joystickState = input->GetJoystick(GetSubsystem<Game>()->GetCurrentJoystick());
+	if (joystickState) {
+		rotateLeft = joystickState->GetButtonPress(9);
+		rotateRight = joystickState->GetButtonPress(10);
 	}
 	
 	rotateLeft = rotateLeft || input->GetKeyPress('Q');

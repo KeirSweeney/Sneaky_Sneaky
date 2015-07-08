@@ -911,19 +911,19 @@ void Game::HandleUpdate(StringHash eventType, VariantMap &eventData)
 	debugHud_->ClearAppStats();
 
 	debugHud_->SetAppStats("Active Joystick", joystickIndex_);
-	JoystickState *state = input->GetJoystick(joystickIndex_);
+	JoystickState *joystickState = input->GetJoystick(joystickIndex_);
 	
-	if (state) {
-		for (int i = 0; i < state->GetNumAxes(); ++i) {
-			debugHud_->SetAppStats("Axis " + String(i), state->GetAxisPosition(i));
+	if (joystickState) {
+		for (int i = 0; i < joystickState->GetNumAxes(); ++i) {
+			debugHud_->SetAppStats("Axis " + String(i), joystickState->GetAxisPosition(i));
 		}
 		
-		for (int i = 0; i < state->GetNumButtons(); ++i) {
-			debugHud_->SetAppStats("Button " + String(i), state->GetButtonDown(i));
+		for (int i = 0; i < joystickState->GetNumButtons(); ++i) {
+			debugHud_->SetAppStats("Button " + String(i), joystickState->GetButtonDown(i));
 		}
 		
-		for (int i = 0; i < state->GetNumHats(); ++i) {
-			debugHud_->SetAppStats("Hat " + String(i), state->GetHatPosition(i));
+		for (int i = 0; i < joystickState->GetNumHats(); ++i) {
+			debugHud_->SetAppStats("Hat " + String(i), joystickState->GetHatPosition(i));
 		}
 	}
 
@@ -1057,10 +1057,8 @@ void Game::HandleUpdate(StringHash eventType, VariantMap &eventData)
 	
 	bool spacePressed = false;
 	
-	if (input->GetNumJoysticks() > 0) {
-		JoystickState *state = input->GetJoystickByIndex(0);
-		
-		spacePressed = state->GetButtonPress(0);
+	if (joystickState) {
+		spacePressed = joystickState->GetButtonPress(0);
 	}
 	
 	spacePressed = spacePressed || input->GetKeyPress(KEY_SPACE);

@@ -2,6 +2,7 @@
 
 #include "Thrower.h"
 
+#include "Game.h"
 #include "Guard.h"
 #include "Inventory.h"
 #include "Person.h"
@@ -45,10 +46,9 @@ void Thrower::Update(float timeStep)
 	
 	bool throwPressed = false;
 	
-	if (input->GetNumJoysticks() > 0) {
-		JoystickState *state = input->GetJoystickByIndex(0);
-		
-		throwPressed = state->GetButtonPress(1);
+	JoystickState *joystickState = input->GetJoystick(GetSubsystem<Game>()->GetCurrentJoystick());
+	if (joystickState) {
+		throwPressed = joystickState->GetButtonPress(1);
 	}
 	
 	throwPressed = throwPressed || input->GetKeyPress(KEY_T);
