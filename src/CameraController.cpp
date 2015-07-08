@@ -95,15 +95,17 @@ void CameraController::Update(float timeStep)
 	Vector3 position = GetScene()->GetChild("Person", true)->GetPosition();
 	IntVector2 room((int)round(position.x_ / 11.0f), (int)round(position.z_ / 11.0f));
 
-	// This is glitchy, sometimes it travels the long way around.
-	if (room.x_ < cameraRoom_.x_) { // Left
-		targetCameraYaw_ = -90.0f;
-	} else if (room.x_ > cameraRoom_.x_) { // Right
-		targetCameraYaw_ = 90.0f;
-	} else if (room.y_ < cameraRoom_.y_) { // Down
-		targetCameraYaw_ = 180.0f;
-	} else if (room.y_ > cameraRoom_.y_) { // Up
-		targetCameraYaw_ = 0.0f;
+	if (GetSubsystem<Game>()->GetCurrentJoystick() == -1) {
+		// This is glitchy, sometimes it travels the long way around.
+		if (room.x_ < cameraRoom_.x_) { // Left
+			targetCameraYaw_ = -90.0f;
+		} else if (room.x_ > cameraRoom_.x_) { // Right
+			targetCameraYaw_ = 90.0f;
+		} else if (room.y_ < cameraRoom_.y_) { // Down
+			targetCameraYaw_ = 180.0f;
+		} else if (room.y_ > cameraRoom_.y_) { // Up
+			targetCameraYaw_ = 0.0f;
+		}
 	}
 
 	if (room != cameraRoom_) {
