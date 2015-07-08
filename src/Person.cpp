@@ -117,22 +117,25 @@ void Person::Update(float timeStep)
 	node_->SetWorldRotation(Quaternion(cameraController->GetYawAngle(), Vector3::UP));
 
 	if (input->IsMouseVisible() || (input->GetNumTouches() > 0 && !input->GetTouch(0)->GetTouchedElement())) {
-		Graphics *graphics = GetSubsystem<Graphics>();
+		Vector3 target = (position + direction_);
 
-		IntVector2 mousePosition = input->IsMouseVisible() ? input->GetMousePosition() : input->GetTouch(0)->position_;
-		Ray mouseRay = camera->GetScreenRay(mousePosition.x_ / (float)graphics->GetWidth(), mousePosition.y_ / (float)graphics->GetHeight());
+		if (GetSubsystem<Game>()->GetCurrentJoystick() == -1) {
+			Graphics *graphics = GetSubsystem<Graphics>();
 
-		Octree *octree = GetScene()->GetComponent<Octree>();
+			IntVector2 mousePosition = input->IsMouseVisible() ? input->GetMousePosition() : input->GetTouch(0)->position_;
+			Ray mouseRay = camera->GetScreenRay(mousePosition.x_ / (float)graphics->GetWidth(), mousePosition.y_ / (float)graphics->GetHeight());
 
-		PODVector<RayQueryResult> result;
-		RayOctreeQuery query(result, mouseRay, RAY_TRIANGLE, M_INFINITY, DRAWABLE_GEOMETRY, 0x01);
-		octree->RaycastSingle(query);
+			Octree *octree = GetScene()->GetComponent<Octree>();
 
-		Vector3 target = position;
-		if (!result.Empty()) {
-			//LOGERRORF("result[0].position_: %s", result[0].position_.ToString().CString());
-			target = result[0].position_;
-			target.y_ = 0.0f;
+			PODVector<RayQueryResult> result;
+			RayOctreeQuery query(result, mouseRay, RAY_TRIANGLE, M_INFINITY, DRAWABLE_GEOMETRY, 0x01);
+			octree->RaycastSingle(query);
+
+			if (!result.Empty()) {
+				//LOGERRORF("result[0].position_: %s", result[0].position_.ToString().CString());
+				target = result[0].position_;
+				target.y_ = 0.0f;
+			}
 		}
 		
 		bool hasJoyMove = false;
@@ -148,7 +151,7 @@ void Person::Update(float timeStep)
 			
 			if (length > 0.25f) {
 				hasJoyMove = true;
-				target = position + offset;
+				target = position + (offset * 0.25f);
 			}
 		}
 
