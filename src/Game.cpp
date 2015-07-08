@@ -47,6 +47,7 @@
 #include "Urho3D/Graphics/Zone.h"
 #include "Urho3D/IO/Log.h"
 #include "Urho3D/Input/Input.h"
+#include "Urho3D/Input/InputEvents.h"
 #include "Urho3D/Navigation/Navigable.h"
 #include "Urho3D/Navigation/NavigationMesh.h"
 #include "Urho3D/Physics/CollisionShape.h"
@@ -72,7 +73,7 @@ using namespace Urho3D;
 DEFINE_APPLICATION_MAIN(Game)
 
 Game::Game(Context *context):
-	Application(context), crashHandler_(context), joystickIndex_(0),
+	Application(context), crashHandler_(context), screenJoystickIndex_(0), joystickIndex_(-1),
 	currentLevel_(0), levelTime_(0.0f), gameState_(GS_INTRO), totalTime_(0.0f), totalScore_(0), unceUnceUnceWubWubWub_(false),
 	developerMode_(false), debugGeometry_(false), debugPhysics_(false), debugNavigation_(false), debugDepthTest_(true)
 {
@@ -202,8 +203,8 @@ void Game::Start()
 #else
 	XMLFile *layout = cache->GetResource<XMLFile>("UI/ScreenJoystick.xml");
 
-	joystickIndex_ = input->AddScreenJoystick(layout, defaultStyle);
-	//input->SetScreenJoystickVisible(joystickIndex_, true);
+	screenJoystickIndex_ = input->AddScreenJoystick(layout, defaultStyle);
+	//input->SetScreenJoystickVisible(screenJoystickIndex_, true);
 #endif
 
 	UI *ui = GetSubsystem<UI>();
@@ -216,6 +217,20 @@ void Game::Start()
 
 	SoundSource *introSource = scene_->CreateComponent<SoundSource>();
 	introSource->Play(cache->GetTempResource<Sound>("Audio/Intro.ogg"));
+
+	// Event Soup. Best served hot.
+	SubscribeToEvent(E_MOUSEBUTTONDOWN, HANDLER(Game, HandleControllerInputEnd));
+	SubscribeToEvent(E_MOUSEBUTTONUP, HANDLER(Game, HandleControllerInputEnd));
+	SubscribeToEvent(E_MOUSEMOVE, HANDLER(Game, HandleControllerInputEnd));
+	SubscribeToEvent(E_MOUSEWHEEL, HANDLER(Game, HandleControllerInputEnd));
+	SubscribeToEvent(E_KEYDOWN, HANDLER(Game, HandleControllerInputEnd));
+	SubscribeToEvent(E_KEYUP, HANDLER(Game, HandleControllerInputEnd));
+	SubscribeToEvent(E_JOYSTICKCONNECTED, HANDLER(Game, HandleControllerInputStart));
+	SubscribeToEvent(E_JOYSTICKDISCONNECTED, HANDLER(Game, HandleControllerInputEnd));
+	SubscribeToEvent(E_JOYSTICKBUTTONDOWN, HANDLER(Game, HandleControllerInputStart));
+	SubscribeToEvent(E_JOYSTICKBUTTONUP, HANDLER(Game, HandleControllerInputStart));
+	SubscribeToEvent(E_JOYSTICKAXISMOVE, HANDLER(Game, HandleControllerInputStart));
+	SubscribeToEvent(E_JOYSTICKHATMOVE, HANDLER(Game, HandleControllerInputStart));
 
 	SubscribeToEvent(E_UPDATE, HANDLER(Game, HandleUpdate));
 	SubscribeToEvent(E_POSTRENDERUPDATE, HANDLER(Game, HandlePostRenderUpdate));
@@ -243,8 +258,8 @@ void Game::LoadLevel()
 	// Reset the score counter.
 	levelTime_ = 0.0f;
 
-	if (joystickIndex_ > 0) {
-		input->RemoveScreenJoystick(joystickIndex_);
+	if (screenJoystickIndex_ > 0) {
+		input->RemoveScreenJoystick(screenJoystickIndex_);
 	}
 
 	// Remove all UI and scene elements,
@@ -252,12 +267,12 @@ void Game::LoadLevel()
 	ui->Clear();
 	scene_->Clear();
 
-	if (joystickIndex_ > 0) {
+	if (screenJoystickIndex_ > 0) {
 		XMLFile *layout = cache->GetResource<XMLFile>("UI/ScreenJoystick.xml");
 		XMLFile *defaultStyle = cache->GetResource<XMLFile>("UI/DefaultStyle.xml");
 
-		joystickIndex_ = input->AddScreenJoystick(layout, defaultStyle);
-		input->SetScreenJoystickVisible(joystickIndex_, true);
+		screenJoystickIndex_ = input->AddScreenJoystick(layout, defaultStyle);
+		input->SetScreenJoystickVisible(screenJoystickIndex_, true);
 	}
 
 	// The floor layout is defined using a pixel image.
@@ -869,6 +884,21 @@ bool Game::IsDeveloper()
 	return developerMode_;
 }
 
+int Game::GetCurrentJoystick()
+{
+	return joystickIndex_;
+}
+
+void Game::HandleControllerInputStart(Urho3D::StringHash eventType, Urho3D::VariantMap &eventData)
+{
+	joystickIndex_ = eventData[JoystickConnected::P_JOYSTICKID].GetInt();
+}
+
+void Game::HandleControllerInputEnd(Urho3D::StringHash eventType, Urho3D::VariantMap &eventData)
+{
+	joystickIndex_ = -1;
+}
+
 void Game::HandleUpdate(StringHash eventType, VariantMap &eventData)
 {
 	(void)eventType;
@@ -877,10 +907,13 @@ void Game::HandleUpdate(StringHash eventType, VariantMap &eventData)
 	Input *input = GetSubsystem<Input>();
 
 	float timeStep = eventData[Update::P_TIMESTEP].GetFloat();
+
+	debugHud_->ClearAppStats();
+
+	debugHud_->SetAppStats("Active Joystick", joystickIndex_);
+	JoystickState *state = input->GetJoystick(joystickIndex_);
 	
-	if (input->GetNumJoysticks() > 0) {
-		JoystickState *state = input->GetJoystickByIndex(0);
-		
+	if (state) {
 		for (int i = 0; i < state->GetNumAxes(); ++i) {
 			debugHud_->SetAppStats("Axis " + String(i), state->GetAxisPosition(i));
 		}

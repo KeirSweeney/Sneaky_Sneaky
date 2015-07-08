@@ -27,8 +27,11 @@ public:
 	void EndLevel(bool died, bool suppressScore);
 
 	bool IsDeveloper();
+	int GetCurrentJoystick();
 
 private:
+	void HandleControllerInputStart(Urho3D::StringHash eventType, Urho3D::VariantMap &eventData);
+	void HandleControllerInputEnd(Urho3D::StringHash eventType, Urho3D::VariantMap &eventData);
 	void HandleUpdate(Urho3D::StringHash eventType, Urho3D::VariantMap &eventData);
 	void HandlePostRenderUpdate(Urho3D::StringHash eventType, Urho3D::VariantMap &eventData);
 
@@ -37,7 +40,8 @@ private:
 
 	Urho3D::SharedPtr<Urho3D::DebugHud> debugHud_;
 	Urho3D::SharedPtr<Urho3D::Scene> scene_;
-	unsigned joystickIndex_;
+	unsigned screenJoystickIndex_;
+	int joystickIndex_;
 	
 	int currentLevel_;
 	float levelTime_;
