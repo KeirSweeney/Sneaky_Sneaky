@@ -772,9 +772,9 @@ void Game::LoadLevel()
 
 	Light *cameraLight = cameraLightNode->CreateComponent<Light>();
 	cameraLight->SetLightType(LIGHT_SPOT);
-	cameraLight->SetRange(200.0f);
+	cameraLight->SetRange(500.0f);
 	cameraLight->SetBrightness(0.2f);
-	cameraLight->SetFov(60.0f);
+	cameraLight->SetFov(90.0f);
 	cameraLight->SetColor(Color::WHITE);
 	cameraLight->SetCastShadows(true);
 	cameraLight->SetLightMask(~0x01);
