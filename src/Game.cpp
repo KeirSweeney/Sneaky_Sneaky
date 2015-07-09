@@ -180,7 +180,7 @@ void Game::Start()
 #ifdef DESKTOP_GRAPHICS
 	RenderPath *renderPath = viewport->GetRenderPath();
 
-	//renderPath->Append(cache->GetResource<XMLFile>("PostProcess/FXAA3.xml"));
+	renderPath->Append(cache->GetResource<XMLFile>("PostProcess/FXAA3.xml"));
 
 	renderPath->Append(cache->GetResource<XMLFile>("PostProcess/BloomHDR.xml"));
 	renderPath->SetShaderParameter("BloomHDRMix", Vector2(1.0f, 1.0f));
