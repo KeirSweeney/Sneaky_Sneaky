@@ -75,7 +75,7 @@ DEFINE_APPLICATION_MAIN(Game)
 
 Game::Game(Context *context):
 	Application(context), crashHandler_(context), screenJoystickIndex_(0), joystickIndex_(-1),
-	currentLevel_(0), levelTime_(0.0f), gameState_(GS_INTRO), totalTime_(0.0f), totalScore_(0), unceUnceUnceWubWubWub_(false),
+	currentLevel_(0), levelTime_(0.0f), gameState_(GS_INTRO), totalTime_(0.0f), totalScore_(0), exitTimer_(0), unceUnceUnceWubWubWub_(false),
 	developerMode_(false), debugGeometry_(false), debugPhysics_(false), debugNavigation_(false), debugDepthTest_(true)
 {
 	// We need to call back from the components for level transitions,
@@ -910,6 +910,17 @@ void Game::HandleUpdate(StringHash eventType, VariantMap &eventData)
 	Input *input = GetSubsystem<Input>();
 
 	float timeStep = eventData[Update::P_TIMESTEP].GetFloat();
+
+	if (input->GetKeyDown(KEY_ESC)) {
+		exitTimer_++;
+
+		if (exitTimer_ > 30) {
+			engine_->Exit();
+			exitTimer_ = 0;
+		}
+	} else {
+		exitTimer_ = 0;
+	}
 
 	debugHud_->ClearAppStats();
 

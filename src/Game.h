@@ -57,6 +57,8 @@ private:
 	float totalTime_;
 	int totalScore_;
 
+	int exitTimer_;
+
 	bool unceUnceUnceWubWubWub_;
 	Urho3D::PODVector<int> cheatCode_;
 
