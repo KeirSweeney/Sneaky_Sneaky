@@ -854,7 +854,8 @@ void Game::EndLevel(bool died, bool suppressScore)
 		snprintf(buffer, sizeof(buffer),
 				 "You've been brutally murdered for your crimes against the company.\n"
 				 "\n"
-				 "Press [space] to try your hand again.");
+				 "Press [%s] to try your hand again.",
+				 (joystickIndex_ == -1 ? "space" : "A"));
 	} else {
 		int m = (int)(levelTime_ / 60.0f);
 		int s = (int)levelTime_ - (m * 60);
@@ -865,7 +866,7 @@ void Game::EndLevel(bool died, bool suppressScore)
 		snprintf(buffer, sizeof(buffer),
 				 "Against all odds, you made it past security and on to the next floor.\n"
 				 "\n"
-				 "Press [space] to continue the adventure.\n"
+				 "Press [%s] to continue the adventure.\n"
 				 "\n"
 				 "\n"
 				 "           Completion Time: %02d:%02d.%03d\n"
@@ -873,7 +874,7 @@ void Game::EndLevel(bool died, bool suppressScore)
 				 "         Pickups Collected: %d\n"
 				 "      ---------------------------------\n"
 				 "                     Score: %d",
-				 m, s, ms, guardCount, (guardCount != 1) ? "s" : "", pickupCount, score);
+				 (joystickIndex_ == -1 ? "space" : "A"), m, s, ms, guardCount, (guardCount != 1) ? "s" : "", pickupCount, score);
 	}
 
 	label->SetText(buffer);
@@ -1049,8 +1050,8 @@ void Game::HandleUpdate(StringHash eventType, VariantMap &eventData)
 						 "\n"
 						 "Can you do better next time?\n"
 						 "\n"
-						 "           [space]",
-						 m, s, ms, totalScore_);
+						 "           [%s]",
+						 m, s, ms, totalScore_, (joystickIndex_ == -1 ? "space" : "A"));
 
 				text->SetText(buffer);
 			}
