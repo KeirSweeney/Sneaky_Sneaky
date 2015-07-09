@@ -314,13 +314,26 @@ float CalcLuma(vec3 rgb)
 
 /*--------------------------------------------------------------------------*/
 
-#define FxaaTexTop(t, p) vec4(texture2D(t, p).rgb, 1.0)
+#ifdef GL3
 
-#define LumaTop(t, p) CalcLuma(texture2D(t, p).rgb)
+#define FxaaTexTop(t, p) vec4(textureLod(t, p, 0.0).rgb, 1.0)
+#define LumaTop(t, p) CalcLuma(textureLod(t, p, 0.0).rgb)
 #if (FXAA_FAST_PIXEL_OFFSET == 1)
-    #define LumaOff(t, p, o, r) CalcLuma(texture2DOffset(t, p, o).rgb)
+    #define LumaOff(t, p, o, r) CalcLuma(textureLodOffset(t, p, 0.0, o).rgb)
 #else
-    #define LumaOff(t, p, o, r) CalcLuma(texture2D(t, p + (o * r)).rgb)
+    #define LumaOff(t, p, o, r) CalcLuma(textureLod(t, p + (o * r), 0.0).rgb)
+#endif
+
+#else
+
+#define FxaaTexTop(t, p) vec4(texture2DLod(t, p, 0.0).rgb, 1.0)
+#define LumaTop(t, p) CalcLuma(texture2DLod(t, p, 0.0).rgb)
+#if (FXAA_FAST_PIXEL_OFFSET == 1)
+    #define LumaOff(t, p, o, r) CalcLuma(texture2DLodOffset(t, p, 0.0, o).rgb)
+#else
+    #define LumaOff(t, p, o, r) CalcLuma(texture2DLod(t, p + (o * r), 0.0).rgb)
+#endif
+
 #endif
 
 /*============================================================================
@@ -731,4 +744,3 @@ void PS()
         0.0833                              // float fxaaQualityEdgeThresholdMin
     );
 }
-
