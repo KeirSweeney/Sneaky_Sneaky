@@ -22,6 +22,7 @@
 #include "Stairs.h"
 #include "Terminal.h"
 #include "Thrower.h"
+#include "TutorialPoster.h"
 #include "Wife.h"
 
 #include "Urho3D/Audio/Audio.h"
@@ -168,6 +169,7 @@ void Game::Start()
 	Stairs::RegisterObject(context_);
 	Terminal::RegisterObject(context_);
 	Thrower::RegisterObject(context_);
+	TutorialPoster::RegisterObject(context_);
 	Wife::RegisterObject(context_);
 
 	SharedPtr<Viewport> viewport(new Viewport(context_, scene_, NULL));
@@ -503,10 +505,10 @@ void Game::LoadLevel()
 							if (interactableComponent) {
 								interactableComponent->LoadFromXML(child);
 							} else {
-								LOGWARNINGF("Component %s doesn't inherit from InteractableComponent", child.GetAttribute("interaction").CString());
+								LOGWARNINGF("Component %s doesn't inherit from InteractableComponent", child.GetAttributeCString("interaction"));
 							}
 						} else {
-							LOGERRORF("Failed to create interaction component: %s", child.GetAttribute("interaction").CString());
+							LOGERRORF("Failed to create interaction component: %s", child.GetAttributeCString("interaction"));
 						}
 					} else if (!child.GetBool("nonsolid")) {
 						childNode->CreateComponent<Navigable>();
