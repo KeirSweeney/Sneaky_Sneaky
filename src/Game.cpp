@@ -104,7 +104,7 @@ void Game::Setup()
 	engineParameters_["TextureAnisotropy"] = 16;
 
 #ifdef DESKTOP_GRAPHICS
-	engineParameters_["FullScreen"] = false;
+	//engineParameters_["FullScreen"] = false;
 	engineParameters_["Multisample"] = 8;
 #else
 	engineParameters_["FullScreen"] = true;
