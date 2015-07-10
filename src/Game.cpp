@@ -75,7 +75,7 @@ DEFINE_APPLICATION_MAIN(Game)
 
 Game::Game(Context *context):
 	Application(context), crashHandler_(context), screenJoystickIndex_(0), joystickIndex_(-1),
-	currentLevel_(0), levelTime_(0.0f), gameState_(GS_INTRO), totalTime_(0.0f), totalScore_(0), exitTimer_(0), unceUnceUnceWubWubWub_(false),
+	currentLevel_(0), levelTime_(0.0f), gameState_(GS_MENU), totalTime_(0.0f), totalScore_(0), exitTimer_(0), unceUnceUnceWubWubWub_(false),
 	developerMode_(false), debugGeometry_(false), debugPhysics_(false), debugNavigation_(false), debugDepthTest_(true)
 {
 	// We need to call back from the components for level transitions,
@@ -208,17 +208,6 @@ void Game::Start()
 	screenJoystickIndex_ = input->AddScreenJoystick(layout, defaultStyle);
 	//input->SetScreenJoystickVisible(screenJoystickIndex_, true);
 #endif
-
-	UI *ui = GetSubsystem<UI>();
-	int displayWidth = ui->GetRoot()->GetWidth();
-
-	Sprite *sprite = ui->GetRoot()->CreateChild<Sprite>("Movie");
-	sprite->SetFixedSize(IntVector2(displayWidth, displayWidth));
-	sprite->SetHotSpot(sprite->GetSize() / 2);
-	sprite->SetAlignment(HA_CENTER, VA_CENTER);
-
-	SoundSource *introSource = scene_->CreateComponent<SoundSource>();
-	introSource->Play(cache->GetTempResource<Sound>("Audio/Intro.ogg"));
 
 	// Event Soup. Best served hot.
 	SubscribeToEvent(E_MOUSEBUTTONDOWN, HANDLER(Game, HandleControllerInputEnd));
@@ -433,7 +422,7 @@ void Game::LoadLevel()
 
 				Light *floorLight = floorLightNode->CreateComponent<Light>();
 				floorLight->SetLightType(LIGHT_POINT);
-				floorLight->SetBrightness(0.2f);
+				floorLight->SetBrightness(0.25f);
 				floorLight->SetColor(Color::WHITE);
 
 				floorLightNode = floorLightNode->Clone();
@@ -943,6 +932,440 @@ void Game::HandleUpdate(StringHash eventType, VariantMap &eventData)
 		}
 	}
 
+	bool spacePressed = false;
+
+	if (joystickState) {
+		spacePressed = joystickState->GetButtonPress(0);
+	}
+
+	spacePressed = spacePressed || input->GetKeyPress(KEY_SPACE);
+
+	if (gameState_ != GS_MENU && gameState_ != GS_PLAYING && spacePressed) {
+		if (gameState_ != GS_CREDITS) {
+			LoadLevel();
+		} else {
+			gameState_ = GS_MENU;
+		}
+
+		spacePressed = false;
+	}
+
+	if (gameState_ == GS_MENU) {
+		Node *container = scene_->GetChild(String("TitleContainer"));
+
+		if (!container) {
+			scene_->Clear();
+
+			container = scene_->CreateChild("TitleContainer");
+
+			scene_->CreateComponent<Octree>();
+			scene_->CreateComponent<DebugRenderer>();
+			scene_->CreateComponent<AudioManager>();
+
+			Zone *zone = scene_->CreateComponent<Zone>();
+			zone->SetBoundingBox(BoundingBox(-1000.0f, 1000.0f));
+			zone->SetAmbientColor(Color::BLACK);
+			zone->SetFogStart(50.0f);
+			zone->SetFogEnd(200.0f);
+
+			NavigationMesh *navigationMesh = scene_->CreateComponent<NavigationMesh>();
+			navigationMesh->SetCellSize(0.05f);
+			navigationMesh->SetCellHeight(0.02f);
+			navigationMesh->SetAgentRadius(0.25f);
+			navigationMesh->SetAgentHeight(1.8f);
+			navigationMesh->SetAgentMaxClimb(0.0f);
+			navigationMesh->SetAgentMaxSlope(5.0f);
+
+			scene_->CreateComponent<PhysicsWorld>();
+
+			Material *worldMaterial = cache->GetResource<Material>("Materials/FlatGrey.xml");
+
+			Node *floorNode = scene_->CreateChild();
+
+			floorNode->CreateComponent<Navigable>()->SetRecursive(false);
+			RigidBody * floorRigidBody = floorNode->CreateComponent<RigidBody>();
+			floorRigidBody->SetRestitution(0.5f);
+
+			CollisionShape *floorCollisionShape = floorNode->CreateComponent<CollisionShape>();
+			floorCollisionShape->SetBox(Vector3(11.0f, 1.0f, 11.0f), Vector3(0.0f, -0.5f, 0.0f));
+
+			StaticModel *floorModel = floorNode->CreateComponent<StaticModel>();
+			floorModel->SetModel(cache->GetResource<Model>("Models/Floor.mdl"));
+			floorModel->SetMaterial(worldMaterial);
+			floorModel->SetViewMask(0x01);
+
+			const float floorLightHeight = 3.0f;
+
+			Node *floorLightNode = floorNode->CreateChild();
+			floorLightNode->SetPosition(Vector3(-2.75f, floorLightHeight, -2.75f));
+			floorLightNode->SetDirection(Vector3::DOWN);
+
+			Light *floorLight = floorLightNode->CreateComponent<Light>();
+			floorLight->SetLightType(LIGHT_POINT);
+			floorLight->SetBrightness(0.3f);
+			floorLight->SetColor(Color::WHITE);
+			floorLight->SetCastShadows(true);
+
+			floorLightNode = floorLightNode->Clone();
+			floorLightNode->SetPosition(Vector3(2.75f, floorLightHeight, -2.75f));
+
+			floorLightNode = floorLightNode->Clone();
+			floorLightNode->SetPosition(Vector3(-2.75f, floorLightHeight, 2.75f));
+
+			floorLightNode = floorLightNode->Clone();
+			floorLightNode->SetPosition(Vector3(2.75f, floorLightHeight, 2.75f));
+
+			floorNode = floorNode->Clone();
+			floorNode->SetPosition(Vector3(0.0f, 0.0f, 11.0f));
+
+			Node *wallNode = scene_->CreateChild();
+			wallNode->SetPosition(Vector3(0.0f, 0.0f, 5.5f));
+
+			wallNode->CreateComponent<Navigable>()->SetRecursive(false);
+
+			RigidBody *wallRigidBody = wallNode->CreateComponent<RigidBody>();
+			wallRigidBody->SetRestitution(0.5f);
+
+			StaticModel *wallModel = wallNode->CreateComponent<StaticModel>();
+			wallModel->SetModel(cache->GetResource<Model>("Models/Wall.mdl"));
+			wallModel->SetMaterial(worldMaterial);
+			wallModel->SetCastShadows(true);
+			wallModel->SetViewMask(0x01);
+
+			wallNode = wallNode->Clone();
+			wallNode->SetPosition(Vector3(-5.5f, 0.0f, 0.0f));
+			wallNode->SetRotation(Quaternion(90.0f, Vector3::UP));
+
+			wallNode = wallNode->Clone();
+			wallNode->SetPosition(Vector3(5.5f, 0.0f, 0.0f));
+
+			{
+				Node *node = scene_->CreateChild();
+				node->SetPosition(Vector3(2.0f, 0.0f, 2.7f));
+				node->SetRotation(Quaternion(0.0f, 0.0f, 0.0f));
+				node->SetScale(25.0f);
+
+				StaticModel *model = node->CreateComponent<StaticModel>();
+				model->SetModel(cache->GetResource<Model>("Models/CoffeeTableGlass.mdl"));
+				model->SetMaterial(cache->GetResource<Material>("Materials/CoffeeTableGlass.xml"));
+				model->SetCastShadows(true);
+				model->SetViewMask(0x02);
+
+				RigidBody *rigidBody = node->CreateComponent<RigidBody>();
+				rigidBody->SetRestitution(0.5f);
+
+				CollisionShape *collisionShape = node->CreateComponent<CollisionShape>();
+				collisionShape->SetBox(model->GetBoundingBox().Size(), model->GetBoundingBox().Center());
+
+				node->CreateComponent<Navigable>();
+
+				node = node->Clone();
+				node->SetPosition(Vector3(2.0f, 0.0f, 2.7f));
+				node->SetRotation(Quaternion(0.0f, 0.0f, 0.0f));
+				node->SetScale(25.0f);
+				model = node->GetComponent<StaticModel>();
+				model->SetModel(cache->GetResource<Model>("Models/CoffeeTableLegs.mdl"));
+				model->SetMaterial(cache->GetResource<Material>("Materials/CoffeeTableLegs.xml"));
+				collisionShape = node->GetComponent<CollisionShape>();
+				collisionShape->SetBox(model->GetBoundingBox().Size(), model->GetBoundingBox().Center());
+
+				node = node->Clone();
+				node->SetPosition(Vector3(2.0f, 0.0f, -2.7f));
+				node->SetRotation(Quaternion(0.0f, 0.0f, 0.0f));
+				node->SetScale(25.0f);
+				model = node->GetComponent<StaticModel>();
+				model->SetModel(cache->GetResource<Model>("Models/CoffeeTableGlass.mdl"));
+				model->SetMaterial(cache->GetResource<Material>("Materials/CoffeeTableGlass.xml"));
+				collisionShape = node->GetComponent<CollisionShape>();
+				collisionShape->SetBox(model->GetBoundingBox().Size(), model->GetBoundingBox().Center());
+
+				node = node->Clone();
+				node->SetPosition(Vector3(2.0f, 0.0f, -2.7f));
+				node->SetRotation(Quaternion(0.0f, 0.0f, 0.0f));
+				node->SetScale(25.0f);
+				model = node->GetComponent<StaticModel>();
+				model->SetModel(cache->GetResource<Model>("Models/CoffeeTableLegs.mdl"));
+				model->SetMaterial(cache->GetResource<Material>("Materials/CoffeeTableLegs.xml"));
+				collisionShape = node->GetComponent<CollisionShape>();
+				collisionShape->SetBox(model->GetBoundingBox().Size(), model->GetBoundingBox().Center());
+
+				node = node->Clone();
+				node->SetPosition(Vector3(4.6f, 0.0f, 3.5f));
+				node->SetRotation(Quaternion(0.0f, -90.0f, 0.0f));
+				node->SetScale(50.0f);
+				model = node->GetComponent<StaticModel>();
+				model->SetModel(cache->GetResource<Model>("Models/SofaLength.mdl"));
+				model->SetMaterial(cache->GetResource<Material>("Materials/Sofa.xml"));
+				collisionShape = node->GetComponent<CollisionShape>();
+				collisionShape->SetBox(model->GetBoundingBox().Size(), model->GetBoundingBox().Center());
+
+				node = node->Clone();
+				node->SetPosition(Vector3(3.2f, -0.01f, 4.6f));
+				node->SetRotation(Quaternion(0.0f, 180.0f, 0.0f));
+				node->SetScale(50.0f);
+				model = node->GetComponent<StaticModel>();
+				model->SetModel(cache->GetResource<Model>("Models/SofaLength.mdl"));
+				model->SetMaterial(cache->GetResource<Material>("Materials/Sofa.xml"));
+				collisionShape = node->GetComponent<CollisionShape>();
+				collisionShape->SetBox(model->GetBoundingBox().Size(), model->GetBoundingBox().Center());
+
+				node = node->Clone();
+				node->SetPosition(Vector3(4.96f, 0.0f, 2.0f));
+				node->SetRotation(Quaternion(0.0f, 90.0f, 0.0f));
+				node->SetScale(50.0f);
+				model = node->GetComponent<StaticModel>();
+				model->SetModel(cache->GetResource<Model>("Models/SofaEnd.mdl"));
+				model->SetMaterial(cache->GetResource<Material>("Materials/Sofa.xml"));
+				collisionShape = node->GetComponent<CollisionShape>();
+				collisionShape->SetBox(model->GetBoundingBox().Size(), model->GetBoundingBox().Center());
+
+				node = node->Clone();
+				node->SetPosition(Vector3(1.8f, 0.0f, 4.95f));
+				node->SetRotation(Quaternion(0.0f, 180.0f, 0.0f));
+				node->SetScale(50.0f);
+				model = node->GetComponent<StaticModel>();
+				model->SetModel(cache->GetResource<Model>("Models/SofaEnd.mdl"));
+				model->SetMaterial(cache->GetResource<Material>("Materials/Sofa.xml"));
+				collisionShape = node->GetComponent<CollisionShape>();
+				collisionShape->SetBox(model->GetBoundingBox().Size(), model->GetBoundingBox().Center());
+
+				node = node->Clone();
+				node->SetPosition(Vector3(4.6f, 0.0f, -3.5f));
+				node->SetRotation(Quaternion(0.0f, -90.0f, 0.0f));
+				node->SetScale(50.0f);
+				model = node->GetComponent<StaticModel>();
+				model->SetModel(cache->GetResource<Model>("Models/SofaLength.mdl"));
+				model->SetMaterial(cache->GetResource<Material>("Materials/Sofa.xml"));
+				collisionShape = node->GetComponent<CollisionShape>();
+				collisionShape->SetBox(model->GetBoundingBox().Size(), model->GetBoundingBox().Center());
+
+				node = node->Clone();
+				node->SetPosition(Vector3(3.2f, -0.01f, -4.6f));
+				node->SetRotation(Quaternion(0.0f, 0.0f, 0.0f));
+				node->SetScale(50.0f);
+				model = node->GetComponent<StaticModel>();
+				model->SetModel(cache->GetResource<Model>("Models/SofaLength.mdl"));
+				model->SetMaterial(cache->GetResource<Material>("Materials/Sofa.xml"));
+				collisionShape = node->GetComponent<CollisionShape>();
+				collisionShape->SetBox(model->GetBoundingBox().Size(), model->GetBoundingBox().Center());
+
+				node = node->Clone();
+				node->SetPosition(Vector3(4.96f, 0.0f, -2.0f));
+				node->SetRotation(Quaternion(0.0f, -90.0f, 0.0f));
+				node->SetScale(50.0f);
+				model = node->GetComponent<StaticModel>();
+				model->SetModel(cache->GetResource<Model>("Models/SofaEnd.mdl"));
+				model->SetMaterial(cache->GetResource<Material>("Materials/Sofa.xml"));
+				collisionShape = node->GetComponent<CollisionShape>();
+				collisionShape->SetBox(model->GetBoundingBox().Size(), model->GetBoundingBox().Center());
+
+				node = node->Clone();
+				node->SetPosition(Vector3(1.8f, 0.0f, -4.95f));
+				node->SetRotation(Quaternion(0.0f, 180.0f, 0.0f));
+				node->SetScale(50.0f);
+				model = node->GetComponent<StaticModel>();
+				model->SetModel(cache->GetResource<Model>("Models/SofaEnd.mdl"));
+				model->SetMaterial(cache->GetResource<Material>("Materials/Sofa.xml"));
+				collisionShape = node->GetComponent<CollisionShape>();
+				collisionShape->SetBox(model->GetBoundingBox().Size(), model->GetBoundingBox().Center());
+
+				node = node->Clone();
+				node->SetPosition(Vector3(0.0f, 0.0f, 4.5f));
+				node->SetRotation(Quaternion(0.0f, 0.0f, 0.0f));
+				node->SetScale(6.0f);
+				model = node->GetComponent<StaticModel>();
+				model->SetModel(cache->GetResource<Model>("Models/CoolerBase.mdl"));
+				model->SetMaterial(cache->GetResource<Material>("Materials/FlatGrey.xml"));
+				collisionShape = node->GetComponent<CollisionShape>();
+				collisionShape->SetBox(model->GetBoundingBox().Size(), model->GetBoundingBox().Center());
+
+				node = node->Clone();
+				node->SetPosition(Vector3(0.0f, 0.0f, 4.5f));
+				node->SetRotation(Quaternion(0.0f, 0.0f, 0.0f));
+				node->SetScale(6.0f);
+				model = node->GetComponent<StaticModel>();
+				model->SetModel(cache->GetResource<Model>("Models/CoolerBottle.mdl"));
+				model->SetMaterial(cache->GetResource<Material>("Materials/CoolerBottle.xml"));
+				collisionShape = node->GetComponent<CollisionShape>();
+				collisionShape->SetBox(model->GetBoundingBox().Size(), model->GetBoundingBox().Center());
+
+				node = node->Clone();
+				node->SetPosition(Vector3(-1.4f, -0.1f, 0.0f));
+				node->SetRotation(Quaternion(0.0f, 95.0f, 0.0f));
+				node->SetScale(20.0f);
+				model = node->GetComponent<StaticModel>();
+				model->SetModel(cache->GetResource<Model>("Models/Table.mdl"));
+				model->SetMaterial(cache->GetResource<Material>("Materials/FlatGrey.xml"));
+				collisionShape = node->GetComponent<CollisionShape>();
+				collisionShape->SetBox(model->GetBoundingBox().Size(), model->GetBoundingBox().Center());
+
+				node = node->Clone();
+				node->SetPosition(Vector3(-1.4f, 0.8f, 0.0f));
+				node->SetRotation(Quaternion(0.0f, 75.0f, 0.0f));
+				node->SetScale(5.0f);
+				model = node->GetComponent<StaticModel>();
+				model->SetModel(cache->GetResource<Model>("Models/Terminal.mdl"));
+				model->SetMaterial(cache->GetResource<Material>("Materials/Terminal.xml"));
+				collisionShape = node->GetComponent<CollisionShape>();
+				collisionShape->SetBox(model->GetBoundingBox().Size(), model->GetBoundingBox().Center());
+			}
+
+			navigationMesh->Build();
+
+			Node *cameraNode = scene_->CreateChild("Camera");
+			cameraNode->SetPosition(Vector3(-0.5f, 1.5f, -4.5f));
+			cameraNode->SetRotation(Quaternion(25.0f, Vector3::UP) * Quaternion(15.0f, Vector3::RIGHT));
+
+			Camera *camera = cameraNode->CreateComponent<Camera>();
+			camera->SetFarClip(zone->GetFogEnd());
+			//camera->SetViewMask(0x01);
+
+			Node *cameraLightNode = cameraNode->CreateChild();
+			cameraLightNode->SetPosition(Vector3(0.0f, -0.5f, 0.0f));
+			cameraLightNode->SetRotation(Quaternion(-5.0f, Vector3::RIGHT));
+
+			Light *cameraLight = cameraLightNode->CreateComponent<Light>();
+			cameraLight->SetLightType(LIGHT_SPOT);
+			cameraLight->SetRange(500.0f);
+			cameraLight->SetBrightness(0.2f);
+			cameraLight->SetFov(90.0f);
+			cameraLight->SetColor(Color::WHITE);
+			cameraLight->SetCastShadows(true);
+			cameraLight->SetLightMask(~0x01);
+			cameraLight->SetShapeTexture(cache->GetResource<Texture2D>("Textures/White.png"));
+
+			Renderer *renderer = GetSubsystem<Renderer>();
+			renderer->GetViewport(0)->SetCamera(camera);
+		}
+
+		UI *ui = GetSubsystem<UI>();
+		int displayWidth = ui->GetRoot()->GetWidth();
+		int displayHeight = ui->GetRoot()->GetHeight();
+
+		Sprite *sprite = (Sprite *)ui->GetRoot()->GetChild(String("Title"));
+
+		if (!sprite) {
+			if (screenJoystickIndex_ > 0) {
+				input->RemoveScreenJoystick(screenJoystickIndex_);
+			}
+
+			ui->Clear();
+
+			if (screenJoystickIndex_ > 0) {
+				XMLFile *layout = cache->GetResource<XMLFile>("UI/ScreenJoystick.xml");
+				XMLFile *defaultStyle = cache->GetResource<XMLFile>("UI/DefaultStyle.xml");
+
+				screenJoystickIndex_ = input->AddScreenJoystick(layout, defaultStyle);
+				input->SetScreenJoystickVisible(screenJoystickIndex_, true);
+			}
+
+			sprite = ui->GetRoot()->CreateChild<Sprite>("Title");
+			sprite->SetPosition(0, -displayHeight / 2.9);
+			sprite->SetFixedSize(1024, 512);
+			sprite->SetHotSpot(sprite->GetSize() / 2);
+			sprite->SetAlignment(HA_CENTER, VA_CENTER);
+
+			UIElement *textContainer = ui->GetRoot()->CreateChild<UIElement>();
+			textContainer->SetFixedSize(850, 400);
+			textContainer->SetAlignment(HA_CENTER, VA_CENTER);
+
+			Text *text = textContainer->CreateChild<Text>("TitleText");
+			text->SetFont("Fonts/Anonymous Pro.ttf", 24);
+			text->SetColor(Color::BLACK);
+			text->SetAlignment(HA_LEFT, VA_BOTTOM);
+			text->SetTextAlignment(HA_LEFT);
+			text->SetText("Press [space] or (A)\nto begin the adventure.\n\n"
+			              "Alternatively, skip to a\nspecific level with [1] to [9]");
+		}
+
+		static int frame = 0;
+
+		if (frame >= 0) {
+			static float frameTimer = 0.0f;
+			static const float frameRate = (1.0f / 23.98f) * 1.5f;
+
+			frameTimer += timeStep;
+
+			if (frameTimer >= frameRate) {
+				while (frameTimer >= frameRate) {
+					frameTimer -= frameRate;
+					frame++;
+				}
+
+				SharedPtr<Texture2D> frameTexture = cache->GetTempResource<Texture2D>("Textures/logo_anim/" + String(frame) + ".png");
+
+				if (frameTexture.NotNull()) {
+					frameTexture->SetNumLevels(1);
+					sprite->SetTexture(frameTexture);
+				} else {
+					frame = -1;
+					frameTimer = 0.0f;
+				}
+			}
+		}
+
+		int targetLevel = -1;
+
+		if (input->GetKeyPress(KEY_1)) {
+			targetLevel = 0;
+		} else if (input->GetKeyPress(KEY_2)) {
+			targetLevel = 1;
+		} else if (input->GetKeyPress(KEY_3)) {
+			targetLevel = 2;
+		} else if (input->GetKeyPress(KEY_4)) {
+			targetLevel = 3;
+		} else if (input->GetKeyPress(KEY_5)) {
+			targetLevel = 4;
+		} else if (input->GetKeyPress(KEY_6)) {
+			targetLevel = 5;
+		} else if (input->GetKeyPress(KEY_7)) {
+			targetLevel = 6;
+		} else if (input->GetKeyPress(KEY_8)) {
+			targetLevel = 7;
+		} else if (input->GetKeyPress(KEY_9)) {
+			targetLevel = 8;
+		} else if (input->GetKeyPress(KEY_0)) {
+			targetLevel = 9;
+		}
+
+		if (spacePressed || targetLevel != -1) {
+			if (screenJoystickIndex_ > 0) {
+				input->RemoveScreenJoystick(screenJoystickIndex_);
+			}
+
+			ui->Clear();
+			scene_->Clear();
+
+			if (screenJoystickIndex_ > 0) {
+				XMLFile *layout = cache->GetResource<XMLFile>("UI/ScreenJoystick.xml");
+				XMLFile *defaultStyle = cache->GetResource<XMLFile>("UI/DefaultStyle.xml");
+
+				screenJoystickIndex_ = input->AddScreenJoystick(layout, defaultStyle);
+				input->SetScreenJoystickVisible(screenJoystickIndex_, true);
+			}
+
+			if (spacePressed || targetLevel == 9) {
+				Sprite *sprite = ui->GetRoot()->CreateChild<Sprite>("Movie");
+				sprite->SetFixedSize(IntVector2(displayWidth, displayWidth));
+				sprite->SetHotSpot(sprite->GetSize() / 2);
+				sprite->SetAlignment(HA_CENTER, VA_CENTER);
+
+				if (spacePressed) {
+					SoundSource *introSource = scene_->CreateComponent<SoundSource>();
+					introSource->Play(cache->GetTempResource<Sound>("Audio/Intro.ogg"));
+
+					gameState_ = GS_INTRO;
+				} else {
+					gameState_ = GS_CREDITS;
+				}
+				
+			} else {
+				currentLevel_ = targetLevel;
+				LoadLevel();
+			}
+		}
+	}
+	
 	if (gameState_ == GS_INTRO) {
 		static int frame = 0;
 		static float frameTimer = 0.0f;
@@ -971,8 +1394,10 @@ void Game::HandleUpdate(StringHash eventType, VariantMap &eventData)
 				LoadLevel();
 			}
 		}
-	} else if (gameState_ == GS_PLAYING) {
-		levelTime_ += timeStep;
+	} else if (gameState_ == GS_MENU || gameState_ == GS_PLAYING) {
+		if (gameState_ == GS_PLAYING) {
+			levelTime_ += timeStep;
+		}
 
 		static struct {
 			String material;
@@ -1043,7 +1468,19 @@ void Game::HandleUpdate(StringHash eventType, VariantMap &eventData)
 				frame = 0;
 				frameTimer = 0.0f;
 
+				if (screenJoystickIndex_ > 0) {
+					input->RemoveScreenJoystick(screenJoystickIndex_);
+				}
+
 				ui->Clear();
+
+				if (screenJoystickIndex_ > 0) {
+					XMLFile *layout = cache->GetResource<XMLFile>("UI/ScreenJoystick.xml");
+					XMLFile *defaultStyle = cache->GetResource<XMLFile>("UI/DefaultStyle.xml");
+
+					screenJoystickIndex_ = input->AddScreenJoystick(layout, defaultStyle);
+					input->SetScreenJoystickVisible(screenJoystickIndex_, true);
+				}
 
 				Text *text = ui->GetRoot()->CreateChild<Text>();
 				text->SetFont("Fonts/Anonymous Pro.ttf");
@@ -1063,24 +1500,12 @@ void Game::HandleUpdate(StringHash eventType, VariantMap &eventData)
 						 "\n"
 						 "Can you do better next time?\n"
 						 "\n"
-						 "           [%s]",
-						 m, s, ms, totalScore_, (joystickIndex_ == -1 ? "space" : "A"));
+						 "           %s",
+						 m, s, ms, totalScore_, (joystickIndex_ == -1 ? "[space]" : "  (A)  "));
 
 				text->SetText(buffer);
 			}
 		}
-	}
-	
-	bool spacePressed = false;
-	
-	if (joystickState) {
-		spacePressed = joystickState->GetButtonPress(0);
-	}
-	
-	spacePressed = spacePressed || input->GetKeyPress(KEY_SPACE);
-
-	if (gameState_ != GS_PLAYING && spacePressed) {
-		LoadLevel();
 	}
 
 	if (developerMode_) {

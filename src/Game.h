@@ -46,6 +46,7 @@ private:
 	int currentLevel_;
 	float levelTime_;
 	enum GameState {
+		GS_MENU,
 		GS_INTRO,
 		GS_PLAYING,
 		GS_DEAD,
