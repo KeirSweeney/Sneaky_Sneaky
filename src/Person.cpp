@@ -116,7 +116,7 @@ void Person::Update(float timeStep)
 	CameraController *cameraController = camera->GetNode()->GetParent()->GetComponent<CameraController>();
 	node_->SetWorldRotation(Quaternion(cameraController->GetYawAngle(), Vector3::UP));
 
-	if (input->IsMouseVisible() || (input->GetNumTouches() > 0 && !input->GetTouch(0)->GetTouchedElement())) {
+	if (input->IsMouseVisible() || GetSubsystem<Game>()->GetCurrentJoystick() != -1 || (input->GetNumTouches() > 0 && !input->GetTouch(0)->GetTouchedElement())) {
 		Vector3 target = (position + direction_);
 
 		if (GetSubsystem<Game>()->GetCurrentJoystick() == -1) {
@@ -155,7 +155,7 @@ void Person::Update(float timeStep)
 			}
 		}
 
-		if (hasJoyMove || !input->IsMouseVisible() || input->GetMouseButtonDown(MOUSEB_LEFT) || input->GetMouseButtonPress(MOUSEB_LEFT)) {
+		if (hasJoyMove || (GetSubsystem<Game>()->GetCurrentJoystick() == -1 && !input->IsMouseVisible()) || input->GetMouseButtonDown(MOUSEB_LEFT) || input->GetMouseButtonPress(MOUSEB_LEFT)) {
 			Vector3 meshTarget = navMesh->FindNearestPoint(target, Vector3(1.0f, 0.01f, 1.0f));
 
 			if (input->GetMouseButtonPress(MOUSEB_LEFT)) {

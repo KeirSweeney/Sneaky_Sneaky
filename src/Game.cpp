@@ -854,8 +854,8 @@ void Game::EndLevel(bool died, bool suppressScore)
 		snprintf(buffer, sizeof(buffer),
 				 "You've been brutally murdered for your crimes against the company.\n"
 				 "\n"
-				 "Press [%s] to try your hand again.",
-				 (joystickIndex_ == -1 ? "space" : "A"));
+				 "Press %s to try your hand again.",
+				 (joystickIndex_ == -1 ? "[space]" : "(A)"));
 	} else {
 		int m = (int)(levelTime_ / 60.0f);
 		int s = (int)levelTime_ - (m * 60);
@@ -866,7 +866,7 @@ void Game::EndLevel(bool died, bool suppressScore)
 		snprintf(buffer, sizeof(buffer),
 				 "Against all odds, you made it past security and on to the next floor.\n"
 				 "\n"
-				 "Press [%s] to continue the adventure.\n"
+				 "Press %s to continue the adventure.\n"
 				 "\n"
 				 "\n"
 				 "           Completion Time: %02d:%02d.%03d\n"
@@ -874,7 +874,7 @@ void Game::EndLevel(bool died, bool suppressScore)
 				 "         Pickups Collected: %d\n"
 				 "      ---------------------------------\n"
 				 "                     Score: %d",
-				 (joystickIndex_ == -1 ? "space" : "A"), m, s, ms, guardCount, (guardCount != 1) ? "s" : "", pickupCount, score);
+				 (joystickIndex_ == -1 ? "[space]" : "(A)"), m, s, ms, guardCount, (guardCount != 1) ? "s" : "", pickupCount, score);
 	}
 
 	label->SetText(buffer);
@@ -895,11 +895,13 @@ int Game::GetCurrentJoystick()
 void Game::HandleControllerInputStart(Urho3D::StringHash eventType, Urho3D::VariantMap &eventData)
 {
 	joystickIndex_ = eventData[JoystickConnected::P_JOYSTICKID].GetInt();
+	GetSubsystem<Input>()->SetMouseVisible(false, true);
 }
 
 void Game::HandleControllerInputEnd(Urho3D::StringHash eventType, Urho3D::VariantMap &eventData)
 {
 	joystickIndex_ = -1;
+	GetSubsystem<Input>()->SetMouseVisible(true, true);
 }
 
 void Game::HandleUpdate(StringHash eventType, VariantMap &eventData)
